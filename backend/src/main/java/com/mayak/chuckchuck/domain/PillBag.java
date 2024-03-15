@@ -17,7 +17,7 @@ public class PillBag extends OCRList{
     private LocalDateTime buildDate;
 
     //약국명
-    @Column(name = "pharmacy_name")
+    @Column(name = "pharmacy_name", length = 100)
     private String pharmacyName;
 
     //수납금액

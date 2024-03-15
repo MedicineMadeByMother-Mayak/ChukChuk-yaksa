@@ -29,22 +29,27 @@ public class Pill {
     private String company;
 
     //약 효과
+    @Column(length = 2000)
     private String effect;
 
     //약 주성분
+    @Column(length = 2000)
     private String basis;
 
     //약 주의사항
+    @Column(length = 2000)
     private String caution;
 
     //용법용량
+    @Column(length = 2000)
     private String capacity;
 
-    //약 이미지 url
-    @Column(name="image_url")
+    //약 이미지 링크
+    @Column(name="image_url", length = 1000)
     private String imageUrl;
 
     //약 분류
+    @Column(length = 100)
     private String type;
 
     //임산부 주의

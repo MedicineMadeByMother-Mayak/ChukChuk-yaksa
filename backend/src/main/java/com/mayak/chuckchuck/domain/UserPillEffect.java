@@ -32,6 +32,7 @@ public class UserPillEffect {
     private Pill pill;
 
     //메모
+    @Column(length = 100)
     private String memo;
     
     //공통 데이터

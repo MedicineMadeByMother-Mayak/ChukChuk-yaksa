@@ -17,8 +17,8 @@ public class Category {
     @Column(name = "category_id")
     private Long categoryId;
     
-    //카테고리명
-    @Column(name = "category_name")
+    //대분류 이름
+    @Column(name = "category_name", length = 20)
     private String categoryName;
 
     //공통데이터

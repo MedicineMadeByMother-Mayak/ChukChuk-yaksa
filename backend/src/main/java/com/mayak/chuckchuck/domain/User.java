@@ -29,10 +29,11 @@ public class User {
     private SocialCode socialCode;
 
     //소셜로그인 플랫폼 이름
+    @Column(length = 100)
     private String social;
 
     //사용자이름
-    @Column(name="user_name")
+    @Column(name="user_name", length = 20)
     private String userName;
 
     //생일
@@ -54,6 +55,7 @@ public class User {
     private Sex sex;
 
     //토큰
+    @Column(length = 100)
     private String token;
 
     //공통데이터

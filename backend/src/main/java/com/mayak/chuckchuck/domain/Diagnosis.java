@@ -12,15 +12,15 @@ import java.time.LocalDateTime;
 public class Diagnosis extends OCRList{
 
     //질병 code
-    @Column(name = "ill_code")
+    @Column(name = "ill_code", length = 50)
     private String illCode;
 
     //질병 name
-    @Column(name = "ill_name")
+    @Column(name = "ill_name", length = 50)
     private String illName;
 
     //병원명
-    @Column(name = "hospital_name")
+    @Column(name = "hospital_name", length = 50)
     private String hospitalName;
 
     //진단일
@@ -28,6 +28,6 @@ public class Diagnosis extends OCRList{
     private LocalDateTime diagnosisDate;
 
     //소견
-    @Column
+    @Column(length = 1000)
     private String opinion;
 }

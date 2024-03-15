@@ -3,6 +3,7 @@ package com.mayak.chuckchuck.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
@@ -23,7 +24,7 @@ public class TakeList {
     private User user;
 
     //복용리스트명
-    @Column(name="take_list_name")
+    @Column(name="take_list_name", length = 10)
     private String takeListName;
 
     //복용알림여부
@@ -35,6 +36,7 @@ public class TakeList {
     private LocalDateTime alarmTime;
 
     //반복주기
+    @ColumnDefault(value = "24")
     private int cycle;
 
     //복용 완료 여부
