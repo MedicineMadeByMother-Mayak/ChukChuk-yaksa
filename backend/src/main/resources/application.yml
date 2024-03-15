@@ -1,14 +1,10 @@
-# DB Source URL
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/chukchuk_db
-    username: root
-    password: root
-    driverClassName: com.mysql.cj.jdbc.Driver
+  config:
+    import: db.yml
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
