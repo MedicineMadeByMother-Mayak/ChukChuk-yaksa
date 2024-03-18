@@ -1,0 +1,5 @@
+방법은 두가지 
+1. mysql에서 export_file을 import 한다
+2. 직접 순서대로 실행한다
+	- 1. Mayak_DB_Base_Setting.sql
+	- 2. insert_queries_all_data.txt
