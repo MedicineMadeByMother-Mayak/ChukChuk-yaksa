@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `chukchuk_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `chukchuk_db`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: localhost    Database: chukchuk_db
@@ -46,7 +44,7 @@ CREATE TABLE `ocr_pills` (
 
 LOCK TABLES `ocr_pills` WRITE;
 /*!40000 ALTER TABLE `ocr_pills` DISABLE KEYS */;
-INSERT INTO `ocr_pills` VALUES (1,1,1,'Take 1 pill every 8 hours','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(2,2,2,'Take 2 pills after meal','2024-03-18 14:38:29','2024-03-18 14:38:29',0);
+INSERT INTO `ocr_pills` VALUES (1,1,1,'Take 1 pill every 8 hours','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(2,2,2,'Take 2 pills after meal','2024-03-19 15:40:41','2024-03-19 15:40:41',0);
 /*!40000 ALTER TABLE `ocr_pills` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 14:45:41
+-- Dump completed on 2024-03-19 15:46:30

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `chukchuk_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `chukchuk_db`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: localhost    Database: chukchuk_db
@@ -40,7 +38,7 @@ CREATE TABLE `user_pill_effect` (
   CONSTRAINT `FK_user_pill_effect_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`),
   CONSTRAINT `FK_user_pill_effect_pill_id` FOREIGN KEY (`pill_id`) REFERENCES `pill` (`pill_id`),
   CONSTRAINT `FK_user_pill_effect_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +47,7 @@ CREATE TABLE `user_pill_effect` (
 
 LOCK TABLES `user_pill_effect` WRITE;
 /*!40000 ALTER TABLE `user_pill_effect` DISABLE KEYS */;
+INSERT INTO `user_pill_effect` VALUES (1,1,1,1,'Sample memo 1','2024-03-19 15:40:41',NULL,0),(2,2,1,2,'Sample memo 2','2024-03-19 15:40:41',NULL,0),(3,3,2,3,'Sample memo 3','2024-03-19 15:40:41',NULL,0),(4,1,2,4,'Sample memo 4','2024-03-19 15:40:41',NULL,0),(5,2,3,5,'Sample memo 5','2024-03-19 15:40:41',NULL,0),(6,3,3,6,'Sample memo 6','2024-03-19 15:40:41',NULL,0),(7,1,4,7,'Sample memo 7','2024-03-19 15:40:41',NULL,0),(8,2,4,8,'Sample memo 8','2024-03-19 15:40:41',NULL,0),(9,3,5,9,'Sample memo 9','2024-03-19 15:40:41',NULL,0),(10,1,5,10,'Sample memo 10','2024-03-19 15:40:41',NULL,0);
 /*!40000 ALTER TABLE `user_pill_effect` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 14:45:57
+-- Dump completed on 2024-03-19 15:46:46

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `chukchuk_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `chukchuk_db`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: localhost    Database: chukchuk_db
@@ -40,7 +38,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'Electronics','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(2,'Clothing','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(3,'Books','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(4,'Furniture','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(5,'Sports','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(6,'Toys','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(7,'Beauty','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(8,'Home & Kitchen','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(9,'Automotive','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(10,'Garden','2024-03-18 14:38:29','2024-03-18 14:38:29',0);
+INSERT INTO `category` VALUES (1,'Electronics','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(2,'Clothing','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(3,'Books','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(4,'Furniture','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(5,'Sports','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(6,'Toys','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(7,'Beauty','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(8,'Home & Kitchen','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(9,'Automotive','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(10,'Garden','2024-03-19 15:40:41','2024-03-19 15:40:41',0);
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 14:45:41
+-- Dump completed on 2024-03-19 15:46:46
