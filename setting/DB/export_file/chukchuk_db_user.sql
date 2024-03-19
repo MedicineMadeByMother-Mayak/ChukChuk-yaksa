@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `chukchuk_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `chukchuk_db`;
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
 --
 -- Host: localhost    Database: chukchuk_db
@@ -48,7 +46,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'John','GOOGLE','google_user123','1990-05-15 00:00:00','A',175,70,'male','token123','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(2,'Emily','NAVER','naver_user456','1985-08-20 00:00:00','B',160,55,'female','token456','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(3,'Michael','KAKAO','kakao_user789','1995-03-25 00:00:00','AB',180,80,'male','token789','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(4,'Jessica','GOOGLE','google_user321','1988-12-10 00:00:00','O',165,60,'female','token321','2024-03-18 14:38:29','2024-03-18 14:38:29',0),(5,'Daniel','NAVER','naver_user654','1992-07-05 00:00:00','A',170,75,'male','token654','2024-03-18 14:38:29','2024-03-18 14:38:29',0);
+INSERT INTO `user` VALUES (1,'John','GOOGLE','google_user123','1990-05-15 00:00:00','A',175,70,'male','token123','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(2,'Emily','NAVER','naver_user456','1985-08-20 00:00:00','B',160,55,'female','token456','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(3,'Michael','KAKAO','kakao_user789','1995-03-25 00:00:00','AB',180,80,'male','token789','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(4,'Jessica','GOOGLE','google_user321','1988-12-10 00:00:00','O',165,60,'female','token321','2024-03-19 15:40:41','2024-03-19 15:40:41',0),(5,'Daniel','NAVER','naver_user654','1992-07-05 00:00:00','A',170,75,'male','token654','2024-03-19 15:40:41','2024-03-19 15:40:41',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -61,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-03-18 14:45:57
+-- Dump completed on 2024-03-19 15:46:31
