@@ -90,7 +90,7 @@ public class TakeListController {
      * @return:
      */
     @DeleteMapping("/alarms/{takeListId}")
-    public void deactivateAlarm(@PathVariable Long takeListId){
+    public void deactivateAlarm(@PathVariable("takeListId") Long takeListId){
         takeListService.updateIsAlarmFalse(takeListId);
     }
 
