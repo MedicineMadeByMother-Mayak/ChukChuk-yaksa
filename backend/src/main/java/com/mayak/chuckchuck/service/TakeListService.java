@@ -19,7 +19,7 @@ public class TakeListService {
     private final UserRepository userRepository;
 
     /**
-     * 알람 비활성화
+     * 복용리스트의 알람 비활성화
      * @author: 최서현
      * @param: takeListId
      * @return:
