@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.domain;
 
 
+import com.mayak.chuckchuck.dto.request.UserInfoRequest;
 import com.mayak.chuckchuck.enums.BloodType;
 import com.mayak.chuckchuck.enums.Sex;
 import com.mayak.chuckchuck.enums.SocialCode;
@@ -63,4 +64,16 @@ public class User {
     private CommonData commonData;
 
 
+    /**
+     * 업데이트
+     */
+    public void updateInfo(UserInfoRequest userInfoRequest) {
+        System.out.println("udpate");
+        this.userName = userInfoRequest.getUserName();
+        this.sex = userInfoRequest.getSex();
+        this.birth = userInfoRequest.getBirth();
+        this.bloodType = userInfoRequest.getBloodType();
+        this.height = userInfoRequest.getHeight();
+        this.weight = userInfoRequest.getWeight();
+    }
 }
