@@ -4,6 +4,7 @@ import com.mayak.chuckchuck.dto.request.UserInfoRequest;
 import com.mayak.chuckchuck.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +25,13 @@ public class UserController {
     /**
      * 사용자 정보 초기 등록(업데이트로 동작)
      * @author: 최서현
-     * @param:
+     * @param: userInfoRequest
      * @return:
      */
     @PostMapping("/")
-    public void registUserInfo(@Valid @RequestBody UserInfoRequest userInfoRequest){
+    public ResponseEntity<Void> registUserInfo(@Valid @RequestBody UserInfoRequest userInfoRequest){
         userService.registUserInfo(userInfoRequest);
+        return ResponseEntity.ok().build();
     }
 
     /**

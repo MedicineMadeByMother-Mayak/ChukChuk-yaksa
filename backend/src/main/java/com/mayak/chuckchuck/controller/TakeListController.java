@@ -101,8 +101,9 @@ public class TakeListController {
      * @return:
      */
     @DeleteMapping("/alarms/{takeListId}")
-    public void deactivateAlarm(@PathVariable("takeListId") Long takeListId){
+    public ResponseEntity<Void> deactivateAlarm(@PathVariable("takeListId") Long takeListId){
         takeListService.updateIsAlarmFalse(takeListId);
+        return ResponseEntity.ok().build();
     }
 
 }
