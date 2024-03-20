@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.request.UserInfoRequest;
 import com.mayak.chuckchuck.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +28,7 @@ public class UserController {
      * @return:
      */
     @PostMapping("/")
-    public void registUserInfo(@RequestBody UserInfoRequest userInfoRequest){
-        System.out.println("컨트롤러 진입"+ userInfoRequest.toString());
+    public void registUserInfo(@Valid @RequestBody UserInfoRequest userInfoRequest){
         userService.registUserInfo(userInfoRequest);
     }
 
