@@ -38,7 +38,7 @@ CREATE TABLE `user` (
   `blood_type` 			enum('A', 'B', 'AB', 'O')				DEFAULT NULL,
   `height` 				int 														NOT NULL,
   `weight` 				int 														NOT NULL,
-  `sex` 				enum('male', 'female')					DEFAULT NULL,
+  `sex` 				enum('MALE', 'FEMALE')					DEFAULT NULL,
   `token` 				varchar(500) 							DEFAULT NULL,
   `create_date` 		datetime      							DEFAULT NOW(),
   `modify_date` 		datetime      							DEFAULT NULL,	
