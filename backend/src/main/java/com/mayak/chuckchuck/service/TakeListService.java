@@ -1,6 +1,8 @@
 package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.TakeList;
+import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
+import com.mayak.chuckchuck.exception.RestApiException;
 import com.mayak.chuckchuck.repository.TakeListRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,11 +20,15 @@ public class TakeListService {
      * 알람 비활성화
      * @author: 최서현
      * @param: takeListId
-     * @return:
      */
     public void updateIsAlarmFalse(Long takeListId) {
-        TakeList takeList = takeListRepository.findById(takeListId).get();
-        takeList.toggleAlarm();
+        Optional<TakeList> takeListOptional = takeListRepository.findById(takeListId);
+        if (takeListOptional.isPresent()) {
+            TakeList takeList = takeListRepository.findById(takeListId).get();
+            takeList.toggleAlarm();
+        } else {
+            throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
+        }
     }
 
 }

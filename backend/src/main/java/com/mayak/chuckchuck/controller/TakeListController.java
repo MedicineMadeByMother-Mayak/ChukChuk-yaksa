@@ -3,6 +3,8 @@ package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,11 +89,11 @@ public class TakeListController {
      * 알람 비활성화
      * @author: 최서현
      * @param: takeListId
-     * @return:
      */
     @DeleteMapping("/alarms/{takeListId}")
-    public void deactivateAlarm(@PathVariable("takeListId") Long takeListId){
+    public ResponseEntity<HttpStatus> deactivateAlarm(@PathVariable("takeListId") Long takeListId){
         takeListService.updateIsAlarmFalse(takeListId);
+        return ResponseEntity.ok().build();
     }
 
 }
