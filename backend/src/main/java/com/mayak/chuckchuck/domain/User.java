@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.domain;
 
 
+import com.mayak.chuckchuck.dto.request.UserInfoRequest;
 import com.mayak.chuckchuck.enums.BloodType;
 import com.mayak.chuckchuck.enums.Sex;
 import com.mayak.chuckchuck.enums.SocialCode;
@@ -63,4 +64,17 @@ public class User {
     private CommonData commonData;
 
 
+    /**
+     * User의 기타정보를 변경
+     * @author: 최서현
+     * @param: userInfoRequest
+     */
+    public void updateInfo(UserInfoRequest userInfoRequest) {
+        this.userName = userInfoRequest.userName();
+        this.sex = userInfoRequest.sex();
+        this.birth = userInfoRequest.birth();
+        this.bloodType = userInfoRequest.bloodType();
+        this.height = userInfoRequest.height();
+        this.weight = userInfoRequest.weight();
+    }
 }
