@@ -1,0 +1,5 @@
+-- SQL_SAFE_UPDATES 설정 변경
+SET SQL_SAFE_UPDATES = 0;
+
+ALTER TABLE `chukchuk_db`.`user` 
+CHANGE COLUMN `sex` `sex` ENUM('MALE', 'FEMALE') NULL DEFAULT NULL ;
