@@ -1,6 +1,8 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.domain.UserPillEffect;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
+import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.service.UserPillEffectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +31,18 @@ public class UserPillEffectController {
      */
 
     /**
-     * 약효기록 추가
-     * @author:
+     * 약효기록 추가 (있으면 가져오기, 없으면 추가)
+     * @author 최진학
      * @param:
      * @return:
      */
+    @PostMapping("/")
+    public ResponseEntity<Void> registUserPillEffect(@RequestBody UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
+        userPillEffectService.registUserPillEffect(userPillEffectRegistInfoRequest);
+
+
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * 약효기록 삭제

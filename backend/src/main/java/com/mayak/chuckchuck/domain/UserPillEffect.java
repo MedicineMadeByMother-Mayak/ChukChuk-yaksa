@@ -3,11 +3,13 @@ package com.mayak.chuckchuck.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Table(name="user_pill_effect")
+@ToString
 // 사용자-약-약효 대분류
 public class UserPillEffect {
     // 사용자-약효 대분류 id(약효 기록 id)

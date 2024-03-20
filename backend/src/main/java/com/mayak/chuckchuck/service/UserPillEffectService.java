@@ -2,16 +2,31 @@ package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.UserPillEffect;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
+import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.repository.UserPillEffectRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserPillEffectService {
     private final UserPillEffectRepository userPillEffectRepository;
+
+    /**
+     * 약효기록 추가
+     * @author 최진학
+     * @param
+     * @return 없음
+     */
+    public void registUserPillEffect(UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
+        List<UserPillEffect> userPillEffect = userPillEffectRepository.findByUserAndPillId(1L, userPillEffectRegistInfoRequest.pillId());
+
+        System.out.println(userPillEffect);
+    }
 
     /**
      * 약효기록 삭제
