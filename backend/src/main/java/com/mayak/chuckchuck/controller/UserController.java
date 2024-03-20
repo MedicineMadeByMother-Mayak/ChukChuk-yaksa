@@ -28,7 +28,7 @@ public class UserController {
      */
     @PostMapping("/")
     public void registUserInfo(@RequestBody UserInfoRequest userInfoRequest){
-        System.out.println("컨트롤러 진입"+ userInfoRequest.toString());
+        System.out.println("컨트롤러 진입 request : "+ userInfoRequest.toString());
         userService.registUserInfo(userInfoRequest);
     }
 
