@@ -1,6 +1,8 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.service.UserPillEffectService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +44,9 @@ public class UserPillEffectController {
 
     /**
      * 약효기록 삭제
-     * @author: 최진학
-     * @param:
-     * @return:
+     * @author 최진학
+     * @param userPillEffectId (약효 효과 ID)
+     * @return HttpStatus.OK
      */
     @DeleteMapping("/pill/{userPillEffectId}")
     public ResponseEntity<Void> updateUserPillEffectIsDelete(@PathVariable Long userPillEffectId){
@@ -68,9 +70,15 @@ public class UserPillEffectController {
      */
 
     /**
-     * 약효기록 메모수정
-     * @author:
-     * @param:
-     * @return:
+     * 약효기록 - 메모수정
+     * @author 최진학
+     * @param userPillEffectMemoRequest (메모 수정 request)
+     * @return 200 OK
      */
+    @PutMapping("/pill/memo")
+    public ResponseEntity<Void> updateUserPillEffectIsDelete(@Valid @RequestBody UserPillEffectMemoRequest userPillEffectMemoRequest){
+        userPillEffectService.updateUserPillEffectMemo(userPillEffectMemoRequest);
+
+        return ResponseEntity.ok().build();
+    }
 }
