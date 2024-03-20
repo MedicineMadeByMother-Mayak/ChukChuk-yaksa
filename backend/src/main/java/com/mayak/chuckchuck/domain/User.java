@@ -65,15 +65,16 @@ public class User {
 
 
     /**
-     * 업데이트
+     * User의 기타정보를 변경
+     * @author: 최서현
+     * @param: userInfoRequest
      */
     public void updateInfo(UserInfoRequest userInfoRequest) {
-        System.out.println("udpate");
-        this.userName = userInfoRequest.getUserName();
-        this.sex = userInfoRequest.getSex();
-        this.birth = userInfoRequest.getBirth();
-        this.bloodType = userInfoRequest.getBloodType();
-        this.height = userInfoRequest.getHeight();
-        this.weight = userInfoRequest.getWeight();
+        this.userName = userInfoRequest.userName();
+        this.sex = userInfoRequest.sex();
+        this.birth = userInfoRequest.birth();
+        this.bloodType = userInfoRequest.bloodType();
+        this.height = userInfoRequest.height();
+        this.weight = userInfoRequest.weight();
     }
 }

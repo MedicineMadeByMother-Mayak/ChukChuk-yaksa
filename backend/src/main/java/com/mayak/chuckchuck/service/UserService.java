@@ -13,13 +13,14 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     /**
-     *
-     * @param userInfoRequest
+     * User의 기타 개인정보를 업데이트
+     * @author: 최서현
+     * @param: userInfoRequest
      */
     public void registUserInfo(UserInfoRequest userInfoRequest) {
-        System.out.println("user 찾을게요");
+        //== 임시User객체
         User user = userRepository.findById(1L).get();
-        System.out.println("user 찾았고요 : "+user.getSex());
+        //==
         user.updateInfo(userInfoRequest);
     }
 }
