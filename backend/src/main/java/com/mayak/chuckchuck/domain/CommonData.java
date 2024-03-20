@@ -21,7 +21,7 @@ public class CommonData {
     @ColumnDefault("false")
     private Boolean isDelete = false;  //삭제 여부
 
-    /** 부모객체 수정시 modifyDate를 자동으로 세팅함
+    /** 부모객체 생성시 createDate를 자동으로 세팅함
      * @author common
      * @param
      * @return void
@@ -41,4 +41,12 @@ public class CommonData {
         this.modifyDate = LocalDateTime.now();
     }
 
+    /** isDelete 토글 기능
+     * @author common
+     * @param
+     * @return void
+     */
+    public void toggleDelete(){
+        this.isDelete = !this.isDelete;
+    }
 }

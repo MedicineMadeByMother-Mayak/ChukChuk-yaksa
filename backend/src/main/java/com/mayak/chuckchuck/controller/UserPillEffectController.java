@@ -1,12 +1,17 @@
 package com.mayak.chuckchuck.controller;
+
+import com.mayak.chuckchuck.service.UserPillEffectService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/effects")
 @RequiredArgsConstructor
 public class UserPillEffectController {
+    private final UserPillEffectService userPillEffectService;
+
     /**
      * 약효기록 리스트 조회 및 검색
      * @author:
@@ -34,6 +39,19 @@ public class UserPillEffectController {
      * @param:
      * @return:
      */
+
+    /**
+     * 약효기록 삭제
+     * @author: 최진학
+     * @param:
+     * @return:
+     */
+    @DeleteMapping("/pill/{userPillEffectId}")
+    public ResponseEntity<Void> updateUserPillEffectIsDelete(@PathVariable Long userPillEffectId){
+        userPillEffectService.updateUserPillEffectIsDelete(userPillEffectId);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     /**
      * 약효기록 새로운 태그 등록
