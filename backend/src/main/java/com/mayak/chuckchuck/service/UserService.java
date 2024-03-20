@@ -13,14 +13,15 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     /**
-     * User의 기타 개인정보를 업데이트
+     * User의 기타 개인정보를 처음 등록(업데이트로 동작)
      * @author: 최서현
      * @param: userInfoRequest
      */
-    public void registUserInfo(UserInfoRequest userInfoRequest) {
+    public void updateUserInfo(UserInfoRequest userInfoRequest) {
         //== 임시User객체
         User user = userRepository.findById(1L).get();
         //==
         user.updateInfo(userInfoRequest);
     }
+
 }
