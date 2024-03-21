@@ -68,7 +68,7 @@ public class TakeListService {
      * @param:
      * @return: TakeListResponse
      */
-    public List<TakeListResponse> getTakeList(TakeListRequest takeListRequest) {
+    public TakeListResponse getTakeList(TakeListRequest takeListRequest) {
         // period t/f 별 기준일자 분기
         LocalDateTime baseDate;
         if(takeListRequest.period()) {
@@ -78,36 +78,11 @@ public class TakeListService {
         }
 
         //===임시 User 객체 사용
-        User user = userRepository.findById(1L).get();
+        User user = userRepository.findById(2L).get();
         //===
 
-        List< TakeList> takeLists = takeListRepository.findByUserAndFinishDateGreaterThanEqualOrIsFinish(user, baseDate, false);
-        List<TakeListResponse> results = new ArrayList<>();
-
-        for (TakeList takeList : takeLists) {
-            List<TakePills> pills = takePillsRepository.findByTakeList(takeList);
-            for (TakePills takePills : pills) {
-                Pill pill = takePills.getPill();
-                TakeListResponse takeListResponse = new TakeListResponse(
-                        takeList.getTakeListId(),
-                        takeList.getTakeListName(),
-                        takeList.getCommonData(),
-                        takeList.getFinishDate(),
-                        takeList.getIsFinish(),
-                        pill.getPillId(),
-                        pill.getName(),
-                        pill.getImageUrl(),
-                        pill.getType(),
-                        pill.getWarningPregnant(),
-                        pill.getWarningUseDate(),
-                        pill.getWarningElders(),
-                        pill.getWarningTogether()
-                );
-                results.add(takeListResponse);
-            }
-        }
-
-        return results;
+        List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, baseDate);
+        return TakeListResponse.fromEntity(takeLists);
 
     }
 }

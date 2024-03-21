@@ -3,6 +3,8 @@ package com.mayak.chuckchuck.repository;
 import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,5 +26,8 @@ public interface TakeListRepository extends JpaRepository<TakeList, Long> {
      * @param: baseDate, isFinish
      * @return: TakeList
      */
-    List<TakeList> findByUserAndFinishDateGreaterThanEqualOrIsFinish(User user, LocalDateTime baseDate, boolean isFinish);
+
+    @Query("SELECT t FROM TakeList t WHERE t.user = :user AND (t.finishDate >= :baseDate OR t.isFinish = false)")
+    List<TakeList> findTakeListByUserIdAndFinishDateAndIsFinish(@Param("user") User user, @Param("baseDate") LocalDateTime baseDate);
+
 }

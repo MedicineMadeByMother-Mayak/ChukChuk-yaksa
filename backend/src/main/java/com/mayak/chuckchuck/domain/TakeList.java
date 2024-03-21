@@ -51,7 +51,11 @@ public class TakeList {
     @Embedded
     private CommonData commonData;
 
+
     public void toggleAlarm(){
         this.isAlarm = !this.isAlarm;
     }
+
 }
+
+

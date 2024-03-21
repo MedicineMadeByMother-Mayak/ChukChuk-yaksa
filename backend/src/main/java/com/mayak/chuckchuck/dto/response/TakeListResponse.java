@@ -1,29 +1,20 @@
 package com.mayak.chuckchuck.dto.response;
 
 import com.mayak.chuckchuck.domain.CommonData;
+import com.mayak.chuckchuck.domain.TakeList;
+import com.mayak.chuckchuck.dto.TakeListInfo;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
-public record TakeListResponse(
-        // TakeList 의 컬럼
-        Long takeListId,
-        String takeListName,
-//        LocalDateTime createDate, => private access 안됨
-        CommonData commonData,
-        LocalDateTime finishDate,
-        Boolean isFinished,
-        // Pills 의 컬럼
-        Long pillId,
-        String name,
-        String imageUrl,
-        String type,
-        boolean warningPregnant,
-        boolean warningUseDate,
-        boolean warningElders,
-        boolean warningTogether
-) {
-//    public TakeListResponse {
-//        this(takeListId, takeListName, commonData, finishDate, isFinished, pillId, name, imageUrl, type, warningPregnant, warningUseDate, warningElders, warningTogether);
-//    }
+public record TakeListResponse(List<TakeListInfo> results) {
+    public static TakeListResponse fromEntity(List<TakeList> takeLists) {
+        List<TakeListInfo> results = takeLists.stream()
+                .map(takeList -> new TakeListInfo(takeList.getTakeListId(), takeList.getTakeListName(), takeList.getCommonData(), takeList.getFinishDate(), takeList.getIsFinish()))
+                .collect(Collectors.toList());
+        return new TakeListResponse(results);
+    }
 }
+
+
