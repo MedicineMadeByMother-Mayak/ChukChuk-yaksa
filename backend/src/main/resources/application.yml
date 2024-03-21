@@ -1,6 +1,6 @@
 spring:
   config:
-    import: db.yml, secret.yml
+    import: db.yml, secretkey.yml
 
   jpa:
     hibernate:
