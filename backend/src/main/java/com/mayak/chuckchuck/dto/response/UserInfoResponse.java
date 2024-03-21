@@ -8,8 +8,6 @@ import com.mayak.chuckchuck.enums.SocialCode;
 import java.time.LocalDateTime;
 
 public record UserInfoResponse(
-        String social,
-        SocialCode socialCode,
         String userName,
         Sex sex,
         LocalDateTime birth,
@@ -20,8 +18,6 @@ public record UserInfoResponse(
 
     public static UserInfoResponse fromEntity(User user) {
         return new UserInfoResponse(
-                user.getSocial(),
-                user.getSocialCode(),
                 user.getUserName(),
                 user.getSex(),
                 user.getBirth(),
