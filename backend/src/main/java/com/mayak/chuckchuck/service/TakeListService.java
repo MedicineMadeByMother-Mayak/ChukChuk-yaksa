@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +50,29 @@ public class TakeListService {
 
         List<TakeList> takeLists = takeListRepository.findByUserAndIsAlarmTrue(user);
         return ActiveAlarmListResponse.fromEntity(takeLists);
+    }
+
+    /**
+     * 알람등록 및 수정
+     * @author: 차현철
+     * @param: Long takeListId, String alarmTime, String cycle
+     * @return: ResponseEntity.ok()
+     */
+    public void updateAlarm(Long takeListId, LocalDateTime alarmTime, int cycle) {
+        if (cycle == 0) cycle = 24;
+        TakeList takeList = getTakeListOrException(takeListId);
+        takeList.updateAlarm(alarmTime, cycle);
+    }
+
+    // 복용리스트 있으면 가져오고, 없으면 에러 반환
+    private TakeList getTakeListOrException(Long takeListId) {
+        return takeListRepository.findById(takeListId).orElseThrow(() ->
+                new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+    }
+
+    // 유저 있으면 가져오고, 없으면 에러 반환
+    private User getUserOrException(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() ->
+                new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
 }
