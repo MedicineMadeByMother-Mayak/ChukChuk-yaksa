@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
+import com.mayak.chuckchuck.dto.response.DiseaseResponse;
 import com.mayak.chuckchuck.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class RecordController {
      * @return:
      */
     @GetMapping("/diagnosis")
-    public ResponseEntity<DiagnosisResponse> getAlarmList(@RequestParam final int page){
+    public ResponseEntity<DiagnosisResponse> getDiagnosisList(@RequestParam final int page){
         DiagnosisResponse diagnosisResponse = recordService.getDiagnosisList(page - 1);
         return ResponseEntity.ok(diagnosisResponse);
     }
@@ -50,10 +51,15 @@ public class RecordController {
 
     /**
      * 병력조회
-     * @author:
+     * @author: 김태완
      * @param:
      * @return:
      */
+    @GetMapping("/disease")
+    public ResponseEntity<DiseaseResponse> getDiseaseList() {
+        DiseaseResponse diseaseResponse = recordService.getDiseaseResponse();
+        return ResponseEntity.ok(diseaseResponse);
+    }
 
     /**
      * 약력조회

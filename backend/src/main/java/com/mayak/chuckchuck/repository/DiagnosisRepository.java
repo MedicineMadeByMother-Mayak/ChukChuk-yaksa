@@ -15,6 +15,5 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
      * @param pageable 페이지 정보
      * @return Page<OCRList> 페이징된 진단 내역 리스트
      */
-
-    Page<Diagnosis> findByUser(User user, Pageable pageable);
+    Page<Diagnosis> findAllByUser(User user, Pageable pageable);
 }
