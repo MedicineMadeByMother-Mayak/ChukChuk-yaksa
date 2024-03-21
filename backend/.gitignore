@@ -1,9 +1,8 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,windows,gradle,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij,windows,gradle,git
 
-
-db.yml
 secret.yml
+db.yml
 
 # dotenv environment variable files
 .env
