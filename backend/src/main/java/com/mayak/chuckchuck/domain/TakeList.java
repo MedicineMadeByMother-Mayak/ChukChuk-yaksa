@@ -51,12 +51,16 @@ public class TakeList {
     @Embedded
     private CommonData commonData;
 
+
     public void toggleAlarm(){
         this.isAlarm = !this.isAlarm;
     }
+
     public void updateAlarm(LocalDateTime alarmTime, int cycle) {
         this.isAlarm = true;
         this.alarmTime = alarmTime;
         this.cycle = cycle;
     }
 }
+
+

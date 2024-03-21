@@ -3,10 +3,12 @@ package com.mayak.chuckchuck.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
+@Getter
 @Entity
 @DiscriminatorValue("PILLBAG")
 //약봉투

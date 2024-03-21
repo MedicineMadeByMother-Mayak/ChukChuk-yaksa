@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
 import com.mayak.chuckchuck.dto.response.DiseaseResponse;
+import com.mayak.chuckchuck.dto.response.PillBagResponse;
 import com.mayak.chuckchuck.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,11 @@ public class RecordController {
      * @param:
      * @return:
      */
+    @GetMapping("/pill-bag")
+    public ResponseEntity<PillBagResponse> getPillBagList(@RequestParam final int page){
+        PillBagResponse pillBagResponse = recordService.getPillBagResponse(page);
+        return ResponseEntity.ok(pillBagResponse);
+    }
 
     /**
      * 병력조회

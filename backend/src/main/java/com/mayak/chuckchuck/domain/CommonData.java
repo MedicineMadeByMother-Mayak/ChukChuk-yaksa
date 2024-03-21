@@ -5,12 +5,14 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
 
 //공통데이터
 @Embeddable
+@Getter
 public class CommonData {
     @Column(name="create_date")
     @NotNull
