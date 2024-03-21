@@ -14,7 +14,7 @@ public class UserController {
     private final UserService userService;
     /**
      * 사용자 정보 조회
-     * @author:
+     * @author:김태완
      * @param:
      * @return:
      */
