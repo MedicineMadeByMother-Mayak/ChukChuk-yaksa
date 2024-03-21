@@ -30,7 +30,7 @@ public class RecordController {
      */
     @GetMapping("/diagnosis")
     public ResponseEntity<DiagnosisResponse> getAlarmList(@RequestParam final int page){
-        DiagnosisResponse diagnosisResponse = recordService.getDiagnosisList(page);
+        DiagnosisResponse diagnosisResponse = recordService.getDiagnosisList(page - 1);
         return ResponseEntity.ok(diagnosisResponse);
     }
 

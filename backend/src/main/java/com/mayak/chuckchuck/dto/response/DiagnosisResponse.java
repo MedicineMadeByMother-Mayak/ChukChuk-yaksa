@@ -19,6 +19,6 @@ public record DiagnosisResponse(int count, List<DiagnosisDto> result) {
                         diagnosisDtos.getOpinion()))
                 .collect(Collectors.toList());
 
-        return new DiagnosisResponse(count, result);
+        return new DiagnosisResponse((int) diagnosisPage.getTotalElements(), result);
     }
 }

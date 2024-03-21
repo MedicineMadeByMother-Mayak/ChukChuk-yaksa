@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class RecordService {
+public class  RecordService {
     private final DiagnosisRepository diagnosisRepository;
     private final UserRepository userRepository;
 
