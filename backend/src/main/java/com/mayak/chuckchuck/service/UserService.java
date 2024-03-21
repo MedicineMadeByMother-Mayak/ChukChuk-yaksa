@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.request.UserInfoRequest;
+import com.mayak.chuckchuck.dto.response.UserInfoResponse;
 import com.mayak.chuckchuck.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,4 +25,14 @@ public class UserService {
         user.updateInfo(userInfoRequest);
     }
 
+    /**
+     * User의 기타 개인정보를 조회
+     * @author: 김태완
+     * @param:
+     * return: UserInfoResponse
+     */
+    public UserInfoResponse getUserInfo() {
+        User user = userRepository.findById(1L).get();
+        return UserInfoResponse.fromEntity(user);
+    }
 }
