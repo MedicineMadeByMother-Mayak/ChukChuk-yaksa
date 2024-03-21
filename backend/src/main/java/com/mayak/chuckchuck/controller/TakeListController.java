@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 
+import com.mayak.chuckchuck.dto.request.AlarmRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
@@ -82,17 +83,27 @@ public class TakeListController {
 
     /**
      * 알람등록
-     * @author:
-     * @param:
-     * @return:
+     * @author: 차현철
+     * @param: AlarmRequest
+     * @return: ResponseEntity<Void>
      */
+    @PostMapping("/alarms")
+    public ResponseEntity<Void> addAlarm(@RequestBody AlarmRequest alarmRequest){
+        takeListService.updateAlarm(alarmRequest.takeListId(), alarmRequest.alarmTime(), alarmRequest.cycle());
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * 알람수정
-     * @author:
-     * @param:
-     * @return:
+     * @author: 차현철
+     * @param: AlarmRequest
+     * @return: ResponseEntity<Void>
      */
+    @PutMapping("/alarms")
+    public ResponseEntity<Void> updateAlarm(@RequestBody AlarmRequest alarmRequest){
+        takeListService.updateAlarm(alarmRequest.takeListId(), alarmRequest.alarmTime(), alarmRequest.cycle());
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * 알람 비활성화
@@ -105,5 +116,4 @@ public class TakeListController {
         takeListService.updateIsAlarmFalse(takeListId);
         return ResponseEntity.ok().build();
     }
-
 }
