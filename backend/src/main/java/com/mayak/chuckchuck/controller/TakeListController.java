@@ -1,9 +1,11 @@
 package com.mayak.chuckchuck.controller;
 
 
+import com.mayak.chuckchuck.dto.request.TakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +16,15 @@ public class TakeListController {
     private final TakeListService takeListService;
     /**
      * 복용리스트 조회
-     * @author:
+     * @author:김보경
      * @param:
      * @return:
      */
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<?> getTakeList(@RequestBody TakeListRequest takeListRequest) {
+        return new ResponseEntity<>(takeListService.getTakeList(takeListRequest), HttpStatus.OK);
+    }
     
     /**
      * 복용리스트 약 추가

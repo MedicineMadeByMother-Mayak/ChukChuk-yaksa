@@ -4,6 +4,8 @@ import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TakeListRepository extends JpaRepository<TakeList, Long> {
@@ -15,4 +17,12 @@ public interface TakeListRepository extends JpaRepository<TakeList, Long> {
      * @return: TakeList
      */
     List<TakeList> findByUserAndIsAlarmTrue(User user);
+
+    /**
+     * 복용리스트 조회
+     * @author: 김보경
+     * @param: baseDate, isFinish
+     * @return: TakeList
+     */
+    List<TakeList> findByUserAndFinishDateGreaterThanEqualOrIsFinish(User user, LocalDateTime baseDate, boolean isFinish);
 }
