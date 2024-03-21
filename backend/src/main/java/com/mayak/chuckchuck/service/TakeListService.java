@@ -55,11 +55,13 @@ public class TakeListService {
     /**
      * 알람등록 및 수정
      * @author: 차현철
-     * @param: Long takeListId, String alarmTime, String cycle
+     * @param: {Long} takeListId
+     * @param: {String} alarmTime
+     * @param: {int} cycle
      * @return: ResponseEntity.ok()
      */
     public void updateAlarm(Long takeListId, LocalDateTime alarmTime, int cycle) {
-        if (cycle == 0) cycle = 24;
+        if (0 >= cycle) throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
         TakeList takeList = getTakeListOrException(takeListId);
         takeList.updateAlarm(alarmTime, cycle);
     }
