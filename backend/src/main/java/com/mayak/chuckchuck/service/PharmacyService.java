@@ -16,6 +16,13 @@ import java.math.BigDecimal;
 @Transactional
 @RequiredArgsConstructor
 public class PharmacyService {
+    /**
+     * 타이레놀 보유 약국 조회
+     *
+     * @author: 차현철
+     * @param: String city, String area, Long pillId
+     * @return: PharmacyDto[]
+     */
     public PharmacyDto[] tylenolSearch(String city, String area, Long pillId) {
         try {
             // URL 설정

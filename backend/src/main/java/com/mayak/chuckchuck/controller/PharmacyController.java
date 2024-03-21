@@ -20,6 +20,7 @@ public class PharmacyController {
      */
     @GetMapping
     public ResponseEntity<PharmacyResponse> pharmacySearch(@RequestParam String city, @RequestParam String area, @RequestParam Long pillId, @RequestParam int page){
+        // 타이레놀 검색
         PharmacyResponse pharmacyResponse = PharmacyResponse.fromArr(pharmacyService.tylenolSearch(city, area, pillId));
         return ResponseEntity.ok(pharmacyResponse);
     }
