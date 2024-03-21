@@ -10,5 +10,5 @@ public record UserPillEffectDto(
         List<TagDto> unUsedTags,
         String memo
 ) {
-    public record Tag (Long tagId, String tagName) {}
+
 }
