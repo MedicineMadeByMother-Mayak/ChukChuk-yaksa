@@ -31,9 +31,14 @@ public class TakePills {
     @Embedded
     private CommonData commonData;
 
-    //알림리스트 약 추가에 사용
+    //복용 리스트 약 추가에 사용
     public TakePills(TakeList takeList, Pill pill){
         this.takeList = takeList;
         this.pill = pill;
     }
+    //복용 리스트 약 삭제에 사용
+    public void deletePill() {
+        this.commonData.toggleDelete();
+    }
+
 }

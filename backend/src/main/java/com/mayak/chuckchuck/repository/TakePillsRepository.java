@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TakePillsRepository extends JpaRepository<TakePills, Long> {
 
@@ -28,4 +29,15 @@ public interface TakePillsRepository extends JpaRepository<TakePills, Long> {
      */
     @Query("SELECT tp.pill.pillId FROM TakePills tp WHERE tp.takeList.takeListId = :takeListId")
     List<Long> findPillIdsByTakeListId(@Param("takeListId") Long takeListId);
+
+    /**
+     * 복용리스트 약 삭제
+     * @author:김보경
+     * @param:takeListId, pillId
+     */
+//    @Query("SELECT tp FROM TakePills tp WHERE tp.takeList.takeListId = :takeListId AND tp.pill.pillId = :pillId AND tp.commonData.isDelete is false")
+//    TakePills findPillsByTakeListIdAndPillId(@Param("takeListId") Long takeListId, @Param("pillId") Long pillId);
+    @Query("SELECT tp FROM TakePills tp WHERE tp.takeList.id = :takeListId AND tp.pill.id = :pillId")
+    Optional<TakePills> findPillsByTakeListIdAndPillId(@Param("takeListId") Long takeListId, @Param("pillId") Long pillId);
+
 }

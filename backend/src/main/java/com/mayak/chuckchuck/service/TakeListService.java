@@ -169,5 +169,26 @@ public class TakeListService {
         takeList.updateTakeListName(updateTakeListRequest);
         takeListRepository.save(takeList);
     }
+
+    /**
+     * 복용리스트 약 삭제
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     */
+    @Transactional
+    public void deleteTakeListPill(Long takeListId, Long pillId) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        TakePills takePills = takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+
+//        Optional<TakePills> optionalTakePills = Optional.ofNullable(takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
+//                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND)));
+//        TakePills takePills = optionalTakePills.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        takePills.deletePill();
+        takePillsRepository.save(takePills);
+    }
 }
 

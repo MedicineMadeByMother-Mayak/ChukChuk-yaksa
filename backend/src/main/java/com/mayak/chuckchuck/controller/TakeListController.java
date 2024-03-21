@@ -59,10 +59,16 @@ public class TakeListController {
 
     /**
      * 복용리스트 약 삭제
-     * @author:
-     * @param:
-     * @return:
+     * @author:김보경
+     * @param:takeListId, pillId
+     * @return:200ok
      */
+    @DeleteMapping("/{takeListId}/{pillId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> deleteTakeListPill(@PathVariable(value = "takeListId") Long takeListId, @PathVariable(value="pillId") Long pillId) {
+        takeListService.deleteTakeListPill(takeListId, pillId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     /**
      * 복용리스트 완료
