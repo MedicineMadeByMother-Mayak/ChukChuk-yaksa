@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public record DiagnosisResponse(int count, List<DiagnosisDto> result) {
 
-    public static DiagnosisResponse fromEntity(int count, Page<Diagnosis> diagnosisPage) {
-        List<DiagnosisDto> result = diagnosisPage.stream()
+    public static DiagnosisResponse fromEntity(Page<Diagnosis> diagnosises) {
+        List<DiagnosisDto> result = diagnosises.stream()
                 .map(diagnosisDtos -> new DiagnosisDto(
                         diagnosisDtos.getDiagnosisDate(),
                         diagnosisDtos.getHospitalName(),
@@ -19,6 +19,6 @@ public record DiagnosisResponse(int count, List<DiagnosisDto> result) {
                         diagnosisDtos.getOpinion()))
                 .collect(Collectors.toList());
 
-        return new DiagnosisResponse((int) diagnosisPage.getTotalElements(), result);
+        return new DiagnosisResponse((int) diagnosises.getTotalElements(), result);
     }
 }
