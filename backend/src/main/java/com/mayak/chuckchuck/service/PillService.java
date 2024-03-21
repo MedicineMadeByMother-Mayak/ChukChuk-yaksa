@@ -2,7 +2,7 @@ package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.dto.PagingDto;
-import com.mayak.chuckchuck.dto.response.PillSearchResultResp;
+import com.mayak.chuckchuck.dto.response.PillSearchResultResponse;
 import com.mayak.chuckchuck.repository.PillRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,11 +22,11 @@ public class PillService {
      * @param: page 페이지번호
      * @return:
      */
-    public PillSearchResultResp getLatestResult(int page) {
+    public PillSearchResultResponse getLatestResult(int page) {
         PagingDto pagingDto = new PagingDto(page, "name");
         Page<Pill> latestResult = pillRepository.findAll(pagingDto.getPageable());
         Long totalCount = pillRepository.count();
-        return PillSearchResultResp.fromEntity(latestResult, totalCount);
+        return PillSearchResultResponse.fromEntity(latestResult, totalCount);
     }
 
 
@@ -36,10 +36,10 @@ public class PillService {
      * @param:
      * @return:
      */
-    public PillSearchResultResp getSearchResult(String keyword, int page) {
+    public PillSearchResultResponse getSearchResult(String keyword, int page) {
         PagingDto pagingDto = new PagingDto(page, "name");
         Page<Pill> searchResult = pillRepository.findByNameContaining(keyword, pagingDto.getPageable());
         Long totalCount = pillRepository.countByNameContaining(keyword);
-        return PillSearchResultResp.fromEntity(searchResult, totalCount);
+        return PillSearchResultResponse.fromEntity(searchResult, totalCount);
     }
 }

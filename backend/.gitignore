@@ -3,6 +3,7 @@
 
 
 db.yml
+secret.yml
 
 # dotenv environment variable files
 .env

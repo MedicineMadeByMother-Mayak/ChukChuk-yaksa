@@ -1,6 +1,6 @@
 package com.mayak.chuckchuck.controller;
 
-import com.mayak.chuckchuck.dto.response.PillSearchResultResp;
+import com.mayak.chuckchuck.dto.response.PillSearchResultResponse;
 import com.mayak.chuckchuck.service.PillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class PillController {
      * @return:
      */
     @GetMapping("/search")
-    public ResponseEntity<PillSearchResultResp> searchPill(@RequestParam(name="keyword") String keyword, @RequestParam(name="page", defaultValue = "1") int page){
+    public ResponseEntity<PillSearchResultResponse> searchPill(@RequestParam(name="keyword") String keyword, @RequestParam(name="page", defaultValue = "1") int page){
         //키워드 없을경우 최근 등록된 알약 가져오기
         if(keyword==null) return ResponseEntity.ok(pillService.getLatestResult(page));
         //키워드가 있을경우 해당 데이터 가져오기

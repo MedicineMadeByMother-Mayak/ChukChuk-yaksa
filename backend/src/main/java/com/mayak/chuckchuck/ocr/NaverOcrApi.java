@@ -16,22 +16,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@Slf4j
 @Component
-public class NaverOciApi {
-    @Value("{naver.service.url}")
+@Slf4j
+public class NaverOcrApi {
+    @Value("${naver.service.url}")
     private String url;
 
     /**
-     * naver clover ocr api 호츌
-     * @author: 최서현
+     * 네이버 ocr api 호출한다
      * @param {string} type 호출 메서드 타입
      * @param {string} filePath 파일 경로
      * @param {string} naver_secretKey 네이버 시크릿키 값
      * @param {string} ext 확장자
      * @returns {List} 추출 text list
      */
-    public List<String> callApi(String type, String filePath, String naver_secretKey, String ext) {
+    public  List<String> callApi(String type, String filePath, String naver_secretKey, String ext) {
         String apiURL = url;
         String secretKey = naver_secretKey;
         String imageFile = filePath;
@@ -91,11 +90,8 @@ public class NaverOciApi {
         }
         return parseData;
     }
-
-
     /**
      * writeMultiPart
-     * @author: 최서현
      * @param {OutputStream} out 데이터를 출력
      * @param {string} jsonMessage 요청 params
      * @param {File} file 요청 파일
@@ -137,17 +133,21 @@ public class NaverOciApi {
     }
     /**
      * 데이터 가공
-     * @author: 최서현
      * @param {StringBuffer} response 응답값
      * @returns {List} result text list
      */
-    private static List<String> jsonparse(StringBuffer response) throws ParseException {
+    private static List<String> jsonparse(StringBuffer response) {
         //json 파싱
         JSONParser jp = new JSONParser();
-        JSONObject jobj = (JSONObject) jp.parse(response.toString());
+        JSONObject jobj = null;
+        try {
+            jobj = (JSONObject) jp.parse(response.toString());
+        } catch (ParseException e) {
+            log.error("OCR JSON PARSING ERROR");
+        }
         //images 배열 obj 화
-        JSONArray JSONArrayPerson = (JSONArray)jobj.get("images");
-        JSONObject JSONObjImage = (JSONObject)JSONArrayPerson.get(0);
+        JSONArray JSONArrayPerson = (JSONArray) jobj.get("images");
+        JSONObject JSONObjImage = (JSONObject) JSONArrayPerson.get(0);
         JSONArray s = (JSONArray) JSONObjImage.get("fields");
         //
         List<Map<String, Object>> m = JsonUtill.getListMapFromJsonArray(s);
@@ -155,7 +155,6 @@ public class NaverOciApi {
         for (Map<String, Object> as : m) {
             result.add((String) as.get("inferText"));
         }
-
         return result;
     }
 }
