@@ -28,4 +28,5 @@ public class UserPillEffectToTag {
     //공통 데이터
     @Embedded
     private CommonData commonData;
+
 }

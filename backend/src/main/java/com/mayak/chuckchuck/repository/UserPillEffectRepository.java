@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.repository;
 
+import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.domain.UserPillEffect;
@@ -15,5 +16,6 @@ public interface UserPillEffectRepository extends JpaRepository<UserPillEffect, 
      * @param: User
      * @return: TakeList
      */
-    List<UserPillEffect> findByUserAndPillId (Long userId, Long pillId);
+//    List<UserPillEffect> findByUser_UserIdAndPill_PillId(Long userId, Long pillId);
+    List<UserPillEffect> findByUserAndPill_pillId(User user, Long pillId);
 }

@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.domain;
 
+import com.mayak.chuckchuck.dto.request.UserInfoRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class UserPillEffect {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
-    
+
     // 약
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="pill_id")
@@ -43,5 +44,12 @@ public class UserPillEffect {
 
     public void updateMemo(String memo) {
         this.memo = memo;
+    }
+
+    public void registUserPillEffect(User user, Category category, Pill pill) {
+        // UserInfoRequest에서 필요한 정보 추출
+        this.user = user;
+        this.category = category;
+        this.pill = pill;
     }
 }
