@@ -3,7 +3,6 @@ package com.mayak.chuckchuck.service;
 import com.mayak.chuckchuck.domain.Diagnosis;
 import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
 import com.mayak.chuckchuck.dto.response.DiseaseResponse;
-import com.mayak.chuckchuck.repository.DiseaseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +22,6 @@ import java.util.List;
 public class  RecordService {
     private final DiagnosisRepository diagnosisRepository;
     private final UserRepository userRepository;
-    private final DiseaseRepository diseaseRepository;
 
     /**
      * 진단 기록 조회
@@ -39,9 +37,15 @@ public class  RecordService {
         return DiagnosisResponse.fromEntity(page, diagnosisPage);
     }
 
+    /**
+     * 진단 기록 조회
+     * @author: 김태완
+     * @param:
+     * @return: DiagnosisResponse
+     */
     public DiseaseResponse getDiseaseResponse() {
         User user = userRepository.findById(1L).get();
-        List<Diagnosis> dieaseList = diseaseRepository.findAllByUser(user);
+        List<Diagnosis> dieaseList = diagnosisRepository.findAllByUser(user);
         return DiseaseResponse.fromEntity(dieaseList);
     }
 }

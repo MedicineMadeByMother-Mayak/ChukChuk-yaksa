@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.request.UserInfoRequest;
+import com.mayak.chuckchuck.dto.response.UserInfoResponse;
 import com.mayak.chuckchuck.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,15 @@ public class UserController {
     private final UserService userService;
     /**
      * 사용자 정보 조회
-     * @author:
+     * @author:김태완
      * @param:
      * @return:
      */
+    @GetMapping("")
+    public ResponseEntity getUserInfo() {
+        UserInfoResponse userInfoResponse = userService.getUserInfo();
+        return ResponseEntity.ok(userInfoResponse);
+    }
 
     /**
      * 사용자 정보 초기 등록(업데이트로 동작)

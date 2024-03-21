@@ -87,9 +87,9 @@ public class TakeListController {
      * @param: AlarmRequest
      * @return: ResponseEntity<Void>
      */
-    @PostMapping("/alarms")
-    public ResponseEntity<Void> addAlarm(@RequestBody AlarmRequest alarmRequest){
-        takeListService.updateAlarm(alarmRequest.takeListId(), alarmRequest.alarmTime(), alarmRequest.cycle());
+    @PostMapping("/alarms/{takeListId}")
+    public ResponseEntity<Void> addAlarm(@PathVariable Long takeListId, @RequestBody AlarmRequest alarmRequest){
+        takeListService.updateAlarm(takeListId, alarmRequest.alarmTime(), alarmRequest.cycle());
         return ResponseEntity.ok().build();
     }
 
@@ -99,9 +99,9 @@ public class TakeListController {
      * @param: AlarmRequest
      * @return: ResponseEntity<Void>
      */
-    @PutMapping("/alarms")
-    public ResponseEntity<Void> updateAlarm(@RequestBody AlarmRequest alarmRequest){
-        takeListService.updateAlarm(alarmRequest.takeListId(), alarmRequest.alarmTime(), alarmRequest.cycle());
+    @PutMapping("/alarms/{takeListId}")
+    public ResponseEntity<Void> updateAlarm(@PathVariable Long takeListId, @RequestBody AlarmRequest alarmRequest){
+        takeListService.updateAlarm(takeListId, alarmRequest.alarmTime(), alarmRequest.cycle());
         return ResponseEntity.ok().build();
     }
 
