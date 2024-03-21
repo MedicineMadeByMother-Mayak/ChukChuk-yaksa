@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
 
     /**
@@ -16,4 +18,5 @@ public interface DiagnosisRepository extends JpaRepository<Diagnosis, Long> {
      * @return Page<OCRList> 페이징된 진단 내역 리스트
      */
     Page<Diagnosis> findAllByUser(User user, Pageable pageable);
+    List<Diagnosis> findAllByUser(User user);
 }
