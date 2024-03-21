@@ -57,6 +57,12 @@ public class  RecordService {
         return DiseaseResponse.fromEntity(dieaseList);
     }
 
+    /**
+     * 병력 조회
+     * @author: 김태완
+     * @param:
+     * @return: PillBagResponse
+     */
     public PillBagResponse getPillBagResponse(int page) {
         User user = userRepository.findById(1L).get();
         PagingDto pagingDto = new PagingDto(page, "buildDate");

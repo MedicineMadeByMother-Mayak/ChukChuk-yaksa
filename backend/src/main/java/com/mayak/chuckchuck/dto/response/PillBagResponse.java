@@ -2,15 +2,9 @@ package com.mayak.chuckchuck.dto.response;
 
 import com.mayak.chuckchuck.domain.OCRPills;
 import com.mayak.chuckchuck.domain.PillBag;
-import com.mayak.chuckchuck.domain.User;
-import com.mayak.chuckchuck.enums.BloodType;
-import com.mayak.chuckchuck.enums.Sex;
-import com.mayak.chuckchuck.repository.OCRPillsRepository;
-import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public record PillBagResponse(int count, List<PillBagDto> result) {
     public static PillBagReceipt fromReceipt(PillBag pillBags) {
@@ -26,13 +20,6 @@ public record PillBagResponse(int count, List<PillBagDto> result) {
                 ocrPills.getPill().getName(),
                 ocrPills.getPill().getType(),
                 ocrPills.getPill().getCapacity()
-        );
-    }
-
-    public static PillBagDto fromPillBagDto(PillBagReceipt pillBagReceipt, List<OCRPillsGuide> ocrPillsGuides) {
-        return new PillBagDto(
-                pillBagReceipt,
-                ocrPillsGuides
         );
     }
 
@@ -71,6 +58,6 @@ public record PillBagResponse(int count, List<PillBagDto> result) {
 //    }
 //
     public record PillBagDto (PillBagReceipt receipt, List<OCRPillsGuide> guide) {}
-    public record PillBagReceipt (String pharmacyName, LocalDateTime date, int cost) {}
+    public record PillBagReceipt (String pharmacyName, LocalDateTime buildDate, int cost) {}
     public record OCRPillsGuide (String pillName, String type, String capacity) {}
 }
