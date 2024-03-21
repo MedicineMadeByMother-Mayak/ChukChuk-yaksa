@@ -37,6 +37,12 @@ public class  RecordService {
         return DiagnosisResponse.fromEntity(page, diagnosisPage);
     }
 
+    /**
+     * 진단 기록 조회
+     * @author: 김태완
+     * @param:
+     * @return: DiagnosisResponse
+     */
     public DiseaseResponse getDiseaseResponse() {
         User user = userRepository.findById(1L).get();
         List<Diagnosis> dieaseList = diagnosisRepository.findAllByUser(user);
