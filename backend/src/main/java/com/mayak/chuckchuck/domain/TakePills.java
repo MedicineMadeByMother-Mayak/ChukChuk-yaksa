@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -28,4 +30,10 @@ public class TakePills {
     //공통데이터
     @Embedded
     private CommonData commonData;
+
+    //알림리스트 약 추가에 사용
+    public TakePills(TakeList takeList, Pill pill){
+        this.takeList = takeList;
+        this.pill = pill;
+    }
 }

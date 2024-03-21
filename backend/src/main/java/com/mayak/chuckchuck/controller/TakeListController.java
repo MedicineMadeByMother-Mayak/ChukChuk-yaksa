@@ -1,11 +1,9 @@
 package com.mayak.chuckchuck.controller;
 
 
-
+import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
 import com.mayak.chuckchuck.dto.request.AlarmRequest;
-
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
-
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,7 @@ public class TakeListController {
     /**
      * 복용리스트 조회
      * @author:김보경
-     * @param: period
+     * @param:
      * @return:TakeListResponse
      */
     @GetMapping
@@ -32,10 +30,17 @@ public class TakeListController {
     
     /**
      * 복용리스트 약 추가
-     * @author:
-     * @param:
-     * @return:
+     * @author:김보경
+     * @param: takeListId
+     * @return:200ok
      */
+    @PostMapping("/{takeListId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> addPillsToTakeList(@PathVariable(value="takeListId") Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest){
+        takeListService.addPillsToTakeList(takeListId, addPillsToTakeListRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 
     /**
      * 복용리스트 이름 수정
