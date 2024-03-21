@@ -3,10 +3,12 @@ package com.mayak.chuckchuck.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 @DiscriminatorValue("DIAGNOSIS")
 //진단서
 public class Diagnosis extends OCRList{
