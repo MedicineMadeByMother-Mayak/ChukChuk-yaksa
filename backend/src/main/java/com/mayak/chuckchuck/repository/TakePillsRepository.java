@@ -37,7 +37,7 @@ public interface TakePillsRepository extends JpaRepository<TakePills, Long> {
      */
 //    @Query("SELECT tp FROM TakePills tp WHERE tp.takeList.takeListId = :takeListId AND tp.pill.pillId = :pillId AND tp.commonData.isDelete is false")
 //    TakePills findPillsByTakeListIdAndPillId(@Param("takeListId") Long takeListId, @Param("pillId") Long pillId);
-    @Query("SELECT tp FROM TakePills tp WHERE tp.takeList.id = :takeListId AND tp.pill.id = :pillId")
+    @Query("SELECT tp FROM TakePills tp WHERE tp.takeList.takeListId = :takeListId AND tp.pill.pillId = :pillId")
     Optional<TakePills> findPillsByTakeListIdAndPillId(@Param("takeListId") Long takeListId, @Param("pillId") Long pillId);
 
 }
