@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.domain;
 
+import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -61,6 +62,10 @@ public class TakeList {
         this.isAlarm = true;
         this.alarmTime = alarmTime;
         this.cycle = cycle;
+    }
+
+    public void updateTakeListName(UpdateTakeListRequest updateTakeListRequest){
+        this.takeListName = updateTakeListRequest.updateTakeName();
     }
 }
 

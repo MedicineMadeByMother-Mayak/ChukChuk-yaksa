@@ -7,6 +7,7 @@ import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.TakeListEach;
 import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
+import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.dto.response.TakeListResponse;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
@@ -153,6 +154,20 @@ public class TakeListService {
             TakePills takePills = new TakePills(takeList, pill);
             takePillsRepository.save(takePills);
         }
+    }
+
+    /**
+     * 복용리스트 이름 수정
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     */
+    public void updateTakeListName(Long takeListId, UpdateTakeListRequest updateTakeListRequest) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        takeList.updateTakeListName(updateTakeListRequest);
+        takeListRepository.save(takeList);
     }
 }
 

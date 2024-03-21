@@ -4,6 +4,7 @@ package com.mayak.chuckchuck.controller;
 import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
 import com.mayak.chuckchuck.dto.request.AlarmRequest;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
+import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TakeListController {
     private final TakeListService takeListService;
+
+
     /**
      * 복용리스트 조회
      * @author:김보경
@@ -41,13 +44,18 @@ public class TakeListController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-
     /**
      * 복용리스트 이름 수정
-     * @author:
-     * @param:
-     * @return:
+     * @author:김보경
+     * @param:takeListId
+     * @return:200ok
      */
+    @PutMapping("/{takeListId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateTakeListName(@PathVariable(value="takeListId") Long takeListId, @RequestBody UpdateTakeListRequest updateTakeListRequest) {
+        takeListService.updateTakeListName(takeListId, updateTakeListRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     /**
      * 복용리스트 약 삭제
