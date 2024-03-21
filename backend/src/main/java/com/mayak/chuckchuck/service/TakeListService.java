@@ -123,10 +123,9 @@ public class TakeListService {
         List<TakeListEach> takeListEachList = new ArrayList<>();
         List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, baseDate);
         for (TakeList takeList : takeLists) {
-            List<TakePills> byTakeList = takePillsRepository.findByTakeList(takeList);
+            List<TakePills> byTakeList = takePillsRepository.findByTakeListAndCommonDataIsDeleteIsFalse(takeList);
             TakeListEach takeListEach = TakeListEach.createTakeListEach(takeList, byTakeList);
             takeListEachList.add(takeListEach);
-
         }
         return TakeListResponse.fromEntity(takeListEachList);
 

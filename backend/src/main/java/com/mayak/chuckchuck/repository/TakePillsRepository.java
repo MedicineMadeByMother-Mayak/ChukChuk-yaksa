@@ -17,7 +17,7 @@ public interface TakePillsRepository extends JpaRepository<TakePills, Long> {
      * @param: TakeListId
      * @return: TakePills
      */
-    List<TakePills> findByTakeList(TakeList takeList);
+    List<TakePills> findByTakeListAndCommonDataIsDeleteIsFalse(TakeList takeList);
 
     /**
      * 복용리스트 약 추가
