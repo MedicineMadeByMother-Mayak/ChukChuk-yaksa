@@ -18,7 +18,7 @@ public class TakeListController {
      * 복용리스트 조회
      * @author:김보경
      * @param:
-     * @return:
+     * @return:TakeListResponse
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

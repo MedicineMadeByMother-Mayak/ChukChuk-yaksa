@@ -4,6 +4,7 @@ import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.TakePills;
 import com.mayak.chuckchuck.domain.User;
+import com.mayak.chuckchuck.dto.Test;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.dto.response.TakeListResponse;
@@ -78,11 +79,18 @@ public class TakeListService {
         }
 
         //===임시 User 객체 사용
-        User user = userRepository.findById(2L).get();
+        User user = userRepository.findById(1L).get();
         //===
 
+        List<Test> testList = new ArrayList<>();
         List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, baseDate);
-        return TakeListResponse.fromEntity(takeLists);
+        for(TakeList takeList : takeLists){
+            List<TakePills> byTakeList = takePillsRepository.findByTakeList(takeList);
+            Test test = Test.createTest(takeList, byTakeList);
+        testList.add(test);
+
+        }
+        return TakeListResponse.fromEntity(testList);
 
     }
 }
