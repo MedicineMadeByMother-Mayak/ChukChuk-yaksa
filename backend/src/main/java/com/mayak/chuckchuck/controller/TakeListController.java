@@ -17,7 +17,7 @@ public class TakeListController {
     /**
      * 복용리스트 조회
      * @author:김보경
-     * @param:
+     * @param: period
      * @return:TakeListResponse
      */
     @GetMapping
