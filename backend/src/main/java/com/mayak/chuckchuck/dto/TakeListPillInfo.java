@@ -12,5 +12,5 @@ public record TakeListPillInfo (Long pillId,
                                 boolean warningPregnant,
                                 boolean warningUseDate,
                                 boolean warningElders,
-                                boolean warningTogether){
-}
+                                boolean warningTogether)
+{}

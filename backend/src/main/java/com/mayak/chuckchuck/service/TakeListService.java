@@ -1,10 +1,9 @@
 package com.mayak.chuckchuck.service;
 
-import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.TakePills;
 import com.mayak.chuckchuck.domain.User;
-import com.mayak.chuckchuck.dto.Test;
+import com.mayak.chuckchuck.dto.TakeListEach;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.dto.response.TakeListResponse;
@@ -17,9 +16,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,14 +60,19 @@ public class TakeListService {
     }
 
     /**
-     * 사용자의 모든 복용 리스트 조회
+     * 사용자의 복용 리스트 조회
      *
      * @author: 김보경
      * @param:
      * @return: TakeListResponse
+     * 필터링 기준 :
+     * period=false : 복용리스트
+     * isFinish 여부 상관없이 전체 복용리스트 조회. 복용중/과거에먹은약 FE에서 isFinish 따라 조회해야 됨.
+     * period=true : 문진표
+     * 한달 이내 복용리스트 조회, isFinish=false 라면 기간 상관없이 전체조회.
      */
     public TakeListResponse getTakeList(TakeListRequest takeListRequest) {
-        // period t/f 별 기준일자 분기
+        /**period t/f 별 기준일자(baseDate) 분기*/
         LocalDateTime baseDate;
         if(takeListRequest.period()) {
             baseDate = LocalDateTime.now().minusMonths(1);
@@ -82,15 +84,15 @@ public class TakeListService {
         User user = userRepository.findById(1L).get();
         //===
 
-        List<Test> testList = new ArrayList<>();
+        List<TakeListEach> takeListEachList = new ArrayList<>();
         List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, baseDate);
         for(TakeList takeList : takeLists){
             List<TakePills> byTakeList = takePillsRepository.findByTakeList(takeList);
-            Test test = Test.createTest(takeList, byTakeList);
-        testList.add(test);
+            TakeListEach takeListEach = TakeListEach.createTakeListEach(takeList, byTakeList);
+        takeListEachList.add(takeListEach);
 
         }
-        return TakeListResponse.fromEntity(testList);
+        return TakeListResponse.fromEntity(takeListEachList);
 
     }
 }
