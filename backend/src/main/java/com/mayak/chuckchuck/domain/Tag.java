@@ -35,11 +35,24 @@ public class Tag {
     @Embedded
     private CommonData commonData;
 
-    public void registTag (Long tagId, String tagName, User user, Category category, CommonData commonData) {
+    private Tag(Long tagId, String tagName, User user, Category category) {
         this.tagId = tagId;
         this.tagName = tagName;
         this.user = user;
         this.category = category;
-        this.commonData = commonData;
+    }
+
+    private Tag(String tagName, User user, Category category) {
+        this.tagName = tagName;
+        this.user = user;
+        this.category = category;
+    }
+
+    public static Tag createTag(String tagName, User user, Category category) {
+        return new Tag(tagName, user, category);
+    }
+
+    public static Tag registTag(Long tagId, String tagName, User user, Category category) {
+        return new Tag(tagId, tagName, user, category);
     }
 }
