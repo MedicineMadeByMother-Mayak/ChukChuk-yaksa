@@ -23,7 +23,8 @@ public class NaverOcrApi {
     private String url;
 
     /**
-     * 네이버 ocr api 호출한다
+     * 네이버 ocr api 호출
+     * @author 최서현
      * @param {string} type 호출 메서드 타입
      * @param {string} filePath 파일 경로
      * @param {string} naver_secretKey 네이버 시크릿키 값
@@ -90,8 +91,10 @@ public class NaverOcrApi {
         }
         return parseData;
     }
+
     /**
      * writeMultiPart
+     * @author 최서현
      * @param {OutputStream} out 데이터를 출력
      * @param {string} jsonMessage 요청 params
      * @param {File} file 요청 파일
@@ -133,6 +136,7 @@ public class NaverOcrApi {
     }
     /**
      * 데이터 가공
+     * @author 최서현
      * @param {StringBuffer} response 응답값
      * @returns {List} result text list
      */

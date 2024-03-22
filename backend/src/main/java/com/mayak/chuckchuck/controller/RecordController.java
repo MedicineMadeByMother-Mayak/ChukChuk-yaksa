@@ -4,6 +4,7 @@ import com.mayak.chuckchuck.dto.response.*;
 import com.mayak.chuckchuck.enums.OcrType;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
+import com.mayak.chuckchuck.service.OCRService;
 import com.mayak.chuckchuck.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class RecordController {
 
     private final RecordService recordService;
+    private final OCRService ocrService;
+
 
     /**
      * 약봉투 OCR 결과
@@ -29,7 +32,7 @@ public class RecordController {
     @PostMapping("/ocr/pill-bag")
     public ResponseEntity<PillBagOCRInfoResponse> ocrPillBag(@RequestBody MultipartFile file) {
         if(file==null || file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
-        return ResponseEntity.ok((PillBagOCRInfoResponse)recordService.ocrResult(OcrType.PILLBAG, file));
+        return ResponseEntity.ok((PillBagOCRInfoResponse) ocrService.ocrResult(OcrType.PILLBAG, file));
     }
 
     /**
@@ -41,7 +44,7 @@ public class RecordController {
     @PostMapping("/ocr/diagnosis")
     public ResponseEntity<DiagnosisOCRInfoResponse> ocrDiagnosis(@RequestBody MultipartFile file) {
         if(file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
-        return ResponseEntity.ok((DiagnosisOCRInfoResponse)recordService.ocrResult(OcrType.DIAGNOSIS, file));
+        return ResponseEntity.ok((DiagnosisOCRInfoResponse) ocrService.ocrResult(OcrType.DIAGNOSIS, file));
     }
 
 
