@@ -1,14 +1,18 @@
 package com.mayak.chuckchuck.service;
 
+import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.TakePills;
 import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.TakeListEach;
+import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
+import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.dto.response.TakeListResponse;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
+import com.mayak.chuckchuck.repository.PillRepository;
 import com.mayak.chuckchuck.repository.TakeListRepository;
 import com.mayak.chuckchuck.repository.TakePillsRepository;
 import com.mayak.chuckchuck.repository.UserRepository;
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -30,9 +35,11 @@ public class TakeListService {
     private final TakeListRepository takeListRepository;
     private final UserRepository userRepository;
     private final TakePillsRepository takePillsRepository;
+    private final PillRepository pillRepository;
 
     /**
      * 복용리스트의 알람 비활성화
+     *
      * @author: 최서현
      * @param: takeListId
      */
@@ -45,6 +52,7 @@ public class TakeListService {
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
         }
     }
+
     /**
      * 사용자의 모든 활성화 알람 리스트 조회
      *
@@ -63,6 +71,7 @@ public class TakeListService {
 
     /**
      * 알람등록 및 수정
+     *
      * @author: 차현철
      * @param: {Long} takeListId
      * @param: {String} alarmTime
@@ -86,9 +95,9 @@ public class TakeListService {
         return userRepository.findById(userId).orElseThrow(() ->
                 new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
+
     /**
      * 사용자의 복용 리스트 조회
-     *
      * @author: 김보경
      * @param:
      * @return: TakeListResponse
@@ -101,10 +110,10 @@ public class TakeListService {
     public TakeListResponse getTakeList(TakeListRequest takeListRequest) {
         /**period t/f 별 기준일자(baseDate) 분기*/
         LocalDateTime baseDate;
-        if(takeListRequest.period()) {
+        if (takeListRequest.period()) {
             baseDate = LocalDateTime.now().minusMonths(1);
         } else {
-            baseDate = LocalDateTime.of(1910, 1, 1,0,0,0);
+            baseDate = LocalDateTime.of(1910, 1, 1, 0, 0, 0);
         }
 
         //===임시 User 객체 사용
@@ -113,13 +122,72 @@ public class TakeListService {
 
         List<TakeListEach> takeListEachList = new ArrayList<>();
         List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, baseDate);
-        for(TakeList takeList : takeLists){
-            List<TakePills> byTakeList = takePillsRepository.findByTakeList(takeList);
+        for (TakeList takeList : takeLists) {
+            List<TakePills> byTakeList = takePillsRepository.findByTakeListAndCommonDataIsDeleteIsFalse(takeList);
             TakeListEach takeListEach = TakeListEach.createTakeListEach(takeList, byTakeList);
-        takeListEachList.add(takeListEach);
-
+            takeListEachList.add(takeListEach);
         }
         return TakeListResponse.fromEntity(takeListEachList);
 
     }
+
+    /**
+     * 복용리스트 약 추가
+     * @author: 김보경
+     * @param: takeListId
+     * @return: ResponseEntity.ok()
+     */
+    public void addPillsToTakeList(Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        List<Long> currentPillIds = takePillsRepository.findPillIdsByTakeListId(takeListId);
+
+        List<Pill> pills = addPillsToTakeListRequest.pills().stream()
+                .filter(pillId -> !currentPillIds.contains(pillId))
+                .map(pillId -> pillRepository.findById(pillId)
+                        .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND)))
+                .collect(Collectors.toList());
+
+        for (Pill pill : pills) {
+            TakePills takePills = new TakePills(takeList, pill);
+            takePillsRepository.save(takePills);
+        }
+    }
+
+    /**
+     * 복용리스트 이름 수정
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     */
+    public void updateTakeListName(Long takeListId, UpdateTakeListRequest updateTakeListRequest) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        takeList.updateTakeListName(updateTakeListRequest);
+        takeListRepository.save(takeList);
+    }
+
+    /**
+     * 복용리스트 약 삭제
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     */
+    @Transactional
+    public void deleteTakeListPill(Long takeListId, Long pillId) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        TakePills takePills = takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+
+//        Optional<TakePills> optionalTakePills = Optional.ofNullable(takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
+//                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND)));
+//        TakePills takePills = optionalTakePills.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        takePills.deletePill();
+        takePillsRepository.save(takePills);
+    }
 }
+
