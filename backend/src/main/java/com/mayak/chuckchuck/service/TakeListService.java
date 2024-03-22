@@ -237,17 +237,16 @@ public class TakeListService {
         List<Long> checkPillId = new ArrayList<>();
 
         for(TakeList tempTakeList : takeLists) {
-//            List<TakePills> pillsInTakeList = takePillsRepository.findPillsByTakeListId(tempTakeList.getTakeListId());
-//
-//            for (TakePills tempTakePills : pillsInTakeList) {
-//                Long currentPillId = tempTakePills.getPill().getPillId();
-//
-//                // 이미 존재하는 pillId인지 확인하여 중복을 방지
-//                if (!checkPillId.contains(currentPillId)) {
-//                    checkPillId.add(currentPillId);
-//                    chukchukAdviceDtos.add(new ChukchukAdviceDto(tempTakePills.getPill().getPillId(), tempTakePills.getPill().getCaution()));
-//                }
-//            }
+            List<TakePills> pillsInTakeList = takePillsRepository.findByTakeList(tempTakeList);
+            for (TakePills tempTakePills : pillsInTakeList) {
+                Long currentPillId = tempTakePills.getPill().getPillId();
+
+                // 이미 존재하는 pillId인지 확인하여 중복을 방지
+                if (!checkPillId.contains(currentPillId)) {
+                    checkPillId.add(currentPillId);
+                    chukchukAdviceDtos.add(new ChukchukAdviceDto(tempTakePills.getPill().getPillId(), tempTakePills.getPill().getCaution()));
+                }
+            }
         }
 
         return ChukChukAdviceResponse.fromEntity(chukchukAdviceDtos);
