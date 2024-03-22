@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
-public record PrescriptionInfoResponse(
+public record PillBagOCRInfoResponse(
         LocalDateTime buildDate,
         String pharmacyName,
         int cost,
         List<PrescriptionInfoDto> pills
 ) {
-    public static PrescriptionInfoResponse fromValidOcrResult(HashMap<String, Object> ocrResult){
+    public static PillBagOCRInfoResponse fromValidOcrResult(HashMap<String, Object> ocrResult){
         LocalDateTime buildDate = LocalDateTime.parse((String) ocrResult.get("buildDate") + "T00:00:00");
 
         int cost = Integer.parseInt(((String) ocrResult.get("cost")).replaceAll(",", ""));
@@ -20,7 +20,7 @@ public record PrescriptionInfoResponse(
         String pharmacyName = (String) ocrResult.get("pharmacyName");
         List<PrescriptionInfoDto> prescriptionInfoList = (List<PrescriptionInfoDto>) ocrResult.get("prescriptionInfo");
 
-        return new PrescriptionInfoResponse(
+        return new PillBagOCRInfoResponse(
                 buildDate,
                 pharmacyName,
                 cost,
