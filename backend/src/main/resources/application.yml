@@ -1,13 +1,15 @@
 spring:
   config:
-    import: db.yml
+    import: db.yml, secretkey.yml
 
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
+        show_sql: true
         format_sql: true
+        use_sql_comments: true
 
 logging:
   level:

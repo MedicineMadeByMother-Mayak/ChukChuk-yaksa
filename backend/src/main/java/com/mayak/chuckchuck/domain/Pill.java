@@ -70,5 +70,4 @@ public class Pill {
 
     @Embedded
     private CommonData commonData;
-
 }

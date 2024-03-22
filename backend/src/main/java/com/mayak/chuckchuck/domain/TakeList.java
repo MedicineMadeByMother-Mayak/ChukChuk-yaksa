@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.domain;
 
+import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,7 +52,31 @@ public class TakeList {
     @Embedded
     private CommonData commonData;
 
+
     public void toggleAlarm(){
         this.isAlarm = !this.isAlarm;
     }
+
+    public void updateAlarm(LocalDateTime alarmTime, int cycle) {
+        this.isAlarm = true;
+        this.alarmTime = alarmTime;
+        this.cycle = cycle;
+    }
+
+    public void updateTakeListName(UpdateTakeListRequest updateTakeListRequest){
+        this.takeListName = updateTakeListRequest.updateTakeName();
+    }
+
+    // 복용리스트 완료
+    public void finishTakeList(){
+        this.isFinish = !this.isFinish;
+        this.finishDate = LocalDateTime.now();
+    }
+
+    // 복용리스트 삭제
+    public void deleteTakeList(){
+        this.commonData.toggleDelete();
+    }
 }
+
+
