@@ -3,10 +3,9 @@ package com.mayak.chuckchuck.controller;
 
 
 import com.mayak.chuckchuck.dto.request.AlarmRequest;
-
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
-
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
+import com.mayak.chuckchuck.dto.response.ChukChukAdviceResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TakeListController {
     private final TakeListService takeListService;
+
     /**
      * 복용리스트 조회
      * @author:김보경
@@ -86,10 +86,16 @@ public class TakeListController {
 
     /**
      * 척척약사 조언 리스트 조회
-     * @author:
+     * @author 최진학
      * @param:
      * @return:
      */
+    @GetMapping("/advice")
+    public ResponseEntity<ChukChukAdviceResponse> getChukChukAdvice(){
+        ChukChukAdviceResponse chukChukAdviceResponse = takeListService.getChukChukAdvice();
+
+        return ResponseEntity.ok(chukChukAdviceResponse);
+    }
 
     /**
      * 알람등록

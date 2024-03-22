@@ -3,12 +3,15 @@ package com.mayak.chuckchuck.service;
 import com.mayak.chuckchuck.domain.TakeList;
 import com.mayak.chuckchuck.domain.TakePills;
 import com.mayak.chuckchuck.domain.User;
+import com.mayak.chuckchuck.dto.ChukchukAdviceDto;
 import com.mayak.chuckchuck.dto.TakeListEach;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
+import com.mayak.chuckchuck.dto.response.ChukChukAdviceResponse;
 import com.mayak.chuckchuck.dto.response.TakeListResponse;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
+import com.mayak.chuckchuck.repository.PillRepository;
 import com.mayak.chuckchuck.repository.TakeListRepository;
 import com.mayak.chuckchuck.repository.TakePillsRepository;
 import com.mayak.chuckchuck.repository.UserRepository;
@@ -45,10 +48,12 @@ public class TakeListService {
             throw new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND);
         }
     }
+
+
     /**
      * 사용자의 모든 활성화 알람 리스트 조회
      *
-     * @author: 최서현xz
+     * @author: 최서현
      * @param:
      * @return: ActiveAlarmListResponse
      */
@@ -60,6 +65,7 @@ public class TakeListService {
         List<TakeList> takeLists = takeListRepository.findByUserAndIsAlarmTrue(user);
         return ActiveAlarmListResponse.fromEntity(takeLists);
     }
+
 
     /**
      * 알람등록 및 수정
@@ -86,6 +92,8 @@ public class TakeListService {
         return userRepository.findById(userId).orElseThrow(() ->
                 new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
+
+
     /**
      * 사용자의 복용 리스트 조회
      *
@@ -121,5 +129,38 @@ public class TakeListService {
         }
         return TakeListResponse.fromEntity(takeListEachList);
 
+    }
+
+
+    /**
+     * 척척약사 조언 리스트 조회 (복용 중인 약에서 주의사항 가져오기)
+     * @author: 최진학
+     * @param
+     * @return
+     */
+    public ChukChukAdviceResponse getChukChukAdvice() {
+        //===임시 User 객체 사용
+        User user = userRepository.findById(1L).get();
+        //===
+
+        List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, LocalDateTime.now().minusMonths(1));
+        List<ChukchukAdviceDto> chukchukAdviceDtos = new ArrayList<>();
+        List<Long> checkPillId = new ArrayList<>();
+
+        for(TakeList tempTakeList : takeLists) {
+            List<TakePills> pillsInTakeList = takePillsRepository.findByTakeList(tempTakeList);
+
+            for (TakePills tempTakePills : pillsInTakeList) {
+                Long currentPillId = tempTakePills.getPill().getPillId();
+
+                // 이미 존재하는 pillId인지 확인하여 중복을 방지
+                if (!checkPillId.contains(currentPillId)) {
+                    checkPillId.add(currentPillId);
+                    chukchukAdviceDtos.add(new ChukchukAdviceDto(tempTakePills.getPill().getPillId(), tempTakePills.getPill().getCaution()));
+                }
+            }
+        }
+
+        return ChukChukAdviceResponse.fromEntity(chukchukAdviceDtos);
     }
 }
