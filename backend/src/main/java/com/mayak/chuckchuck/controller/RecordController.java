@@ -3,26 +3,35 @@ package com.mayak.chuckchuck.controller;
 import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
 import com.mayak.chuckchuck.dto.response.DiseaseResponse;
 import com.mayak.chuckchuck.dto.response.PillBagResponse;
+import com.mayak.chuckchuck.dto.response.PrescriptionInfoResponse;
+import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
+import com.mayak.chuckchuck.exception.RestApiException;
 import com.mayak.chuckchuck.service.RecordService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/record")
 @RequiredArgsConstructor
+@Slf4j
 //기록(약봉투, 진단서, 병력, 약력)과 관련한 컨트롤러
 public class RecordController {
+
     private final RecordService recordService;
     /**
-     * 약봉투 OCR 결과
-     * @author:
+     * 약봉투 OCR
+     * @author: 최서현
      * @param:
      * @return:
      */
+    @PostMapping("/ocr")
+    public ResponseEntity<PrescriptionInfoResponse> ocr(@RequestBody MultipartFile file) {
+        if(file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
+        return ResponseEntity.ok(recordService.ocrResult(file));
+    }
 
     /**
      * 진단서 OCR 결과
