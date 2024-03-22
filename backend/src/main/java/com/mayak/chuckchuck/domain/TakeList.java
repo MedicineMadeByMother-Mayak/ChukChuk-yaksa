@@ -72,6 +72,11 @@ public class TakeList {
         this.isFinish = !this.isFinish;
         this.finishDate = LocalDateTime.now();
     }
+
+    // 복용리스트 삭제
+    public void deleteTakeList(){
+        this.commonData.toggleDelete();
+    }
 }
 
 

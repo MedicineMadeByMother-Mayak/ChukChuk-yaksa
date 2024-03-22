@@ -82,10 +82,16 @@ public class TakeListController {
 
     /**
      * 복용리스트 삭제
-     * @author:
-     * @param:
-     * @return:
+     * @author:김보경
+     * @param:takeListId
+     * @return:200ok
      */
+    @DeleteMapping("/{takeListId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> deleteTakeList(@PathVariable(value="takeListId") Long takeListId) {
+        takeListService.deleteTakeList(takeListId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     /**
      * 복용리스트 조회

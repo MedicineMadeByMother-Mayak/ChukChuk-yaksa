@@ -199,5 +199,21 @@ public class TakeListService {
         takeList.finishTakeList();
         takeListRepository.save(takeList);
     }
+
+    /**
+     * 복용리스트 삭제
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     * - isDelete toggle() 한다.
+     */
+    @Transactional
+    public void deleteTakeList(Long takeListId) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        takeList.deleteTakeList();
+        takeListRepository.save(takeList);
+    }
 }
 
