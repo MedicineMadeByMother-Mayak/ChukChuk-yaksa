@@ -24,4 +24,9 @@ public class Category {
     //공통데이터
     @Embedded
     private CommonData commonData;
+
+    public void registCategory(Long categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+    }
 }

@@ -1,8 +1,10 @@
 package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.*;
+import com.mayak.chuckchuck.dto.CategoryDto;
 import com.mayak.chuckchuck.dto.TagDto;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
+import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.repository.*;
 import jakarta.persistence.EntityManager;
@@ -18,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserPillEffectService {
     private final UserPillEffectRepository userPillEffectRepository;
+    private final UserPillEffectToTagRepository userPillEffectToTagRepository;
     private final UserRepository userRepository;
     private final PillRepository pillRepository;
     private final CategoryRepository categoryRepository;
@@ -25,13 +28,15 @@ public class UserPillEffectService {
     private final TagRepository tagRepository;
 
     /**
-     * 약효기록 상세 조회 (
+     * 약효기록 상세 조회 (인데 없으면 등록이라... reigst로 했는데 이름 진짜 맘에 안듦)
      * @author 최진학
      * @param pillId (
      * @return userPillEffectList (사용자 약효 기록 내역)
      */
     public UserPillEffectResponse registUserPillEffect(Long pillId) {
+        // == 임시 유저 정보 (추후 변경 필요) ==
         User user = userRepository.findById(1L).get();
+        // =================================
 
         // user의 약효기록 리스트 조회
         List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndPill_pillId(user, pillId);
@@ -121,5 +126,53 @@ public class UserPillEffectService {
     public void updateUserPillEffectMemo(UserPillEffectMemoRequest userPillEffectMemoRequest) {
         UserPillEffect userPillEffect = userPillEffectRepository.findById(userPillEffectMemoRequest.usePillEffectId()).get();
         userPillEffect.updateMemo(userPillEffectMemoRequest.memo());
+    }
+
+    /**
+     * 약효기록 - 추가 (업데이트)
+     * @author 최진학
+     * @param userPillEffectRegistInfoRequest (약효 기록 업데이트 request)
+     * @return 없음
+     */
+    public void updateUserPillEffect(UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
+        Long currentPillId = userPillEffectRegistInfoRequest.pillId();
+        List<CategoryDto> categoryDtos = userPillEffectRegistInfoRequest.category();
+
+        // == 임시 유저 정보 (추후 변경 필요) ==
+        User user = userRepository.findById(1L).get();
+        // =================================
+
+        // 카테고리마다 약효 기록을 추가 해야함
+        for (CategoryDto currentCategory : categoryDtos) {
+            List<TagDto> currentTagDtos = currentCategory.usedTags();
+            Category registCategory = categoryRepository.findById(currentCategory.categoryId()).get();
+            Pill registPill = pillRepository.findById(currentPillId).get();  // 등록할 약
+            UserPillEffect registUserpillEffect = userPillEffectRepository.findByUserAndPillAndCategory(user, registPill, registCategory);
+
+            registUserpillEffect.updateMemo(currentCategory.memo());
+            userPillEffectRepository.save(registUserpillEffect);
+
+            // 카테고리 등록된 태그가 비어있지 않고, 0보다 크면 (=값이 있으면), 태그들 등록
+            if (!currentTagDtos.isEmpty()) {
+                CommonData commonData = new CommonData();
+                List<UserPillEffectToTag> userPillEffectToTags = currentTagDtos.stream()
+                        .map(tempTagDto -> {
+                            Tag tag = new Tag();
+                            tag.registTag(tempTagDto.tagId(), tempTagDto.tagName(), user, registCategory, commonData);  // 태그 만듦
+
+                            // 태그 등록 or 업데이트
+                            tagRepository.save(tag);
+
+                            UserPillEffectToTag userPillEffectToTag = new UserPillEffectToTag();
+                            userPillEffectToTag.updateUserPillEffectToTag(registUserpillEffect, tag, commonData);
+
+                            return userPillEffectToTag;
+                        })
+                        .toList();
+
+                // 유저 사용 기록에 태그 등록 or 업데이트
+                userPillEffectToTagRepository.saveAll(userPillEffectToTags);
+            }
+        }
     }
 }

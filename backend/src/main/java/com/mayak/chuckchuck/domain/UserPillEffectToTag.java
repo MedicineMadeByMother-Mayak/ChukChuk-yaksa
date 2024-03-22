@@ -29,4 +29,9 @@ public class UserPillEffectToTag {
     @Embedded
     private CommonData commonData;
 
+    public void updateUserPillEffectToTag (UserPillEffect userPillEffect, Tag tag, CommonData commonData) {
+        this.userPillEffect = userPillEffect;
+        this.tag = tag;
+        this.commonData = commonData;
+    }
 }

@@ -45,7 +45,8 @@ public class UserPillEffectController {
      */
     @PostMapping("/")
     public ResponseEntity<Void> registUserPillEffect(@RequestBody UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
-//        userPillEffectService.registUserPillEffect();
+        System.out.println(userPillEffectRegistInfoRequest);
+        userPillEffectService.updateUserPillEffect(userPillEffectRegistInfoRequest);
 
 
         return ResponseEntity.ok().build();
