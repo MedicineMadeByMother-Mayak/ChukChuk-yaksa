@@ -1,9 +1,10 @@
 package com.mayak.chuckchuck.controller;
 
-import com.mayak.chuckchuck.domain.UserPillEffect;
+import com.mayak.chuckchuck.dto.request.RegistTagRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
+import com.mayak.chuckchuck.service.TagService;
 import com.mayak.chuckchuck.service.UserPillEffectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserPillEffectController {
     private final UserPillEffectService userPillEffectService;
+    private final TagService tagService;
 
     /**
      * 약효기록 리스트 조회 및 검색
-     * @author:
+     * @author 최진학
      * @param:
      * @return:
      */
@@ -53,13 +55,6 @@ public class UserPillEffectController {
 
     /**
      * 약효기록 삭제
-     * @author:
-     * @param:
-     * @return:
-     */
-
-    /**
-     * 약효기록 삭제
      * @author 최진학
      * @param userPillEffectId (약효 효과 ID)
      * @return HttpStatus.OK
@@ -80,10 +75,16 @@ public class UserPillEffectController {
 
     /**
      * 약효기록 약효에 태그 추가
-     * @author:
+     * @author 최진학
      * @param:
      * @return:
      */
+    @PostMapping("/tag")
+    public ResponseEntity<Void> registTag(@RequestBody RegistTagRequest registTagRequest) {
+        tagService.reigstTag(registTagRequest.tagName(), registTagRequest.categoryId());
+
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * 약효기록 - 메모수정

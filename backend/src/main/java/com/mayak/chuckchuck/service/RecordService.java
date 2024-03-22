@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 @Slf4j
-public class  RecordService {
+public class RecordService {
     @Value("${naver.service.secretKey}")
     private String secretKey;
     private final NaverOcrApi naverOcrApi;
