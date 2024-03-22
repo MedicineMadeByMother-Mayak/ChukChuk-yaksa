@@ -1,10 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 
-import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
-import com.mayak.chuckchuck.dto.request.AlarmRequest;
-import com.mayak.chuckchuck.dto.request.TakeListRequest;
-import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
+import com.mayak.chuckchuck.dto.request.*;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
@@ -72,10 +69,16 @@ public class TakeListController {
 
     /**
      * 복용리스트 완료
-     * @author:
-     * @param:
-     * @return:
+     * @author: 김보경
+     * @param: takeListId
+     * @return: 200ok
      */
+    @PutMapping("/{takeListId}/finish")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> finishTakeList(@PathVariable(value="takeListId") Long takeListId) {
+        takeListService.finishTakeList(takeListId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     /**
      * 복용리스트 삭제

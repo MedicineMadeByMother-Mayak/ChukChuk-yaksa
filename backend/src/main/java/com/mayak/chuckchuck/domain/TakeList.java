@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
@@ -66,6 +65,12 @@ public class TakeList {
 
     public void updateTakeListName(UpdateTakeListRequest updateTakeListRequest){
         this.takeListName = updateTakeListRequest.updateTakeName();
+    }
+
+    // 복용리스트 완료
+    public void finishTakeList(){
+        this.isFinish = !this.isFinish;
+        this.finishDate = LocalDateTime.now();
     }
 }
 
