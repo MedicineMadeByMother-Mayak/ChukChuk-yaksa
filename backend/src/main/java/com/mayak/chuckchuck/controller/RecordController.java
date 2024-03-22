@@ -1,9 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
-import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
-import com.mayak.chuckchuck.dto.response.DiseaseResponse;
-import com.mayak.chuckchuck.dto.response.PillBagResponse;
-import com.mayak.chuckchuck.dto.response.PrescriptionInfoResponse;
+import com.mayak.chuckchuck.dto.response.*;
+import com.mayak.chuckchuck.enums.OcrType;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
 import com.mayak.chuckchuck.service.RecordService;
@@ -21,20 +19,34 @@ import org.springframework.web.multipart.MultipartFile;
 public class RecordController {
 
     private final RecordService recordService;
+
     /**
-     * 약봉투 OCR
+     * 약봉투 OCR 결과
      * @author: 최서현
      * @param:
      * @return:
      */
-    @PostMapping("/ocr")
-    public ResponseEntity<PrescriptionInfoResponse> ocr(@RequestBody MultipartFile file) {
-        if(file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
-        return ResponseEntity.ok(recordService.ocrResult(file));
+    @PostMapping("/ocr/pill-bag")
+    public ResponseEntity<PillBagOCRInfoResponse> ocrPillBag(@RequestBody MultipartFile file) {
+        if(file==null || file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
+        return ResponseEntity.ok((PillBagOCRInfoResponse)recordService.ocrResult(OcrType.PILLBAG, file));
     }
 
     /**
      * 진단서 OCR 결과
+     * @author:
+     * @param:
+     * @return:
+     */
+    @PostMapping("/ocr/diagnosis")
+    public ResponseEntity<DiagnosisOCRInfoResponse> ocrDiagnosis(@RequestBody MultipartFile file) {
+        if(file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
+        return ResponseEntity.ok((DiagnosisOCRInfoResponse)recordService.ocrResult(OcrType.DIAGNOSIS, file));
+    }
+
+
+    /**
+     * 진단내역 조회
      * @author: 김태완
      * @param: page
      * @return:
@@ -44,13 +56,6 @@ public class RecordController {
         DiagnosisResponse diagnosisResponse = recordService.getDiagnosisList(page - 1);
         return ResponseEntity.ok(diagnosisResponse);
     }
-
-    /**
-     * 진단내역 조회
-     * @author:
-     * @param:
-     * @return:
-     */
 
     /**
      * 처방내역(약봉투)조회

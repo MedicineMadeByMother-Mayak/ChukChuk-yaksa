@@ -1,4 +1,4 @@
-package com.mayak.chuckchuck.ocr;
+package com.mayak.chuckchuck.utill;
 
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -157,4 +157,6 @@ public class NaverOcrApi {
         }
         return result;
     }
+
+
 }
