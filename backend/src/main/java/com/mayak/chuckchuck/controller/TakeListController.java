@@ -86,10 +86,11 @@ public class TakeListController {
 
     /**
      * 척척약사 조언 리스트 조회
-     * @author:
-     * @param:
-     * @return:
+     * @author 최진학
+     * @param
+     * @return
      */
+    @GetMapping("/advice")
 
     /**
      * 알람등록
