@@ -177,17 +177,43 @@ public class TakeListService {
      */
     @Transactional
     public void deleteTakeListPill(Long takeListId, Long pillId) {
-        TakeList takeList = takeListRepository.findById(takeListId)
-                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         TakePills takePills = takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
 
-
-//        Optional<TakePills> optionalTakePills = Optional.ofNullable(takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
-//                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND)));
-//        TakePills takePills = optionalTakePills.orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         takePills.deletePill();
         takePillsRepository.save(takePills);
+    }
+
+    /**
+     * 복용리스트 완료
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     * - isFinish 를 0 → 1 로 변환
+     * - finishDate 를 그 당시 시간(modifiedDate와 비슷) 로 저장한다.
+     */
+    @Transactional
+    public void finishTakeList(Long takeListId) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        takeList.finishTakeList();
+        takeListRepository.save(takeList);
+    }
+
+    /**
+     * 복용리스트 삭제
+     * @author:김보경
+     * @param:takeListId
+     * @return: ResponseEntity.ok()
+     * - isDelete toggle() 한다.
+     */
+    @Transactional
+    public void deleteTakeList(Long takeListId) {
+        TakeList takeList = takeListRepository.findById(takeListId)
+                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+
+        takeList.deleteTakeList();
+        takeListRepository.save(takeList);
     }
 }
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -35,6 +36,8 @@ public class TakePills {
     public TakePills(TakeList takeList, Pill pill){
         this.takeList = takeList;
         this.pill = pill;
+        this.commonData =new CommonData(); // isDelete, createDate 자동생성
+
     }
     //복용 리스트 약 삭제에 사용
     public void deletePill() {
