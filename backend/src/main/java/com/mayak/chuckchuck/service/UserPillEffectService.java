@@ -152,20 +152,19 @@ public class UserPillEffectService {
             registUserpillEffect.updateMemo(currentCategory.memo());
             userPillEffectRepository.save(registUserpillEffect);
 
-            // 카테고리 등록된 태그가 비어있지 않고, 0보다 크면 (=값이 있으면), 태그들 등록
+            // 카테고리 등록된 태그가 비어있지 않고, 0보다 크면 (=값이 있으면), 태그들 등록 (코드 개선 : peek 쓰면 바로 적용가능)
             if (!currentTagDtos.isEmpty()) {
                 CommonData commonData = new CommonData();
                 List<UserPillEffectToTag> userPillEffectToTags = currentTagDtos.stream()
                         .map(tempTagDto -> {
                             Tag tag = new Tag();
-                            tag.registTag(tempTagDto.tagId(), tempTagDto.tagName(), user, registCategory, commonData);  // 태그 만듦
-
-                            // 태그 등록 or 업데이트
-                            tagRepository.save(tag);
-
+                            tag.registTag(tempTagDto.tagId(), tempTagDto.tagName(), user, registCategory, commonData);
+                            return tag;
+                        })
+                        .peek(tagRepository::save) // 태그 등록 or 업데이트
+                        .map(tag -> {
                             UserPillEffectToTag userPillEffectToTag = new UserPillEffectToTag();
                             userPillEffectToTag.updateUserPillEffectToTag(registUserpillEffect, tag, commonData);
-
                             return userPillEffectToTag;
                         })
                         .toList();

@@ -48,7 +48,6 @@ public class UserPillEffectController {
         System.out.println(userPillEffectRegistInfoRequest);
         userPillEffectService.updateUserPillEffect(userPillEffectRegistInfoRequest);
 
-
         return ResponseEntity.ok().build();
     }
 
