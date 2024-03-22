@@ -38,4 +38,6 @@ public interface TakePillsRepository extends JpaRepository<TakePills, Long> {
     @Query("SELECT tp FROM TakePills tp WHERE tp.takeList.takeListId = :takeListId AND tp.pill.pillId = :pillId")
     Optional<TakePills> findPillsByTakeListIdAndPillId(@Param("takeListId") Long takeListId, @Param("pillId") Long pillId);
 
+
+//    List<TakePills> findPillsByTakeListId(Long takeListId);
 }
