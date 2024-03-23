@@ -4,6 +4,9 @@
 secretkey.yml
 db.yml
 
+# For MacOS
+.DS_Store
+
 # dotenv environment variable files
 .env
 
