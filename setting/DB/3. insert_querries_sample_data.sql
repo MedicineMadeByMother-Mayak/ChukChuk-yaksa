@@ -92,3 +92,30 @@ VALUES
 	(8, 2, NOW(), NULL, 0),
 	(9, 1, NOW(), NULL, 0),
 	(10, 2, NOW(), NULL, 0);
+    
+    
+insert into tag(tag_name, user_id, category_id, create_date, modify_date, is_delete)
+	values 
+    ("부작용-졸림1", 1, 1, now(), null, null),
+    ("부작용-졸림2", 1, 1, now(), null, null),
+    ("부작용-졸림3", 1, 1, now(), null, null),
+    ("부작용-졸림4", 1, 1, now(), null, null),
+    ("부작용-졸림5", 1, 1, now(), null, null),
+    ("중단-피곤함1", 1, 2, now(), null, null),
+    ("중단-피곤함2", 1, 2, now(), null, null),
+    ("중단-피곤함3", 1, 2, now(), null, null),
+    ("중단-피곤함4", 1, 2, now(), null, null),
+    ("중단-피곤함5", 1, 2, now(), null, null),
+    ("효과-개운함1", 1, 3, now(), null, null),
+    ("효과-개운함2", 1, 3, now(), null, null),
+    ("효과-개운함3", 1, 3, now(), null, null),
+    ("효과-개운함4", 1, 3, now(), null, null);
+    
+insert into take_pills (pill_id, take_list_id, create_date, modify_date, is_delete)
+	values 
+		(2, 6, now(), null, 0),
+        (3, 6, now(), null, 0),
+        (4, 6, now(), null, 0),
+        (6, 6, now(), null, 0),
+        (8, 6, now(), null, 0),
+        (27, 6, now(), null, 0);
