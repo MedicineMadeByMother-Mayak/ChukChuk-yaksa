@@ -30,7 +30,7 @@ public class TakePills {
 
     //공통데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 
     //복용 리스트 약 추가에 사용
     private TakePills(TakeList takeList, Pill pill){

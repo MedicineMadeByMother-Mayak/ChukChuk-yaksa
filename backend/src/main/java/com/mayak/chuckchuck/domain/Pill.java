@@ -69,5 +69,5 @@ public class Pill {
     private Boolean warningTogether;
 
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 }

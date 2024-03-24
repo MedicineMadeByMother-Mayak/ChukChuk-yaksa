@@ -33,7 +33,7 @@ public class Tag {
 
     //공통 데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 
     public void registTag (Long tagId, String tagName, User user, Category category, CommonData commonData) {
         this.tagId = tagId;

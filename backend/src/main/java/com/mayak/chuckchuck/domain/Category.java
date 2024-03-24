@@ -23,7 +23,7 @@ public class Category {
 
     //공통데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();
 
     public void registCategory(Long categoryId, String categoryName) {
         this.categoryId = categoryId;

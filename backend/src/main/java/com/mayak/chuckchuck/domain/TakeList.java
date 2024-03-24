@@ -50,7 +50,7 @@ public class TakeList {
 
     //공통 데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 
 
     public void toggleAlarm(){

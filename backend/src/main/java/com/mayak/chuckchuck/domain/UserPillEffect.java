@@ -40,7 +40,7 @@ public class UserPillEffect {
     
     // 공통 데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 
     public void updateMemo(String memo) {
         this.memo = memo;

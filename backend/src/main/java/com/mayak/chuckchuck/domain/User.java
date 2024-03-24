@@ -61,7 +61,7 @@ public class User {
 
     //공통데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 
 
     /**
