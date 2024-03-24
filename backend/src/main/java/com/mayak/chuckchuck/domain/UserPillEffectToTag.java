@@ -27,5 +27,11 @@ public class UserPillEffectToTag {
 
     //공통 데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
+
+    public void updateUserPillEffectToTag (UserPillEffect userPillEffect, Tag tag, CommonData commonData) {
+        this.userPillEffect = userPillEffect;
+        this.tag = tag;
+        this.commonData = commonData;
+    }
 }

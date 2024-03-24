@@ -6,10 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @ToString
 @Table(name="ocr_pills")
+@NoArgsConstructor
 //약봉투에 있는 약
 public class OCRPills{
 
@@ -35,5 +35,15 @@ public class OCRPills{
 
     //공통데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();
+
+    private OCRPills(OCRList ocrList, Pill pill, String guide){
+        this.ocrList = ocrList;
+        this.pill = pill;
+        this.guide = guide;
+    }
+
+    public static OCRPills createOCRPills(Pill pill, PillBag pillBag, String guide) {
+        return new OCRPills(pillBag, pill, guide);
+    }
 }

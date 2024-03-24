@@ -1,11 +1,11 @@
 package com.mayak.chuckchuck.controller;
 
 
-import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
+import com.mayak.chuckchuck.dto.request.*;
 import com.mayak.chuckchuck.dto.request.AlarmRequest;
 import com.mayak.chuckchuck.dto.request.TakeListRequest;
-import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
+import com.mayak.chuckchuck.dto.response.ChukChukAdviceResponse;
 import com.mayak.chuckchuck.service.TakeListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class TakeListController {
     private final TakeListService takeListService;
-
 
     /**
      * 복용리스트 조회
@@ -72,17 +71,29 @@ public class TakeListController {
 
     /**
      * 복용리스트 완료
-     * @author:
-     * @param:
-     * @return:
+     * @author: 김보경
+     * @param: takeListId
+     * @return: 200ok
      */
+    @PutMapping("/{takeListId}/finish")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> finishTakeList(@PathVariable(value="takeListId") Long takeListId) {
+        takeListService.finishTakeList(takeListId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     /**
      * 복용리스트 삭제
-     * @author:
-     * @param:
-     * @return:
+     * @author:김보경
+     * @param:takeListId
+     * @return:200ok
      */
+    @DeleteMapping("/{takeListId}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> deleteTakeList(@PathVariable(value="takeListId") Long takeListId) {
+        takeListService.deleteTakeList(takeListId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 
     /**
      * 복용리스트 조회
@@ -105,10 +116,16 @@ public class TakeListController {
 
     /**
      * 척척약사 조언 리스트 조회
-     * @author:
-     * @param:
-     * @return:
+     * @author 최진학
+     * @param
+     * @return
      */
+    @GetMapping("/advice")
+    public ResponseEntity<ChukChukAdviceResponse> getChukChukAdvice(){
+        ChukChukAdviceResponse chukChukAdviceResponse = takeListService.getChukChukAdvice();
+
+        return ResponseEntity.ok(chukChukAdviceResponse);
+    }
 
     /**
      * 알람등록

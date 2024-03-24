@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -29,16 +30,22 @@ public class TakePills {
 
     //공통데이터
     @Embedded
-    private CommonData commonData;
+    private CommonData commonData = new CommonData();;
 
     //복용 리스트 약 추가에 사용
-    public TakePills(TakeList takeList, Pill pill){
+    private TakePills(TakeList takeList, Pill pill){
         this.takeList = takeList;
         this.pill = pill;
+        this.commonData =new CommonData(); // isDelete, createDate 자동생성
+
     }
     //복용 리스트 약 삭제에 사용
     public void deletePill() {
         this.commonData.toggleDelete();
+    }
+
+    public static TakePills createTakePills(TakeList takeList, Pill pill){
+        return new TakePills(takeList, pill);
     }
 
 }

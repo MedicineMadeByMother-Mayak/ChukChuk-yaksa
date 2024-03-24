@@ -12,6 +12,7 @@ public enum CommonErrorCode implements ErrorCode{
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
     FILE_NOT_FOUND(HttpStatus.NOT_FOUND, "File Not Found"),
     RESULT_NOT_FOUND(HttpStatus.NOT_FOUND, "Result Not Found"),
+    OPENAPI_RESPONSE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "OpenApi got error")
     ;
 
     private final HttpStatus httpStatus;
