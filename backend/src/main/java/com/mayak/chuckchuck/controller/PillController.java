@@ -1,13 +1,11 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.dto.response.PillDetailInfoResultResponse;
 import com.mayak.chuckchuck.dto.response.PillSearchResultResponse;
 import com.mayak.chuckchuck.service.PillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/pill")
@@ -37,8 +35,12 @@ public class PillController {
 
     /**
      * 약 상세보기
-     * @author:
-     * @param:
-     * @return:
+     * @author 최진학
+     * @param
+     * @return
      */
+    @GetMapping("/detail/{pillId}")
+    public ResponseEntity<PillDetailInfoResultResponse> getPillDetailInfo(@PathVariable Long pillId) {
+        return ResponseEntity.ok(pillService.getPillDetailInfoResult(pillId));
+    }
 }

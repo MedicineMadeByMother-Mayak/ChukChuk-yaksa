@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.dto.PagingDto;
+import com.mayak.chuckchuck.dto.response.PillDetailInfoResultResponse;
 import com.mayak.chuckchuck.dto.response.PillSearchResultResponse;
 import com.mayak.chuckchuck.repository.PillRepository;
 import jakarta.transaction.Transactional;
@@ -41,5 +42,18 @@ public class PillService {
         Page<Pill> searchResult = pillRepository.findByNameContaining(keyword, pagingDto.getPageable());
         Long totalCount = pillRepository.countByNameContaining(keyword);
         return PillSearchResultResponse.fromEntity(searchResult, totalCount);
+    }
+
+
+    /**
+     * 약 상세 조회
+     * @author 최진학
+     * @param pillId
+     * @return
+     */
+    public PillDetailInfoResultResponse getPillDetailInfoResult(long pillId) {
+        Pill pill = pillRepository.findById(pillId).get();
+
+        return PillDetailInfoResultResponse.fromEntity(pill);
     }
 }
