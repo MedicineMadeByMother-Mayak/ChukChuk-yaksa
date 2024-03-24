@@ -2,12 +2,14 @@ package com.mayak.chuckchuck.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
 @Getter
 @ToString
 @Table(name="ocr_pills")
+@NoArgsConstructor
 //약봉투에 있는 약
 public class OCRPills{
 
