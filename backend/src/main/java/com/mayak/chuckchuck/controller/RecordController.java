@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.dto.request.DiagnosisInfoResquest;
 import com.mayak.chuckchuck.dto.request.PillBagInfoRequest;
 import com.mayak.chuckchuck.dto.response.*;
 import com.mayak.chuckchuck.enums.OcrType;
@@ -61,6 +62,17 @@ public class RecordController {
         return ResponseEntity.ok((DiagnosisOCRInfoResponse) ocrService.ocrResult(OcrType.DIAGNOSIS, file));
     }
 
+    /**
+     * 진단서 내역 저장
+     * @author: 최서현
+     * @param:
+     * @return:
+     */
+    @PostMapping("/diagnosis")
+    public ResponseEntity<HttpStatus> registDianosis(@RequestBody DiagnosisInfoResquest gianosisInfo) {
+        recordService.registDianosis(gianosisInfo);
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * 진단내역 조회

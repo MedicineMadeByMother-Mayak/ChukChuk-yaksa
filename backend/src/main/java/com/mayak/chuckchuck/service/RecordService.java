@@ -3,6 +3,7 @@ package com.mayak.chuckchuck.service;
 import com.mayak.chuckchuck.domain.*;
 import com.mayak.chuckchuck.dto.PagingDto;
 import com.mayak.chuckchuck.dto.PrescriptionInfoDto;
+import com.mayak.chuckchuck.dto.request.DiagnosisInfoResquest;
 import com.mayak.chuckchuck.dto.request.PillBagInfoRequest;
 import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
 import com.mayak.chuckchuck.dto.response.DiseaseResponse;
@@ -36,10 +37,8 @@ public class  RecordService {
 
     /**
      * 약봉투 내역 저장
-     *
-     * @param pillBagInfo
      * @author: 최서현
-     * @param:
+     * @param pillBagInfo
      * @return:
      */
     public void registPillBag(PillBagInfoRequest pillBagInfo) {
@@ -60,6 +59,21 @@ public class  RecordService {
             OCRPills ocrPills = OCRPills.createOCRPills(pill.get(), pillBag, pillInfo.guide());
             ocrPillsRepository.save(ocrPills);
         }
+    }
+
+    /**
+     * 약봉투 내역 저장
+     * @author: 최서현
+     * @param diagnosisInfo
+     * @return:
+     */
+    public void registDianosis(DiagnosisInfoResquest diagnosisInfo) {
+        //== 임시 user객체
+        User user = userRepository.findById(1L).get();
+        //==
+
+        Diagnosis diagnosis = Diagnosis.createDiagnosis(user, diagnosisInfo);
+        diagnosisRepository.save(diagnosis);
     }
 
     /**
@@ -110,5 +124,6 @@ public class  RecordService {
                 .collect(Collectors.toList());
         return PillBagResponse.fromEntity((int) pillBags.getTotalElements(), pillBagResult);
     }
-    
+
+
 }
