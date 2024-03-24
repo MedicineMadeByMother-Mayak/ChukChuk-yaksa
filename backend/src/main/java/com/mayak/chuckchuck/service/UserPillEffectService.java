@@ -3,6 +3,7 @@ package com.mayak.chuckchuck.service;
 import com.mayak.chuckchuck.domain.*;
 import com.mayak.chuckchuck.dto.CategoryDto;
 import com.mayak.chuckchuck.dto.TagDto;
+import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
@@ -28,7 +29,7 @@ public class UserPillEffectService {
     private final TagRepository tagRepository;
 
     /**
-     * 약효기록 상세 조회 (인데 없으면 등록이라... reigst로 했는데 이름 진짜 맘에 안듦)
+     * 약효기록 상세 조회 & 등록
      * @author 최진학
      * @param pillId (
      * @return userPillEffectList (사용자 약효 기록 내역)
@@ -172,5 +173,27 @@ public class UserPillEffectService {
                 userPillEffectToTagRepository.saveAll(userPillEffectToTags);
             }
         }
+    }
+
+    /**
+     * 약효기록 - 조회 & 검색
+     * @author 최진학
+     * @param userPillEffectListAndSearchRequest (약효 기록 id)
+     * @return 없음
+     */
+    public void getUserPillEffectListAndSearchResult(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+        Long categoryId = userPillEffectListAndSearchRequest.categoryId();
+        String keyword = userPillEffectListAndSearchRequest.keyword();
+        String page = userPillEffectListAndSearchRequest.page();
+        boolean isSearch = false;
+        
+        // 키워드 없으면, 약효 기록 조회 페이지 or 문진표(카테고리 1번(부작용))
+        if (keyword == null) {
+            
+        } else {
+            // 키워드가 없으면, 약효 기록 리스트 조회
+        }
+
+
     }
 }

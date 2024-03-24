@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.request.RegistTagRequest;
+import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
@@ -25,6 +26,13 @@ public class UserPillEffectController {
      * @param:
      * @return:
      */
+//    @GetMapping("")
+//    public ResponseEntity<> getUserPillEffectListAndSearch(@RequestBody UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+//        userPillEffectService.getUserPillEffectListAndSearchResult(userPillEffectListAndSearchRequest);
+//
+//        return ResponseEntity.ok();
+//    }
+
 
     /**
      * 약효기록 상세조회
@@ -47,7 +55,6 @@ public class UserPillEffectController {
      */
     @PostMapping("/")
     public ResponseEntity<Void> registUserPillEffect(@RequestBody UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
-        System.out.println(userPillEffectRegistInfoRequest);
         userPillEffectService.updateUserPillEffect(userPillEffectRegistInfoRequest);
 
         return ResponseEntity.ok().build();
