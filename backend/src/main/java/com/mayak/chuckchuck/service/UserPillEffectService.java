@@ -129,7 +129,7 @@ public class UserPillEffectService {
     }
 
     /**
-     * 약효기록 - 추가 (업데이트)
+     * 약효기록 - 추가 (업데이트) & 태그 등록 기능
      * @author 최진학
      * @param userPillEffectRegistInfoRequest (약효 기록 업데이트 request)
      * @return 없음
@@ -157,8 +157,7 @@ public class UserPillEffectService {
                 CommonData commonData = new CommonData();
                 List<UserPillEffectToTag> userPillEffectToTags = currentTagDtos.stream()
                         .map(tempTagDto -> {
-                            Tag tag = new Tag();
-                            tag.registTag(tempTagDto.tagId(), tempTagDto.tagName(), user, registCategory, commonData);
+                            Tag tag = Tag.registTag(tempTagDto.tagId(), tempTagDto.tagName(), user, registCategory);
                             return tag;
                         })
                         .peek(tagRepository::save) // 태그 등록 or 업데이트
