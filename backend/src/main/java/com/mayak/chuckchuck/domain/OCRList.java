@@ -21,10 +21,6 @@ public class OCRList {
     //사용자 id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
-    private User user;
-
-    //공통 데이터
-    @Embedded
-    private CommonData commonData;
+    User user;
 
 }

@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 
@@ -32,4 +33,8 @@ public class Diagnosis extends OCRList{
     //소견
     @Column(length = 1000)
     private String opinion;
+
+    //공통 데이터
+    @Embedded
+    private CommonData commonData = new CommonData();
 }

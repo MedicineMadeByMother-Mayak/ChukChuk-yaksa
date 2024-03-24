@@ -1,16 +1,15 @@
 package com.mayak.chuckchuck.service;
 
-import com.mayak.chuckchuck.domain.Diagnosis;
-import com.mayak.chuckchuck.domain.PillBag;
-import com.mayak.chuckchuck.domain.User;
+import com.mayak.chuckchuck.domain.*;
 import com.mayak.chuckchuck.dto.PagingDto;
+import com.mayak.chuckchuck.dto.PrescriptionInfoDto;
+import com.mayak.chuckchuck.dto.request.PillBagInfoRequest;
 import com.mayak.chuckchuck.dto.response.DiagnosisResponse;
 import com.mayak.chuckchuck.dto.response.DiseaseResponse;
 import com.mayak.chuckchuck.dto.response.PillBagResponse;
-import com.mayak.chuckchuck.repository.DiagnosisRepository;
-import com.mayak.chuckchuck.repository.OCRPillsRepository;
-import com.mayak.chuckchuck.repository.PillBagRepository;
-import com.mayak.chuckchuck.repository.UserRepository;
+import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
+import com.mayak.chuckchuck.exception.RestApiException;
+import com.mayak.chuckchuck.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +32,35 @@ public class  RecordService {
     private final UserRepository userRepository;
     private final PillBagRepository pillBagRepository;
     private final OCRPillsRepository ocrPillsRepository;
+    private final PillRepository pillRepository;
+
+    /**
+     * 약봉투 내역 저장
+     *
+     * @param pillBagInfo
+     * @author: 최서현
+     * @param:
+     * @return:
+     */
+    public void registPillBag(PillBagInfoRequest pillBagInfo) {
+        //== 임시 user객체
+        User user = userRepository.findById(1L).get();
+        //==
+
+        //약봉투 저장
+        PillBag pillBag = PillBag.createPillBag(pillBagInfo, user);
+        pillBagRepository.save(pillBag);
+
+        //약봉투 내용 저장
+        List<PrescriptionInfoDto> pills = pillBagInfo.pills(); 
+        for(PrescriptionInfoDto pillInfo : pills){
+            Optional<Pill> pill = pillRepository.findById(pillInfo.pillId());
+            if(!pill.isPresent()) throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
+
+            OCRPills ocrPills = OCRPills.createOCRPills(pill.get(), pillBag, pillInfo.guide());
+            ocrPillsRepository.save(ocrPills);
+        }
+    }
 
     /**
      * 진단 기록 조회
@@ -81,4 +110,5 @@ public class  RecordService {
                 .collect(Collectors.toList());
         return PillBagResponse.fromEntity((int) pillBags.getTotalElements(), pillBagResult);
     }
+    
 }

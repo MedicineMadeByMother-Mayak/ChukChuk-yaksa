@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.dto.request.PillBagInfoRequest;
 import com.mayak.chuckchuck.dto.response.*;
 import com.mayak.chuckchuck.enums.OcrType;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
@@ -8,6 +9,7 @@ import com.mayak.chuckchuck.service.OCRService;
 import com.mayak.chuckchuck.service.RecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +35,18 @@ public class RecordController {
     public ResponseEntity<PillBagOCRInfoResponse> ocrPillBag(@RequestBody MultipartFile file) {
         if(file==null || file.isEmpty()) throw new RestApiException(CommonErrorCode.FILE_NOT_FOUND);
         return ResponseEntity.ok((PillBagOCRInfoResponse) ocrService.ocrResult(OcrType.PILLBAG, file));
+    }
+
+    /**
+     * 약봉투 내역 저장
+     * @author: 최서현
+     * @param:
+     * @return:
+     */
+    @PostMapping("/pill-bag")
+    public ResponseEntity<HttpStatus> registPillBag(@RequestBody PillBagInfoRequest pillBagInfo) {
+        recordService.registPillBag(pillBagInfo);
+        return ResponseEntity.ok().build();
     }
 
     /**
