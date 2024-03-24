@@ -65,6 +65,15 @@ spring:
 jwt:
   secret: ${JWT_SECRET_KEY_CODE}
 
+app:
+  auth:
+    tokenSecret: ${JWT_TOKEN_SECRET}
+    tokenExpiry: 7200000 # 2시간
+    refreshTokenExpiry: 604800000 #7일
+  oauth2:
+    authorizedRedirectUris:
+      - http://localhost:8080
+
 logging:
   level:
     org.hibernate.SQL: debug

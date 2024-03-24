@@ -42,12 +42,10 @@ public class UserService {
     }
 
     // 회원가입 - 소셜로그인
-    @org.springframework.transaction.annotation.Transactional
-    public User join(SocialCode socialCode, String email) {
+    public void join(SocialCode socialCode, String email) {
         checkEmailExistenceOrException(socialCode, email);
         User user = User.of(socialCode, email);
         userRepository.save(user);
-        return user;
     }
 
     // 동일한 유저가 이미 있으면 에러 아니면 진행.

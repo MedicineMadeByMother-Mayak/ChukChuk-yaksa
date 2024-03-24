@@ -1,84 +1,50 @@
 package com.mayak.chuckchuck.oauth2.user.Naver;
 
 import com.mayak.chuckchuck.enums.SocialCode;
-import com.mayak.chuckchuck.oauth2.user.OAuth2Provider;
 import com.mayak.chuckchuck.oauth2.user.OAuth2UserInfo;
+import lombok.ToString;
 
 import java.util.Map;
 
-public class NaverOAuth2UserInfo implements OAuth2UserInfo {
+@ToString
+public class NaverOAuth2UserInfo extends OAuth2UserInfo {
 
-    private final Map<String, Object> attributes;
-    private final String accessToken;
-    private final String id;
-    private final String email;
-    private final String name;
-    private final String firstName;
-    private final String lastName;
-    private final String nickName;
-    private final String profileImageUrl;
-
-    public NaverOAuth2UserInfo(String accessToken, Map<String, Object> attributes) {
-        this.accessToken = accessToken;
-        // attributes 맵의 response 키의 값에 실제 attributes 맵이 할당되어 있음
-        this.attributes = (Map<String, Object>) attributes.get("response");
-        this.id = (String) this.attributes.get("id");
-        this.email = (String) this.attributes.get("email");
-        this.name = (String) this.attributes.get("name");
-        this.firstName = null;
-        this.lastName = null;
-        this.nickName = (String) attributes.get("nickname");
-        ;
-        this.profileImageUrl = (String) attributes.get("profile_image");
-    }
-
-    @Override
-    public SocialCode getProvider() {
-        return SocialCode.NAVER;
-    }
-
-    @Override
-    public String getAccessToken() {
-        return accessToken;
-    }
-
-    @Override
-    public Map<String, Object> getAttributes() {
-        return attributes;
+    public NaverOAuth2UserInfo(Map<String, Object> attributes) {
+        super(attributes);
     }
 
     @Override
     public String getId() {
-        return id;
-    }
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
-    @Override
-    public String getEmail() {
-        return email;
+        if (response == null) {
+            return null;
+        }
+        return (String) response.get("id");
     }
 
     @Override
     public String getName() {
-        return name;
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        if (response == null) {
+            return null;
+        }
+        return (String) response.get("name");
     }
 
     @Override
-    public String getFirstName() {
-        return firstName;
+    public String getEmail() {
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        if (response == null) {
+            return null;
+        }
+        return (String) response.get("email");
     }
 
     @Override
-    public String getLastName() {
-        return lastName;
-    }
-
-    @Override
-    public String getNickname() {
-        return nickName;
-    }
-
-    @Override
-    public String getProfileImageUrl() {
-        return profileImageUrl;
+    public SocialCode getSocialCode() {
+        return SocialCode.NAVER;
     }
 }

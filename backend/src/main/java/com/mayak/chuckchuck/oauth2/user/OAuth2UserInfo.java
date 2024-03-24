@@ -1,28 +1,30 @@
 package com.mayak.chuckchuck.oauth2.user;
 
 import com.mayak.chuckchuck.enums.SocialCode;
+import lombok.ToString;
 
 import java.util.Map;
 
-public interface OAuth2UserInfo {
+/**
+ * OAuth2 제공자별로 리턴하는 사용자 정보 데이터의 구조와 필드의 이름 등이 다르다. 서비스별로 다른 구조를 통합하기 위한 인터페이스 정의
+ */
+@ToString
+public abstract class OAuth2UserInfo {
+    protected Map<String, Object> attributes;
 
-    SocialCode getProvider();
+    public OAuth2UserInfo(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
 
-    String getAccessToken();
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
 
-    Map<String, Object> getAttributes();
+    public abstract String getId();
 
-    String getId();
+    public abstract String getName();
 
-    String getEmail();
+    public abstract String getEmail();
 
-    String getName();
-
-    String getFirstName();
-
-    String getLastName();
-
-    String getNickname();
-
-    String getProfileImageUrl();
+    public abstract SocialCode getSocialCode();
 }

@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.oauth2.service;
 
 import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.oauth2.exception.OAuth2AuthenticationProcessingException;
+import com.mayak.chuckchuck.oauth2.user.OAuth2Provider;
 import com.mayak.chuckchuck.oauth2.user.OAuth2UserInfo;
 import com.mayak.chuckchuck.oauth2.user.OAuth2UserInfoFactory;
 import com.mayak.chuckchuck.repository.UserRepository;
@@ -46,18 +47,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
      * 해당 이메일로 된 계정이 있는 경우 -> 토큰 발급
      */
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
-        String registrationId = userRequest.getClientRegistration()
-                .getRegistrationId();
-        String accessToken = userRequest.getAccessToken().getTokenValue();
+        OAuth2Provider providerType = OAuth2Provider.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
+        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(providerType, oAuth2User.getAttributes());
 
-        OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId, accessToken, oAuth2User.getAttributes());
         if (!StringUtils.hasText(userInfo.getEmail())) {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         // 이미 가입한 유저인지 체크
-        User savedUser = userRepository.findBySocialCodeAndSocial(userInfo.getProvider(), userInfo.getEmail()).orElse(null);
+        User savedUser = userRepository.findBySocialCodeAndSocial(userInfo.getSocialCode(), userInfo.getEmail()).orElse(null);
         if (savedUser == null) {  // 없는 유저 회원가입 필요
-            userService.join(userInfo.getProvider(), userInfo.getEmail());
+            userService.join(userInfo.getSocialCode(), userInfo.getEmail());
         }
 
         return new OAuth2UserPrincipal(userInfo);

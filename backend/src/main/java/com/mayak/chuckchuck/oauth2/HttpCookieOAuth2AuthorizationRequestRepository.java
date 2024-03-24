@@ -17,8 +17,6 @@ import org.springframework.util.StringUtils;
  * 최초 프론트에서 로그인 요청시 리다이렉트할 OAuth2 제공자별 URL 정보를 쿠키에 저장하여 리다이렉트한다.
  * 그 이후 사용자가 로그인 성공시 백엔드로 리다이렉트될 때 인증 과정 및 사용자 정보를 불러오는 과정을 마친 후 쿠키에 저장된 정보를 삭제한다.
  */
-@Component
-@RequiredArgsConstructor
 public class HttpCookieOAuth2AuthorizationRequestRepository
         implements AuthorizationRequestRepository<OAuth2AuthorizationRequest> {
     public static final String OAUTH2_AUTHORIZATION_REQUEST_COOKIE_NAME = "oauth2_auth_request";

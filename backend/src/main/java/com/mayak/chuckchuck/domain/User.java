@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -62,7 +61,7 @@ public class User {
 
     //공통데이터
     @Embedded
-    private CommonData commonData = new CommonData();;
+    private CommonData commonData = new CommonData();
 
     private User(
         SocialCode socialCode,
@@ -113,4 +112,6 @@ public class User {
     public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, String token, CommonData commonData) {
         return new User(socialCode, social, userName, birth, bloodType, height, weight, sex, token, commonData);
     }
+
+    public void updateToken(String token) { this.token = token; }
 }

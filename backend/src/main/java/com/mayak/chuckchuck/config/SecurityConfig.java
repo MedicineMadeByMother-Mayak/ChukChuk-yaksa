@@ -24,10 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-    private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
-    private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-    private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
-    private final JwtAuthorizationFilter jwtAuthorizationFilter;
+    private final AuthenticationConfig authenticationConfig;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -47,14 +44,14 @@ public class SecurityConfig {
                 )
                 .sessionManagement(sessions -> sessions.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2Login(configure ->
-                        configure.authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
+                        configure.authorizationEndpoint(config -> config.authorizationRequestRepository(authenticationConfig.oAuth2AuthorizationRequestBasedOnCookieRepository()))
                                 .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
                                 .redirectionEndpoint(config -> config.baseUri("/*/oauth2/code/*"))
-                                .successHandler(oAuth2AuthenticationSuccessHandler)
-                                .failureHandler(oAuth2AuthenticationFailureHandler)
+                                .successHandler(authenticationConfig.oAuth2AuthenticationSuccessHandler())
+                                .failureHandler(authenticationConfig.oAuth2AuthenticationFailureHandler())
                 );
 
-        http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(authenticationConfig.tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
