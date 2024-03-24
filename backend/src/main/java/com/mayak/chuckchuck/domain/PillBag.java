@@ -26,7 +26,7 @@ public class PillBag extends OCRList{
     //수납금액
     @Column
     @ColumnDefault(value = "0")
-    private Integer cost;
+    private Integer cost = 0;
 
     //공통 데이터
     @Embedded
