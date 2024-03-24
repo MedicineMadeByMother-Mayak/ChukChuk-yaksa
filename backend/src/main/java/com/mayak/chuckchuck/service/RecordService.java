@@ -34,6 +34,9 @@ public class  RecordService {
     private final PillBagRepository pillBagRepository;
     private final OCRPillsRepository ocrPillsRepository;
     private final PillRepository pillRepository;
+    private final TakeListRepository takeListRepository;
+    private final TakePillsRepository takePillsRepository;
+
 
     /**
      * 약봉투 내역 저장
@@ -50,14 +53,22 @@ public class  RecordService {
         PillBag pillBag = PillBag.createPillBag(pillBagInfo, user);
         pillBagRepository.save(pillBag);
 
-        //약봉투 내용 저장
-        List<PrescriptionInfoDto> pills = pillBagInfo.pills(); 
+        //약봉투 내용 저장 및 복용리스트에 추가
+        List<PrescriptionInfoDto> pills = pillBagInfo.pills();
+        TakeList  takeList =TakeList.createTakeList(user);
+        takeListRepository.save(takeList);
+
         for(PrescriptionInfoDto pillInfo : pills){
             Optional<Pill> pill = pillRepository.findById(pillInfo.pillId());
             if(!pill.isPresent()) throw new RestApiException(CommonErrorCode.INVALID_PARAMETER);
 
+            //약봉투안의 약 저장
             OCRPills ocrPills = OCRPills.createOCRPills(pill.get(), pillBag, pillInfo.guide());
             ocrPillsRepository.save(ocrPills);
+
+            //복용리스트에 약 추가
+            TakePills takePills = TakePills.createTakePills(takeList, pill.get());
+            takePillsRepository.save(takePills);
         }
     }
 

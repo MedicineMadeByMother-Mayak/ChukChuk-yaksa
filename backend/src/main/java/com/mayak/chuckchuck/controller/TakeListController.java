@@ -95,12 +95,6 @@ public class TakeListController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    /**
-     * 복용리스트 조회
-     * @author:
-     * @param:
-     * @return:
-     */
 
     /**
      * 알람리스트 조회

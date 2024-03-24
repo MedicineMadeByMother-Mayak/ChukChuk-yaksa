@@ -30,7 +30,7 @@ public class TakeList {
 
     //복용알림여부
     @Column(name="is_alarm")
-    private Boolean isAlarm;
+    private Boolean isAlarm = false;
 
     //알림시간
     @Column(name="alarm_time")
@@ -38,11 +38,11 @@ public class TakeList {
 
     //반복주기
     @ColumnDefault(value = "24")
-    private int cycle;
+    private int cycle=24;
 
     //복용 완료 여부
     @Column(name="is_finish")
-    private Boolean isFinish;
+    private Boolean isFinish = false;
 
     //복용완료날짜
     @Column(name="finish_date")
@@ -50,7 +50,18 @@ public class TakeList {
 
     //공통 데이터
     @Embedded
-    private CommonData commonData = new CommonData();;
+    private CommonData commonData = new CommonData();
+
+    private TakeList(User user, String takeListName){
+        this.user = user;
+        this.takeListName = takeListName;
+    }
+
+    public static TakeList createTakeList(User user){
+        LocalDateTime now = LocalDateTime.now();
+        String dateString = String.format("%04d-%02d-%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        return new TakeList(user, dateString+"에 추가한 약");
+    }
 
 
     public void toggleAlarm(){

@@ -110,10 +110,4 @@ public class RecordController {
         return ResponseEntity.ok(diseaseResponse);
     }
 
-    /**
-     * 약력조회
-     * @author:
-     * @param:
-     * @return:
-     */
 }
