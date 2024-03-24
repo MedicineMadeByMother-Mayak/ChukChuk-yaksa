@@ -6,8 +6,9 @@ import com.mayak.chuckchuck.dto.response.*;
 import com.mayak.chuckchuck.enums.OcrType;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
+import com.mayak.chuckchuck.service.DiagnosisService;
 import com.mayak.chuckchuck.service.OCRService;
-import com.mayak.chuckchuck.service.RecordService;
+import com.mayak.chuckchuck.service.PillBagService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 //기록(약봉투, 진단서, 병력, 약력)과 관련한 컨트롤러
 public class RecordController {
 
-    private final RecordService recordService;
+    private final PillBagService pillBagService;
+    private final DiagnosisService diagnosisService;
     private final OCRService ocrService;
 
 
@@ -46,7 +48,7 @@ public class RecordController {
      */
     @PostMapping("/pill-bag")
     public ResponseEntity<HttpStatus> registPillBag(@RequestBody PillBagInfoRequest pillBagInfo) {
-        recordService.registPillBag(pillBagInfo);
+        pillBagService.registPillBag(pillBagInfo);
         return ResponseEntity.ok().build();
     }
 
@@ -70,7 +72,7 @@ public class RecordController {
      */
     @PostMapping("/diagnosis")
     public ResponseEntity<HttpStatus> registDianosis(@RequestBody DiagnosisInfoResquest gianosisInfo) {
-        recordService.registDianosis(gianosisInfo);
+        diagnosisService.registDianosis(gianosisInfo);
         return ResponseEntity.ok().build();
     }
 
@@ -82,7 +84,7 @@ public class RecordController {
      */
     @GetMapping("/diagnosis")
     public ResponseEntity<DiagnosisResponse> getDiagnosisList(@RequestParam final int page){
-        DiagnosisResponse diagnosisResponse = recordService.getDiagnosisList(page - 1);
+        DiagnosisResponse diagnosisResponse = diagnosisService.getDiagnosisList(page - 1);
         return ResponseEntity.ok(diagnosisResponse);
     }
 
@@ -94,7 +96,7 @@ public class RecordController {
      */
     @GetMapping("/pill-bag")
     public ResponseEntity<PillBagResponse> getPillBagList(@RequestParam final int page){
-        PillBagResponse pillBagResponse = recordService.getPillBagResponse(page);
+        PillBagResponse pillBagResponse = pillBagService.getPillBagResponse(page);
         return ResponseEntity.ok(pillBagResponse);
     }
 
@@ -106,7 +108,7 @@ public class RecordController {
      */
     @GetMapping("/disease")
     public ResponseEntity<DiseaseResponse> getDiseaseList() {
-        DiseaseResponse diseaseResponse = recordService.getDiseaseResponse();
+        DiseaseResponse diseaseResponse = diagnosisService.getDiseaseResponse();
         return ResponseEntity.ok(diseaseResponse);
     }
 
