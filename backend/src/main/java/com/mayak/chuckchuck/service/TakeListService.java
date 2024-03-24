@@ -155,7 +155,7 @@ public class TakeListService {
                 .collect(Collectors.toList());
 
         for (Pill pill : pills) {
-            TakePills takePills = new TakePills(takeList, pill);
+            TakePills takePills = TakePills.createTakePills(takeList, pill);
             takePillsRepository.save(takePills);
         }
     }
@@ -169,9 +169,7 @@ public class TakeListService {
     public void updateTakeListName(Long takeListId, UpdateTakeListRequest updateTakeListRequest) {
         TakeList takeList = takeListRepository.findById(takeListId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-
         takeList.updateTakeListName(updateTakeListRequest);
-        takeListRepository.save(takeList);
     }
 
     /**
@@ -180,13 +178,10 @@ public class TakeListService {
      * @param:takeListId
      * @return: ResponseEntity.ok()
      */
-    @Transactional
     public void deleteTakeListPill(Long takeListId, Long pillId) {
         TakePills takePills = takePillsRepository.findPillsByTakeListIdAndPillId(takeListId, pillId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-
         takePills.deletePill();
-        takePillsRepository.save(takePills);
     }
 
     /**
@@ -197,12 +192,10 @@ public class TakeListService {
      * - isFinish 를 0 → 1 로 변환
      * - finishDate 를 그 당시 시간(modifiedDate와 비슷) 로 저장한다.
      */
-    @Transactional
     public void finishTakeList(Long takeListId) {
         TakeList takeList = takeListRepository.findById(takeListId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         takeList.finishTakeList();
-        takeListRepository.save(takeList);
     }
 
     /**
@@ -212,13 +205,10 @@ public class TakeListService {
      * @return: ResponseEntity.ok()
      * - isDelete toggle() 한다.
      */
-    @Transactional
     public void deleteTakeList(Long takeListId) {
         TakeList takeList = takeListRepository.findById(takeListId)
                 .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-
         takeList.deleteTakeList();
-        takeListRepository.save(takeList);
     }
 
     /**

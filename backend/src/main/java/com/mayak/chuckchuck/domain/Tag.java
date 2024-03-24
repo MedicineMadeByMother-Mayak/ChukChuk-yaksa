@@ -55,4 +55,14 @@ public class Tag {
     public static Tag registTag(Long tagId, String tagName, User user, Category category) {
         return new Tag(tagId, tagName, user, category);
     }
+
+    private Tag(String tagName, User user, Category category) {
+        this.tagName = tagName;
+        this.user = user;
+        this.category = category;
+    }
+
+    public static Tag createTag(String tagName, User user, Category category) {
+        return new Tag(tagName, user, category);
+    }
 }

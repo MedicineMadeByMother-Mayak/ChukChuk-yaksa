@@ -1,10 +1,9 @@
-package com.mayak.chuckchuck.ocr;
+package com.mayak.chuckchuck.utill;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
