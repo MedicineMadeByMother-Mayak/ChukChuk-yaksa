@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.oauth2.user.Naver;
 
+import com.mayak.chuckchuck.enums.SocialCode;
 import com.mayak.chuckchuck.oauth2.user.OAuth2Provider;
 import com.mayak.chuckchuck.oauth2.user.OAuth2UserInfo;
 
@@ -32,8 +33,8 @@ public class NaverOAuth2UserInfo implements OAuth2UserInfo {
     }
 
     @Override
-    public OAuth2Provider getProvider() {
-        return OAuth2Provider.NAVER;
+    public SocialCode getProvider() {
+        return SocialCode.NAVER;
     }
 
     @Override

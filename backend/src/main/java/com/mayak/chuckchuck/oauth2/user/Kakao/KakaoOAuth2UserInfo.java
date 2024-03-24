@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.oauth2.user.Kakao;
 
+import com.mayak.chuckchuck.enums.SocialCode;
 import com.mayak.chuckchuck.oauth2.user.OAuth2Provider;
 import com.mayak.chuckchuck.oauth2.user.OAuth2UserInfo;
 
@@ -43,8 +44,8 @@ public class KakaoOAuth2UserInfo implements OAuth2UserInfo {
     }
 
     @Override
-    public OAuth2Provider getProvider() {
-        return OAuth2Provider.KAKAO;
+    public SocialCode getProvider() {
+        return SocialCode.KAKAO;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.oauth2.user.Google;
 
+import com.mayak.chuckchuck.enums.SocialCode;
 import com.mayak.chuckchuck.oauth2.user.OAuth2Provider;
 import com.mayak.chuckchuck.oauth2.user.OAuth2UserInfo;
 
@@ -30,8 +31,8 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
     }
 
     @Override
-    public OAuth2Provider getProvider() {
-        return OAuth2Provider.GOOGLE;
+    public SocialCode getProvider() {
+        return SocialCode.GOOGLE;
     }
 
     @Override

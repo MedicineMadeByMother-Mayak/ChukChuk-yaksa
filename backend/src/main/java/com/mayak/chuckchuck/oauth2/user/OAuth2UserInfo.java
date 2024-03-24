@@ -1,10 +1,12 @@
 package com.mayak.chuckchuck.oauth2.user;
 
+import com.mayak.chuckchuck.enums.SocialCode;
+
 import java.util.Map;
 
 public interface OAuth2UserInfo {
 
-    OAuth2Provider getProvider();
+    SocialCode getProvider();
 
     String getAccessToken();
 

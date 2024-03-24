@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -63,6 +64,29 @@ public class User {
     @Embedded
     private CommonData commonData = new CommonData();;
 
+    private User(
+        SocialCode socialCode,
+        String social,
+        String userName,
+        LocalDateTime birth,
+        BloodType bloodType,
+        int height,
+        int weight,
+        Sex sex,
+        String token,
+        CommonData commonData
+    ) {
+        this.socialCode = socialCode;
+        this.social = social;
+        this.userName = userName;
+        this.birth = birth;
+        this.bloodType = bloodType;
+        this.height = height;
+        this.weight = weight;
+        this.sex = sex;
+        this.token = token;
+        this.commonData = commonData;
+    }
 
     /**
      * User의 기타정보를 변경
@@ -76,5 +100,17 @@ public class User {
         this.bloodType = userInfoRequest.bloodType();
         this.height = userInfoRequest.height();
         this.weight = userInfoRequest.weight();
+    }
+
+    public static User of(SocialCode socialCode, String social) {
+        return of(socialCode, social, null, null, null, 0, 0, null, null);
+    }
+
+    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, CommonData commonData) {
+        return of(socialCode, social, userName, birth, bloodType, height, weight, sex, null, commonData);
+    }
+
+    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, String token, CommonData commonData) {
+        return new User(socialCode, social, userName, birth, bloodType, height, weight, sex, token, commonData);
     }
 }
