@@ -19,8 +19,8 @@ export default {
 <style>
 /* 모바일 환경으로 사이즈 고정 */
 .modie_size {
-  width: 360px;
-  height: 740px;
+  width: 320px;
+  height: 658px;
   position: absolute;
   top: 0;
   left: 0;

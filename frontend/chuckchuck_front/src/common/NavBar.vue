@@ -16,26 +16,28 @@
 </template>
 
 <script>
-// export default {
-
-// }
 </script>
 
 <style scoped>
 .nav-bar {
   position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #333;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  bottom: 16px;
+  left: 7%;
+  width: 85%;
+  height: 50px;
   display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
+  align-items: center;
+
+  background-color: white;
+  border-radius: 22px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: top 0.3s ease; /* 부드러운 이동 효과 */
 }
 .nav-item {
   color: white;
   text-align: center;
+  flex: 1;
 }
 
 .nav-item i {
