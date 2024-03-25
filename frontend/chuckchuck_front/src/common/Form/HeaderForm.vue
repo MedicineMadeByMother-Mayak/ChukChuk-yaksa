@@ -1,3 +1,5 @@
+<!-- 사용법     <HeaderForm :title="'사랑해요'" :height="'100px'" /> -->
+
 <template>
   <div class="header">
     <div class="inner-header flex" :style="{ height }">
