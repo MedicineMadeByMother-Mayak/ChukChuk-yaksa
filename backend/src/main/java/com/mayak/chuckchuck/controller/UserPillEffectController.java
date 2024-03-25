@@ -1,9 +1,12 @@
 package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.request.RegistTagRequest;
+import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
+import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
+import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
 import com.mayak.chuckchuck.service.CommonService;
 import com.mayak.chuckchuck.service.TagService;
 import com.mayak.chuckchuck.service.UserPillEffectService;
@@ -24,8 +27,26 @@ public class UserPillEffectController {
      * 약효기록 리스트 조회 및 검색
      * @author 최진학
      * @param:
-     * @return:
+     * @return userPillSideEffectListResponse(부작용 리스트) or userPillEffectListAndSearchResponse(조회 및 검색)
      */
+    @GetMapping("")
+    public ResponseEntity<Object> getUserPillEffectListAndSearch(@RequestBody UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+
+        // if   : 페이징 X, 문진표 - 부작용 리스트 조회
+        // else : 페이징 O, 약효 기록 리스트 조회 or 검색
+        if (userPillEffectListAndSearchRequest.page() == null) {
+            UserPillSideEffectListResponse userPillSideEffectListResponse
+                    = userPillEffectService.getUserPillSideEffectList();
+
+            return ResponseEntity.ok(userPillSideEffectListResponse);
+        } else {
+            UserPillEffectListAndSearchResponse userPillEffectListAndSearchResponse
+                    = userPillEffectService.getUserPillEffectListAndSearch(userPillEffectListAndSearchRequest);
+
+            return ResponseEntity.ok(userPillEffectListAndSearchResponse);
+        }
+    }
+
 
     /**
      * 약효기록 상세조회
@@ -48,7 +69,6 @@ public class UserPillEffectController {
      */
     @PostMapping("/")
     public ResponseEntity<Void> registUserPillEffect(@RequestBody UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
-        System.out.println(userPillEffectRegistInfoRequest);
         userPillEffectService.updateUserPillEffect(userPillEffectRegistInfoRequest);
 
         return ResponseEntity.ok().build();
@@ -73,19 +93,20 @@ public class UserPillEffectController {
      * @param:
      * @return:
      */
-
-    /**
-     * 약효기록 약효에 태그 추가
-     * @author 최진학
-     * @param:
-     * @return:
-     */
     @PostMapping("/tag")
     public ResponseEntity<Void> registTag(@RequestBody RegistTagRequest registTagRequest) {
         tagService.reigstTag(registTagRequest.tagName(), registTagRequest.categoryId());
 
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * 약효기록 약효에 태그 추가 (약효 기록 상세조횡에 기능 추가 완료)
+     * @author 최진학
+     * @param:
+     * @return:
+     */
+
 
     /**
      * 약효기록 - 메모수정

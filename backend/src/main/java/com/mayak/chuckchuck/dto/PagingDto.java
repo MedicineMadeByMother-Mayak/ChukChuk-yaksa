@@ -14,5 +14,4 @@ public class PagingDto {
     }
     private final int PAGE_SIZE = 5;
     private final PageRequest pageable; // 페이징용 변수
-
 }
