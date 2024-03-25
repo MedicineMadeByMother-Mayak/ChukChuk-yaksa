@@ -3,12 +3,12 @@
     <div class="header">
       <h3>문진표</h3>
       <p>본인의 약국에 프로필을 보여주고 더 정확한 진단을 받아보세요.</p>
+      <div class="profile-picture">
+        <img src="../../assests/img/woman.jpg" alt="프로필 사진" />
+      </div>
     </div>
 
     <div class="profile-container">
-      <div class="profile-picture">
-        <!-- <img src="/path/to/image.png" alt="프로필 사진" /> -->
-      </div>
       <h3>김민중(여)</h3>
       <hr style="margin: 8px 18px" />
     </div>
@@ -92,6 +92,11 @@ export default {
   justify-content: center;
 }
 
+.header > * {
+  position: relative;
+  top: 33px;
+}
+
 .user-madical-info {
   font-family: "Arial", sans-serif;
 }
@@ -101,15 +106,27 @@ div p {
   margin: 5px;
 }
 
+/* 프로필 컨테이너 조정 */
 .profile-container {
-  text-align: center;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  position: relative;
+  padding-top: 50px; /* 프로필 사진 높이만큼 패딩 추가 */
+  margin-top: -50px; /* 헤더와 겹치도록 마진 설정 */
+}
+
+.profile-picture {
+  position: relative;
 }
 
 .profile-picture img {
+  width: 100px; /* 사진 크기 조정 */
+  height: 100px;
   border-radius: 50%;
   border: 4px solid white;
-  margin-top: -50px;
+  position: relative; /* 상위 요소(.profile-container)에 대해 상대적 위치 지정 */
+  z-index: 2; /* 다른 요소 위로 올림 */
   background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
 }
 
 .container {
