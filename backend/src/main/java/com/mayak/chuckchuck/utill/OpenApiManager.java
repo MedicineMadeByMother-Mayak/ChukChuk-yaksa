@@ -31,8 +31,6 @@ public class OpenApiManager {
     public void getIllNamethroughOpenApi(String illCode) {
         try {
             String url = makeOpenApiUrl(illCode);
-            System.out.println("url : "+url);
-
 
             HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
 
@@ -47,9 +45,6 @@ public class OpenApiManager {
             }
 
             JSONObject xmlJSONObj = XML.toJSONObject(st.toString());
-            String jsonPrettyPrintString = xmlJSONObj.toString(4);
-            System.out.println(jsonPrettyPrintString);
-
 
         } catch (IOException e) {
             throw new RestApiException(CommonErrorCode.OPENAPI_RESPONSE_ERROR);

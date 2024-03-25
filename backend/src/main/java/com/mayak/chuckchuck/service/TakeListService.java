@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class TakeListService {
     private final TakeListRepository takeListRepository;
-    private final UserRepository userRepository;
     private final TakePillsRepository takePillsRepository;
     private final PillRepository pillRepository;
 
@@ -63,11 +62,7 @@ public class TakeListService {
      * @param:
      * @return: ActiveAlarmListResponse
      */
-    public ActiveAlarmListResponse getAlarmList() {
-        //===임시 User 객체 사용
-        User user = userRepository.findById(1L).get();
-        //===
-
+    public ActiveAlarmListResponse getAlarmList(User user) {
         List<TakeList> takeLists = takeListRepository.findByUserAndIsAlarmTrue(user);
         return ActiveAlarmListResponse.fromEntity(takeLists);
     }
@@ -94,12 +89,6 @@ public class TakeListService {
                 new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
     }
 
-    // 유저 있으면 가져오고, 없으면 에러 반환
-    private User getUserOrException(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() ->
-                new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
-    }
-
 
     /**
      * 사용자의 복용 리스트 조회
@@ -112,7 +101,7 @@ public class TakeListService {
      * period=true : 문진표
      * 한달 이내 복용리스트 조회, isFinish=false 라면 기간 상관없이 전체조회.
      */
-    public TakeListResponse getTakeList(TakeListRequest takeListRequest) {
+    public TakeListResponse getTakeList(User user, TakeListRequest takeListRequest) {
         /**period t/f 별 기준일자(baseDate) 분기*/
         LocalDateTime baseDate;
         if (takeListRequest.period()) {
@@ -120,10 +109,6 @@ public class TakeListService {
         } else {
             baseDate = LocalDateTime.of(1910, 1, 1, 0, 0, 0);
         }
-
-        //===임시 User 객체 사용
-        User user = userRepository.findById(1L).get();
-        //===
 
         List<TakeListEach> takeListEachList = new ArrayList<>();
         List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, baseDate);
@@ -217,11 +202,7 @@ public class TakeListService {
      * @param
      * @return
      */
-    public ChukChukAdviceResponse getChukChukAdvice() {
-        //===임시 User 객체 사용
-        User user = userRepository.findById(1L).get();
-        //===
-
+    public ChukChukAdviceResponse getChukChukAdvice(User user) {
         List<TakeList> takeLists = takeListRepository.findTakeListByUserIdAndFinishDateAndIsFinish(user, LocalDateTime.now().minusMonths(1));
         List<ChukchukAdviceDto> chukchukAdviceDtos = new ArrayList<>();
         List<Long> checkPillId = new ArrayList<>();

@@ -26,11 +26,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class DiagnosisService {
+
     private final DiagnosisRepository diagnosisRepository;
-    private final UserRepository userRepository;
     private final PillBagRepository pillBagRepository;
     private final OCRPillsRepository ocrPillsRepository;
-
 
     /**
      * 진단서 내역 저장
@@ -38,11 +37,7 @@ public class DiagnosisService {
      * @param diagnosisInfo
      * @return:
      */
-    public void registDianosis(DiagnosisInfoResquest diagnosisInfo) {
-        //== 임시 user객체
-        User user = userRepository.findById(1L).get();
-        //==
-
+    public void registDianosis(User user, DiagnosisInfoResquest diagnosisInfo) {
         Diagnosis diagnosis = Diagnosis.createDiagnosis(user, diagnosisInfo);
         diagnosisRepository.save(diagnosis);
     }
@@ -53,8 +48,7 @@ public class DiagnosisService {
      * @param: page 페이지 번호
      * @return: DiagnosisResponse
      */
-    public DiagnosisResponse getDiagnosisList(int page) {
-        User user = userRepository.findById(1L).get();
+    public DiagnosisResponse getDiagnosisList(User user, int page) {
         Pageable pageable = PageRequest.of(page, 5, Sort.Direction.DESC, "diagnosisDate");
 
         Page<Diagnosis> diagnosisPage = diagnosisRepository.findAllByUser(user, pageable);
@@ -67,8 +61,7 @@ public class DiagnosisService {
      * @param:
      * @return: DiseaseResponse
      */
-    public DiseaseResponse getDiseaseResponse() {
-        User user = userRepository.findById(1L).get();
+    public DiseaseResponse getDiseaseResponse(User user) {
         List<Diagnosis> dieaseList = diagnosisRepository.findAllByUser(user);
         return DiseaseResponse.fromEntity(dieaseList);
     }
@@ -79,8 +72,7 @@ public class DiagnosisService {
      * @param:
      * @return: PillBagResponse
      */
-    public PillBagResponse getPillBagResponse(int page) {
-        User user = userRepository.findById(1L).get();
+    public PillBagResponse getPillBagResponse(User user, int page) {
         PagingDto pagingDto = new PagingDto(page, "buildDate");
         Page<PillBag> pillBags = pillBagRepository
                 .findByUser(user, pagingDto.getPageable());
@@ -95,6 +87,4 @@ public class DiagnosisService {
                 .collect(Collectors.toList());
         return PillBagResponse.fromEntity((int) pillBags.getTotalElements(), pillBagResult);
     }
-
-
 }

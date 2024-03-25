@@ -68,11 +68,18 @@ jwt:
 app:
   auth:
     tokenSecret: ${JWT_TOKEN_SECRET}
-    tokenExpiry: 7200000 # 2시간
+#    tokenExpiry: 7200000 # 2시간
+    tokenExpiry: 604800000
     refreshTokenExpiry: 604800000 #7일
   oauth2:
     authorizedRedirectUris:
       - http://localhost:8080
+
+cors:
+  allowed-origins: '*'
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS, PATCH, HEAD
+  allowed-headers: '*'
+  max-age: 3600
 
 logging:
   level:

@@ -23,21 +23,17 @@ public class UserService {
      * @author: 최서현
      * @param: userInfoRequest
      */
-    public void updateUserInfo(UserInfoRequest userInfoRequest) {
-        //== 임시User객체
-        User user = userRepository.findById(1L).get();
-        //==
+    public void updateUserInfo(User user, UserInfoRequest userInfoRequest) {
         user.updateInfo(userInfoRequest);
     }
 
     /**
      * User의 기타 개인정보를 조회
      *
-     * @author: 김태완
-     * @param: return: UserInfoResponse
+     * @author: 차현철
+     * @param: User
      */
-    public UserInfoResponse getUserInfo() {
-        User user = userRepository.findById(1L).get();
+    public UserInfoResponse getUserInfo(User user) {
         return UserInfoResponse.fromEntity(user);
     }
 
@@ -50,7 +46,7 @@ public class UserService {
 
     // 동일한 유저가 이미 있으면 에러 아니면 진행.
     private void checkEmailExistenceOrException(SocialCode socialCode, String email) {
-        userRepository.findBySocialCodeAndSocial(socialCode, email).ifPresent(it -> {
+        userRepository.findBySocialCodeAndEmail(socialCode, email).ifPresent(it -> {
             throw new RestApiException(CommonErrorCode.DUPLICATED_USER_EMAIL);
         });
     }

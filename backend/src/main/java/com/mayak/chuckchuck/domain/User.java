@@ -31,7 +31,7 @@ public class User {
 
     //소셜로그인 플랫폼 이름
     @Column(length = 100)
-    private String social;
+    private String email;
 
     //사용자이름
     @Column(name="user_name", length = 20)
@@ -65,7 +65,7 @@ public class User {
 
     private User(
         SocialCode socialCode,
-        String social,
+        String email,
         String userName,
         LocalDateTime birth,
         BloodType bloodType,
@@ -76,7 +76,7 @@ public class User {
         CommonData commonData
     ) {
         this.socialCode = socialCode;
-        this.social = social;
+        this.email = email;
         this.userName = userName;
         this.birth = birth;
         this.bloodType = bloodType;
