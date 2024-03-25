@@ -1,5 +1,7 @@
 package com.mayak.chuckchuck.dto.request;
 
+import com.mayak.chuckchuck.domain.TakeList;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,7 @@ import java.util.List;
  * 추가할 약 ID의 목록 pills 를 record로 선언
  * @author:김보경
  */
-public record AddPillsToTakeListRequest(List<Long> pills) {
-}
+public record AddPillsToTakeListRequest(
+        List<Long> pills)
+{}
 
