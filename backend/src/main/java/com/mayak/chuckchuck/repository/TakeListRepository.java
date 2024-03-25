@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface TakeListRepository extends JpaRepository<TakeList, Long> {
 
@@ -27,5 +28,4 @@ public interface TakeListRepository extends JpaRepository<TakeList, Long> {
      */
     @Query("SELECT t FROM TakeList t WHERE t.user = :user AND (t.finishDate >= :baseDate OR t.isFinish = false) AND t.commonData.isDelete = false ORDER BY t.commonData.createDate DESC")
     List<TakeList> findTakeListByUserIdAndFinishDateAndIsFinish(@Param("user") User user, @Param("baseDate") LocalDateTime baseDate);
-
 }

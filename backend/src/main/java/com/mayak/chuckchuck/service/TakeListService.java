@@ -128,10 +128,21 @@ public class TakeListService {
      * @return: ResponseEntity.ok()
      */
     public void addPillsToTakeList(Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
-        TakeList takeList = takeListRepository.findById(takeListId)
-                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        //== 임시 user객체
+        User user = userRepository.findById(1L).get();
+        //==
+        TakeList takeList;
 
-        List<Long> currentPillIds = takePillsRepository.findPillIdsByTakeListId(takeListId);
+        if (takeListId == null) {
+            takeList = TakeList.createTakeList(user);
+            takeListRepository.save(takeList);
+
+        } else {
+            takeList = takeListRepository.findById(takeListId)
+                    .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        }
+
+        List<Long> currentPillIds = takePillsRepository.findPillIdsByTakeListId(takeList.getTakeListId());
 
         List<Pill> pills = addPillsToTakeListRequest.pills().stream()
                 .filter(pillId -> !currentPillIds.contains(pillId))

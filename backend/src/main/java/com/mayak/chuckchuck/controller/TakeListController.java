@@ -16,6 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/take-list")
 @RequiredArgsConstructor
@@ -43,9 +46,13 @@ public class TakeListController {
      * @return:200ok
      */
     @PostMapping("/{takeListId}")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> addPillsToTakeList(@PathVariable(value="takeListId") Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest){
+    public ResponseEntity<Void> addPillsToTakeListWithId(@PathVariable Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
         takeListService.addPillsToTakeList(takeListId, addPillsToTakeListRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    @PostMapping
+    public ResponseEntity<Void> addPillsToTakeListWithoutId(@RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
+        takeListService.addPillsToTakeList(null, addPillsToTakeListRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
