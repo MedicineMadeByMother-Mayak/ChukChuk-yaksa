@@ -142,15 +142,19 @@ public class TakeListService {
      * @param: takeListId
      * @return: ResponseEntity.ok()
      */
-    public void addPillsToTakeList(Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
+    public void addPillsToTakeList(AddPillsToTakeListRequest addPillsToTakeListRequest) {
         //== 임시 user객체
         User user = userRepository.findById(1L).get();
         //==
 
-        LocalDateTime now = LocalDateTime.now();
-        String dateString = String.format("%04d-%02d-%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        String takeListName = addPillsToTakeListRequest.takeListName();
 
-        TakeList takeList = takeListRepository.findByUserAndDateString(user, dateString)
+        if (takeListName == null || takeListName.isEmpty()) {
+            LocalDateTime now = LocalDateTime.now();
+            takeListName = String.format("%04d-%02d-%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        }
+
+        TakeList takeList = takeListRepository.findByUserAndTakeListName(user ,takeListName)
                 .orElseGet(() -> {
                     TakeList newTakeList = TakeList.createTakeList(user);
                     return takeListRepository.save(newTakeList);

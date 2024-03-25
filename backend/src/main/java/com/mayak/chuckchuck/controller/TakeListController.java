@@ -36,10 +36,10 @@ public class TakeListController {
      * @param: takeListId
      * @return:200ok
      */
-    @PostMapping("/{takeListId}")
+    @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> addPillsToTakeList(@PathVariable(value="takeListId") Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest){
-        takeListService.addPillsToTakeList(takeListId, addPillsToTakeListRequest);
+    public ResponseEntity<Void> addPillsToTakeList(@RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest){
+        takeListService.addPillsToTakeList(addPillsToTakeListRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
