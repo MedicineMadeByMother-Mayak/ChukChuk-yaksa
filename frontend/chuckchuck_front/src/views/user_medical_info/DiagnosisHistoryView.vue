@@ -24,6 +24,13 @@
       </li>
       <li style="margin: 10px 0px">
         <strong>복약안내</strong>
+        <div v-for="pillData in data.guide" style="margin-top: 10px">
+          <PillBagContent
+            :pillName="pillData.pillName"
+            :type="pillData.type"
+            :capacity="pillData.capacity"
+          />
+        </div>
       </li>
     </Accordian>
   </div>
@@ -31,6 +38,7 @@
 
 <script setup>
 import Accordian from "@/views/user_medical_info/components/Accordian.vue";
+import PillBagContent from "@/views/user_medical_info/components/PillBagContent.vue";
 import { ref } from "vue";
 import Wave from "@/common/Wave.vue";
 import TableForm from "@/common/Form/TableForm.vue";
@@ -47,9 +55,28 @@ const dumydata = ref({
       },
       guide: [
         {
-          pillName: "약 이름", //약 이름
-          type: "약 분류", //약 분류(타입)
-          capacity: "용법용량", //용법용량(복약안내)
+          pillName: "프라닥사캡슐", //약 이름
+          type: "항히스타민제", //약 분류(타입)
+          capacity: "1정씩 2회, 14일분", //용법용량(복약안내)
+        },
+      ],
+    },
+    {
+      receipt: {
+        pharmacyName: "에잇 퍼런 약국", //약국명
+        buildDate: new Date("2011-11-30 10:30:20"), //조제일자
+        cost: 8600,
+      },
+      guide: [
+        {
+          pillName: "프라닥사캡슐", //약 이름
+          type: "항히스타민제", //약 분류(타입)
+          capacity: "1정씩 2회, 14일분", //용법용량(복약안내)
+        },
+        {
+          pillName: "프라닥사캡슐", //약 이름
+          type: "항히스타민제", //약 분류(타입)
+          capacity: "1정씩 2회, 14일분", //용법용량(복약안내)
         },
       ],
     },
