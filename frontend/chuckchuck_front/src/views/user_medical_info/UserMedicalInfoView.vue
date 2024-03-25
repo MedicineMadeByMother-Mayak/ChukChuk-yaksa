@@ -8,6 +8,8 @@
       </div>
     </div>
 
+    <div style="height: 42px"></div>
+
     <div class="profile-container">
       <h3>김민중(여)</h3>
       <hr style="margin: 8px 18px" />
