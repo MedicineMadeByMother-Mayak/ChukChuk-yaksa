@@ -4,6 +4,7 @@ import com.mayak.chuckchuck.dto.request.RegistTagRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
+import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
 import com.mayak.chuckchuck.service.TagService;
@@ -25,7 +26,7 @@ public class UserPillEffectController {
      * 약효기록 리스트 조회 및 검색
      * @author 최진학
      * @param:
-     * @return:
+     * @return userPillSideEffectListResponse(부작용 리스트) or userPillEffectListAndSearchResponse(조회 및 검색)
      */
     @GetMapping("")
     public ResponseEntity<Object> getUserPillEffectListAndSearch(@RequestBody UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
@@ -33,14 +34,16 @@ public class UserPillEffectController {
         // if   : 페이징 X, 문진표 - 부작용 리스트 조회
         // else : 페이징 O, 약효 기록 리스트 조회 or 검색
         if (userPillEffectListAndSearchRequest.page() == null) {
-            UserPillSideEffectListResponse userPillSideEffectListResponse = userPillEffectService.getUserPillSideEffectList();
+            UserPillSideEffectListResponse userPillSideEffectListResponse
+                    = userPillEffectService.getUserPillSideEffectList();
 
             return ResponseEntity.ok(userPillSideEffectListResponse);
         } else {
-            userPillEffectService.temp(userPillEffectListAndSearchRequest);
-        }
+            UserPillEffectListAndSearchResponse userPillEffectListAndSearchResponse
+                    = userPillEffectService.getUserPillEffectListAndSearch(userPillEffectListAndSearchRequest);
 
-        return null;
+            return ResponseEntity.ok(userPillEffectListAndSearchResponse);
+        }
     }
 
 

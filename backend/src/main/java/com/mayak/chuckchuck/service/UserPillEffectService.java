@@ -8,6 +8,7 @@ import com.mayak.chuckchuck.dto.TagDto;
 import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
+import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
 import com.mayak.chuckchuck.repository.*;
@@ -17,7 +18,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -199,10 +202,10 @@ public class UserPillEffectService {
     /**
      * 약효기록 - 전체 리스트 조회 & 검색
      * @author 최진학
-     * @param userPillEffectListAndSearchRequest (약효 기록 id)
+     * @param userPillEffectListAndSearchRequest ()
      * @return 없음
      */
-    public void temp(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+    public UserPillEffectListAndSearchResponse getUserPillEffectListAndSearch(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
         Long categoryId = userPillEffectListAndSearchRequest.categoryId();
         String keyword = userPillEffectListAndSearchRequest.keyword();
         String page = userPillEffectListAndSearchRequest.page();
@@ -234,36 +237,49 @@ public class UserPillEffectService {
                 else if (currentCategoryId == 3) effectPillDtoList.add(currentPillDto);
             }
         } else {
-            String jpqlQueryForPillList = "SELECT ";
-            List<Pill> tempPillList;
+            String jpqlQueryForPillList = "SELECT DISTINCT p " +
+                    "FROM UserPillEffect upe " +
+                    "JOIN upe.pill p " +
+                    "WHERE upe.user.userId = :userId " +
+                    "AND p.name LIKE CONCAT('%', :keyword, '%')";
 
-            // 전체 목록 조회면 중복 제거
-            if (categoryId == 0) jpqlQueryForPillList += "DISTINCT ";
-            jpqlQueryForPillList += "p ";
+            // if   : 전체 목록
+            // else : 각 카테고리 별 목록
+            List<Pill> tempPillList = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
+                    .setParameter("userId", 2L)
+                    .setParameter("keyword", keyword)
+                    .getResultList();
+        
+            // 전체 목록
+            totalPillDtoList = PillDetailDto.fromEntity(tempPillList);
+            
+            // 카테고리별 목록
+            jpqlQueryForPillList += "AND upe.category.categoryId = :categoryId ";
 
-            jpqlQueryForPillList += "FROM UserPillEffect upe " +
-                                    "JOIN upe.pill p " +
-                                    "WHERE upe.user.userId = :userId " +
-                                    "AND p.name LIKE CONCAT('%', :keyword, '%')";
-
-            // if   : categoryId = 0 (전체조회)
-            // else : categoryId in 1, 2, 3 (카테고리별 조회)
-            if (categoryId == 0) {
-                tempPillList = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
-                        .setParameter("userId", 1L)
+            Map<Integer, List<PillDetailDto>> pillMap = new HashMap<>();
+            for (int i = 1; i <= 3; i++) {
+                List<Pill> temp = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
+                        .setParameter("userId", 2L)
                         .setParameter("keyword", keyword)
+                        .setParameter("categoryId", i)
                         .getResultList();
-            } else {
-                jpqlQueryForPillList += "AND upe.category.categoryId = :categoryId ";
-                tempPillList = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
-                        .setParameter("userId", 1L)
-                        .setParameter("keyword", keyword)
-                        .setParameter("categoryId", categoryId)
-                        .getResultList();
+
+                List<PillDetailDto> pillDetailDtoList = PillDetailDto.fromEntity(temp);
+                pillMap.put(i, pillDetailDtoList);
             }
 
-            List<PillDetailDto> pillDetailDtoList = PillDetailDto.fromEntity(tempPillList);
-            System.out.println(pillDetailDtoList);
+            siedEffectPillDtoList = pillMap.get(1);
+            stopPillDtoList = pillMap.get(2);
+            effectPillDtoList = pillMap.get(3);
+
+
+            System.out.println(totalPillDtoList);
+            System.out.println(siedEffectPillDtoList);
+            System.out.println(stopPillDtoList);
+            System.out.println(effectPillDtoList);
+
         }
+
+        return new UserPillEffectListAndSearchResponse(totalPillDtoList, siedEffectPillDtoList, stopPillDtoList, effectPillDtoList);
     }
 }
