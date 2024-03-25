@@ -142,23 +142,20 @@ public class TakeListService {
      * @param: takeListId
      * @return: ResponseEntity.ok()
      */
-    public void addPillsToTakeList(AddPillsToTakeListRequest addPillsToTakeListRequest) {
+    public void addPillsToTakeList(Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
         //== 임시 user객체
         User user = userRepository.findById(1L).get();
         //==
+        TakeList takeList;
 
-        String takeListName = addPillsToTakeListRequest.takeListName();
+        if (takeListId == null) {
+            takeList = TakeList.createTakeList(user);
+            takeListRepository.save(takeList);
 
-        if (takeListName == null || takeListName.isEmpty()) {
-            LocalDateTime now = LocalDateTime.now();
-            takeListName = String.format("%04d-%02d-%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+        } else {
+            takeList = takeListRepository.findById(takeListId)
+                    .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
         }
-
-        TakeList takeList = takeListRepository.findByUserAndTakeListName(user ,takeListName)
-                .orElseGet(() -> {
-                    TakeList newTakeList = TakeList.createTakeList(user);
-                    return takeListRepository.save(newTakeList);
-                });
 
         List<Long> currentPillIds = takePillsRepository.findPillIdsByTakeListId(takeList.getTakeListId());
 

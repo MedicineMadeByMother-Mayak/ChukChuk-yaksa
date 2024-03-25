@@ -10,7 +10,6 @@ import java.util.List;
  * @author:김보경
  */
 public record AddPillsToTakeListRequest(
-        List<Long> pills,
-        String takeListName)
+        List<Long> pills)
 {}
 

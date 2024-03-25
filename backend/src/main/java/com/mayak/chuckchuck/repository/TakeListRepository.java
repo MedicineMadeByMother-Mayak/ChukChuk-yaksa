@@ -28,16 +28,4 @@ public interface TakeListRepository extends JpaRepository<TakeList, Long> {
      */
     @Query("SELECT t FROM TakeList t WHERE t.user = :user AND (t.finishDate >= :baseDate OR t.isFinish = false) AND t.commonData.isDelete = false ORDER BY t.commonData.createDate DESC")
     List<TakeList> findTakeListByUserIdAndFinishDateAndIsFinish(@Param("user") User user, @Param("baseDate") LocalDateTime baseDate);
-
-    /**
-     * 복용리스트 약 추가
-     * @author: 김보경
-     */
-    @Query("SELECT t FROM TakeList t WHERE t.user = :user AND t.takeListName = :takeListName AND t.commonData.isDelete = false")
-    Optional<TakeList> findByUserAndTakeListName(@Param("user") User user, @Param("takeListName") String takeListName);
-
-    default Optional<TakeList> findByUserAndDateString(User user, String dateString) {
-        String takeListName = dateString + "에 추가한 약";
-        return findByUserAndTakeListName(user, takeListName);
-    }
 }

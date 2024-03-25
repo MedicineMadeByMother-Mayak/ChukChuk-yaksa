@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/v1/take-list")
 @RequiredArgsConstructor
@@ -36,10 +39,14 @@ public class TakeListController {
      * @param: takeListId
      * @return:200ok
      */
+    @PostMapping("/{takeListId}")
+    public ResponseEntity<Void> addPillsToTakeListWithId(@PathVariable Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
+        takeListService.addPillsToTakeList(takeListId, addPillsToTakeListRequest);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> addPillsToTakeList(@RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest){
-        takeListService.addPillsToTakeList(addPillsToTakeListRequest);
+    public ResponseEntity<Void> addPillsToTakeListWithoutId(@RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
+        takeListService.addPillsToTakeList(null, addPillsToTakeListRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
