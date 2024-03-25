@@ -46,13 +46,16 @@ public class TakeListController {
      * @return:200ok
      */
     @PostMapping("/{takeListId}")
-    public ResponseEntity<Void> addPillsToTakeListWithId(@PathVariable Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
-        takeListService.addPillsToTakeList(takeListId, addPillsToTakeListRequest);
+    public ResponseEntity<Void> addPillsToTakeListWithId(@AuthenticationPrincipal UserPrincipal principal, @PathVariable Long takeListId, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
+        User user = commonService.getUserOrException(principal);
+        takeListService.addPillsToTakeList(user, takeListId, addPillsToTakeListRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    
     @PostMapping
-    public ResponseEntity<Void> addPillsToTakeListWithoutId(@RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
-        takeListService.addPillsToTakeList(null, addPillsToTakeListRequest);
+    public ResponseEntity<Void> addPillsToTakeListWithoutId(@AuthenticationPrincipal UserPrincipal principal, @RequestBody AddPillsToTakeListRequest addPillsToTakeListRequest) {
+        User user = commonService.getUserOrException(principal);
+        takeListService.addPillsToTakeList(user, null, addPillsToTakeListRequest);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
