@@ -1,16 +1,26 @@
 <template>
   <div class="modie_size">
-    <RouterView />
+    <!-- <RouterView /> -->
+    <nav-bar></nav-bar>
+    <router-view></router-view>
+
   </div>
 </template>
 
-<script setup></script>
+<script>
+import NavBar from './common/NavBar.vue';
+export default {
+  components: {
+    NavBar,
+  }
+}
+</script>
 
 <style>
 /* 모바일 환경으로 사이즈 고정 */
 .modie_size {
-  width: 360px;
-  height: 740px;
+  width: 320px;
+  height: 658px;
   position: absolute;
   top: 0;
   left: 0;
