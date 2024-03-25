@@ -7,10 +7,12 @@
         ['Jane Doe', 'Designer'],
       ]"
     />
+    <Badge />
   </div>
 </template>
 
 <script setup>
 import Wave from "@/common/Wave.vue";
 import CustomTable from "@/common/Form/TableForm.vue";
+import Badge from "@/common/Badge.vue";
 </script>
