@@ -143,10 +143,20 @@ public class TakeListService {
      * @return: ResponseEntity.ok()
      */
     public void addPillsToTakeList(Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
-        TakeList takeList = takeListRepository.findById(takeListId)
-                .orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        //== 임시 user객체
+        User user = userRepository.findById(1L).get();
+        //==
 
-        List<Long> currentPillIds = takePillsRepository.findPillIdsByTakeListId(takeListId);
+        LocalDateTime now = LocalDateTime.now();
+        String dateString = String.format("%04d-%02d-%02d", now.getYear(), now.getMonthValue(), now.getDayOfMonth());
+
+        TakeList takeList = takeListRepository.findByUserAndDateString(user, dateString)
+                .orElseGet(() -> {
+                    TakeList newTakeList = TakeList.createTakeList(user);
+                    return takeListRepository.save(newTakeList);
+                });
+
+        List<Long> currentPillIds = takePillsRepository.findPillIdsByTakeListId(takeList.getTakeListId());
 
         List<Pill> pills = addPillsToTakeListRequest.pills().stream()
                 .filter(pillId -> !currentPillIds.contains(pillId))
