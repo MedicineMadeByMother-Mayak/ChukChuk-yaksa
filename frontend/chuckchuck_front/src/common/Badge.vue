@@ -4,10 +4,11 @@
       backgroundColor="뱃지 색"
       color="글씨 색"
       fontSize="글씨 크기"
+      padding="내부 여백"
     /> -->
 
 <template>
-  <div class="badge-container" :style="{ backgroundColor }">
+  <div class="badge-container" :style="{ backgroundColor, padding }">
     <span class="badge-text" :style="{ color, fontSize }">{{ title }}</span>
   </div>
 </template>
@@ -31,21 +32,21 @@ const props = defineProps({
     type: String,
     default: "14px",
   },
+  padding: {
+    type: String,
+    default: "3px 8px",
+  },
 });
 </script>
 
 <style scoped>
 .badge-container {
-  background-color: #34c759; /* 배경색 */
-  padding: 8px 16px; /* 내부 여백 */
   border-radius: 5px; /* 둥근 모서리 */
   display: inline-block; /* 필요한 만큼의 공간만 차지 */
 }
 
 .badge-text {
-  color: white; /* 글자색 */
   font-weight: bold; /* 글자 두껍게 */
-  font-size: 14px; /* 글자 크기 */
   white-space: nowrap; /* 텍스트가 한 줄로 나타나도록 설정 */
 }
 </style>

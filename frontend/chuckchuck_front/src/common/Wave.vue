@@ -37,7 +37,9 @@ c-22.4,3-38.4,9.2-47.8,18.3c-11.2,10.9-13.6,26.7-16.3,45c-3.1,20.8-6.6,44.4-25.3
           />
         </g>
       </svg> -->
-      <h1>{{ title }}</h1>
+      <i class="arrow left"></i>
+      <h1 style="left: 10px">{{ title }}</h1>
+      <p></p>
     </div>
 
     <!--Waves Container-->
@@ -113,7 +115,17 @@ h1 {
   font-family: Arial, sans-serif;
   font-weight: bold;
   letter-spacing: 2px;
-  font-size: 48px;
+  font-size: 24px;
+}
+
+.inner-header h1 {
+  flex-grow: 1; /* h1 태그가 가능한 모든 공간을 차지하도록 함 */
+  text-align: center; /* h1 내의 텍스트 중앙 정렬 */
+}
+
+.arrow.left {
+  flex-grow: 0; /* 아이콘이 추가 공간을 차지하지 않도록 함 */
+  margin-right: auto; /* 오른쪽에 자동 마진을 줘서 왼쪽으로 밀어냄 */
 }
 
 p {
@@ -140,9 +152,14 @@ p {
 .flex {
   /*Flexbox for containers*/
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   text-align: center;
+  padding: auto;
+}
+
+.inner-header > i {
+  margin: 10px;
 }
 
 .waves {
@@ -203,5 +220,18 @@ p {
   h1 {
     font-size: 24px;
   }
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 5px 5px 0;
+  display: inline-block;
+  padding: 6px;
+  caret-color: transparent;
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
 }
 </style>

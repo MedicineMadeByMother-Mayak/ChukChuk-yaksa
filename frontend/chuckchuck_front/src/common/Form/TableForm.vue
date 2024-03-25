@@ -12,7 +12,14 @@
 
 <script setup>
 import CustomTable from "@/common/Form/TableForm.vue";
-</script> -->
+</script> 
+=======================
+John Doe   Developer
+=======================
+Jane Doe   Designer
+=======================
+이런 형태로 나옵니다.
+-->
 
 <script setup>
 const props = defineProps({

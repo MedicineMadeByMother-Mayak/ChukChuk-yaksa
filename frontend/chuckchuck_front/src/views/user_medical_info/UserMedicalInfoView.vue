@@ -68,18 +68,15 @@
       </div>
       <div class="appointment-details">
         <span>2023.03.05</span>
-        <span>JOO</span>
+        <Badge title="Joo" background-color="#d3e0f8" color="black" />
         <span>국민기(금성)</span>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "ProfilePage",
-  //   여기에 컴포넌트 데이터, 메서드 등을 추가하세요.
-};
+<script setup>
+import Badge from "@/common/Badge.vue";
 </script>
 
 <style scoped>
@@ -108,12 +105,11 @@ div p {
   margin: 5px;
 }
 
-/* 프로필 컨테이너 조정 */
 .profile-container {
-  text-align: center; /* 텍스트 중앙 정렬 */
+  text-align: center;
   position: relative;
-  padding-top: 50px; /* 프로필 사진 높이만큼 패딩 추가 */
-  margin-top: -50px; /* 헤더와 겹치도록 마진 설정 */
+  padding-top: 50px;
+  margin-top: -50px;
 }
 
 .profile-picture {
@@ -121,14 +117,14 @@ div p {
 }
 
 .profile-picture img {
-  width: 100px; /* 사진 크기 조정 */
+  width: 100px;
   height: 100px;
   border-radius: 50%;
   border: 4px solid white;
-  position: relative; /* 상위 요소(.profile-container)에 대해 상대적 위치 지정 */
-  z-index: 2; /* 다른 요소 위로 올림 */
+  position: relative;
+  z-index: 2;
   background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .container {
@@ -161,11 +157,11 @@ div p {
 }
 
 .info-card hr {
-  width: 100%; /* 가로선 전체 너비를 사용하도록 설정 */
+  width: 100%;
   border: 0;
-  height: 1px; /* 선의 높이 */
-  background-color: #eaeaea; /* 선의 색상 */
-  margin: 3px 0; /* 위아래 여백 */
+  height: 1px;
+  background-color: #eaeaea;
+  margin: 3px 0;
 }
 
 .info-item {
@@ -196,10 +192,9 @@ div p {
 .button {
   width: 100%;
   height: 100%;
-  padding: calc(
-    50% - 44px
-  ); /* Adjust padding to make the height approximately 50% */
-  margin-bottom: 0px; /* Spacing between buttons */
+  padding: calc(50% - 44px);
+
+  margin-bottom: 0px;
   border-radius: 20px;
   border: none;
   color: white;
@@ -215,10 +210,9 @@ div p {
   background: linear-gradient(145deg, #a0b7ef, #e3b8fb);
 }
 
-/* Additional media query to handle button height on smaller screens */
 @media (max-width: 768px) {
   .button {
-    padding: 10px; /* Reduce padding on smaller screens */
+    padding: 10px;
   }
 }
 
@@ -229,6 +223,7 @@ div p {
 .appointment-details {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: white;
   border-radius: 15px;
   padding: 18px;
