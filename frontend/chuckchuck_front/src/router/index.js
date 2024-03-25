@@ -28,13 +28,13 @@ const router = createRouter({
     //복용리스트
     {
       path: '/take-list',
-      name: "takeList",
+      name: "TakeList",
       component: TakeListView,
     },
     //설정
     {
       path: '/setting',
-      name: "settingView",
+      name: "Setting",
       component: SettingView,
     },
 
