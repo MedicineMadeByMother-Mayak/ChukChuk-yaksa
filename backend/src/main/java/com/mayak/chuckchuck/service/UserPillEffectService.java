@@ -2,6 +2,7 @@ package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.*;
 import com.mayak.chuckchuck.dto.CategoryDto;
+import com.mayak.chuckchuck.dto.PagingDto;
 import com.mayak.chuckchuck.dto.PillDetailDto;
 import com.mayak.chuckchuck.dto.TagDto;
 import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
@@ -189,14 +190,14 @@ public class UserPillEffectService {
         User user = userRepository.findById(1L).get();
         // ====================
 
-        List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndCategory_CategoryId(user, 1L);
+        List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndCategory_CategoryIdOrderByCommonData_createDate(user, 1L);
 
         return UserPillSideEffectListResponse.fromEntity(userPillEffectList);
     }
 
 
     /**
-     * 약효기록 - 조회 & 검색
+     * 약효기록 - 전체 리스트 조회 & 검색
      * @author 최진학
      * @param userPillEffectListAndSearchRequest (약효 기록 id)
      * @return 없음
@@ -204,36 +205,65 @@ public class UserPillEffectService {
     public void temp(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
         Long categoryId = userPillEffectListAndSearchRequest.categoryId();
         String keyword = userPillEffectListAndSearchRequest.keyword();
+        String page = userPillEffectListAndSearchRequest.page();
+
+        // 값 담을 Dto list 생성
+        List<PillDetailDto> totalPillDtoList = new ArrayList<>();
+        List<PillDetailDto> siedEffectPillDtoList = new ArrayList<>();
+        List<PillDetailDto> stopPillDtoList = new ArrayList<>();
+        List<PillDetailDto> effectPillDtoList = new ArrayList<>();
 
         User user = userRepository.findById(1L).get();
+        PagingDto pagingDto = new PagingDto(1, "createDate");
 
-        List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndCategory_CategoryIdOrderByCommonData_createDate(user, categoryId);
-
-        List<PillDetailDto> totalPillList = new ArrayList<>();
-        List<PillDetailDto> siedEffectPillList = new ArrayList<>();
-        List<PillDetailDto> stopPillList = new ArrayList<>();
-        List<PillDetailDto> effectPillList = new ArrayList<>();
-
-        for (UserPillEffect temp : userPillEffectList) {
-            long currentCategoryId = temp.getCategory().getCategoryId();
-            PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp);
-
-            // 전체 목록에는 항상 추가
-            totalPillList.add(currentPillDto);
-
-            // 카테고리별 약 분류
-            if (currentCategoryId == 1) siedEffectPillList.add(currentPillDto);
-            else if (currentCategoryId == 2) stopPillList.add(currentPillDto);
-            else if (currentCategoryId == 3) effectPillList.add(currentPillDto);
-        }
-
-
-        // 키워드 없으면, 약효 기록 조회 페이지 or 문진표(카테고리 1번(부작용))
+        // if : 키워드 X (전체 리스트 조회)
+        // else : 키워드 O (검색)
         if (keyword == null) {
+            List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUser(user, pagingDto.getPageable());
 
+            for (UserPillEffect temp : userPillEffectList) {
+                long currentCategoryId = temp.getCategory().getCategoryId();
+                PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp);
+
+                // 전체 목록에는 항상 추가
+                totalPillDtoList.add(currentPillDto);
+
+                // 카테고리별 약 분류
+                if (currentCategoryId == 1) siedEffectPillDtoList.add(currentPillDto);
+                else if (currentCategoryId == 2) stopPillDtoList.add(currentPillDto);
+                else if (currentCategoryId == 3) effectPillDtoList.add(currentPillDto);
+            }
         } else {
-            // 키워드가 없으면, 약효 기록 리스트 조회
-        }
+            String jpqlQueryForPillList = "SELECT ";
+            List<Pill> tempPillList;
 
+            // 전체 목록 조회면 중복 제거
+            if (categoryId == 0) jpqlQueryForPillList += "DISTINCT ";
+            jpqlQueryForPillList += "p ";
+
+            jpqlQueryForPillList += "FROM UserPillEffect upe " +
+                                    "JOIN upe.pill p " +
+                                    "WHERE upe.user.userId = :userId " +
+                                    "AND p.name LIKE CONCAT('%', :keyword, '%')";
+
+            // if   : categoryId = 0 (전체조회)
+            // else : categoryId in 1, 2, 3 (카테고리별 조회)
+            if (categoryId == 0) {
+                tempPillList = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
+                        .setParameter("userId", 1L)
+                        .setParameter("keyword", keyword)
+                        .getResultList();
+            } else {
+                jpqlQueryForPillList += "AND upe.category.categoryId = :categoryId ";
+                tempPillList = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
+                        .setParameter("userId", 1L)
+                        .setParameter("keyword", keyword)
+                        .setParameter("categoryId", categoryId)
+                        .getResultList();
+            }
+
+            List<PillDetailDto> pillDetailDtoList = PillDetailDto.fromEntity(tempPillList);
+            System.out.println(pillDetailDtoList);
+        }
     }
 }

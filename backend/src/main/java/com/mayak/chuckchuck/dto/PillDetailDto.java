@@ -39,25 +39,23 @@ public record PillDetailDto(
         );
     }
 
-    public static List<PillDetailDto> fromEntity(List<UserPillEffect> userPillEffectList) {
-        return userPillEffectList.stream()
-                .map(userPillEffect -> {
-                    Pill pill = userPillEffect.getPill();
-                    return new PillDetailDto(
-                            pill.getPillId(),
-                            pill.getName(),
-                            pill.getCompany(),
-                            pill.getEffect(),
-                            pill.getBasis(),
-                            pill.getCaution(),
-                            pill.getCapacity(),
-                            pill.getImageUrl(),
-                            pill.getType(),
-                            pill.getWarningPregnant(),
-                            pill.getWarningUseDate(),
-                            pill.getWarningElders(),
-                            pill.getWarningTogether()
-                    );
-                }).toList();
+    public static List<PillDetailDto> fromEntity(List<Pill> pillList) {
+        return pillList.stream()
+                .map(pill -> new PillDetailDto(
+                        pill.getPillId(),
+                        pill.getName(),
+                        pill.getCompany(),
+                        pill.getEffect(),
+                        pill.getBasis(),
+                        pill.getCaution(),
+                        pill.getCapacity(),
+                        pill.getImageUrl(),
+                        pill.getType(),
+                        pill.getWarningPregnant(),
+                        pill.getWarningUseDate(),
+                        pill.getWarningElders(),
+                        pill.getWarningTogether()
+                ))
+                .toList(); // toList()를 추가하여 Stream을 List로 변환합니다.
     }
 }

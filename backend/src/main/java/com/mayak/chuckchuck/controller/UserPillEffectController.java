@@ -37,7 +37,7 @@ public class UserPillEffectController {
 
             return ResponseEntity.ok(userPillSideEffectListResponse);
         } else {
-
+            userPillEffectService.temp(userPillEffectListAndSearchRequest);
         }
 
         return null;
