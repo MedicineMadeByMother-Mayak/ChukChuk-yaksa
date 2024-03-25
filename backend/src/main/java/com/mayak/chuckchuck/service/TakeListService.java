@@ -127,10 +127,7 @@ public class TakeListService {
      * @param: takeListId
      * @return: ResponseEntity.ok()
      */
-    public void addPillsToTakeList(Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
-        //== 임시 user객체
-        User user = userRepository.findById(1L).get();
-        //==
+    public void addPillsToTakeList(User user, Long takeListId, AddPillsToTakeListRequest addPillsToTakeListRequest) {
         TakeList takeList;
 
         if (takeListId == null) {
