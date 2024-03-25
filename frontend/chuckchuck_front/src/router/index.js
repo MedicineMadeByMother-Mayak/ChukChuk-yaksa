@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import PillBagHistoryView from "@/views/user_medical_info/PillBagHistoryView.vue";
 import HomeView from "@/views/home/HomeView.vue";
 import UserMedicalInfoView from "@/views/user_medical_info/UserMedicalInfoView.vue";
+import testView from "@/common/testView.vue";
+import DiagnosisHistoryView from "@/views/user_medical_info/DiagnosisHistoryView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,14 +22,24 @@ const router = createRouter({
     //   component:
     // },
     {
+      path: "/usermedicalinfo",
+      name: "usermedicalinfo",
+      component: UserMedicalInfoView,
+    },
+    {
       path: "/usermedicalinfo/pillbag",
       name: "pillbaghistory",
       component: PillBagHistoryView,
     },
     {
-      path: "/usermedicalinfo",
-      name: "usermedicalinfo",
-      component: UserMedicalInfoView,
+      path: "/usermedicalinfo/diagnosishistory",
+      name: "diagnosishistory",
+      component: DiagnosisHistoryView,
+    },
+    {
+      path: "/test",
+      name: "test",
+      component: testView,
     },
   ],
 });
