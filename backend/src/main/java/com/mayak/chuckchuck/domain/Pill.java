@@ -3,11 +3,13 @@ package com.mayak.chuckchuck.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "pill")
+@ToString
 //약
 public class Pill {
 
