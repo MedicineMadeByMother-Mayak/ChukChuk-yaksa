@@ -17,7 +17,6 @@ public record UserPillSideEffectListResponse(List<SideEffectPill> userPillSIdeEf
                     return new SideEffectPill(tempPill.getCompany(), tempPill.getName(), temp.getMemo());
                 }).toList();
 
-
         return new UserPillSideEffectListResponse(userPillEffectListResult);
     }
 }

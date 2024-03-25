@@ -2,11 +2,13 @@ package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.domain.*;
 import com.mayak.chuckchuck.dto.CategoryDto;
+import com.mayak.chuckchuck.dto.PillDetailDto;
 import com.mayak.chuckchuck.dto.TagDto;
 import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
+import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
 import com.mayak.chuckchuck.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -175,25 +177,63 @@ public class UserPillEffectService {
         }
     }
 
+
+    /**
+     * 약효기록 - 문진표, 부작용 리스트 조회 (페이징 X)
+     * @author 최진학
+     * @param
+     * @return 없음
+     */
+    public UserPillSideEffectListResponse getUserPillSideEffectList() {
+        // === 임시 유저 정보 ===
+        User user = userRepository.findById(1L).get();
+        // ====================
+
+        List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndCategory_CategoryId(user, 1L);
+
+        return UserPillSideEffectListResponse.fromEntity(userPillEffectList);
+    }
+
+
     /**
      * 약효기록 - 조회 & 검색
      * @author 최진학
      * @param userPillEffectListAndSearchRequest (약효 기록 id)
      * @return 없음
      */
-    public void getUserPillEffectListAndSearchResult(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+    public void temp(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
         Long categoryId = userPillEffectListAndSearchRequest.categoryId();
         String keyword = userPillEffectListAndSearchRequest.keyword();
-        String page = userPillEffectListAndSearchRequest.page();
-        boolean isSearch = false;
-        
+
+        User user = userRepository.findById(1L).get();
+
+        List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndCategory_CategoryIdOrderByCommonData_createDate(user, categoryId);
+
+        List<PillDetailDto> totalPillList = new ArrayList<>();
+        List<PillDetailDto> siedEffectPillList = new ArrayList<>();
+        List<PillDetailDto> stopPillList = new ArrayList<>();
+        List<PillDetailDto> effectPillList = new ArrayList<>();
+
+        for (UserPillEffect temp : userPillEffectList) {
+            long currentCategoryId = temp.getCategory().getCategoryId();
+            PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp);
+
+            // 전체 목록에는 항상 추가
+            totalPillList.add(currentPillDto);
+
+            // 카테고리별 약 분류
+            if (currentCategoryId == 1) siedEffectPillList.add(currentPillDto);
+            else if (currentCategoryId == 2) stopPillList.add(currentPillDto);
+            else if (currentCategoryId == 3) effectPillList.add(currentPillDto);
+        }
+
+
         // 키워드 없으면, 약효 기록 조회 페이지 or 문진표(카테고리 1번(부작용))
         if (keyword == null) {
-            
+
         } else {
             // 키워드가 없으면, 약효 기록 리스트 조회
         }
-
 
     }
 }
