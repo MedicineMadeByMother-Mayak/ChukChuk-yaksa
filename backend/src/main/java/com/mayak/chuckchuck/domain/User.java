@@ -31,7 +31,7 @@ public class User {
 
     //소셜로그인 플랫폼 이름
     @Column(length = 100)
-    private String social;
+    private String email;
 
     //사용자이름
     @Column(name="user_name", length = 20)
@@ -61,8 +61,31 @@ public class User {
 
     //공통데이터
     @Embedded
-    private CommonData commonData = new CommonData();;
+    private CommonData commonData = new CommonData();
 
+    private User(
+        SocialCode socialCode,
+        String email,
+        String userName,
+        LocalDateTime birth,
+        BloodType bloodType,
+        int height,
+        int weight,
+        Sex sex,
+        String token,
+        CommonData commonData
+    ) {
+        this.socialCode = socialCode;
+        this.email = email;
+        this.userName = userName;
+        this.birth = birth;
+        this.bloodType = bloodType;
+        this.height = height;
+        this.weight = weight;
+        this.sex = sex;
+        this.token = token;
+        this.commonData = commonData;
+    }
 
     /**
      * User의 기타정보를 변경
@@ -77,4 +100,18 @@ public class User {
         this.height = userInfoRequest.height();
         this.weight = userInfoRequest.weight();
     }
+
+    public static User of(SocialCode socialCode, String social) {
+        return of(socialCode, social, null, null, null, 0, 0, null, null);
+    }
+
+    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, CommonData commonData) {
+        return of(socialCode, social, userName, birth, bloodType, height, weight, sex, null, commonData);
+    }
+
+    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, String token, CommonData commonData) {
+        return new User(socialCode, social, userName, birth, bloodType, height, weight, sex, token, commonData);
+    }
+
+    public void updateToken(String token) { this.token = token; }
 }

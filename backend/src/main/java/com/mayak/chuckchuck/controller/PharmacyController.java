@@ -1,6 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.response.PharmacyResponse;
+import com.mayak.chuckchuck.service.CommonService;
 import com.mayak.chuckchuck.service.PharmacyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

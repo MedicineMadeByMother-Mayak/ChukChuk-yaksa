@@ -2,9 +2,11 @@ package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.dto.response.PillDetailInfoResultResponse;
 import com.mayak.chuckchuck.dto.response.PillSearchResultResponse;
+import com.mayak.chuckchuck.service.CommonService;
 import com.mayak.chuckchuck.service.PillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

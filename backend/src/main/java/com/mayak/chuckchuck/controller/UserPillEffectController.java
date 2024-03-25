@@ -4,6 +4,7 @@ import com.mayak.chuckchuck.dto.request.RegistTagRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
+import com.mayak.chuckchuck.service.CommonService;
 import com.mayak.chuckchuck.service.TagService;
 import com.mayak.chuckchuck.service.UserPillEffectService;
 import jakarta.validation.Valid;
