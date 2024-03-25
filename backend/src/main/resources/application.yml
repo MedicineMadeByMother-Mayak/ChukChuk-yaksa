@@ -2,6 +2,12 @@ spring:
   config:
     import: db.yml, secretkey.yml
 
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driverClassName: com.mysql.cj.jdbc.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -85,3 +91,12 @@ logging:
   level:
     org.hibernate.SQL: debug
 
+naver:
+  service:
+    url: https://1fuxve2qvp.apigw.ntruss.com/custom/v1/29414/1b4882a3dd7bf51d43db0b8ac45ea64f9d49db6af9672e932c55ff0b57382eb7/general
+    secretKey: ${NAVER_OCR_SECRET_KEY}
+
+openApi:
+  illCode:
+    url: http://apis.data.go.kr/B551182/diseaseInfoService/getDissNameCodeList
+    secretKey: ${OPEN_API_SECRET_KEY}
