@@ -131,13 +131,6 @@ h1 {
   margin-right: auto; /* 오른쪽에 자동 마진을 줘서 왼쪽으로 밀어냄 */
 }
 
-p {
-  font-family: "Lato", sans-serif;
-  letter-spacing: 1px;
-  font-size: 14px;
-  color: #333333;
-}
-
 .header {
   position: relative;
   text-align: center;
