@@ -19,6 +19,6 @@ import Wave from "@/common/Wave.vue";
 import CustomTable from "@/common/Form/TableForm.vue";
 import Badge from "@/common/Badge.vue";
 import Accordian from "@/views/user_medical_info/components/Accordian.vue";
-import PillBagContent from "@/views/user_medical_info/components/PillBagContent.vue";
+import PillBagContent from "@/common/PillInfo.vue";
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 </script>
