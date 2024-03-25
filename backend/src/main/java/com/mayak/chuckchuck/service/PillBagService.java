@@ -23,13 +23,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class PillBagService {
-    private final UserRepository userRepository;
     private final PillBagRepository pillBagRepository;
     private final OCRPillsRepository ocrPillsRepository;
     private final PillRepository pillRepository;
     private final TakeListRepository takeListRepository;
     private final TakePillsRepository takePillsRepository;
-
 
     /**
      * 약봉투 내역 저장
@@ -37,11 +35,7 @@ public class PillBagService {
      * @param pillBagInfo
      * @return:
      */
-    public void registPillBag(PillBagInfoRequest pillBagInfo) {
-        //== 임시 user객체
-        User user = userRepository.findById(1L).get();
-        //==
-
+    public void registPillBag(User user, PillBagInfoRequest pillBagInfo) {
         //약봉투 저장
         PillBag pillBag = PillBag.createPillBag(pillBagInfo, user);
         pillBagRepository.save(pillBag);
@@ -65,15 +59,13 @@ public class PillBagService {
         }
     }
 
-
     /**
      * 약봉투내역 조회
      * @author: 김태완
      * @param:
      * @return: PillBagResponse
      */
-    public PillBagResponse getPillBagResponse(int page) {
-        User user = userRepository.findById(1L).get();
+    public PillBagResponse getPillBagResponse(User user, int page) {
         PagingDto pagingDto = new PagingDto(page, "buildDate");
         Page<PillBag> pillBags = pillBagRepository
                 .findByUser(user, pagingDto.getPageable());
@@ -88,6 +80,4 @@ public class PillBagService {
                 .collect(Collectors.toList());
         return PillBagResponse.fromEntity((int) pillBags.getTotalElements(), pillBagResult);
     }
-
-
 }

@@ -1,11 +1,14 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.request.DiagnosisInfoResquest;
 import com.mayak.chuckchuck.dto.request.PillBagInfoRequest;
 import com.mayak.chuckchuck.dto.response.*;
 import com.mayak.chuckchuck.enums.OcrType;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
+import com.mayak.chuckchuck.security.oauth2.user.UserPrincipal;
+import com.mayak.chuckchuck.service.CommonService;
 import com.mayak.chuckchuck.service.DiagnosisService;
 import com.mayak.chuckchuck.service.OCRService;
 import com.mayak.chuckchuck.service.PillBagService;
@@ -13,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,10 +27,10 @@ import org.springframework.web.multipart.MultipartFile;
 //기록(약봉투, 진단서, 병력, 약력)과 관련한 컨트롤러
 public class RecordController {
 
+    private final CommonService commonService;
     private final PillBagService pillBagService;
     private final DiagnosisService diagnosisService;
     private final OCRService ocrService;
-
 
     /**
      * 약봉투 OCR 결과
@@ -47,8 +51,9 @@ public class RecordController {
      * @return:
      */
     @PostMapping("/pill-bag")
-    public ResponseEntity<HttpStatus> registPillBag(@RequestBody PillBagInfoRequest pillBagInfo) {
-        pillBagService.registPillBag(pillBagInfo);
+    public ResponseEntity<HttpStatus> registPillBag(@AuthenticationPrincipal UserPrincipal principal, @RequestBody PillBagInfoRequest pillBagInfo) {
+        User user = commonService.getUserOrException(principal);
+        pillBagService.registPillBag(user, pillBagInfo);
         return ResponseEntity.ok().build();
     }
 
@@ -71,8 +76,9 @@ public class RecordController {
      * @return:
      */
     @PostMapping("/diagnosis")
-    public ResponseEntity<HttpStatus> registDianosis(@RequestBody DiagnosisInfoResquest gianosisInfo) {
-        diagnosisService.registDianosis(gianosisInfo);
+    public ResponseEntity<HttpStatus> registDianosis(@AuthenticationPrincipal UserPrincipal principal, @RequestBody DiagnosisInfoResquest gianosisInfo) {
+        User user = commonService.getUserOrException(principal);
+        diagnosisService.registDianosis(user, gianosisInfo);
         return ResponseEntity.ok().build();
     }
 
@@ -83,8 +89,9 @@ public class RecordController {
      * @return:
      */
     @GetMapping("/diagnosis")
-    public ResponseEntity<DiagnosisResponse> getDiagnosisList(@RequestParam final int page){
-        DiagnosisResponse diagnosisResponse = diagnosisService.getDiagnosisList(page - 1);
+    public ResponseEntity<DiagnosisResponse> getDiagnosisList(@AuthenticationPrincipal UserPrincipal principal, @RequestParam final int page){
+        User user = commonService.getUserOrException(principal);
+        DiagnosisResponse diagnosisResponse = diagnosisService.getDiagnosisList(user, page - 1);
         return ResponseEntity.ok(diagnosisResponse);
     }
 
@@ -95,8 +102,9 @@ public class RecordController {
      * @return:
      */
     @GetMapping("/pill-bag")
-    public ResponseEntity<PillBagResponse> getPillBagList(@RequestParam final int page){
-        PillBagResponse pillBagResponse = pillBagService.getPillBagResponse(page);
+    public ResponseEntity<PillBagResponse> getPillBagList(@AuthenticationPrincipal UserPrincipal principal, @RequestParam final int page){
+        User user = commonService.getUserOrException(principal);
+        PillBagResponse pillBagResponse = pillBagService.getPillBagResponse(user, page);
         return ResponseEntity.ok(pillBagResponse);
     }
 
@@ -107,8 +115,9 @@ public class RecordController {
      * @return:
      */
     @GetMapping("/disease")
-    public ResponseEntity<DiseaseResponse> getDiseaseList() {
-        DiseaseResponse diseaseResponse = diagnosisService.getDiseaseResponse();
+    public ResponseEntity<DiseaseResponse> getDiseaseList(@AuthenticationPrincipal UserPrincipal principal) {
+        User user = commonService.getUserOrException(principal);
+        DiseaseResponse diseaseResponse = diagnosisService.getDiseaseResponse(user);
         return ResponseEntity.ok(diseaseResponse);
     }
 
