@@ -33,7 +33,7 @@ CREATE TABLE `user` (
   `user_id` 			bigint 														NOT NULL 			AUTO_INCREMENT,
   `user_name` 			varchar(20) 							DEFAULT NULL,
   `social_code` 		enum('NAVER', 'GOOGLE', 'KAKAO')		DEFAULT NULL,
-  `social` 				varchar(100)							DEFAULT NULL,
+  `email` 				varchar(100)							DEFAULT NULL,
   `birth` 				datetime     							DEFAULT NULL,
   `blood_type` 			enum('A', 'B', 'AB', 'O')				DEFAULT NULL,
   `height` 				int 									DEFAULT NULL,
