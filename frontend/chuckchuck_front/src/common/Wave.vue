@@ -38,7 +38,7 @@ c-22.4,3-38.4,9.2-47.8,18.3c-11.2,10.9-13.6,26.7-16.3,45c-3.1,20.8-6.6,44.4-25.3
         </g>
       </svg> -->
       <i class="arrow left"></i>
-      <h1 style="left: 10px">{{ title }}</h1>
+      <h1>{{ title }}</h1>
       <p></p>
     </div>
 
@@ -112,10 +112,13 @@ body {
 }
 
 h1 {
+  position: relative;
+  right: 11.8px;
   font-family: Arial, sans-serif;
   font-weight: bold;
   letter-spacing: 2px;
-  font-size: 24px;
+  font-size: 20px;
+  margin-top: 5px;
 }
 
 .inner-header h1 {
@@ -218,7 +221,7 @@ p {
     height: 30vh;
   }
   h1 {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
 
