@@ -13,8 +13,8 @@ import SettingView from "@/views/setting/SettingView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    //메인페이지
     {
+      //메인페이지
       path: "/",
       name: "home",
       component: HomeView,
@@ -29,8 +29,8 @@ const router = createRouter({
       name: "pillbaghistory",
       component: PillBagHistoryView,
     },
-    //문진표
     {
+      //문진표
       path: "/usermedicalinfo/diagnosishistory",
       name: "diagnosishistory",
       component: DiagnosisHistoryView,
@@ -40,14 +40,14 @@ const router = createRouter({
       name: "test",
       component: testView,
     },
-    //복용리스트
     {
+      //복용리스트
       path: '/take-list',
       name: "TakeList",
       component: TakeListView,
     },
-    //설정
     {
+      //설정
       path: '/setting',
       name: "Setting",
       component: SettingView,

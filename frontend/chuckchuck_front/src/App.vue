@@ -1,9 +1,7 @@
 <template>
   <div class="modie_size">
-    <!-- <RouterView /> -->
     <nav-bar></nav-bar>
     <router-view></router-view>
-
   </div>
 </template>
 

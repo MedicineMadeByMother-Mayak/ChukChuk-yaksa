@@ -35,13 +35,12 @@
   position: fixed;
   bottom: 25px;
   left: 50%;
-  transform: translateX(-50%); /* 가운데 정렬을 위해 위치 조정 */
+  transform: translateX(-50%); 
   width: 89%;
   height: 50px;
   display: flex;
   align-items: center;
   box-shadow: 0 0.3em 0.3em rgba(0, 0, 0, 0.3);
-  /* border-top: 0.5px solid rgba(0,0,0,0.1); */
   background-color: #ffffff;
   border-radius: 22px;
   z-index: 1000;
