@@ -5,6 +5,7 @@ import UserMedicalInfoView from "@/views/user_medical_info/UserMedicalInfoView.v
 
 import testView from "@/common/testView.vue";
 import DiagnosisHistoryView from "@/views/user_medical_info/DiagnosisHistoryView.vue";
+import LoginView from "@/views/home/LoginView.vue";
 
 import TakeListView from "@/views/take_list/TakeListView.vue";
 import SettingView from "@/views/setting/SettingView.vue";
@@ -51,6 +52,13 @@ const router = createRouter({
       path: "/setting",
       name: "Setting",
       component: SettingView,
+    },
+
+    {
+      // 로그인 화면
+      path: "/login",
+      name: "login",
+      component: LoginView,
     },
   ],
 });
