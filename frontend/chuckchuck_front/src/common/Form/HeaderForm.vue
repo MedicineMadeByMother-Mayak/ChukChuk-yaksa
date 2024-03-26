@@ -36,7 +36,6 @@ body {
 h1 {
   position: relative;
   right: 11.8px;
-  font-family: Arial, sans-serif;
   font-weight: bold;
   letter-spacing: 2px;
   font-size: 20px;
