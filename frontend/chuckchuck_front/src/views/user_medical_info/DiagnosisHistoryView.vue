@@ -38,7 +38,7 @@
 
 <script setup>
 import Accordian from "@/views/user_medical_info/components/Accordian.vue";
-import PillBagContent from "@/views/user_medical_info/components/PillBagContent.vue";
+import PillBagContent from "@/common/PillInfo.vue";
 import { ref } from "vue";
 import Wave from "@/common/Wave.vue";
 import TableForm from "@/common/Form/TableForm.vue";
