@@ -1,5 +1,5 @@
 <!-- 사용법     
-  <HeaderForm :title="'사랑해요'" :height="'100px'">
+  <HeaderForm :title="'사랑해요'" :height="'100px'" :Link="''">
     여기에 내용을 넣으세요
   </HeaderForm>  
 -->
@@ -7,7 +7,9 @@
 <template>
   <div class="header">
     <div class="inner-header flex" :style="{ height }">
-      <i class="arrow left"></i>
+      <RouterLink style="margin-left: 10px; z-index: 3" :to="{ name: Link }">
+        <i class="arrow left"></i>
+      </RouterLink>
       <h1>{{ title }}</h1>
       <p></p>
     </div>
@@ -24,6 +26,10 @@ const props = defineProps({
   height: {
     type: String,
     default: "148px",
+  },
+  Link: {
+    type: String,
+    default: "home",
   },
 });
 </script>

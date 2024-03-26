@@ -1,5 +1,7 @@
 <!-- 사용법 -->
-<!-- <Wave title="원하는 제목" height="원하는 높이 기본값 148px" /> -->
+<!-- 
+  <Wave :title="원하는 제목" :height="원하는 높이 기본값 148px" :Link="< 아이콘 누르면 가기 원하는 링크" /> 
+-->
 
 <template>
   <!--Hey! This is the original version
@@ -37,7 +39,11 @@ c-22.4,3-38.4,9.2-47.8,18.3c-11.2,10.9-13.6,26.7-16.3,45c-3.1,20.8-6.6,44.4-25.3
           />
         </g>
       </svg> -->
-      <i class="arrow left"></i>
+      <RouterLink style="z-index: 3" :to="{ name: Link }">
+        <div class="arrow left">
+          <i></i>
+        </div>
+      </RouterLink>
       <h1 class="bold">{{ title }}</h1>
       <p></p>
     </div>
@@ -98,6 +104,10 @@ const props = defineProps({
   height: {
     type: String,
     default: "148px",
+  },
+  Link: {
+    type: String,
+    default: "home",
   },
 });
 
@@ -222,6 +232,7 @@ h1 {
   display: inline-block;
   padding: 6px;
   caret-color: transparent;
+  margin-left: 10px;
 }
 
 .left {
