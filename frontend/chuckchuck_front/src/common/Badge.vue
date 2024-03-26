@@ -46,7 +46,6 @@ const props = defineProps({
 }
 
 .badge-text {
-  font-weight: bold; /* 글자 두껍게 */
   white-space: nowrap; /* 텍스트가 한 줄로 나타나도록 설정 */
 }
 </style>
