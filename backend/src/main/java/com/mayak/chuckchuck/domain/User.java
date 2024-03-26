@@ -72,8 +72,7 @@ public class User {
         int height,
         int weight,
         Sex sex,
-        String token,
-        CommonData commonData
+        String token
     ) {
         this.socialCode = socialCode;
         this.email = email;
@@ -84,7 +83,6 @@ public class User {
         this.weight = weight;
         this.sex = sex;
         this.token = token;
-        this.commonData = commonData;
     }
 
     /**
@@ -102,15 +100,15 @@ public class User {
     }
 
     public static User of(SocialCode socialCode, String social) {
-        return of(socialCode, social, null, null, null, 0, 0, null, null);
+        return of(socialCode, social, null, null, null, 0, 0, null);
     }
 
-    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, CommonData commonData) {
-        return of(socialCode, social, userName, birth, bloodType, height, weight, sex, null, commonData);
+    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex) {
+        return of(socialCode, social, userName, birth, bloodType, height, weight, sex, null);
     }
 
-    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, String token, CommonData commonData) {
-        return new User(socialCode, social, userName, birth, bloodType, height, weight, sex, token, commonData);
+    public static User of(SocialCode socialCode, String social, String userName, LocalDateTime birth, BloodType bloodType, int height, int weight, Sex sex, String token) {
+        return new User(socialCode, social, userName, birth, bloodType, height, weight, sex, token);
     }
 
     public void updateToken(String token) { this.token = token; }
