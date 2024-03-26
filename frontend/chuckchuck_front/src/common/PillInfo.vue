@@ -55,13 +55,14 @@ const props = defineProps({
 .pill-type {
   color: #3183ff;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 9px;
   margin-bottom: 5px;
 }
 
 .pill-name {
   font-weight: bold;
   margin-bottom: 5px;
+  font-size: 11px;
 }
 
 .pill-capacity {
