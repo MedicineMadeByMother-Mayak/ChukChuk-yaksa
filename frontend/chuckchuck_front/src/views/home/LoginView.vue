@@ -1,7 +1,7 @@
 <template>
   <div class="login-page-container">
     <div class="login-logo">
-      <img src="../../assests/img/startLogo.png" alt="Logo" />
+      <img class="wave" src="../../assests/img/startLogo.png" alt="Logo" />
       <div>
         <div class="login-sub-title">슬기로운 복용생활,</div>
         <div class="login-title">척척약사</div>
@@ -9,15 +9,15 @@
     </div>
 
     <div class="login-options">
-      <button class="login-btn google">
+      <button class="login-btn google" @click="loginWithGoogle">
         <img src="../../assests/img/Google.png" alt="" />
         <p>구글로 로그인</p>
       </button>
-      <button class="login-btn naver">
+      <button class="login-btn naver" @click="loginWithNaver">
         <img src="../../assests/img/네이버 로고.png" alt="" />
         <p>네이버 로그인</p>
       </button>
-      <button class="login-btn kakao">
+      <button class="login-btn kakao" @click="loginWithKakao">
         <img src="../../assests/img/Kakao.png" alt="" />
         <p>카카오 로그인</p>
       </button>
@@ -28,19 +28,34 @@
 <script>
 export default {
   name: "LoginPage",
-  data() {
-    return {};
-  },
   methods: {
-    loginWithNaver() {},
-    loginWithGoogle() {},
-    loginWithKakao() {},
+    loginWithGoogle() {
+      window.location = "http://localhost:8080/oauth2/authorization/google";
+    },
+    loginWithNaver() {
+      window.location = "http://localhost:8080/oauth2/authorization/naver";
+    },
+    loginWithKakao() {
+      window.location = "http://localhost:8080/oauth2/authorization/kakao";
+    },
   },
 };
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.wave {
+  animation: rotateAnimation 7.5s linear infinite;
+}
 
 .login-page-container {
   background: #ffffff;
