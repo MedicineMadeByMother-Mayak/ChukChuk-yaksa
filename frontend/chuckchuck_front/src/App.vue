@@ -1,19 +1,18 @@
 <template>
-  <div class="modie_size">
+  <div class="modie_size absolute">
     <!-- <RouterView /> -->
     <nav-bar></nav-bar>
     <router-view></router-view>
-
   </div>
 </template>
 
 <script>
-import NavBar from './common/NavBar.vue';
+import NavBar from "./common/NavBar.vue";
 export default {
   components: {
     NavBar,
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -21,6 +20,9 @@ export default {
 .modie_size {
   width: 320px;
   height: 658px;
+}
+
+.absolute {
   position: absolute;
   top: 0;
   left: 0;
