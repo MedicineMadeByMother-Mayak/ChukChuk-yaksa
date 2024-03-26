@@ -1,3 +1,9 @@
+<!-- 사용법     
+  <HeaderForm :title="'사랑해요'" :height="'100px'">
+    여기에 내용을 넣으세요
+  </HeaderForm>  
+-->
+
 <template>
   <div class="header">
     <div class="inner-header flex" :style="{ height }">
@@ -5,6 +11,7 @@
       <h1>{{ title }}</h1>
       <p></p>
     </div>
+    <slot></slot>
   </div>
 </template>
 
