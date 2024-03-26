@@ -54,14 +54,7 @@
 
     <div class="appointment-section">
       <div style="margin: 5px 0px">
-        <strong
-          style="
-            font-size: 18.72px;
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 5px 0px;
-          "
-        >
-          병력 </strong
+        <strong style="font-size: 18.72px; margin: 5px 0px"> 병력 </strong
         ><span style="font-size: 10px"
           >(다음과 같은 질병으로 진단을 받았어요.)</span
         >
@@ -96,10 +89,6 @@ import Badge from "@/common/Badge.vue";
   top: 33px;
 }
 
-.user-madical-info {
-  font-family: "Arial", sans-serif;
-}
-
 div p {
   font-size: 10px;
   margin: 5px;
@@ -128,7 +117,6 @@ div p {
 }
 
 .container {
-  font-family: "Arial", sans-serif;
   width: 100%;
   padding: 18px;
   box-sizing: border-box;
