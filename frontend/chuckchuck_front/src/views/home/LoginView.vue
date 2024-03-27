@@ -44,17 +44,22 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
-@keyframes rotateAnimation {
+@keyframes rotateAndPause {
   0% {
     transform: rotate(0deg);
   }
+
+  55% {
+    transform: rotate(360deg);
+  }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 .wave {
-  animation: rotateAnimation 7.5s linear infinite;
+  animation: rotateAndPause 3s ease-in-out infinite;
 }
 
 .login-page-container {
