@@ -40,14 +40,18 @@
           </div>
         </div>
         <div class="buttons-container">
-          <button class="button gradient-blue">
-            <strong>처방내역 확인</strong>
-            <p><strong>모든 약봉투를 확인</strong></p>
-          </button>
-          <button class="button gradient-purple">
-            <strong>진단내역 확인</strong>
-            <p><strong>모든 진단서를 확인</strong></p>
-          </button>
+          <RouterLink :to="{ name: 'diagnosishistory' }">
+            <button class="button gradient-blue">
+              <strong>처방내역 확인</strong>
+              <p><strong>모든 약봉투를 확인</strong></p>
+            </button>
+          </RouterLink>
+          <RouterLink :to="{ name: 'pillbaghistory' }">
+            <button class="button gradient-purple">
+              <strong>진단내역 확인</strong>
+              <p><strong>모든 진단서를 확인</strong></p>
+            </button>
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -161,12 +165,12 @@ div p {
 
 .info-title {
   font-weight: bold;
-  font-size: 10px;
+  font-size: 8px;
   color: #666;
 }
 
 .info-content {
-  font-size: 10px;
+  font-size: 8px;
   color: #333;
 }
 
@@ -179,11 +183,12 @@ div p {
 
 .button {
   width: 100%;
+  min-height: 70px;
   height: 100%;
   padding: calc(50% - 44px);
 
   margin-bottom: 0px;
-  border-radius: 20px;
+  border-radius: 8px;
   border: none;
   color: white;
   cursor: pointer;

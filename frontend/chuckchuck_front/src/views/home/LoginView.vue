@@ -44,17 +44,32 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
-@keyframes rotateAnimation {
+@keyframes rotateAndPause {
   0% {
     transform: rotate(0deg);
   }
+
+  55% {
+    transform: rotate(360deg);
+  }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
+@keyframes slideAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(30%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .wave {
-  animation: rotateAnimation 7.5s linear infinite;
+  animation: rotateAndPause 3s ease-in-out infinite;
 }
 
 .login-page-container {
@@ -120,6 +135,7 @@ export default {
   font-size: 1rem;
   font-weight: 500;
   padding-left: 61px;
+  animation: slideAndFade 1s ease-out forwards;
 }
 
 .login-btn > img {
