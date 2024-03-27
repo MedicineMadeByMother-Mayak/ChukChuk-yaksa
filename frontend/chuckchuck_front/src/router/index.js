@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/home/HomeView.vue";
+import LoginSuccessView from "@/views/login/LoginSuccessView.vue";
 
 import OcrListView from "@/views/ocr_list/OcrListView.vue";
 import DiagnosisFilmingView from "@/views/ocr_list/DiagnosisFilmingView.vue";
@@ -37,6 +38,12 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+    },
+    {
+      //로그인 성공시 처리용 페이지
+      path: "/login-success",
+      name: "loginSuccess",
+      component: LoginSuccessView,
     },
 
     {
