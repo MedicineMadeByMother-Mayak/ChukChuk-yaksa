@@ -11,6 +11,7 @@ import testView from "@/common/testView.vue";
 import PillBagHistoryView from "@/views/user_medical_info/PillBagHistoryView.vue";
 import UserMedicalInfoView from "@/views/user_medical_info/UserMedicalInfoView.vue";
 import DiagnosisHistoryView from "@/views/user_medical_info/DiagnosisHistoryView.vue";
+import LoginView from "@/views/home/LoginView.vue";
 
 import PillSearchView from "@/views/pill_search/PillSearchView.vue";
 import PillSearchDetailView from "@/views/pill_search/PillSearchDetailView.vue";
@@ -27,6 +28,7 @@ import PIllPicView from "@/views/pill_pic/PIllPicView.vue";
 
 import UserPillEffectView from "@/views/user_pill_effect/UserPillEffectView.vue";
 import EffectDetailView from "@/views/user_pill_effect/EffectDetailView.vue";
+import LoadingView from "@/views/home/LoadingView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -155,6 +157,18 @@ const router = createRouter({
       path: "/userpilleffect/effectdetail",
       name: "/effectdetail",
       component: EffectDetailView,
+    },
+    {
+      // 로그인 화면
+      path: "/login",
+      name: "login",
+      component: LoginView,
+    },
+    {
+      // 로딩 화면
+      path: "/loading",
+      name: "loading",
+      component: LoadingView,
     },
   ],
 });
