@@ -1,14 +1,14 @@
 <!-- 약 상세 페이지 -->
 <template>
   <div class="basic-background-color">
-    <Wave :title="waveTitle" height="60px" /> 
+    <Wave :title="waveTitle" height="10px" />
     <div class="container">
-      <img :src="imagePath" alt="Image description">
+      <img :src="imagePath" alt="Image description" />
     </div>
 
-    <div v-for="(item, index) in appointmentDetails" :key="index" class="appointment-section">
-      <div style="margin: 5px 0px; display: flex; align-items: center;">
-        <strong 
+    <div v-for="(item, index) in appointmentDetails" :key="index" class="main-container">
+      <div style="margin: 5px 0px; display: flex; align-items: center">
+        <strong
           style="
             font-size: 15px;
             font-family: Arial, Helvetica, sans-serif;
@@ -17,42 +17,56 @@
             align-items: center;
           "
         >
-          <i class="fa-solid fa-circle-info" style="margin-right: 5px; color: #509af8;"></i>
-          <span style="vertical-align: middle;">{{ item.title }}</span>
+          <i class="fa-solid fa-circle-info" style="margin-right: 5px; color: #509af8"></i>
+          <span style="vertical-align: middle">{{ item.title }}</span>
         </strong>
         <span style="font-size: 10px"></span>
       </div>
-      <div class="appointment-details-pill">
-        <span class="pill-content">{{ item.content }}</span>
+      <div class="details-info">
+        <span class="info">{{ item.content }}</span>
       </div>
     </div>
   </div>
-  <div class="white-space basic-background-color">
-    
-  </div>
+  <div class="white-space basic-background-color"></div>
 </template>
 
 <script setup>
 import Wave from "@/common/Wave.vue";
 
-const waveTitle = "활명수";  // 약 이름 받아오기
-const imagePath = "../../assests/img/tempPill.png";  // 이미지 경로 받아오기
+const waveTitle = "활명수"; // 약 이름 받아오기
+const imagePath = "../../assests/img/tempPill.png"; // 이미지 경로 받아오기
 
 const appointmentDetails = [
   { title: "제조사", content: "동화약품 (주)" },
-  { title: "주의사항", content: "주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항" },
+  {
+    title: "주의사항",
+    content:
+      "주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항",
+  },
   { title: "종류", content: "진통제 (painkiller)" },
-  { title: "효능", content: "기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음" },
+  {
+    title: "효능",
+    content:
+      "기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음",
+  },
   { title: "사용법", content: "동화약품 (주)" },
   { title: "주성분", content: "시나몬, 초코, 얼음" },
-  { title: "약 사용 전 반드시 알아야 할 내용", content: "알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용" },
-  { title: "보관시 주의사항", content: "상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관" }
+  {
+    title: "약 사용 전 반드시 알아야 할 내용",
+    content:
+      "알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용",
+  },
+  {
+    title: "보관시 주의사항",
+    content:
+      "상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관",
+  },
 ];
 </script>
 
 <style>
 .basic-background-color {
-  background-color: #f9f9f9
+  background-color: #f9f9f9;
 }
 
 /* nav-bar 길이만큼 여백 */
@@ -60,14 +74,14 @@ const appointmentDetails = [
   height: 85px;
 }
 
-.appointment-section {
+.main-container {
   padding: 7px 20px;
 }
 
-.appointment-details-pill {
+.details-info {
   display: flex;
   align-items: center;
-  background-color: rgb(255, 255, 255);;
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 4px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -77,7 +91,7 @@ const appointmentDetails = [
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(0, 119, 255); 
+  background-color: rgb(0, 119, 255);
 }
 
 .container {
@@ -94,8 +108,7 @@ img {
   margin: 10px; /* 이미지 여백 설정 */
 }
 
-.pill-content {
-  padding: 4px; /* 내부 span 요소에 padding 추가 */
+.info {
+  padding: 4px;
 }
-
 </style>
