@@ -6,32 +6,33 @@
       <div class="center-aligned">
         <div class="in-header-pill-name">
           <div>
-            <strong>{{ pillName }}</strong>
-            <div>{{ companyName }}</div>
+            <strong>{{ userPillEffectList[0].name }}</strong>
+            <div>{{ userPillEffectList[0].company }}</div>
           </div>
         </div>
       </div>
     </HeaderForm>
+    <!-- 수정 start -->
     <div class="icon-container">
-      <div class="icon-and-text">
-        <span class="icon"><i class="fa-regular fa-face-kiss-beam fa-2xl"></i></span>
-        <span>효과</span>
-      </div>
-      <div class="icon-and-text">
-        <span class="icon"><i class="fa-regular fa-face-kiss-beam fa-2xl"></i></span>
-        <span>중단</span>
-      </div>
-      <div class="icon-and-text">
-        <span class="icon"><i class="fa-regular fa-face-kiss-beam fa-2xl"></i></span>
-        <span>부작용</span>
+      <div class="icon-container">
+        <img id="effectFace" :src="EffectFace" alt="Effect Face Icon" @click="toggleOpacity('effectFace')" />
+        <img id="stopFace" :src="StopFace" alt="StopFace Face Icon" @click="toggleOpacity('stopFace')" />
+        <img id="sideEffectFace" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="toggleOpacity('sideEffectFace')" />
       </div>
     </div>
+    <!-- 수정 end -->
     <div class="appointment-section">
       <strong class="title-style">TAG</strong>
       <div class="used-tag-list">
         <div class="badge-list">
           <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].usedTags" :key="index">
-            <Badge :title="tag.tagName" :backgroundColor="getBackgroundColor(tag.categoryId)" color="white" fontSize="12" padding="4px" />
+            <Badge
+              :title="tag.tagName"
+              :backgroundColor="getBackgroundColor(tag.categoryId)"
+              color="white"
+              fontSize="12"
+              padding="4px 15px 4px 15px"
+            />
           </div>
         </div>
       </div>
@@ -40,101 +41,122 @@
           <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
         </div>
       </div>
+      <img :src="underDirection" style="display: block; margin: 20px auto 12px;">
+      <div style="border-bottom: 1px solid black; "></div>
       <strong class="title-style">MEMO</strong>
-      <!-- 수정부분 start -->
+
       <div class="memo">
-        <input type="text" v-model="memo" placeholder="메모를 입력하세요" class="memo-input" maxlength="100" />
+        <textarea class="memo-input" type="text" v-model="memo" placeholder="메모를 입력하세요" maxlength="100" />
       </div>
-      <!-- 수정부분 end -->
     </div>
+  </div>
+  <div>
+    <EffectFaceIcon />
   </div>
 </template>
 
 <script setup>
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 import Badge from "@/common/Badge.vue";
+import EffectFace from "@/assests/icon/effectFace.svg";
+import StopFace from "@/assests/icon/stopFace.svg";
+import SideEffectFace from "@/assests/icon/sideEffectFace.svg";
+import underDirection from "@/assests/icon/underDirection.svg";
 
-const pillName = "프라닥사캡슐"; // 약 이름 받아오기
-const companyName = "메딕스제약";
+// 이미지 투명도를 토글하는 함수
+const toggleOpacity = (imageId) => {
+  const images = ["effectFace", "stopFace", "sideEffectFace"];
+  images.forEach((img) => {
+    const currentImage = document.getElementById(img);
 
+    if (img !== imageId) {
+      if (currentImage) { // 이미지 요소가 존재하는지 확인
+        currentImage.style.opacity = "0.5";
+      }
+    } else {
+      currentImage.style.opacity = "1.0";
+
+    }
+  });
+};
 const userPillEffectList = [
   {
-    pillId : 1,
-    name : "프라닥사캡슐",
-    company : "메딕스제약",
-    imageUrl : "../../assests/img/tempPill.png",
-    categories : [
-        {
-          userPillEffectId : 32,
-          categoryId : 1,
-          categoryName : "부작용",
-          usedTags : [  // 사용 중인 태그
-              {
-                  categoryId : 1,
-                  tagId : 1,
-                  tagName : "졸림"
-              },
-              {
-                  categoryId : 1,
-                  tagId : 1,
-                  tagName : "피곤"
-              },
-              {
-                  categoryId : 2,
-                  tagId : 1,
-                  tagName : "물려"
-              },
-              {
-                  categoryId : 3,
-                  tagId : 1,
-                  tagName : "시력강화"
-              }
-
-
-          ],
-          unUsedTags : [  // 사용하지 않은 태그
-              {
-                  categoryId : 1,
-                  tagId : 10,
-                  tagName : "안씀1"
-              },
-              {
-                  categoryId : 1,
-                  tagId : 11,
-                  tagName : "안씀2"
-              },
-              {
-                  categoryId : 1,
-                  tagId : 12,
-                  tagName : "안씀3"
-              },
-              {
-                  categoryId : 1,
-                  tagId : 13,
-                  tagName : "안씀4"
-              },
-              {
-                  categoryId : 1,
-                  tagId : 14,
-                  tagName : "안씀5"
-              },
-              {
-                  categoryId : 1,
-                  tagId : 15,
-                  tagName : "안씀6"
-              },
-          ],
-          memo : "부작용 메모"
-        }
-    ]
-  }
-]
+    pillId: 1,
+    name: "프라닥사캡슐",
+    company: "메딕스제약",
+    imageUrl: "../../assests/img/tempPill.png",
+    categories: [
+      {
+        userPillEffectId: 32,
+        categoryId: 1,
+        categoryName: "부작용",
+        usedTags: [
+          // 사용 중인 태그
+          {
+            categoryId: 1,
+            tagId: 1,
+            tagName: "졸림",
+          },
+          {
+            categoryId: 1,
+            tagId: 1,
+            tagName: "피곤",
+          },
+          {
+            categoryId: 1,
+            tagId: 1,
+            tagName: "물려",
+          },
+          {
+            categoryId: 1,
+            tagId: 1,
+            tagName: "체력약화",
+          },
+        ],
+        unUsedTags: [
+          // 사용하지 않은 태그
+          {
+            categoryId: 1,
+            tagId: 10,
+            tagName: "안씀1",
+          },
+          {
+            categoryId: 1,
+            tagId: 11,
+            tagName: "안씀2",
+          },
+          {
+            categoryId: 1,
+            tagId: 12,
+            tagName: "안씀3",
+          },
+          {
+            categoryId: 1,
+            tagId: 13,
+            tagName: "안씀4",
+          },
+          {
+            categoryId: 1,
+            tagId: 14,
+            tagName: "안씀5",
+          },
+          {
+            categoryId: 1,
+            tagId: 15,
+            tagName: "안씀6",
+          },
+        ],
+        memo: "부작용 메모",
+      },
+    ],
+  },
+];
 
 // categoryId에 따라 다른 backgroundColor를 반환하는 함수
 const getBackgroundColor = (categoryId) => {
   switch (categoryId) {
     case 1:
-      return "#ff4343"; // categoryId가 1인 경우
+      return "#7fc2ff"; // categoryId가 1인 경우 (적당한 빨강 : #ff4343)
     case 2:
       return "#ffbb7f"; // categoryId가 2인 경우
     case 3:
@@ -151,7 +173,7 @@ const getBackgroundColor = (categoryId) => {
 }
 
 .badge-custom {
-  padding: 0 2px;
+  padding: 0 4px;
 }
 
 .appointment-section {
@@ -184,21 +206,8 @@ const getBackgroundColor = (categoryId) => {
   width: 100vw; /* 전체 화면 너비 설정 */
 }
 
-.icon-container i {
-  font-size: 4em; /* 현재 사이즈의 2배 */
-  padding: 0 15px; /* 좌우로 20px의 패딩 */
-  height: 10px;
-}
-
-.icon {
-  color: #ffd43b;
-  padding-bottom: 15px;
-}
-
-.icon-and-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.icon-container img {
+  padding: 0 5px;
 }
 
 /* 사용중인 태그 리스트 */
@@ -227,7 +236,7 @@ const getBackgroundColor = (categoryId) => {
   margin: 5px 0px;
   display: flex;
   align-items: center;
-  padding: 15px 0 5px 5px;
+  padding: 7px 0 5px 5px;
 }
 
 /* 메모 */
@@ -246,11 +255,15 @@ const getBackgroundColor = (categoryId) => {
   outline: none; /* 포커스 테두리 제거 */
   border: none; /* 테두리 제거 */
   background-color: transparent; /* 배경색 투명하게 설정 */
+  height: 100px;
   width: 100%; /* 부모 요소의 가로폭을 최대한 활용 */
   padding: 0; /* 내부 패딩 제거 */
-  font-size: 14px; /* 글꼴 크기 설정 */
   box-sizing: border-box; /* 너비와 높이에 패딩과 테두리를 포함하도록 설정 */
   resize: none; /* 크기 조절 비활성화 */
   word-wrap: break-word; /* 긴 텍스트가 영역을 벗어날 때 줄 바꿈 설정 */
+}
+
+.icon-container img {
+  padding: 0 5px;
 }
 </style>
