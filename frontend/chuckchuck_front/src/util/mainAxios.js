@@ -47,7 +47,7 @@ instance.interceptors.response.use(
 
       //재로그인 불가시 로그인페이지로 이동하고 alert 띄우기
       //const refreshToken = getRefreshToken();
-      //alert("로그인 시간이 만료되었습니다. 다시 로그인해주세요.");
+      alert("로그인 시간이 만료되었습니다. 다시 로그인해주세요.");
 
       return instance.request(error.config);
     }

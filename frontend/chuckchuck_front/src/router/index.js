@@ -12,7 +12,7 @@ import testView from "@/common/testView.vue";
 import PillBagHistoryView from "@/views/user_medical_info/PillBagHistoryView.vue";
 import UserMedicalInfoView from "@/views/user_medical_info/UserMedicalInfoView.vue";
 import DiagnosisHistoryView from "@/views/user_medical_info/DiagnosisHistoryView.vue";
-import LoginView from "@/views/home/LoginView.vue";
+import LoginView from "@/views/login/LoginView.vue";
 
 import PillSearchView from "@/views/pill_search/PillSearchView.vue";
 import PillSearchDetailView from "@/views/pill_search/PillSearchDetailView.vue";
