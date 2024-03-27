@@ -1,6 +1,8 @@
 <template>
   <div class="modie_size">
-    <nav-bar></nav-bar>
+    <!-- <nav-bar></nav-bar> -->
+    <!-- meta: { hideNavBar: true } index.js의 navbar 필요없는 페이지에 추가 -->
+    <NavBar v-if="!$route.meta.hideNavBar" />
     <router-view></router-view>
   </div>
 </template>
