@@ -1,5 +1,5 @@
 <template>
-  <Wave title="처방내역" height="60px" />
+  <Wave title="처방내역" height="60px" Link="usermedicalinfo" />
 
   <div style="margin: 5px 10px">
     총 {{ dumydata.count }}건의 처방내역이 있습니다.
