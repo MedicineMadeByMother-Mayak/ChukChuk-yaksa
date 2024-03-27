@@ -58,6 +58,16 @@ export default {
   }
 }
 
+@keyframes slideAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(30%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .wave {
   animation: rotateAndPause 3s ease-in-out infinite;
 }
@@ -125,6 +135,7 @@ export default {
   font-size: 1rem;
   font-weight: 500;
   padding-left: 61px;
+  animation: slideAndFade 1s ease-out forwards;
 }
 
 .login-btn > img {
