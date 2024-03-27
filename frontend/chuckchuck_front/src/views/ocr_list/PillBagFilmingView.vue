@@ -12,7 +12,16 @@
       <div class="button-icon"></div>
       병력 저장하기
     </button>
-    <div class="grey-oval"></div>
+    <div
+      style="
+        position: relative;
+        top: 19px;
+        height: 10px;
+        background-color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      "
+    ></div>
   </HeaderForm>
   <div style="margin: 20px">
     <div style="text-align: center">진단서 분석 결과입니다.</div>
