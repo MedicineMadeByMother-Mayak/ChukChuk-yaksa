@@ -1,90 +1,129 @@
 <template>
-  <Wave title="복용 목록" height="60px" />
-  <div v-for="(item, index) in items" :key="index">
-    <img :src="item.imageUrl" :alt="'Image ' + (index + 1)" />
-  </div>
-  <div cla ss="carousel-container">
-    <div class="carousel">
+  <Wave title="복용 관리" height="60px" />
+  <vueper-slides class="no-shadow ex--center-mode" :arrows-outside="false" bullets-outside transition-speed="250" :interval="2000">
+  <vueper-slide
+    class = 'vueper-slide'
+    v-for="i in 3"
+    :key="i"
+    :title="i.toString()"
+    />
+  </vueper-slides>
 
-      <div v-for="(item, index) in items" :key="index">
-        <img :src="item.imageUrl" :alt="'Image ' + (index + 1)" />
-      </div>
-  
-      <div class="carousel-buttons">
-        <button class="prev-button" @click="prev" :class="{ 'active': currentIndex > 0 }"></button>
-        <button class="next-button" @click="next" :class="{ 'active': currentIndex < items.length - 1 }"></button>
-        <button class="next-button" @click="next" :class="{ 'active': currentIndex < items.length - 1 }"></button>
-      </div>
+  <div class="alarms">
+  </div>
+
+  <div class="menu">
+    <div class="menu-left">
+      <img src="@/assests/icon/pill.png" alt="복용리스트">
+      <div>복용중</div>
+    </div>
+    <div class="menu-right">
+      <button class="gray">과거에먹은약</button>
+      <button class="blue">추가</button>
     </div>
   </div>
+  <hr class="line">
+  
+ 
 </template>
 
-<script setup>
+<script>
   import Wave from '@/common/Wave.vue';
+  import { VueperSlides, VueperSlide } from 'vueperslides'
+  import 'vueperslides/dist/vueperslides.css'
   // import { ref, onUnmounted } from 'vue';
 
-  // const items = ref([
-  //   { imageUrl: 'https://via.placeholder.com/728x90.png' },
-  //   { imageUrl: 'https://via.placeholder.com/728x90.png' },
-  //   { imageUrl: 'https://via.placeholder.com/728x90.png' }
-  // ]);
-
-  // let currentIndex = ref(0);
-
-  // function prev() {
-  //   currentIndex.value = (currentIndex.value - 1 + items.value.length) % items.value.length;
-  // }
-
-  // function next() {
-  //   currentIndex.value = (currentIndex.value + 1) % items.value.length;
-  // }
-
-  // const interval = setInterval(next, 3000); // 3 seconds interval for automatic sliding
-
-  
-  // onUnmounted(() => {
-  //   clearInterval(interval);
-  // });
+  export default {
+  components: { VueperSlides, VueperSlide, Wave }
+}
 </script>
   
 <style>
-  /* .carousel {
-    overflow: hidden;
-    position: relative;
-  }
+.ex--center-mode {
+  margin-top: 30px;
+  left: 50%;
+  transform: translateX(-50%); 
+  width: 80%;
+}
+.vueper-slide {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%); 
+  width: 70%;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border-radius: 10px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+}
 
-  .carousel ul {
-    display: flex;
-    transition: transform 0.5s ease;
-    background-color:yellow;
-  }
-  .carousel ul ul{
-    margin-left: 0px;
-    background-color:aqua;
-  }
+.alarms {
+   background-color: lightskyblue;
+   height: 50px;
+}
+.menu{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: 20px;
+  margin-top: 10px;
+  position: relative;
+}
 
-  .carousel-buttons {
-    display: flex;
-    justify-content: center;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
+.menu-left {
+  display: flex;
+  align-items: center;
+}
+.menu-left img {
+  width: 80px;
+  margin-right: 5px;
+}
 
-  .carousel-buttons button {
-    background-color: #ccc;
-    color: #fff;
+.menu-right {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.menu img {
+  width: 10px;
+  height: 10px;
+}
+
+button {
+  display: inline;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+.gray {
+    background-color: #cccccc;
+    color: #ffffff; 
+    font-weight: bold; 
+    border-radius: 5px;
+    padding: 5px 10px; 
+    font-size: 12px;
     border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 5px;
-    height: 11px;
-    z-index: 999;
-    margin-left: 5px; /* 간격 조정 */
-    /* transition: all 0.3s ease;
-  } */
+    cursor: pointer; 
+    margin-right: 5px;
+  }
+  .blue {
+    background-color: #001f3f;
+    color: #ffffff; 
+    font-weight: bold; 
+    border-radius: 5px; 
+    padding: 5px 15px; 
+    font-size: 12px; 
+    border: none;
+    cursor: pointer; 
+  }
 
-  /* .carousel-buttons button.active {
-    background-color: #888;
-    transform: scale(1.2);
-  } */
+.line{
+  color: gray;
+  width: 90%;
+  margin-top: 20px;
+  
+}
+
 </style>
