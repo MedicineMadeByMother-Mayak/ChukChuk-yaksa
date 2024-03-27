@@ -8,8 +8,17 @@
 of Simple CSS Waves-->
 
   <div class="header">
+    <div class="inner-header flex">
+      <RouterLink style="z-index: 3" :to="{ name: Link }">
+        <div class="arrow left">
+          <i></i>
+        </div>
+      </RouterLink>
+      <h1 class="bold" :style="{ fontSize }">{{ title }}</h1>
+      <p></p>
+    </div>
     <!--Content before waves-->
-    <div class="inner-header flex" :style="{ height: headerHeight }">
+    <container class="inner-header flex" :style="{ height: headerHeight }">
       <!--Just the logo.. Don't mind this-->
       <!-- <svg
         version="1.1"
@@ -39,14 +48,7 @@ c-22.4,3-38.4,9.2-47.8,18.3c-11.2,10.9-13.6,26.7-16.3,45c-3.1,20.8-6.6,44.4-25.3
           />
         </g>
       </svg> -->
-      <RouterLink style="z-index: 3" :to="{ name: Link }">
-        <div class="arrow left">
-          <i></i>
-        </div>
-      </RouterLink>
-      <h1 class="bold">{{ title }}</h1>
-      <p></p>
-    </div>
+    </container>
 
     <!--Waves Container-->
     <div>
@@ -71,7 +73,7 @@ c-22.4,3-38.4,9.2-47.8,18.3c-11.2,10.9-13.6,26.7-16.3,45c-3.1,20.8-6.6,44.4-25.3
             y="4"
             fill="rgba(255,255,255,0.7"
           />
-          <use xlink:href="#gentle-wave" x="48" y="5" fill="#fff" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
           <!-- <use
             xlink:href="#gentle-wave"
             x="48"
@@ -103,11 +105,15 @@ const props = defineProps({
   },
   height: {
     type: String,
-    default: "148px",
+    default: "20px",
   },
   Link: {
     type: String,
     default: "home",
+  },
+  fontSize: {
+    type: String,
+    default: "20px",
   },
 });
 
@@ -126,7 +132,7 @@ h1 {
   right: 11.8px;
   letter-spacing: 2px;
   font-size: 20px;
-  margin-top: 5px;
+  margin: 10px;
 }
 
 .inner-header h1 {

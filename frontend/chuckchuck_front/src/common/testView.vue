@@ -24,3 +24,5 @@ import Accordian from "@/views/user_medical_info/components/Accordian.vue";
 import PillBagContent from "@/common/PillInfo.vue";
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 </script>
+
+<style setup></style>
