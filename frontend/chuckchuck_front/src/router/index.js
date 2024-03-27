@@ -28,6 +28,7 @@ import PIllPicView from "@/views/pill_pic/PIllPicView.vue";
 
 import UserPillEffectView from "@/views/user_pill_effect/UserPillEffectView.vue";
 import EffectDetailView from "@/views/user_pill_effect/EffectDetailView.vue";
+import LoadingView from "@/views/home/LoadingView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -157,12 +158,17 @@ const router = createRouter({
       name: "/effectdetail",
       component: EffectDetailView,
     },
-
     {
       // 로그인 화면
       path: "/login",
       name: "login",
       component: LoginView,
+    },
+    {
+      // 로딩 화면
+      path: "/loading",
+      name: "loading",
+      component: LoadingView,
     },
   ],
 });
