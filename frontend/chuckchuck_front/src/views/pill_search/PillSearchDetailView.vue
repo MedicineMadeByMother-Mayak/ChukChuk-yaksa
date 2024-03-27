@@ -1,3 +1,4 @@
+<!-- 약 상세 페이지 -->
 <template>
   <div class="basic-background-color">
     <Wave :title="waveTitle" height="60px" /> 
@@ -76,7 +77,7 @@ const appointmentDetails = [
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(255, 0, 230); 
+  background-color: rgb(0, 119, 255); 
 }
 
 .container {

@@ -1,3 +1,4 @@
+<!-- 처방내역 -->
 <template>
   <Wave title="진단내역" height="60px" />
 
