@@ -5,11 +5,11 @@
       <img src="@/assests/img/dumypillimg.jpg" alt="약 이미지" />
     </div>
     <div class="pill-info">
-      <div class="pill-type">{{ type }}</div>
-      <div class="pill-name">{{ pillName }}</div>
+      <div class="pill-type txt_line">{{ type }}</div>
+      <div class="pill-name txt_line">{{ pillName }}</div>
     </div>
     <div class="pill-capacity">
-      <div>{{ capacity }}</div>
+      <div class="txt_line">{{ capacity }}</div>
     </div>
   </div>
 </template>
@@ -41,11 +41,25 @@ const props = defineProps({
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.pill-image {
+  width: 90px;
+  height: 60px;
+}
+
 .pill-image img {
-  width: 80px;
-  height: auto;
-  margin: 10px;
+  min-width: 80px;
+  min-height: 50px;
+  margin: 5px;
+  object-fit: cover;
   border-radius: 8px;
+}
+
+.txt_line {
+  width: 80px;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .pill-info {
@@ -67,8 +81,6 @@ const props = defineProps({
 
 .pill-capacity {
   margin-left: auto;
-  background-color: white;
   border-radius: 10px;
-  padding: 5px 10px;
 }
 </style>

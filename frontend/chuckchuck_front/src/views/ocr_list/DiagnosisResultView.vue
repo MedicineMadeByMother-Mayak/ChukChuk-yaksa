@@ -15,6 +15,8 @@
     <div class="grey-oval"></div>
   </HeaderForm>
   <div style="margin: 20px">
+    <div style="text-align: center">처방 받으신 약 봉투 분석 결과입니다.</div>
+    <hr />
     <li>
       <strong>영수증</strong>
       <TableForm
@@ -146,7 +148,7 @@ const dumydata = ref({
 
 .grey-oval {
   position: relative;
-  top: 16px;
+  top: 18px;
   width: 320px;
   height: 20px;
   background-color: #e7e7e7;
