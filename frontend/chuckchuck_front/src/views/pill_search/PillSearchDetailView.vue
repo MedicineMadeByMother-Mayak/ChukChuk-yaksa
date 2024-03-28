@@ -6,7 +6,11 @@
       <img :src="imagePath" alt="Image description" />
     </div>
 
-    <div v-for="(item, index) in appointmentDetails" :key="index" class="main-container">
+    <div
+      v-for="(item, index) in appointmentDetails"
+      :key="index"
+      class="main-container"
+    >
       <div style="margin: 5px 0px; display: flex; align-items: center">
         <strong
           style="
@@ -17,7 +21,10 @@
             align-items: center;
           "
         >
-          <i class="fa-solid fa-circle-info" style="margin-right: 5px; color: #509af8"></i>
+          <i
+            class="fa-solid fa-circle-info"
+            style="margin-right: 5px; color: #509af8"
+          ></i>
           <span style="vertical-align: middle">{{ item.title }}</span>
         </strong>
         <span style="font-size: 10px"></span>
@@ -64,7 +71,7 @@ const appointmentDetails = [
 ];
 </script>
 
-<style>
+<style scoped>
 .basic-background-color {
   background-color: #f9f9f9;
 }

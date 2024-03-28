@@ -5,8 +5,8 @@
       <img src="@/assests/img/dumypillimg.jpg" alt="약 이미지" />
     </div>
     <div class="pill-info">
-      <div class="pill-type">{{ type }}</div>
-      <div class="pill-name">{{ pillName }}</div>
+      <div class="pill-type txt_line">{{ type }}</div>
+      <div class="pill-name txt_line">{{ pillName }}</div>
     </div>
     <div class="pill-capacity">
       <div>{{ capacity }}</div>
@@ -32,13 +32,24 @@ const props = defineProps({
 </script>
 
 <style scoped>
+.txt_line {
+  width: 80px;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .pill-card {
   font-size: 12px;
   display: flex;
   align-items: center;
-  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pill-image {
+  display: flex;
 }
 
 .pill-image img {

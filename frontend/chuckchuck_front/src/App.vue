@@ -3,7 +3,6 @@
     <!-- <RouterView /> -->
     <nav-bar></nav-bar>
     <router-view></router-view>
-    <div style="height: 75px"></div>
   </div>
 </template>
 
