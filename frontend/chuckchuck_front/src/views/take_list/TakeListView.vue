@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Wave title="복용 관리" height="60px" />
+    <Wave title="복용 관리" height="30px" />
     <!-- <vueper-slides
       autoplay
       class="no-shadow ex--center-mode"
@@ -17,7 +17,16 @@
       />
     </vueper-slides> -->
 
-    <div class="alarms"></div>
+    <div class="alarms">
+      <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`">
+        <button class="rounded-button">
+          <span><i class="fa-solid fa-bell" style="color: #FFD43B; margin-right: 8px;"></i>{{ pillDatas.takeListName }}</span>
+        </button>
+      </div>
+      <div>
+        <button class="rounded-button" style="height: 28px;"><span><i class="fa-solid fa-circle-plus fa-lg icon" style="color: #1454b5; margin: 2px 15px;"></i></span></button>
+      </div>
+    </div>
     <div class="menu">
       <div class="menu-left">
         <img src="@/assests/icon/pill.png" alt="복용리스트" />
@@ -28,34 +37,31 @@
         <button class="navy-button">추가</button>
       </div>
     </div>
-    <hr class="line" />
-
-    <div
-      class="pill-info"
-      v-for="(data, index) in dumydata.result"
-      :key="index"
-    >
-      <div>{{ data.createDate }} [{{ data.takeListName }}]</div>
-
-      <img src="@/assests/icon/edit.png" alt="홈" />
-    </div>
-    <div v-for="(pillDatas, index) in dumydata.result" :key="index">
-      <div
-        v-for="(pillData, index) in pillDatas.pills"
-        style="margin-top: 10px"
-      >
-        <Content
-          :pillId="pillData.pillId"
-          :pillName="pillData.pillName"
-          :imageUrl="pillData.imageUrl"
-          :type="pillData.type"
-          :warningPregnant="pillData.warningPregnant"
-          :warningUseDate="pillData.warningUseDate"
-          :warningElders="pillData.warningElders"
-          :warningTogether="pillData.warningTogether"
-        />
+    <hr style="margin: 3px;" />
+      <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`" class="pill-entry">
+        <div class="pill-date">
+          {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
+          <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
+        </div>
+        <ul class="pills-list">
+          <li
+            v-for="(pillData, index) in pillDatas.pills"
+            :key="`pill-details-${index}`"
+            class="pill-info"
+          >
+            <Content
+              :pillId="pillData.pillId"
+              :pillName="pillData.pillName"
+              :imageUrl="pillData.imageUrl"
+              :type="pillData.type"
+              :warningPregnant="pillData.warningPregnant"
+              :warningUseDate="pillData.warningUseDate"
+              :warningElders="pillData.warningElders"
+              :warningTogether="pillData.warningTogether"
+            />
+          </li>
+        </ul>
       </div>
-    </div>
   </div>
 </template>
 
@@ -69,11 +75,11 @@ import List from "./components/List.vue";
 
 // import { instance } from "@/util/mainAxios";
 //요청 test
-const server = async () => {
-  const { data } = await instance.get("/pill/search?keyword=활&page=1");
-  console.log(data);
-};
-server();
+// const server = async () => {
+//   const { data } = await instance.get("/pill/search?keyword=활&page=1");
+//   console.log(data);
+// };
+// server();
 
 const dumydata = ref({
   count: 5,
@@ -227,16 +233,19 @@ const dumydata = ref({
 } */
 
 .alarms {
-  background-color: lightskyblue;
-  height: 50px;
+  padding: 15px 10px;
+  background-color: #c0e6fc;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .menu {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%;
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 5px;
+  margin-top: 5px;
   position: relative;
   overflow: hidden;
 }
@@ -250,7 +259,7 @@ const dumydata = ref({
 }
 .menu-right {
   text-align: right;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .menu img {
   width: 10px;
@@ -259,7 +268,7 @@ const dumydata = ref({
 
 button {
   display: inline;
-  margin-right: 10px;
+  margin-right: 5px;
   margin-top: 10px;
 }
 .gray-button {
@@ -273,6 +282,7 @@ button {
   cursor: pointer;
   margin-right: 5px;
 }
+
 .navy-button {
   background-color: #242291;
   color: #ffffff;
@@ -285,20 +295,88 @@ button {
 }
 
 .line {
-  width: 90%;
+  width: 100%;
   margin-top: 0px;
 }
+
 .pill-info {
-  margin-left: 20px;
   font-weight: bold;
-  display: flex;
+  margin: 0px 10px;
   align-items: center;
 }
-.pill-info p {
-  flex: 1;
+
+.pills-list {
+  margin: 5px 0px;
+  list-style: none;
+  padding-left: 0;
+  position: relative;
 }
-.pill-info img {
-  width: 20px;
-  height: 20px;
+
+.pills-list::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #083688;
+}
+
+.pill-info:first-child::before,
+.pill-info:last-child::before
+{
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #083688; /* 점의 색상, 원하는 색으로 변경 가능 */
+  border-radius: 50%; /* 원형 점 */
+}
+
+/* 첫 번째 pill-info의 상단 왼쪽 모서리 */
+.pill-info:first-child::before {
+  top: -2px; /* 점의 위치를 반으로 조정 */
+  left: -2px;
+}
+
+/* 마지막 pill-info의 하단 왼쪽 모서리 */
+.pill-info:last-child::before {
+  bottom: -2px;
+  left: -2px;
+}
+
+.pill-entry {
+  margin-bottom: 20px;
+  padding-left: 5px;
+}
+
+.pill-date {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.pill-info + .pill-info {
+  margin-top: 10px;
+}
+
+.pill-date img {
+  margin-left: 3px;
+  width: 25px;
+  height: 25px;
+}
+
+.rounded-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: white; /* 버튼 배경색 */
+  padding: 5px 15px; /* 버튼 내부 패딩 */
+  margin: 0px;
+  border-radius: 30px; /* 둥근 모서리 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  cursor: pointer;
+  transition: background-color 0.3s; /* 배경색 변경 시 애니메이션 */
 }
 </style>

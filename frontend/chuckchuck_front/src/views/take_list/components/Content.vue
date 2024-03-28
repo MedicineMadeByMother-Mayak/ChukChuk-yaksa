@@ -16,14 +16,16 @@
           :title="badge.title"
           :backgroundColor="badge.backgroundColor"
           color="white"
-          fontSize="9px"
+          fontSize="8px"
           padding="1px 4px 1px 4px"
+          style="margin: 0px 1px;"
           v-if="badge.condition"
         />
+        <span v-if="index >= badges.length - 1">...</span>
       </span>
       <!-- 수정 end -->
     </div>
-    <i class="fa-solid fa-xmark fa-xl"></i>
+    <i class="fa-solid fa-xmark fa-xl delete-icon" style="margin: 3px;" ></i>
   </div>
 </template>
 
@@ -61,7 +63,7 @@ const props = defineProps({
 
 const truncateName = (name) => {
   if (name.length > 10) {
-    return name.slice(0, 10) + "..";
+    return name.slice(0, 13) + "..";
   } else {
     return name;
   }
@@ -96,7 +98,7 @@ let trueCount = 0;
 badges.forEach((badge, index) => {
   if (badge.condition) {
     trueCount++;
-    if (trueCount >= 3) {
+    if (trueCount > 3) {
       badge.condition = false;
     }
   }
@@ -111,6 +113,7 @@ badges.forEach((badge, index) => {
 
 .pill-card {
   font-size: 12px;
+  position: relative;
   display: flex;
   align-items: center;
   background-color: #ffffff;
@@ -152,6 +155,13 @@ badges.forEach((badge, index) => {
 }
 
 .badge-custom {
-  padding: 0 2px 0 0;
+  padding: 0 0 0 0;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 9px;
+  right: 3px;
+  cursor: pointer;
 }
 </style>
