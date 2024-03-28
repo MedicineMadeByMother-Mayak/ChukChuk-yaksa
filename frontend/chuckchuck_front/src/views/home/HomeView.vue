@@ -1,5 +1,9 @@
 <template>
-  <div>home</div>
+  <div class="basic-background-color">
+    <img :src="EffectRecord">
+
+
+  </div>
   <div>
     <a href="/ocrlist">약봉투/진단서 촬영 메인페이지 (/ocrlist)</a>
   </div>
@@ -65,6 +69,16 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import EffectRecord from "@/assests/icon/main_page/effectRecord.svg";
+import StopFace from "@/assests/icon/stopFace.svg";
+import SideEffectFace from "@/assests/icon/sideEffectFace.svg";
+import underDirection from "@/assests/icon/underDirection.svg";
+</script>
 
-<style scoped></style>
+<style scoped>
+.basic-background-color {
+  background-color: #f9f9f9;
+  height: 100vb;
+}
+</style>
