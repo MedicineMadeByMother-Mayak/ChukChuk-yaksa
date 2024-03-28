@@ -1,5 +1,5 @@
 <template>
-  <Wave title="처방내역" height="60px" Link="usermedicalinfo" />
+  <Wave title="처방내역" height="30px" Link="usermedicalinfo" />
 
   <div style="margin: 5px 10px">
     총 {{ dumydata.count }}건의 처방내역이 있습니다.
@@ -88,4 +88,4 @@ function formatDate(date, format = "YYYY/MM/DD") {
 }
 </script>
 
-<style setup></style>
+<style scoped></style>
