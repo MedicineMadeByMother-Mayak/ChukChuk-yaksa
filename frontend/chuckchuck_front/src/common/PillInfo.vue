@@ -48,6 +48,10 @@ const props = defineProps({
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.pill-image {
+  display: flex;
+}
+
 .pill-image img {
   width: 80px;
   height: auto;
