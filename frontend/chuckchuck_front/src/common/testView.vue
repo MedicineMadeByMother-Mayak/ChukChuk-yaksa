@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderForm :title="'사랑해요'" :height="'100px'">
+    <HeaderForm :title="'사랑해요'" :height="'100px'" :Link="'home'">
       <div>사랑해요</div>
     </HeaderForm>
     <!-- <Wave title="문진표" height="100px" /> -->
@@ -24,3 +24,5 @@ import Accordian from "@/views/user_medical_info/components/Accordian.vue";
 import PillBagContent from "@/common/PillInfo.vue";
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 </script>
+
+<style setup></style>

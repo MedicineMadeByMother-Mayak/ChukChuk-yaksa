@@ -1,14 +1,18 @@
 <!-- 사용법     
-  <HeaderForm :title="'사랑해요'" :height="'100px'">
+  <HeaderForm :title="'사랑해요'" :height="'100px'" :Link="''" :fontsize="10px">
     여기에 내용을 넣으세요
   </HeaderForm>  
 -->
 
 <template>
-  <div class="header">
-    <div class="inner-header flex" :style="{ height }">
-      <i class="arrow left"></i>
-      <h1>{{ title }}</h1>
+  <div class="header" :style="{ height }">
+    <div class="inner-header flex">
+      <RouterLink style="z-index: 3" :to="{ name: Link }">
+        <div class="arrow left">
+          <i></i>
+        </div>
+      </RouterLink>
+      <h1 class="bold" :style="{ fontSize }">{{ title }}</h1>
       <p></p>
     </div>
     <slot></slot>
@@ -23,7 +27,15 @@ const props = defineProps({
   },
   height: {
     type: String,
-    default: "148px",
+    default: "100px",
+  },
+  Link: {
+    type: String,
+    default: "home",
+  },
+  fontSize: {
+    type: String,
+    default: "20px",
   },
 });
 </script>
@@ -39,7 +51,7 @@ h1 {
   font-weight: bold;
   letter-spacing: 2px;
   font-size: 20px;
-  margin-top: 5px;
+  margin: 10px;
 }
 
 .inner-header h1 {
@@ -85,6 +97,7 @@ h1 {
   display: inline-block;
   padding: 6px;
   caret-color: transparent;
+  margin-left: 10px;
 }
 
 .left {

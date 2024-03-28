@@ -1,5 +1,6 @@
+<!-- 처방내역 -->
 <template>
-  <Wave title="진단내역" height="60px" />
+  <Wave title="진단내역" height="20px" Link="usermedicalinfo" />
 
   <div style="margin: 5px 10px">
     총 {{ dumydata.count }}건의 진단내역이 있습니다.
