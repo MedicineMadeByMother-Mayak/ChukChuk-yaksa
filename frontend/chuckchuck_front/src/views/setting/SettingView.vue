@@ -59,14 +59,6 @@ const logout = () => {};
   background-color: white;
 }
 
-.settings-toggle {
-  /* 스타일링을 위한 추가 CSS */
-}
-
-.arrow.right {
-  /* 화살표 아이콘을 위한 스타일링 */
-}
-
 /* 토글 스위치를 위한 스타일링 */
 input[type="checkbox"] {
   /* 숨김 처리 */
