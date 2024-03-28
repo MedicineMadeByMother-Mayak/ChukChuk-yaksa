@@ -27,6 +27,9 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         if (token.validate()) {
             Authentication authentication = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+        }else {
+//            jwt access token에 문제있다면 401에러 리턴
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
         filterChain.doFilter(request, response);
     }
