@@ -34,7 +34,8 @@
       </div>
     </div>
   </div>
-  <div class="white-space basic-background-color"></div>
+  <!-- Nav-bar용 -->
+  <div style="height: 85px; background-color: #f9f9f9;"></div>
 </template>
 
 <script setup>
@@ -74,11 +75,6 @@ const appointmentDetails = [
 <style scoped>
 .basic-background-color {
   background-color: #f9f9f9;
-}
-
-/* nav-bar 길이만큼 여백 */
-.white-space {
-  height: 85px;
 }
 
 .main-container {
