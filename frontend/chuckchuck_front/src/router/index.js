@@ -136,7 +136,9 @@ const router = createRouter({
       component: PillBagHistoryView,
     },
     {
+
       //진단내역
+
       path: "/usermedicalinfo/diagnosishistory",
       name: "diagnosishistory",
       component: DiagnosisHistoryView,
@@ -146,6 +148,20 @@ const router = createRouter({
       name: "test",
       component: testView,
     },
+
+    {
+      //복용리스트
+      path: '/take-list',
+      name: "TakeList",
+      component: TakeListView,
+    },
+    {
+      //설정
+      path: '/setting',
+      name: "Setting",
+      component: SettingView,
+    },
+
 
     {
       //약효기록
