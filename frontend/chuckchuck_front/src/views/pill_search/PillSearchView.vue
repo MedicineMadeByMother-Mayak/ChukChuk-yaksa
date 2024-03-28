@@ -25,6 +25,8 @@
       </div>
     </div>
   </div>
+    <!-- Nav-bar용 -->
+    <div style="height: 85px; background-color: #FFFFFF;"></div>
 </template>
 
 <script setup>
@@ -44,6 +46,46 @@ const dumydata = ref({
       warningUseDate: true,
       warningElders: true,
       warningTogether: true,
+    },
+    {
+      pillId: 2,
+      pillName: "디고신정(디곡신)",
+      imageUrl: "../../assests/img/tempPill.png",
+      type: "진통제 (painkiller)",
+      warningPregnant: true,
+      warningUseDate: false,
+      warningElders: true,
+      warningTogether: false,
+    },
+    {
+      pillId: 3,
+      pillName: "옥시톤주사액5아이유(옥시토신)",
+      imageUrl: "../../assests/img/tempPill.png",
+      type: "진통제 (painkiller)",
+      warningPregnant: false,
+      warningUseDate: false,
+      warningElders: true,
+      warningTogether: true,
+    },
+    {
+      pillId: 4,
+      pillName: "아주디곡신주사액",
+      imageUrl: "../../assests/img/tempPill.png",
+      type: "진통제 (painkiller)",
+      warningPregnant: false,
+      warningUseDate: true,
+      warningElders: true,
+      warningTogether: false,
+    },
+    {
+      pillId: 5,
+      pillName: "삐콤정",
+      imageUrl: "../../assests/img/tempPill.png",
+      type: "진통제 (painkiller)",
+      warningPregnant: true,
+      warningUseDate: true,
+      warningElders: true,
+      warningTogether: false,
     },
     {
       pillId: 2,
