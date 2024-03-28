@@ -2,7 +2,7 @@
 <template>
   <div class="effect-detail-view">
     <HeaderForm :title="'약효기록 작성'" :height="'260px'">
-      <img class="img" src="../../assests/img/tempPill.png" alt="Image description" />
+      <img class="pill-img" src="../../assests/img/tempPill.png" alt="Image description" />
       <div class="center-aligned">
         <div class="in-header-pill-name">
           <div>
@@ -53,6 +53,8 @@
   <div>
     <EffectFaceIcon />
   </div>
+  <!-- Nav-bar용 -->
+  <div style="height: 85px; background-color: #f9f9f9;"></div>
 </template>
 
 <script setup>
@@ -196,6 +198,11 @@ const getBackgroundColor = (categoryId) => {
 
 .img {
   border-radius: 10px;
+}
+
+.pill-img {
+  border-radius: 10px;
+  max-height: 150px;
 }
 
 .icon-container {
