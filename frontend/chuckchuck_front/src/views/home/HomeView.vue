@@ -1,5 +1,55 @@
 <template>
-  <div>home</div>
+  <div class="header-background">
+    <img src="@/assests/img/main_page_background.svg" style="border-radius: 30px;" />
+  </div>
+  <div class="basic-background">
+    <div class="basic-content">
+    <div class="hello">
+      <img src="@/assests/icon/main_page/main_icon.svg" style="border-radius: 30px;" />
+      <div class="hello-text">안녕하세요 기미중님!</div>
+      <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
+    </div>
+    <div class="temp">
+      <div class="icon-container">
+        <div class="box">
+          <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
+            <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
+              <img src="@/assests/icon/main_page/find_pill_by_pic.svg" />
+            </div>
+            <div
+              class="column"
+              style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+            >
+              <img src="@/assests/icon/main_page/take_pic.svg" />
+            </div>
+            <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
+              <img src="@/assests/icon/main_page/pill_search.svg" />
+            </div>
+          </div>
+          <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
+            <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
+              <img src="@/assests/icon/main_page/pharmacy_search.svg" />
+            </div>
+            <div
+              class="column"
+              style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+            >
+              <img src="@/assests/icon/main_page/effect_record.svg" />
+            </div>
+            <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
+              <img src="@/assests/icon/main_page/take_pill_management.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- 수정 start -->
+    <div class="middle-content">
+      <img src="@/assests/icon/main_page/noti_background.svg" />
+    </div>
+    <!-- 수정 end -->
+  </div>
   <div>
     <a href="/ocrlist">약봉투/진단서 촬영 메인페이지 (/ocrlist)</a>
   </div>
@@ -65,5 +115,122 @@
   </div>
 </template>
 
-<script setup></script>
-<style scoped></style>
+
+<script setup>
+</script>
+
+<style scoped>
+.header-background {
+  height: 400px;
+  width: 700px;
+  position: relative;
+  text-align: center;
+  color: black;
+  margin-top: -110px;  /*위로 올려 원 일부를 가리는 용도 */
+  margin-bottom: -257px;  /*밑에 사진 삼키는 용도 */
+  margin-left: -96px;
+  border-radius: 500%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.basic-background {
+  background-color: #f9f9f9;
+  height: 100vh; /* 100vb가 아닌 100vh로 수정 */
+  display: flex;
+  justify-content: top; /* 가로 가운데 정렬 */
+  flex-direction: column; /* 요소들을 세로로 정렬 */
+}
+
+.basic-content {
+  margin: 90px 0 0 0;
+}
+
+.hello {
+  display: flex;
+  justify-content: left; /* 가로 가운데 정렬 */
+  align-items: center;
+  position: relative; /* 상대 위치 설정 */
+  z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+  margin: 0 0 10px 20px;
+}
+
+.hello-text {
+  color: white;
+  margin: 0 0 0 10px;
+}
+
+.hello-pic {
+  display: flex;
+  justify-content: right; /* 가로 가운데 정렬 */
+  align-items: center;
+  margin: -50px -30px -18px -10px;
+}
+
+.icon-container {
+  width: 270px; /* 가로 50px */
+  height: 180px; /* 높이 80px */
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 10px; /* 바깥 모서리에 border-radius 적용 */
+  border: 1px solid rgb(231, 231, 231);
+  position: relative; /* 상대 위치 설정 */
+  z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+  background-color: white;
+  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.4); /* 아래쪽에만 그림자 추가 */
+  margin: 43px 0 50px 0;
+}
+
+.row {
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+
+.column {
+  width: 33.333%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.temp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.middle-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 270px;
+  margin: 90px auto 0; /* 상단 여백을 조절하기 위해 auto로 수정 */
+  text-align: center; /* 내부 요소를 가운데 정렬 */
+}
+
+.middle-content img {
+  max-width: 270px;
+  border-radius: 20px;
+}
+
+.middle-content-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+  color: white;
+  justify-items: left;
+}
+</style>
