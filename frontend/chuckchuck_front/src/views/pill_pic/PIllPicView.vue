@@ -3,14 +3,16 @@
     <Wave title="사진으로 약찾기" height="10px" Link="usermedicalinfo" />
     <!-- OcrListView -->
     <div class="text">
-      <p>무슨약인지 잊어버리셨나요?</p>
+      <p>무슨 약인지 잊어버리셨나요?</p>
       <p>알약사진을 찍으면 AI가 해당 약을 분석해드려요.</p>
     </div>
 
     <div class="survey-container">
       <div class="survey-header">
         <div class="step active">1</div>
+        <div class="line"></div>
         <div class="step">2</div>
+        <div class="line"></div>
         <div class="step">3</div>
       </div>
       <div class="survey-steps">
@@ -21,7 +23,10 @@
     </div>
 
     <div class="buttons">
-      <button>갤러리에서 알약사진 선택하기</button>
+      <label for="file-upload" class="custom-button"
+        >갤러리에서 알약사진 선택하기</label
+      >
+      <input type="file" id="file-upload" style="display: none" />
       <button>카메라로 알약사진 촬영하기</button>
     </div>
   </div>
@@ -45,6 +50,15 @@ import Wave from "@/common/Wave.vue";
 p {
   margin: 0px;
   padding: 0px;
+  color: #626262; /* 원하는 색상값을 넣어주세요 */
+  font-size: 12px;
+}
+.line {
+  height: 1px;
+  width: 50px;
+  border-radius: 10px;
+  border: 2px solid #eff0f6;
+  background-color: #eff0f6;
 }
 .base-backgound-color {
   display: flex;
@@ -69,14 +83,36 @@ p {
   gap: 20px;
 }
 
+.custom-button {
+  width: 68vw;
+  height: 8vh;
+  display: inline-flex; /* Flexbox 사용 */
+  align-items: center; /* 수직 정렬 */
+  justify-content: center; /* 수평 정렬 */
+  padding: 10px 20px;
+  background-color: #ffffff; /* 하얀색 배경 */
+  color: #000000; /* 검은색 텍스트 */
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
+  text-align: center;
+  line-height: 1.5; /* 버튼 내부 텍스트의 수직 정렬을 위해 사용 */
+  font-size: 14px;
+}
+.custom-button:hover {
+  background-color: rgb(241, 241, 241); /* 흰색 배경 */
+}
+
+button:hover {
+  background-color: rgb(241, 241, 241); /* 흰색 배경 */
+}
+
 button {
   background-color: white; /* 흰색 배경 */
   border: none; /* outline 없음 */
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
-  /* padding: 27px 40px; */
-  /* margin: 15px; */
   border-radius: 5px;
-  font-size: 15px;
+  font-size: 14px;
   width: 80vw;
   height: 80px;
 }
@@ -85,12 +121,19 @@ button {
   padding: 1rem;
   /* background: #fff; */
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
 }
 
 .survey-header {
+  width: 90vw;
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.3rem;
+  gap: 11px;
 }
 
 .step {
@@ -101,7 +144,7 @@ button {
   line-height: 2rem;
   text-align: center;
   color: #797979; /* 원하는 색상값을 넣어주세요 */
-  font-weight: bold; /* 텍스트를 굵게 처리 */
+  font-weight: normal; /* 텍스트를 굵게 처리 */
   font-size: medium;
 }
 .step.active {
@@ -110,35 +153,21 @@ button {
 }
 
 .survey-steps {
+  width: 100vw;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   margin-bottom: 1rem;
 }
 
 .step-description {
   flex: 1;
   text-align: center;
-  color: rgb(75, 75, 75);
+  color: rgb(88, 88, 88);
+  font-size: 8px;
+  /* font-weight: bold; */
 }
 
 .step-description.active {
-  color: rgb(75, 75, 75);
-}
-
-.survey-button {
-  display: block;
-  width: 100%;
-  padding: 1rem;
-  margin-bottom: 0.5rem;
-  background: #f7f7f7;
-  border: none;
-  border-radius: 5px;
-  box-shadow: inset 0 0 0 1px #ddd;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.survey-button:hover {
-  background: #e0e0e0;
+  color: rgb(88, 88, 88);
 }
 </style>

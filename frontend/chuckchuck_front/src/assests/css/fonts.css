@@ -7,6 +7,11 @@
   font-family: "Inter-Bold";
   src: url("./Inter-Bold.ttf");
 }
+
+* {
+  letter-spacing: -0.9px; /* 원하는 자간 값으로 변경하세요 */
+}
+
 body {
   font-family: "Inter-Medium", sans-serif;
   font-size: 12px;
@@ -16,11 +21,16 @@ body {
   font-family: "Inter-Bold";
 }
 
+p,
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
+  font-family: "Inter-Medium", sans-serif;
+}
+
+button {
   font-family: "Inter-Medium", sans-serif;
 }
