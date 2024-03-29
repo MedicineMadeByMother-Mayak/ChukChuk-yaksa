@@ -1,7 +1,13 @@
 <template>
+  <!-- 검색바 -->
   <div class="search-bar" :style="{ width: width, height: height }">
     <img :src="searchIcon" :style="{ width: iconWidth }" alt="" />
-    <span> 검색할 약의 이름을 입력하세요. </span>
+    <input
+      class="input-local"
+      placeholder="검색할 약의 이름을 입력하세요."
+      type="text"
+      :value="keyword"
+    />
   </div>
 </template>
 
@@ -20,6 +26,7 @@ const props = defineProps({
     type: String,
     default: "30px",
   },
+  keyword: String,
 });
 </script>
 
@@ -28,7 +35,6 @@ const props = defineProps({
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
 }
 
 .search-bar::before {
@@ -36,7 +42,7 @@ const props = defineProps({
   position: absolute;
   inset: 0;
   border-radius: 6px;
-  padding: 3px;
+  padding: 2.5px;
   background: linear-gradient(60deg, #3183ff 0%, #86e7ee 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -45,9 +51,20 @@ const props = defineProps({
 
 .search-bar > img {
   margin: 0;
+  position: absolute;
+  left: 6%;
 }
 
-.search-bar > span {
-  font-size: 115%;
+.input-local {
+  margin-left: 20%;
+  width: 100%;
+  border: none;
+  outline: 0;
+  background-color: transparent;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 0;
+  color: #606060;
+  z-index: 2;
 }
 </style>
