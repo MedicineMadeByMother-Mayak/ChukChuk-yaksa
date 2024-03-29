@@ -1,9 +1,6 @@
 <template>
   <div class="header-background">
-    <img
-      src="@/assests/img/main_page_background.svg"
-      style="border-radius: 30px"
-    />
+    <img src="@/assests/img/main_page_background.svg" />
   </div>
   <div class="basic-background">
     <div class="basic-content">
@@ -171,17 +168,23 @@
 <style scoped>
 .header-background {
   height: 400px;
-  width: 700px;
+  width: 320px;
   position: relative;
   text-align: center;
   color: black;
   margin-top: -110px; /*위로 올려 원 일부를 가리는 용도 */
   margin-bottom: -257px; /*밑에 사진 삼키는 용도 */
-  margin-left: -96px;
   border-radius: 500%;
   display: flex;
   justify-items: center;
   align-items: center;
+}
+
+.header-background img {
+  width: 320px;
+  height: 600px;
+  margin-top: 20px;
+  border-radius: 100px;
 }
 
 .basic-background {
@@ -263,7 +266,7 @@
   justify-content: center;
   align-items: center;
   max-width: 270px;
-  margin: 90px auto 0; /* 상단 여백을 조절하기 위해 auto로 수정 */
+  margin: 80px auto 0; /* 상단 여백을 조절하기 위해 auto로 수정 */
   text-align: center; /* 내부 요소를 가운데 정렬 */
 }
 
