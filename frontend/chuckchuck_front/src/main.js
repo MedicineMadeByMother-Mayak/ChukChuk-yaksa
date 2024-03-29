@@ -4,7 +4,6 @@ import App from "./App.vue";
 
 import router from "./router";
 import "./assests/css/fonts.css";
-import "./assests/css/carousel.css";
 
 const app = createApp(App);
 
