@@ -1,22 +1,6 @@
 <template>
   <div>
     <Wave title="복용 관리" height="30px" />
-    <!-- <vueper-slides
-      autoplay
-      class="no-shadow ex--center-mode"
-      :arrows-outside="false"
-      bullets-outside
-      transition-speed="250"
-      :interval="2000"
-    >
-      <vueper-slide
-        class="vueper-slide"
-        v-for="i in 3"
-        :key="i"
-        :title="i.toString()"
-      />
-    </vueper-slides> -->
-
     <div class="alarms">
       <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`">
         <button class="rounded-button">
@@ -29,7 +13,7 @@
     </div>
     <div class="menu">
       <div class="menu-left">
-        <img src="@/assests/icon/pill.png" alt="복용리스트" />
+        <!-- <img src="@/assests/icon/pill.png" alt="복용리스트" /> -->
         <div><strong>복용중</strong></div>
       </div>
       <div class="menu-right">
@@ -41,7 +25,7 @@
       <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`" class="pill-entry">
         <div class="pill-date">
           {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
-          <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
+          <!-- <img src="@/assests/icon/edit.png" alt="편집 아이콘" /> -->
         </div>
         <ul class="pills-list">
           <li
@@ -67,19 +51,9 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-// // import { VueperSlides, VueperSlide } from "vueperslides";
 import { ref } from "vue";
-// // import "vueperslides/dist/vueperslides.css";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
-
-// import { instance } from "@/util/mainAxios";
-//요청 test
-// const server = async () => {
-//   const { data } = await instance.get("/pill/search?keyword=활&page=1");
-//   console.log(data);
-// };
-// server();
 
 const dumydata = ref({
   count: 5,
