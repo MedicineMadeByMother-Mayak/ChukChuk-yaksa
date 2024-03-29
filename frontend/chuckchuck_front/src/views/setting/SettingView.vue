@@ -65,6 +65,7 @@ input[type="checkbox"] {
   opacity: 0;
   width: 0;
   height: 0;
+  caret-color: transparent;
 }
 
 input[type="checkbox"] + label {
@@ -75,6 +76,7 @@ input[type="checkbox"] + label {
   height: 25px;
   background-color: #ccc;
   border-radius: 25px;
+  caret-color: transparent;
 }
 
 input[type="checkbox"]:checked + label {
