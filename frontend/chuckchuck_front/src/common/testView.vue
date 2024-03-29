@@ -1,28 +1,42 @@
 <template>
-  <div>
-    <HeaderForm :title="'사랑해요'" :height="'100px'" :Link="'home'">
-      <div>사랑해요</div>
-    </HeaderForm>
-    <!-- <Wave title="문진표" height="100px" /> -->
-    <CustomTable
-      :tableData="[
-        ['John Doe', 'Developer'],
-        ['Jane Doe', 'Designer'],
-      ]"
-    />
-    <Badge />
-    <Accordian> 사랑해요 </Accordian>
-    <PillBagContent />
+  <div class="what-container">
+    <div class="white-background">
+      <div class="white-box"></div>
+    </div>
+    <div class="blue-rounded"></div>
   </div>
 </template>
 
 <script setup>
-import Wave from "@/common/Wave.vue";
-import CustomTable from "@/common/Form/TableForm.vue";
-import Badge from "@/common/Badge.vue";
-import Accordian from "@/views/user_medical_info/components/Accordian.vue";
-import PillBagContent from "@/common/PillInfo.vue";
-import HeaderForm from "@/common/Form/HeaderForm.vue";
 </script>
 
-<style scoped></style>
+<style scoped>
+.what-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.blue-rounded {
+  width: 200px;
+  height: 100px;
+  background-color: blue;
+  border-radius: 20px;
+}
+
+.white-background {
+  width: 200px;
+  height: 150px; /* 높이를 조정하여 파란색 상자와 겹치도록 설정 */
+  background-color: white;
+  position: relative;
+}
+
+.white-box {
+  width: 100px;
+  height: 100px;
+  background-color: rgb(255, 0, 0);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+</style>

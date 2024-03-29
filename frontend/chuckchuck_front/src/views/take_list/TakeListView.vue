@@ -1,35 +1,46 @@
 <template>
   <div>
+    <!-- 복용관리 -->
     <Wave title="복용 관리" height="30px" />
-    <!-- <vueper-slides
-      autoplay
-      class="no-shadow ex--center-mode"
-      :arrows-outside="false"
-      bullets-outside
-      transition-speed="250"
-      :interval="2000"
-    >
-      <vueper-slide
-        class="vueper-slide"
-        v-for="i in 3"
-        :key="i"
-        :title="i.toString()"
-      />
-    </vueper-slides> -->
+    <Carousel :autoplay="false" :wrap-around="true">
+      <Slide v-for="slide in 3" :key="slide">
+        <div class="carousel__item">{{ slide }}</div>
+      </Slide>
 
+      <template #addons>
+        <Navigation />
+        <Pagination />
+      </template>
+    </Carousel>
     <div class="alarms">
-      <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`">
+      <div
+        v-for="(pillDatas, index) in dumydata.result"
+        :key="`pill-date-${index}`"
+      >
         <button class="rounded-button">
-          <span><i class="fa-solid fa-bell" style="color: #FFD43B; margin-right: 8px;"></i>{{ pillDatas.takeListName }}</span>
+          <span
+            ><i
+              class="fa-solid fa-bell"
+              style="color: #ffd43b; margin-right: 8px"
+            ></i
+            >{{ pillDatas.takeListName }}</span
+          >
         </button>
       </div>
       <div>
-        <button class="rounded-button" style="height: 28px;"><span><i class="fa-solid fa-circle-plus fa-lg icon" style="color: #1454b5; margin: 2px 15px;"></i></span></button>
+        <button class="rounded-button" style="height: 28px">
+          <span
+            ><i
+              class="fa-solid fa-circle-plus fa-lg icon"
+              style="color: #1454b5; margin: 2px 15px"
+            ></i
+          ></span>
+        </button>
       </div>
     </div>
     <div class="menu">
       <div class="menu-left">
-        <img src="@/assests/icon/pill.png" alt="복용리스트" />
+        <img src="@/assests/img/tempPill.png" alt="복용리스트" />
         <div><strong>복용중</strong></div>
       </div>
       <div class="menu-right">
@@ -37,31 +48,35 @@
         <button class="navy-button">추가</button>
       </div>
     </div>
-    <hr style="margin: 3px;" />
-      <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`" class="pill-entry">
-        <div class="pill-date">
-          {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
-          <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
-        </div>
-        <ul class="pills-list">
-          <li
-            v-for="(pillData, index) in pillDatas.pills"
-            :key="`pill-details-${index}`"
-            class="pill-info"
-          >
-            <Content
-              :pillId="pillData.pillId"
-              :pillName="pillData.pillName"
-              :imageUrl="pillData.imageUrl"
-              :type="pillData.type"
-              :warningPregnant="pillData.warningPregnant"
-              :warningUseDate="pillData.warningUseDate"
-              :warningElders="pillData.warningElders"
-              :warningTogether="pillData.warningTogether"
-            />
-          </li>
-        </ul>
+    <hr style="margin: 3px" />
+    <div
+      v-for="(pillDatas, index) in dumydata.result"
+      :key="`pill-date-${index}`"
+      class="pill-entry"
+    >
+      <div class="pill-date">
+        {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
+        <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
       </div>
+      <ul class="pills-list">
+        <li
+          v-for="(pillData, index) in pillDatas.pills"
+          :key="`pill-details-${index}`"
+          class="pill-info"
+        >
+          <Content
+            :pillId="pillData.pillId"
+            :pillName="pillData.pillName"
+            :imageUrl="pillData.imageUrl"
+            :type="pillData.type"
+            :warningPregnant="pillData.warningPregnant"
+            :warningUseDate="pillData.warningUseDate"
+            :warningElders="pillData.warningElders"
+            :warningTogether="pillData.warningTogether"
+          />
+        </li>
+      </ul>
+    </div>
   </div>
 
   <div class="menu">
@@ -87,19 +102,11 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-// // import { VueperSlides, VueperSlide } from "vueperslides";
 import { ref } from "vue";
-// // import "vueperslides/dist/vueperslides.css";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
-
-// import { instance } from "@/util/mainAxios";
-//요청 test
-// const server = async () => {
-//   const { data } = await instance.get("/pill/search?keyword=활&page=1");
-//   console.log(data);
-// };
-// server();
+import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 
 const dumydata = ref({
   count: 5,
@@ -220,45 +227,15 @@ const dumydata = ref({
 <style>
 
 <style scoped>
-/* .ex--center-mode {
-  margin-top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-} */
-/* .vueper-slide {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  box-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  border-radius: 10px;
-  z-index: 1000;
-  transition: top 0.3s ease;
+ol {
+  padding-inline-start: 0px;
 }
-.vueperslides__bullet .default {
-  background-color: rgba(0, 0, 0, 0.3);
-  border: none;
-  box-shadow: none;
-  transition: 0.3s;
-  width: 10px;
-  height: 10px;
-  margin-left: -10px;
-  margin-top: 0px;
-}
-.vueperslides__bullet--active .default {
-  background-color: rgb(66, 66, 66);
-} */
 
 .alarms {
   padding: 15px 10px;
   background-color: #c0e6fc;
   display: flex;
-  width: 100%;
+  width: 300px;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -335,7 +312,7 @@ button {
 }
 
 .pills-list::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -345,9 +322,8 @@ button {
 }
 
 .pill-info:first-child::before,
-.pill-info:last-child::before
-{
-  content: '';
+.pill-info:last-child::before {
+  content: "";
   position: absolute;
   width: 6px;
   height: 6px;
@@ -355,13 +331,11 @@ button {
   border-radius: 50%; /* 원형 점 */
 }
 
-/* 첫 번째 pill-info의 상단 왼쪽 모서리 */
 .pill-info:first-child::before {
-  top: -2px; /* 점의 위치를 반으로 조정 */
+  top: -2px;
   left: -2px;
 }
 
-/* 마지막 pill-info의 하단 왼쪽 모서리 */
 .pill-info:last-child::before {
   bottom: -2px;
   left: -2px;
@@ -387,18 +361,17 @@ button {
   width: 25px;
   height: 25px;
 }
-
 .rounded-button {
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: white; /* 버튼 배경색 */
-  padding: 5px 15px; /* 버튼 내부 패딩 */
+  background-color: white;
+  padding: 5px 15px;
   margin: 0px;
-  border-radius: 30px; /* 둥근 모서리 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: background-color 0.3s; /* 배경색 변경 시 애니메이션 */
+  transition: background-color 0.3s;
 }
 </style>

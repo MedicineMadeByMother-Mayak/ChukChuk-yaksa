@@ -1,6 +1,11 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,intellij,windows,gradle,git
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,intellij,windows,gradle,git
 
+
+# Ignore the src/assests/ directory
+!/frontend/chuckchuck_front/src/assests/
+
+
 secretkey.yml
 db.yml
 

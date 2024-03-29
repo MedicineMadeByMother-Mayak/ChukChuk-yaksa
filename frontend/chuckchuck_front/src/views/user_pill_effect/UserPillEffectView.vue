@@ -1,5 +1,5 @@
 <template>
-  <div>PIllPicView</div>
+  <div>userpilleffectView</div>
 </template>
 
 <script setup></script>
