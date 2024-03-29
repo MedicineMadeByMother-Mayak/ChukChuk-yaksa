@@ -18,19 +18,22 @@
           color="white"
           fontSize="8px"
           padding="1px 4px 1px 4px"
-          style="margin: 0px 1px;"
+          style="margin: 0px 1px"
           v-if="badge.condition"
         />
-        <span v-if="index >= badges.length - 1">...</span>
       </span>
+      <span v-if="flag == 4">..</span>
       <!-- 수정 end -->
     </div>
-    <i class="fa-solid fa-xmark fa-xl delete-icon" style="margin: 3px;" ></i>
+    <i class="fa-solid fa-xmark fa-xl delete-icon" style="margin: 3px"></i>
   </div>
 </template>
 
 <script setup>
 import Badge from "@/common/Badge.vue";
+import { ref } from "vue";
+
+const flag = ref(0);
 
 const props = defineProps({
   pillId: 1,
@@ -98,6 +101,7 @@ let trueCount = 0;
 badges.forEach((badge, index) => {
   if (badge.condition) {
     trueCount++;
+    flag.value++;
     if (trueCount > 3) {
       badge.condition = false;
     }
