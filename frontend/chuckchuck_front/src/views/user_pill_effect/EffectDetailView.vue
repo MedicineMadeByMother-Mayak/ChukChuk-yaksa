@@ -2,7 +2,11 @@
 <template>
   <div class="effect-detail-view">
     <HeaderForm :title="'약효기록 작성'" :height="'260px'">
-      <img class="pill-img" src="../../assests/img/tempPill.png" alt="Image description" />
+      <img
+        class="pill-img"
+        src="../../assests/img/tempPill.png"
+        alt="Image description"
+      />
       <div class="center-aligned">
         <div class="in-header-pill-name">
           <div>
@@ -15,9 +19,24 @@
     <!-- 수정 start -->
     <div class="icon-container">
       <div class="icon-container">
-        <img id="effectFace" :src="EffectFace" alt="Effect Face Icon" @click="toggleOpacity('effectFace')" />
-        <img id="stopFace" :src="StopFace" alt="StopFace Face Icon" @click="toggleOpacity('stopFace')" />
-        <img id="sideEffectFace" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="toggleOpacity('sideEffectFace')" />
+        <img
+          id="effectFace"
+          :src="EffectFace"
+          alt="Effect Face Icon"
+          @click="toggleOpacity('effectFace')"
+        />
+        <img
+          id="stopFace"
+          :src="StopFace"
+          alt="StopFace Face Icon"
+          @click="toggleOpacity('stopFace')"
+        />
+        <img
+          id="sideEffectFace"
+          :src="SideEffectFace"
+          alt="SideEffectFace Face Icon"
+          @click="toggleOpacity('sideEffectFace')"
+        />
       </div>
     </div>
     <!-- 수정 end -->
@@ -25,7 +44,11 @@
       <strong class="title-style">TAG</strong>
       <div class="used-tag-list">
         <div class="badge-list">
-          <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].usedTags" :key="index">
+          <div
+            class="badge-custom"
+            v-for="(tag, index) in userPillEffectList[0].categories[0].usedTags"
+            :key="index"
+          >
             <Badge
               :title="tag.tagName"
               :backgroundColor="getBackgroundColor(tag.categoryId)"
@@ -37,16 +60,35 @@
         </div>
       </div>
       <div class="unused-tag-list">
-        <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].unUsedTags" :key="index">
-          <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
+        <div
+          class="badge-custom"
+          v-for="(tag, index) in userPillEffectList[0].categories[0].unUsedTags"
+          :key="index"
+        >
+          <Badge
+            :title="tag.tagName"
+            backgroundColor="#dfdfdf"
+            color="white"
+            fontSize="12"
+            padding="4px"
+          />
         </div>
       </div>
-      <img :src="underDirection" style="display: block; margin: 20px auto 12px;">
-      <div style="border-bottom: 1px solid black; "></div>
+      <img
+        :src="underDirection"
+        style="display: block; margin: 20px auto 12px"
+      />
+      <div style="border-bottom: 1px solid black"></div>
       <strong class="title-style">MEMO</strong>
 
       <div class="memo">
-        <textarea class="memo-input" type="text" v-model="memo" placeholder="메모를 입력하세요" maxlength="100" />
+        <textarea
+          class="memo-input"
+          type="text"
+          v-model="memo"
+          placeholder="메모를 입력하세요"
+          maxlength="100"
+        />
       </div>
     </div>
   </div>
@@ -54,7 +96,7 @@
     <EffectFaceIcon />
   </div>
   <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #f9f9f9;"></div>
+  <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 
 <script setup>
@@ -72,12 +114,12 @@ const toggleOpacity = (imageId) => {
     const currentImage = document.getElementById(img);
 
     if (img !== imageId) {
-      if (currentImage) { // 이미지 요소가 존재하는지 확인
+      if (currentImage) {
+        // 이미지 요소가 존재하는지 확인
         currentImage.style.opacity = "0.5";
       }
     } else {
       currentImage.style.opacity = "1.0";
-
     }
   });
 };
