@@ -3,7 +3,6 @@
     <!-- meta: { hideNavBar: true } index.js의 navbar 필요없는 페이지에 추가 -->
     <NavBar v-if="!$route.meta.hideNavBar" />
     <router-view></router-view>
-    <div style="height: 75px"></div>
   </div>
 </template>
 

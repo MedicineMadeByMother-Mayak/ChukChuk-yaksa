@@ -25,4 +25,4 @@ import PillBagContent from "@/common/PillInfo.vue";
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 </script>
 
-<style setup></style>
+<style scoped></style>

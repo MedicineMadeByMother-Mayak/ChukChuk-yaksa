@@ -147,6 +147,7 @@ const dumydata = ref({
 }
 
 .grey-oval {
+  caret-color: transparent;
   position: relative;
   top: 18px;
   width: 320px;

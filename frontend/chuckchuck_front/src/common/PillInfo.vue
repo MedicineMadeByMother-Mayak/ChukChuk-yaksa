@@ -32,18 +32,24 @@ const props = defineProps({
 </script>
 
 <style scoped>
+.txt_line {
+  width: 80px;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .pill-card {
   font-size: 12px;
   display: flex;
   align-items: center;
-  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .pill-image {
-  width: 90px;
-  height: 60px;
+  display: flex;
 }
 
 .pill-image img {

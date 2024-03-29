@@ -9,15 +9,15 @@
     </div>
 
     <div class="login-options">
-      <button class="login-btn google" @click="loginWithGoogle">
+      <button class="login-btn google" @click="googleLogin">
         <img src="../../assests/img/Google.png" alt="" />
         <p>구글로 로그인</p>
       </button>
-      <button class="login-btn naver" @click="loginWithNaver">
+      <button class="login-btn naver" @click="naverLogin">
         <img src="../../assests/img/네이버 로고.png" alt="" />
         <p>네이버 로그인</p>
       </button>
-      <button class="login-btn kakao" @click="loginWithKakao">
+      <button class="login-btn kakao" @click="kakoLogin">
         <img src="../../assests/img/Kakao.png" alt="" />
         <p>카카오 로그인</p>
       </button>
@@ -25,20 +25,37 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "LoginPage",
-  methods: {
-    loginWithGoogle() {
-      window.location = "http://localhost:8080/oauth2/authorization/google";
-    },
-    loginWithNaver() {
-      window.location = "http://localhost:8080/oauth2/authorization/naver";
-    },
-    loginWithKakao() {
-      window.location = "http://localhost:8080/oauth2/authorization/kakao";
-    },
-  },
+<script setup>
+const {
+  VITE_REDIRECT_URI,
+  VITE_VUE_URL,
+  VITE_REDIRECT_URI_PARAM_COOKIE_NAME,
+  VITE_SPRING_URL_FOR_LOGIN,
+} = import.meta.env;
+
+const googleLogin = () => {
+  const loginUrl = getLoginURI("google");
+  window.location.href = loginUrl;
+};
+const kakoLogin = () => {
+  const loginUrl = getLoginURI("kakao");
+  window.location.href = loginUrl;
+};
+const naverLogin = () => {
+  const loginUrl = getLoginURI("naver");
+  window.location.href = loginUrl;
+};
+
+const getLoginURI = (social) => {
+  return (
+    VITE_SPRING_URL_FOR_LOGIN +
+    "/oauth2/authorization/" +
+    social +
+    "?" +
+    VITE_REDIRECT_URI_PARAM_COOKIE_NAME +
+    "=" +
+    VITE_REDIRECT_URI
+  );
 };
 </script>
 
