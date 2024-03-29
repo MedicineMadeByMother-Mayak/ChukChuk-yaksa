@@ -1,25 +1,7 @@
 <template>
   <div>
-<<<<<<< Updated upstream
-    복용관리
-
-=======
-    <Wave title="복용 관리" height="10px" />
-    <!-- <vueper-slides
-      autoplay
-      class="no-shadow ex--center-mode"
-      :arrows-outside="false"
-      bullets-outside
-      transition-speed="250"
-      :interval="2000"
-    >
-      <vueper-slide
-        class="vueper-slide"
-        v-for="i in 3"
-        :key="i"
-        :title="i.toString()"
-      />
-    </vueper-slides> -->
+    <!-- 복용관리 -->
+    <Wave title="복용 관리" height="30px" />
 
     <div class="alarms">
       <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`">
@@ -66,24 +48,14 @@
           </li>
         </ul>
       </div>
->>>>>>> Stashed changes
   </div>
 </template>
 
 <script setup>
-<<<<<<< Updated upstream
-
-</script>
-
-<style lang="scss" scoped>
-
-</style>
-=======
 import Wave from "@/common/Wave.vue";
 import { ref } from "vue";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
-import temp from "@/assests/icon/main_page/effect_record.svg";
 
 
 const dumydata = ref({
@@ -351,4 +323,4 @@ button {
   transition: background-color 0.3s; /* 배경색 변경 시 애니메이션 */
 }
 </style>
->>>>>>> Stashed changes
+

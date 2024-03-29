@@ -11,7 +11,11 @@
         전체 | <strong>{{ dumydata.count }}</strong> 건
       </div>
       <div style="border-bottom: 1px solid lightgray"></div>
-      <div v-for="pillData in dumydata.pills" :key="pillData.pillId" style="margin-top: 10px">
+      <div
+        v-for="pillData in dumydata.pills"
+        :key="pillData.pillId"
+        style="margin-top: 10px"
+      >
         <PillBagContent
           :pillId="pillData.pillId"
           :pillName="pillData.pillName"
@@ -25,8 +29,8 @@
       </div>
     </div>
   </div>
-    <!-- Nav-bar용 -->
-    <div style="height: 85px; background-color: #FFFFFF;"></div>
+  <!-- Nav-bar용 -->
+  <div style="height: 85px; background-color: #ffffff"></div>
 </template>
 
 <script setup>

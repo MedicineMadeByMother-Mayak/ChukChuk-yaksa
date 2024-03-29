@@ -1,8 +1,5 @@
 <template>
-<<<<<<< Updated upstream
   <div>home</div>
-=======
->>>>>>> Stashed changes
   <div>
     <a href="/ocrlist">약봉투/진단서 촬영 메인페이지 (/ocrlist)</a>
   </div>
@@ -68,12 +65,5 @@
   </div>
 </template>
 
-<<<<<<< Updated upstream
 <script setup></script>
-=======
-<script setup>
-
-</script>
->>>>>>> Stashed changes
-
 <style scoped></style>
