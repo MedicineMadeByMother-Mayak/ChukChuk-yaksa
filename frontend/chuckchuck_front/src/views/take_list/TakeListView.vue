@@ -4,18 +4,34 @@
     <Wave title="복용 관리" height="30px" />
 
     <div class="alarms">
-      <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`">
+      <div
+        v-for="(pillDatas, index) in dumydata.result"
+        :key="`pill-date-${index}`"
+      >
         <button class="rounded-button">
-          <span><i class="fa-solid fa-bell" style="color: #FFD43B; margin-right: 8px;"></i>{{ pillDatas.takeListName }}</span>
+          <span
+            ><i
+              class="fa-solid fa-bell"
+              style="color: #ffd43b; margin-right: 8px"
+            ></i
+            >{{ pillDatas.takeListName }}</span
+          >
         </button>
       </div>
       <div>
-        <button class="rounded-button" style="height: 28px;"><span><i class="fa-solid fa-circle-plus fa-lg icon" style="color: #1454b5; margin: 2px 15px;"></i></span></button>
+        <button class="rounded-button" style="height: 28px">
+          <span
+            ><i
+              class="fa-solid fa-circle-plus fa-lg icon"
+              style="color: #1454b5; margin: 2px 15px"
+            ></i
+          ></span>
+        </button>
       </div>
     </div>
     <div class="menu">
       <div class="menu-left">
-        <!-- <img src="@/assests/img/tempPill.png" alt="복용리스트" /> -->
+        <img src="@/assests/img/tempPill.png" alt="복용리스트" />
         <div><strong>복용중</strong></div>
       </div>
       <div class="menu-right">
@@ -23,31 +39,35 @@
         <button class="navy-button">추가</button>
       </div>
     </div>
-    <hr style="margin: 3px;" />
-      <div v-for="(pillDatas, index) in dumydata.result" :key="`pill-date-${index}`" class="pill-entry">
-        <div class="pill-date">
-          {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
-          <!-- <img src="@/assests/icon/edit.png" alt="편집 아이콘" /> -->
-        </div>
-        <ul class="pills-list">
-          <li
-            v-for="(pillData, index) in pillDatas.pills"
-            :key="`pill-details-${index}`"
-            class="pill-info"
-          >
-            <Content
-              :pillId="pillData.pillId"
-              :pillName="pillData.pillName"
-              :imageUrl="pillData.imageUrl"
-              :type="pillData.type"
-              :warningPregnant="pillData.warningPregnant"
-              :warningUseDate="pillData.warningUseDate"
-              :warningElders="pillData.warningElders"
-              :warningTogether="pillData.warningTogether"
-            />
-          </li>
-        </ul>
+    <hr style="margin: 3px" />
+    <div
+      v-for="(pillDatas, index) in dumydata.result"
+      :key="`pill-date-${index}`"
+      class="pill-entry"
+    >
+      <div class="pill-date">
+        {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
+        <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
       </div>
+      <ul class="pills-list">
+        <li
+          v-for="(pillData, index) in pillDatas.pills"
+          :key="`pill-details-${index}`"
+          class="pill-info"
+        >
+          <Content
+            :pillId="pillData.pillId"
+            :pillName="pillData.pillName"
+            :imageUrl="pillData.imageUrl"
+            :type="pillData.type"
+            :warningPregnant="pillData.warningPregnant"
+            :warningUseDate="pillData.warningUseDate"
+            :warningElders="pillData.warningElders"
+            :warningTogether="pillData.warningTogether"
+          />
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -56,7 +76,6 @@ import Wave from "@/common/Wave.vue";
 import { ref } from "vue";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
-
 
 const dumydata = ref({
   count: 5,
@@ -179,7 +198,7 @@ const dumydata = ref({
   padding: 15px 10px;
   background-color: #c0e6fc;
   display: flex;
-  width: 100%;
+  width: 300px;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -256,7 +275,7 @@ button {
 }
 
 .pills-list::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -266,9 +285,8 @@ button {
 }
 
 .pill-info:first-child::before,
-.pill-info:last-child::before
-{
-  content: '';
+.pill-info:last-child::before {
+  content: "";
   position: absolute;
   width: 6px;
   height: 6px;
@@ -323,4 +341,3 @@ button {
   transition: background-color 0.3s; /* 배경색 변경 시 애니메이션 */
 }
 </style>
-
