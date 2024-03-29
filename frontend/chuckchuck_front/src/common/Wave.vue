@@ -50,7 +50,7 @@ header {
 
 #right {
   position: absolute;
-  bottom: -200px;
+  bottom: -150px;
   animation: move-2 5s infinite;
 }
 
