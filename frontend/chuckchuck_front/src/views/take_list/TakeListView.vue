@@ -2,7 +2,16 @@
   <div>
     <!-- 복용관리 -->
     <Wave title="복용 관리" height="30px" />
+    <Carousel :autoplay="false" :wrap-around="true">
+      <Slide v-for="slide in 3" :key="slide">
+        <div class="carousel__item">{{ slide }}</div>
+      </Slide>
 
+      <template #addons>
+        <Navigation />
+        <Pagination />
+      </template>
+    </Carousel>
     <div class="alarms">
       <div
         v-for="(pillDatas, index) in dumydata.result"
@@ -76,6 +85,8 @@ import Wave from "@/common/Wave.vue";
 import { ref } from "vue";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
+import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
 
 const dumydata = ref({
   count: 5,
@@ -194,6 +205,10 @@ const dumydata = ref({
 </script>
 
 <style scoped>
+ol {
+  padding-inline-start: 0px;
+}
+
 .alarms {
   padding: 15px 10px;
   background-color: #c0e6fc;
@@ -294,13 +309,11 @@ button {
   border-radius: 50%; /* 원형 점 */
 }
 
-/* 첫 번째 pill-info의 상단 왼쪽 모서리 */
 .pill-info:first-child::before {
-  top: -2px; /* 점의 위치를 반으로 조정 */
+  top: -2px;
   left: -2px;
 }
 
-/* 마지막 pill-info의 하단 왼쪽 모서리 */
 .pill-info:last-child::before {
   bottom: -2px;
   left: -2px;
@@ -326,18 +339,17 @@ button {
   width: 25px;
   height: 25px;
 }
-
 .rounded-button {
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  background-color: white; /* 버튼 배경색 */
-  padding: 5px 15px; /* 버튼 내부 패딩 */
+  background-color: white;
+  padding: 5px 15px;
   margin: 0px;
-  border-radius: 30px; /* 둥근 모서리 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: background-color 0.3s; /* 배경색 변경 시 애니메이션 */
+  transition: background-color 0.3s;
 }
 </style>

@@ -1,0 +1,19 @@
+:root {
+  --vc-pgn-width: 10px;
+  --vc-pgn-height: 10px;
+  --vc-pgn-border-radius: 5px;
+  --vc-pgn-background-color: #d9d9d9;
+  --vc-pgn-active-color: #b1b1b1;
+}
+
+.carousel__pagination-button:hover::after,
+.carousel__pagination-button--active::after {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.carousel__pagination-button {
+  width: 20px;
+  height: 20px;
+}
