@@ -78,6 +78,26 @@
       </ul>
     </div>
   </div>
+
+  <div class="menu">
+    <div class="menu-left">
+      <img src="@/assests/icon/pill.png" alt="복용리스트">
+      <div>복용중</div>
+    </div>
+    <div class="menu-right">
+      <button class="gray-button">과거에먹은약</button>
+      <button class="navy-button">추가</button>
+    </div>
+  </div>
+  <hr class="line">
+  <div class="pill-info" v-for="(data, index) in dumydata.result" :key="index">
+    <div>{{data.createDate}} [{{ data.takeListName }}]</div>
+    <img src="@/assests/icon/edit.png" alt="홈">
+
+  </div>
+
+  
+ 
 </template>
 
 <script setup>
@@ -203,6 +223,8 @@ const dumydata = ref({
   ],
 });
 </script>
+  
+<style>
 
 <style scoped>
 ol {
