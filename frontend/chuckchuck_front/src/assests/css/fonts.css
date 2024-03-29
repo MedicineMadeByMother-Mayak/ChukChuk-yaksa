@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "Cafe24SsurroundAir";
-  src: url("./Cafe24SsurroundAir-v1.1.ttf");
+  font-family: "Inter-Medium";
+  src: url("./Inter-Medium.ttf");
 }
 
 @font-face {
-  font-family: "Cafe24SsurroundBold";
-  src: url("./Cafe24Ssurround-v2.0.ttf");
+  font-family: "Inter-Bold";
+  src: url("./Inter-Bold.ttf");
 }
 body {
-  font-family: "Cafe24SsurroundAir", sans-serif;
+  font-family: "Inter-Medium", sans-serif;
   font-size: 12px;
 }
 
 .bold {
-  font-family: "Cafe24SsurroundBold";
+  font-family: "Inter-Bold";
 }
 
 h1,
@@ -22,5 +22,5 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Cafe24SsurroundAir", sans-serif;
+  font-family: "Inter-Medium", sans-serif;
 }
