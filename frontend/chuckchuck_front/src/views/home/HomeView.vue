@@ -14,30 +14,30 @@
         <div class="box">
           <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
             <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-              <img src="@/assests/icon/main_page/find_pill_by_pic.svg" />
+              <a href="/pillpic"><img src="@/assests/icon/main_page/find_pill_by_pic.svg" /></a>
             </div>
             <div
               class="column"
               style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
             >
-              <img src="@/assests/icon/main_page/take_pic.svg" />
+              <a href="/ocrlist"><img src="@/assests/icon/main_page/take_pic.svg" /></a>
             </div>
             <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-              <img src="@/assests/icon/main_page/pill_search.svg" />
+              <a href="/pillsearch"><img src="@/assests/icon/main_page/pill_search.svg" /></a>
             </div>
           </div>
           <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
             <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-              <img src="@/assests/icon/main_page/pharmacy_search.svg" />
+              <a href="/map"><img src="@/assests/icon/main_page/pharmacy_search.svg" /></a>
             </div>
             <div
               class="column"
               style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
             >
-              <img src="@/assests/icon/main_page/effect_record.svg" />
+              <a href="/userpilleffect"><img src="@/assests/icon/main_page/effect_record.svg" /></a>
             </div>
             <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-              <img src="@/assests/icon/main_page/take_pill_management.svg" />
+              <a href="/take-list"><img src="@/assests/icon/main_page/take_pill_management.svg" /></a>
             </div>
           </div>
         </div>
