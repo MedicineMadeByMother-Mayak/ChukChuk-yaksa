@@ -25,7 +25,7 @@
       <span v-if="flag == 4">..</span>
       <!-- 수정 end -->
     </div>
-    <i class="fa-solid fa-xmark fa-xl delete-icon" style="margin: 3px"></i>
+    <font-awesome-icon class="delete-icon" :icon="['fas', 'x']" />
   </div>
 </template>
 
@@ -164,8 +164,9 @@ badges.forEach((badge, index) => {
 
 .delete-icon {
   position: absolute;
-  top: 9px;
+  top: 3px;
   right: 3px;
   cursor: pointer;
+  margin: 3px;
 }
 </style>

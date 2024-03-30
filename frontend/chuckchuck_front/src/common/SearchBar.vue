@@ -7,12 +7,14 @@
       placeholder="검색할 약의 이름을 입력하세요."
       type="text"
       :value="keyword"
+      :style="{ fontSize, marginLeft }"
     />
   </div>
 </template>
 
 <script setup>
 import searchIcon from "@/assests/img/searchIcon.svg";
+
 const props = defineProps({
   width: {
     type: String,
@@ -27,6 +29,14 @@ const props = defineProps({
     default: "30px",
   },
   keyword: String,
+  fontSize: {
+    type: String,
+    default: "14px",
+  },
+  marginLeft: {
+    type: String,
+    default: "20%",
+  },
 });
 </script>
 
@@ -35,6 +45,8 @@ const props = defineProps({
   position: relative;
   display: flex;
   align-items: center;
+  background-color: #fff;
+  border-radius: 7px;
 }
 
 .search-bar::before {
@@ -56,13 +68,11 @@ const props = defineProps({
 }
 
 .input-local {
-  margin-left: 20%;
   width: 100%;
   border: none;
   outline: 0;
   background-color: transparent;
   font-weight: 600;
-  font-size: 14px;
   padding: 0;
   color: #606060;
   z-index: 2;

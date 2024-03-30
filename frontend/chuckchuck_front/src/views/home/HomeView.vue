@@ -5,39 +5,75 @@
   <div class="basic-background">
     <div class="basic-content">
       <div class="hello">
-        <img src="@/assests/icon/main_page/main_icon.svg" style="border-radius: 30px" />
+        <img
+          src="@/assests/icon/main_page/main_icon.svg"
+          style="border-radius: 30px"
+        />
         <div class="hello-text">안녕하세요 기미중님!</div>
         <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
       </div>
       <div class="temp">
         <div class="icon-container">
           <div class="box">
-            <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
-              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-                <a href="/pillpic"><img src="@/assests/icon/main_page/find_pill_by_pic.svg" /></a>
+            <div
+              class="row"
+              style="border-bottom: 0.5px solid rgb(231, 231, 231)"
+            >
+              <div
+                class="column"
+                style="border-right: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/pillpic"
+                  ><img src="@/assests/icon/main_page/find_pill_by_pic.svg"
+                /></a>
               </div>
               <div
                 class="column"
-                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+                style="
+                  border-left: 0.5px solid rgb(231, 231, 231);
+                  border-right: 0.5px solid rgb(231, 231, 231);
+                "
               >
-                <a href="/ocrlist"><img src="@/assests/icon/main_page/take_pic.svg" /></a>
+                <a href="/ocrlist"
+                  ><img src="@/assests/icon/main_page/take_pic.svg"
+                /></a>
               </div>
-              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-                <a href="/pillsearch"><img src="@/assests/icon/main_page/pill_search.svg" /></a>
+              <div
+                class="column"
+                style="border-left: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/pillsearch"
+                  ><img src="@/assests/icon/main_page/pill_search.svg"
+                /></a>
               </div>
             </div>
             <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
-              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-                <a href="/map"><img src="@/assests/icon/main_page/pharmacy_search.svg" /></a>
+              <div
+                class="column"
+                style="border-right: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/map"
+                  ><img src="@/assests/icon/main_page/pharmacy_search.svg"
+                /></a>
               </div>
               <div
                 class="column"
-                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+                style="
+                  border-left: 0.5px solid rgb(231, 231, 231);
+                  border-right: 0.5px solid rgb(231, 231, 231);
+                "
               >
-                <a href="/userpilleffect"><img src="@/assests/icon/main_page/effect_record.svg" /></a>
+                <a href="/userpilleffect"
+                  ><img src="@/assests/icon/main_page/effect_record.svg"
+                /></a>
               </div>
-              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-                <a href="/take-list"><img src="@/assests/icon/main_page/take_pill_management.svg" /></a>
+              <div
+                class="column"
+                style="border-left: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/take-list"
+                  ><img src="@/assests/icon/main_page/take_pill_management.svg"
+                /></a>
               </div>
             </div>
           </div>
@@ -54,16 +90,22 @@
     <a href="/ocrlist">약봉투/진단서 촬영 메인페이지 (/ocrlist)</a>
   </div>
   <div>
-    <a href="/ocrlist/diagnosisfilming">약봉투 촬영 (/ocrlist/diagnosisfilming)</a>
+    <a href="/ocrlist/diagnosisfilming"
+      >약봉투 촬영 (/ocrlist/diagnosisfilming)</a
+    >
   </div>
   <div>
-    <a href="/ocrlist/diagnosisresult">약봉투 촬영 결과 (/ocrlist/diagnosisresult)</a>
+    <a href="/ocrlist/diagnosisresult"
+      >약봉투 촬영 결과 (/ocrlist/diagnosisresult)</a
+    >
   </div>
   <div>
     <a href="/ocrlist/pillbagfilming">진단서 촬영 (/ocrlist/pillbagfilming)</a>
   </div>
   <div>
-    <a href="/ocrlist/pillbagresult">진단서 촬영 결과 (/ocrlist/pillbagresult)</a>
+    <a href="/ocrlist/pillbagresult"
+      >진단서 촬영 결과 (/ocrlist/pillbagresult)</a
+    >
   </div>
   <div>
     <a href="/map">약국 검색 메인페이지 (/map)</a>
@@ -81,7 +123,9 @@
     <a href="/pillsearch">약 이름으로 검색 (/pillsearch)</a>
   </div>
   <div>
-    <a href="/pillsearch/pillsearchdetail">약 상세정보 페이지 (/pillsearch/pillsearchdetail)</a>
+    <a href="/pillsearch/pillsearchdetail"
+      >약 상세정보 페이지 (/pillsearch/pillsearchdetail)</a
+    >
   </div>
   <div>
     <a href="/setting">설정 (/setting)</a>
@@ -96,7 +140,9 @@
     <a href="/usermedicalinfo/pillbag">처방내역 (/usermedicalinfo/pillbag)</a>
   </div>
   <div>
-    <a href="/usermedicalinfo/diagnosishistory">진단내역 (/usermedicalinfo/diagnosishistory)</a>
+    <a href="/usermedicalinfo/diagnosishistory"
+      >진단내역 (/usermedicalinfo/diagnosishistory)</a
+    >
   </div>
   <div>
     <a href="/test">테스트 (/test)</a>
@@ -105,7 +151,9 @@
     <a href="/userpilleffect">약효기록 (/userpilleffect)</a>
   </div>
   <div>
-    <a href="/userpilleffect/effectdetail">약효기록 상세정보 페이지 (/userpilleffect/effectdetail)</a>
+    <a href="/userpilleffect/effectdetail"
+      >약효기록 상세정보 페이지 (/userpilleffect/effectdetail)</a
+    >
   </div>
   <div>
     <a href="/login">로그인 화면 (/login)</a>
