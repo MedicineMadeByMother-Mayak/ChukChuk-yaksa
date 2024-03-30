@@ -1,42 +1,39 @@
 <template>
-  <div class="what-container">
-    <div class="white-background">
-      <div class="white-box"></div>
-    </div>
-    <div class="blue-rounded"></div>
+  <div class="basic-background">
+    뭣허냐
+    <!-- <ModalForm
+      v-model="msg"
+      :modalData="[
+        ['달디달디달디달디달디달디', true, { params: {}, Link: 'registinfo' }],
+        ['단 밤양갱', true, { params: {}, Link: '' }],
+        ['밤양갱이얌', true, { params: {}, Link: '' }],
+        ['밤양갱밤양갱밤양갱밤양갱', true, { params: {}, Link: '' }],
+        ['양갱갱갱갱', true, { params: {}, Link: '' }],
+      ]"
+    /> -->
+    <ModalForm
+      v-model="msg"
+      :modalData="[
+        [1, '달디달디달디달'],
+        [2, '단 밤양갱'],
+        [3, '단 밤양갱'],
+        [4, '밤양갱밤양갱밤갱'],
+        [5, '밤양갱이얌'],
+      ]"
+    />
   </div>
 </template>
 
 <script setup>
+import ModalForm from "@/common/Form/SelectListModalForm.vue";
+import { ref } from "vue";
+
+const msg = ref(true);
 </script>
 
 <style scoped>
-.what-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.blue-rounded {
-  width: 200px;
-  height: 100px;
-  background-color: blue;
-  border-radius: 20px;
-}
-
-.white-background {
-  width: 200px;
-  height: 150px; /* 높이를 조정하여 파란색 상자와 겹치도록 설정 */
-  background-color: white;
-  position: relative;
-}
-
-.white-box {
-  width: 100px;
-  height: 100px;
-  background-color: rgb(255, 0, 0);
-  position: absolute;
-  top: 50%;
-  left: 50%;
+.basic-background {
+  background-color: blueviolet;
+  height: 100vh;
 }
 </style>

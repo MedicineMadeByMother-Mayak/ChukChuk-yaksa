@@ -1,6 +1,6 @@
 <template>
   <!-- PillSearchView(약검색) -->
-  <div>
+  <div class="basic-background">
     <Wave title="약 검색" height="1px" />
     <div style="padding: 15px">
       <div style="padding: 0 0 20px 0">
@@ -135,4 +135,8 @@ const dumydata = ref({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.basic-background {
+  background-color: #F9F9F9;
+}
+</style>
