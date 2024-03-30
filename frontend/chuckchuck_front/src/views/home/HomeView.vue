@@ -1,48 +1,48 @@
 <template>
   <div class="header-background">
-    <img src="@/assests/img/main_page_background.svg" style="border-radius: 30px;" />
+    <img src="@/assests/img/main_page_background.svg" />
   </div>
   <div class="basic-background">
     <div class="basic-content">
-    <div class="hello">
-      <img src="@/assests/icon/main_page/main_icon.svg" style="border-radius: 30px;" />
-      <div class="hello-text">안녕하세요 기미중님!</div>
-      <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
-    </div>
-    <div class="temp">
-      <div class="icon-container">
-        <div class="box">
-          <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
-            <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-              <a href="/pillpic"><img src="@/assests/icon/main_page/find_pill_by_pic.svg" /></a>
+      <div class="hello">
+        <img src="@/assests/icon/main_page/main_icon.svg" style="border-radius: 30px" />
+        <div class="hello-text">안녕하세요 기미중님!</div>
+        <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
+      </div>
+      <div class="temp">
+        <div class="icon-container">
+          <div class="box">
+            <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
+              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
+                <a href="/pillpic"><img src="@/assests/icon/main_page/find_pill_by_pic.svg" /></a>
+              </div>
+              <div
+                class="column"
+                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/ocrlist"><img src="@/assests/icon/main_page/take_pic.svg" /></a>
+              </div>
+              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
+                <a href="/pillsearch"><img src="@/assests/icon/main_page/pill_search.svg" /></a>
+              </div>
             </div>
-            <div
-              class="column"
-              style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
-            >
-              <a href="/ocrlist"><img src="@/assests/icon/main_page/take_pic.svg" /></a>
-            </div>
-            <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-              <a href="/pillsearch"><img src="@/assests/icon/main_page/pill_search.svg" /></a>
-            </div>
-          </div>
-          <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
-            <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-              <a href="/map"><img src="@/assests/icon/main_page/pharmacy_search.svg" /></a>
-            </div>
-            <div
-              class="column"
-              style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
-            >
-              <a href="/userpilleffect"><img src="@/assests/icon/main_page/effect_record.svg" /></a>
-            </div>
-            <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-              <a href="/take-list"><img src="@/assests/icon/main_page/take_pill_management.svg" /></a>
+            <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
+              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
+                <a href="/map"><img src="@/assests/icon/main_page/pharmacy_search.svg" /></a>
+              </div>
+              <div
+                class="column"
+                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/userpilleffect"><img src="@/assests/icon/main_page/effect_record.svg" /></a>
+              </div>
+              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
+                <a href="/take-list"><img src="@/assests/icon/main_page/take_pill_management.svg" /></a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
     <!-- 수정 start -->
     <div class="middle-content">
@@ -120,24 +120,28 @@
     <div style="height: 85px; background-color: #f9f9f9;"></div>
 </template>
 
-
-<script setup>
-</script>
+<script setup></script>
 
 <style scoped>
 .header-background {
   height: 400px;
-  width: 700px;
+  width: 320px;
   position: relative;
   text-align: center;
   color: black;
-  margin-top: -110px;  /*위로 올려 원 일부를 가리는 용도 */
-  margin-bottom: -257px;  /*밑에 사진 삼키는 용도 */
-  margin-left: -96px;
+  margin-top: -110px; /*위로 올려 원 일부를 가리는 용도 */
+  margin-bottom: -257px; /*밑에 사진 삼키는 용도 */
   border-radius: 500%;
   display: flex;
   justify-items: center;
   align-items: center;
+}
+
+.header-background img {
+  width: 320px;
+  height: 600px;
+  margin-top: 20px;
+  border-radius: 100px;
 }
 
 .basic-background {
@@ -219,7 +223,7 @@
   justify-content: center;
   align-items: center;
   max-width: 270px;
-  margin: 90px auto 0; /* 상단 여백을 조절하기 위해 auto로 수정 */
+  margin: 80px auto 0; /* 상단 여백을 조절하기 위해 auto로 수정 */
   text-align: center; /* 내부 요소를 가운데 정렬 */
 }
 
