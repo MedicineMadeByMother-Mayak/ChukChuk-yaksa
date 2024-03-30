@@ -29,7 +29,7 @@
             :icon="['fas', 'circle-info']"
             style="color: #509af8; margin-right: 5px"
           />
-          <span style="vertical-align: middle">{{ item.title }}</span>
+          <span class="info-title" style="vertical-align: middle">{{ item.title }}</span>
         </strong>
         <span style="font-size: 10px"></span>
       </div>
@@ -117,5 +117,10 @@ img {
 
 .info {
   padding: 4px;
+  /* color: rgb(86, 86, 86); */
+}
+
+.info-title { 
+  /* color: rgb(86, 86, 86); */
 }
 </style>
