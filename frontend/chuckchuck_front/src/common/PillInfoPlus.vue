@@ -10,7 +10,6 @@
       <div class="pill-name">
         <strong>{{ truncateName(pillName) }}</strong>
       </div>
-
       <span class="badge-custom" v-for="(badge, index) in badges" :key="index">
         <Badge
           :title="badge.title"
@@ -21,7 +20,6 @@
           v-if="badge.condition"
         />
       </span>
-      <!-- 수정 end -->
     </div>
     <font-awesome-icon
       class="icon"
@@ -109,12 +107,8 @@ badges.forEach((badge, index) => {
 </script>
 
 <style scoped>
-.pill-image {
-  display: flex;
-  padding: 5px 2px;
-}
-
 .pill-card {
+  height: 90px;
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -123,15 +117,22 @@ badges.forEach((badge, index) => {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.pill-image {
+  display: flex;
+  height: 64px;
+  padding: 5px 2px;
+}
+
 .pill-image img {
-  max-width: 103px;
-  max-height: 80px; /* 추가 */
+  max-width: 90px;
+  max-height: 64px; /* 추가 */
   border-radius: 12px;
   padding: 0px 6px 0 5px;
+  object-fit: cover;
 }
 
 .pill-info {
-  flex-grow: 1;
+  width: 160px;
 }
 
 .pill-type {
@@ -148,7 +149,9 @@ badges.forEach((badge, index) => {
 }
 
 .icon {
-  padding: 15px;
+  display: flex;
+  margin-left: auto;
+  padding: 0 15px 0 0;
 }
 
 .tags {
