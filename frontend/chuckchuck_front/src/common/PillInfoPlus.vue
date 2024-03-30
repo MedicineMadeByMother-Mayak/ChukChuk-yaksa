@@ -23,7 +23,12 @@
       </span>
       <!-- 수정 end -->
     </div>
-    <i class="fa-solid fa-circle-plus fa-2xl icon" style="color: #1454b5"></i>
+    <font-awesome-icon
+      class="icon"
+      :icon="['fas', 'circle-plus']"
+      size="2xl"
+      style="color: #1454b5"
+    />
   </div>
 </template>
 
