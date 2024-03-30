@@ -27,7 +27,6 @@
 <script setup>
 import ModalForm from "@/common/Form/SelectListModalForm.vue";
 import { ref } from "vue";
-
 const msg = ref(true);
 </script>
 
