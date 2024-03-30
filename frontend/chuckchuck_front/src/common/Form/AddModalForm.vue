@@ -45,11 +45,6 @@ const props = defineProps({
   },
 });
 
-// const performAction = (action) => {
-//   console.log("Action performed:", action);
-//   showModal.value = !showModal.value;
-// };
-
 const closeModal = () => {
   showModal.value = !showModal.value;
 };

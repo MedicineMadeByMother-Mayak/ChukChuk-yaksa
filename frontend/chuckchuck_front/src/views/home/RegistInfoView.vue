@@ -8,13 +8,13 @@
         <div class="info-container">
           <div class="box">
             <div class="row">
-              <div class="column">
+              <div class="column-left">
                 <div class="column-content">
                   <div class="column-content-title">이름</div>
                   <div><input /></div>
                 </div>
               </div>
-              <div class="column">
+              <div class="column-right">
                 <div class="column-content">
                   <div class="column-content-title">혈액형</div>
                   <div><input /></div>
@@ -22,13 +22,13 @@
               </div>
             </div>
             <div class="row">
-              <div class="column">
+              <div class="column-left">
                 <div class="column-content">
                   <div class="column-content-title">생년월일</div>
                   <div><input /></div>
                 </div>
               </div>
-              <div class="column">
+              <div class="column-right">
                 <div class="column-content">
                   <div class="column-content-title">성별</div>
                   <div><input /></div>
@@ -36,15 +36,15 @@
               </div>
             </div>
             <div class="row">
-              <div class="column">
+              <div class="column-left">
                 <div class="column-content">
-                  <div class="column-content-title">키/몸무게</div>
+                  <div class="column-content-title">키</div>
                   <div><input /></div>
                 </div>
               </div>
-              <div class="column">
+              <div class="column-right" >
                 <div class="column-content">
-                  <div style="visibility: hidden">_</div>
+                  <div class="column-content-title">몸무게</div>
                   <div><input /></div>
                 </div>
               </div>
@@ -102,7 +102,6 @@
 .info-container {
   display: flex;
   justify-content: center;
-  align-items: top;
   height: 100%;
   width: 100%;
   flex-direction: column;
@@ -121,17 +120,24 @@
   display: flex;
 }
 
-.column {
+.column-left {
   width: 50%;
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   flex-direction: column;
+  margin: 0 0 0 12px;
 }
 
-.column-content {
-  margin: 0 0 0 20px;
+.column-right {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 12px 0 0;
 }
 
 .column-content-title {
@@ -140,8 +146,8 @@
   justify-content: start;
 }
 
-.column input {
-    width: 90px;
+input {
+    width: 100px;
     height: 20px;
     background-color: white;
     border: 1px solid lightgray;
