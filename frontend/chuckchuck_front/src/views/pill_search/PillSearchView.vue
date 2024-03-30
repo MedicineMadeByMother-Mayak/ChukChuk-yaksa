@@ -14,9 +14,9 @@
       <div
         v-for="pillData in dumydata.pills"
         :key="pillData.pillId"
-        style="margin-top: 10px"
+        style="margin-top: 13px"
       >
-        <PillBagContent
+        <PillInfoPlus
           :pillId="pillData.pillId"
           :pillName="pillData.pillName"
           :imageUrl="pillData.imageUrl"
@@ -35,7 +35,7 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-import PillBagContent from "@/common/PillInfoPlus.vue";
+import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import { ref } from "vue";
 
 const dumydata = ref({
