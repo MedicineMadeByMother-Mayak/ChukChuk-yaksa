@@ -11,8 +11,17 @@
         ['양갱갱갱갱', true, { params: {}, Link: '' }],
       ]"
     /> -->
-    <AlarmModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/>
-    <ModalForm
+    <SelectListModalForm
+      v-model="msg"
+      :modalData="[
+        [1, '달디달디달디달'],
+        [2, '단 밤양갱'],
+        [3, '단 밤양갱'],
+        [4, '밤양갱밤양갱밤갱'],
+        [5, '밤양갱이얌'],
+      ]"
+    />
+    <SelectListModalForm
       v-model="msg"
       :modalData="[
         [1, '달디달디달디달'],
@@ -26,8 +35,8 @@
 </template>
 
 <script setup>
-import AlarmModal from '@/views/take_list/components/AlarmModal.vue';
-import ModalForm from "@/common/Form/SelectListModalForm.vue";
+import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
+import AddListAlertModalForm from "@/common/Form/AddListAlertModalForm.vue";
 import { ref } from "vue";
 const msg = ref(true);
 </script>
