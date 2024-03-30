@@ -113,7 +113,7 @@ const props = defineProps({
   },
   fontSize: {
     type: String,
-    default: "20px",
+    default: "16px",
   },
 });
 
@@ -123,6 +123,11 @@ const headerHeight = computed(() => props.height);
 <style scoped>
 @import url(//fonts.googleapis.com/css?family=Lato:300:400);
 
+* {
+  letter-spacing: -0.8px; /* 원하는 자간 값으로 변경하세요 */
+  font-size: 10px;
+}
+
 body {
   margin: 0;
 }
@@ -130,8 +135,8 @@ body {
 h1 {
   position: relative;
   right: 11.8px;
-  letter-spacing: 2px;
-  font-size: 20px;
+  /* letter-spacing: 2px; */
+  /* font-size: 1rem; */
   margin: 10px;
 }
 
@@ -226,9 +231,6 @@ h1 {
   }
   .content {
     height: 30vh;
-  }
-  h1 {
-    font-size: 20px;
   }
 }
 
