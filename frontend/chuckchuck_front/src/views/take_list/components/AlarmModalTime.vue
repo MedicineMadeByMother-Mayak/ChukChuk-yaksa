@@ -1,17 +1,3 @@
-<!-- 사용방법
-  <template>
-
-  <AlarmModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/>
-
-</template>
-
-<script setup>
-import AlarmModal from '@/views/take_list/components/AlarmModal.vue';
-import {ref} from "vue";
-const msg = ref(true);
-</script> -->
-
-
 <template>
   <div class="modal-overlay" v-if="showModal">
     <div class="modal">
@@ -29,15 +15,19 @@ const msg = ref(true);
             </div>
             <div class="top">
               <img style="width: 20px; height: 20px" src="@/assests/img/startLogo.png" alt="">
-              <div style="margin: 9px; font-size: 14px; font-weight: bold;">어떤 약에 대한 알람을 <span style="color:green;">등록</span>하시겠어요?</div>
+              <div style="margin: 19px; font-size: 14px; font-weight: bold;">알람을 울릴 시간을 선택해주세요</div>
             </div>
-            <div class="button-container">
-              <button v-for="(medicine, name) in medicines" :key="name" @click="toggleActive(name)" :class="{ 'active': medicine.isActive }">
-                <font-awesome-icon :icon="medicine.isActive ? ['fas', 'bell'] : ['fas', 'bell-slash']" style="color: gray;"/>
-                <span class="text">{{ name }}</span>
-              </button>
+
+            <div>
+              <input type="radio" id="mail" name="contact" value="mail" />
+              <label for="mail">우편</label>
             </div>
-            <button class="save-button" @click="redirectToAlarmModalTime">SAVE</button>
+            <div>
+              <input type="radio" id="mail" name="contact" value="mail" />
+              <label for="mail">우편2</label>
+            </div>
+
+            <button class="save-button" @click="redirectToTakeList">SAVE</button>
           </div>
             
           </RouterLink>
@@ -50,28 +40,28 @@ const msg = ref(true);
 
 <script setup>
 import { ref, reactive } from "vue";
-import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faBell, faBellSlash);
+import { useRouter } from 'vue-router';
+
 const router = useRouter();
 
-const redirectToAlarmModalTime = () => {
-  router.push({ name: 'alarmmodaltime' }); // 'AlarmModalTime'은 목적지 컴포넌트의 라우터 이름입니다.
+const redirectToTakeList = () => {
+  router.push({ name: 'TakeList' }); 
 };
+
 const showModal = ref(true);
 const medicines = reactive({
-  '빈혈약': { isActive: false },
-  '저혈압약': { isActive: false },
-  '고혈압약': { isActive: false },
-  '당뇨약': { isActive: false },
-  '심장약': { isActive: false },
+  '빈혈약': { isActive: false, icon: 'fa-solid fa-bell-slash' },
+  '저혈압약': { isActive: false, icon: 'fa-solid fa-bell-slash' },
+  '고혈압약': { isActive: false, icon: 'fa-solid fa-bell-slash' },
+  '당뇨약': { isActive: false, icon: 'fa-solid fa-bell-slash' },
+  '심장약': { isActive: false, icon: 'fa-solid fa-bell-slash' },
 });
 
 const toggleActive = (name) => {
-  medicines[name].isActive = !medicines[name].isActive;
+  const medicine = medicines[name];
+  medicine.isActive = !medicine.isActive;
+  medicine.icon = medicine.isActive ? 'fa-solid fa-bell' : 'fa-solid fa-bell-slash';
 };
 
 const closeModal = () => {
@@ -85,11 +75,11 @@ const props = defineProps({
   },
 });
 
-
 // const performAction = (action) => {
 //   console.log("Action performed:", action);
 //   showModal.value = !showModal.value;
 // };
+
 // const closeModal = () => {
 //   showModal.value = !showModal.value;
 // };
@@ -98,7 +88,37 @@ const props = defineProps({
 </script>
 
 <style scoped>
+label {
+  font-size: 18px;
+  line-height: 2rem;
+  padding: 0.2em 0.4em;
+}
 
+[type="radio"],
+span {
+  vertical-align: middle;
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 50%;
+  width: 1.25em;
+  height: 1.25em;
+  transition: border 0.5s ease-in-out;
+}
+[type="radio"]:checked {
+  border: 0.4em solid tomato;
+}
+[type="radio"]:focus-visible {
+  outline: max(2px, 0.1em) dotted tomato;
+  outline-offset: max(2px, 0.1em);
+}
+[type="radio"]:hover {
+  box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+  cursor: pointer;
+}
+
+[type="radio"]:hover + span {
+  cursor: pointer;
+}
 .button-container button.active {
   background-color: #FFD43B; /* 활성 버튼 배경 */
   color: white; /* 활성 버튼 텍스트 색상 */
@@ -263,8 +283,5 @@ const props = defineProps({
   background-color: white;
   color: navy;
 }
-
-
-
 
 </style>
