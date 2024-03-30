@@ -113,6 +113,11 @@
   <div>
     <a href="/loading">로딩 화면 (/loading)</a>
   </div>
+  <div>
+    <a href="/registinfo">개인정보등록 페이지 (/registinfo)</a>
+  </div>
+    <!-- Nav-bar용 -->
+    <div style="height: 85px; background-color: #f9f9f9;"></div>
 </template>
 
 

@@ -9,6 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< Updated upstream
+=======
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/vue-fontawesome": "^3.0.6",
+    "@rollup/wasm-node": "^4.13.2",
+>>>>>>> Stashed changes
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "js-cookie": "^3.0.5",
