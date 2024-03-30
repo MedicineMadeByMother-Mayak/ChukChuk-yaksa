@@ -25,7 +25,11 @@
             class="fa-solid fa-circle-info"
             style="margin-right: 5px; color: #509af8"
           ></i>
-          <span style="vertical-align: middle">{{ item.title }}</span>
+          <font-awesome-icon
+            :icon="['fas', 'circle-info']"
+            style="color: #509af8; margin-right: 5px"
+          />
+          <span class="info-title" style="vertical-align: middle">{{ item.title }}</span>
         </strong>
         <span style="font-size: 10px"></span>
       </div>
@@ -35,7 +39,7 @@
     </div>
   </div>
   <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #f9f9f9;"></div>
+  <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 
 <script setup>
@@ -113,5 +117,10 @@ img {
 
 .info {
   padding: 4px;
+  /* color: rgb(86, 86, 86); */
+}
+
+.info-title { 
+  /* color: rgb(86, 86, 86); */
 }
 </style>

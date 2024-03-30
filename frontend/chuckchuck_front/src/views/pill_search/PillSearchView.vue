@@ -1,6 +1,6 @@
 <template>
   <!-- PillSearchView(약검색) -->
-  <div>
+  <div class="basic-background">
     <Wave title="약 검색" height="1px" />
     <div style="padding: 15px">
       <div style="padding: 0 0 20px 0">
@@ -14,9 +14,9 @@
       <div
         v-for="pillData in dumydata.pills"
         :key="pillData.pillId"
-        style="margin-top: 10px"
+        style="margin-top: 13px"
       >
-        <PillBagContent
+        <PillInfoPlus
           :pillId="pillData.pillId"
           :pillName="pillData.pillName"
           :imageUrl="pillData.imageUrl"
@@ -35,7 +35,7 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-import PillBagContent from "@/common/PillInfoPlus.vue";
+import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import { ref } from "vue";
 
 const dumydata = ref({
@@ -135,4 +135,8 @@ const dumydata = ref({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.basic-background {
+  background-color: #F9F9F9;
+}
+</style>

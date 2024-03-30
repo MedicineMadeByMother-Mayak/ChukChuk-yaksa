@@ -34,3 +34,5 @@ coverage
 *.tsbuildinfo
 
 src/common/testView.vue
+
+package-lock.json
