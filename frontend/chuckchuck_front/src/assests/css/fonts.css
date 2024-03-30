@@ -10,11 +10,14 @@
 
 * {
   letter-spacing: -0.8px; /* 원하는 자간 값으로 변경하세요 */
+  
 }
 
 body {
   font-family: "Inter-Medium", sans-serif;
   font-size: 12px;
+  color: #565656;
+
 }
 
 .bold {
