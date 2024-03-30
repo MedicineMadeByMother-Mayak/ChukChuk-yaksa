@@ -11,21 +11,31 @@
         <strong>{{ truncateName(pillName) }}</strong>
       </div>
 
-      <span class="badge-custom" v-for="(badge, index) in badges" :key="index">
+      <span v-if="categoryflag" class="badge-custom" v-for="(badge, index) in badges" :key="index">
         <Badge
           :title="badge.title"
           :backgroundColor="badge.backgroundColor"
           color="white"
           fontSize="8px"
-          padding="1px 4px 1px 4px"
+          padding="1px 3px"
           style="margin: 0px 1px"
           v-if="badge.condition"
         />
       </span>
-      <span v-if="flag == 4">..</span>
-      <!-- 수정 end -->
+      <span v-else class="badge-custom" v-for="(badge, elseindex) in props.tags" :key="elseindex">
+        <Badge
+          :title="badge.tagName"
+          backgroundColor="#898989"
+          color="white"
+          fontSize="8px"
+          padding="1px 4px 1px 4px"
+          style="margin: 0px 1px;"
+        />
+      </span>
     </div>
-    <i class="fa-solid fa-xmark fa-xl delete-icon" style="margin: 3px"></i>
+    <div class="ellipsis-icon">
+    <font-awesome-icon :icon="['fas', 'ellipsis-vertical']" />
+  </div>
   </div>
 </template>
 
@@ -33,10 +43,12 @@
 import Badge from "@/common/Badge.vue";
 import { ref } from "vue";
 
-const flag = ref(0);
-
+const categoryflag = defineModel();
 const props = defineProps({
-  pillId: 1,
+  pillId: {
+    type: Number,
+    default: 1
+  },
   pillName: {
     type: String,
     default: "프로다나서캡슐",
@@ -46,22 +58,36 @@ const props = defineProps({
     type: String,
     default: "항히스타민제",
   },
-  warningPregnant: {
-    type: Boolean,
-    default: false,
+  company: {
+    type: String,
+    default: "항히스타민제",
   },
-  warningUseDate: {
-    type: Boolean,
-    default: false,
+  categories : {
+    type : Array,
+    default: [
+      {
+        categoryId : 0,
+        categoryName : "전체"
+      },
+      {
+        categoryId : 1, //대분류 id
+        categoryName : "부작용"   //대분류 이름
+      },
+      {
+        categoryId : 2,
+        categoryName : "중단"
+      }
+    ]
   },
-  warningElders: {
-    type: Boolean,
-    default: false,
-  },
-  warningTogether: {
-    type: Boolean,
-    default: false,
-  },
+  tags : {
+   type : Array, 
+   default : [         //태그 리스트(String List)
+				{
+					tagId : 0, //태그 id값
+					tagName : "알러지 진정" //태그 이름
+				}
+			]
+  }
 });
 
 const truncateName = (name) => {
@@ -72,41 +98,39 @@ const truncateName = (name) => {
   }
 };
 
-// badges 배열 생성
-const badges = [
+const badges = ref([]);
+
+let sideeffectbadge = false;
+let effectbadge = false;
+let stopbadge = false;
+
+props.categories.forEach((category, index) => {
+  if (category.categoryName === "부작용") {
+    sideeffectbadge = true;
+  } else if (category.categoryName === "중단") {
+    stopbadge = true;
+  } else if (category.categoryName === "효과") {
+    effectbadge = true;
+  }
+})
+
+badges.value = [
   {
-    title: "임산부 주의",
-    backgroundColor: "#ff9999",
-    condition: props.warningPregnant,
+    title: "부작용",
+    backgroundColor: "#ff7070",
+    condition: sideeffectbadge,
   },
   {
-    title: "노인 주의",
+    title: "효과",
     backgroundColor: "#77d461",
-    condition: props.warningElders,
+    condition: effectbadge,
   },
   {
-    title: "투여기간 주의",
-    backgroundColor: "#ffb555",
-    condition: props.warningUseDate,
-  },
-  {
-    title: "병용 주의",
-    backgroundColor: "#2fd1d1",
-    condition: props.warningTogether,
+    title: "중단",
+    backgroundColor: "#f9ed84",
+    condition: stopbadge,
   },
 ];
-
-// 이미 두 개의 참인 요소가 있다면 나머지 요소의 condition을 false로 변경
-let trueCount = 0;
-badges.forEach((badge, index) => {
-  if (badge.condition) {
-    trueCount++;
-    flag.value++;
-    if (trueCount > 3) {
-      badge.condition = false;
-    }
-  }
-});
 </script>
 
 <style scoped>
@@ -162,10 +186,16 @@ badges.forEach((badge, index) => {
   padding: 0 0 0 0;
 }
 
-.delete-icon {
+.ellipsis-icon {
   position: absolute;
-  top: 9px;
+  width: 20px;
+  height: 20px;
+  top: 3px;
   right: 3px;
   cursor: pointer;
+  margin: 3px 5px;
+  display: flex;
+  justify-content: end;
+  align-items: start;
 }
 </style>
