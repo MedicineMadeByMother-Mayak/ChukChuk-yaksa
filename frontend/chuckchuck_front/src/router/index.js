@@ -30,6 +30,8 @@ import PIllPicView from "@/views/pill_pic/PIllPicView.vue";
 import UserPillEffectView from "@/views/user_pill_effect/UserPillEffectView.vue";
 import EffectDetailView from "@/views/user_pill_effect/EffectDetailView.vue";
 import LoadingView from "@/views/home/LoadingView.vue";
+import RegistInfoView from "@/views/home/RegistInfoView.vue";
+
 
 const routes = [
   {
@@ -44,7 +46,6 @@ const routes = [
     name: "loginSuccess",
     component: LoginSuccessView,
   },
-
   {
     //약봉투/진단서 촬영 메인페이지
     path: "/ocrlist",
@@ -75,7 +76,6 @@ const routes = [
     name: "pillbagresult",
     component: PillBagResultView,
   },
-
   {
     //약국 검색 메인페이지
     path: "/map",
@@ -94,7 +94,6 @@ const routes = [
     name: "resultview",
     component: ResultView,
   },
-
   {
     //약 사진으로 검색
     path: "/pillpic",
@@ -113,21 +112,18 @@ const routes = [
     name: "pilldetail",
     component: PillSearchDetailView,
   },
-
   {
     //설정
     path: "/setting",
     name: "Setting",
     component: SettingView,
   },
-
   {
     //복용리스트
     path: "/take-list",
     name: "TakeList",
     component: TakeListView,
   },
-
   {
     //문진표
     path: "/usermedicalinfo",
@@ -175,6 +171,12 @@ const routes = [
     name: "loading",
     component: LoadingView,
   },
+  {
+    // 개인정보등록
+    path: "/registinfo",
+    name: "registinfo",
+    component: RegistInfoView,
+  }
 ];
 const router = createRouter({
   history: createWebHistory(),

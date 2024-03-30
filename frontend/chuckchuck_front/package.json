@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/vue-fontawesome": "^3.0.6",
+    "@rollup/wasm-node": "^4.13.2",
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "js-cookie": "^3.0.5",
@@ -16,8 +20,8 @@
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
     "vue3-carousel": "^0.3.1",
-    "vuex-persistedstate": "^4.1.0",
-    "vueperslides": "^3.5.1"
+    "vueperslides": "^3.5.1",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
