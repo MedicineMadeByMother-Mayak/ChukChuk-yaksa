@@ -11,7 +11,7 @@
     <div style="height: 42px"></div>
 
     <div class="profile-container">
-      <h3>김민중(여)</h3>
+      <h3>{{ userdata.userName }}</h3>
       <hr style="margin: 8px 18px" />
     </div>
 
@@ -21,32 +21,36 @@
         <div class="info-card">
           <div class="info-item">
             <p class="info-title">생년월일</p>
-            <p class="info-content">1995.10.02</p>
+            <p class="info-content">{{ formatDate(userdata.birth) }}</p>
           </div>
           <hr />
           <div class="info-item">
             <p class="info-title">혈액형</p>
-            <p class="info-content">A RH+</p>
+            <p class="info-content">{{ userdata.bloodType }}</p>
           </div>
           <hr />
           <div class="info-item">
             <p class="info-title">키/몸무게</p>
-            <p class="info-content">180cm/ 75kg</p>
+            <p class="info-content">
+              {{ userdata.height }}cm/ {{ userdata.weight }}kg
+            </p>
           </div>
           <hr />
           <div class="info-item">
             <p class="info-title">BMI</p>
-            <p class="info-content">22.5</p>
+            <p class="info-content">
+              {{ calculateBMI(userdata.weight, userdata.height) }}
+            </p>
           </div>
         </div>
         <div class="buttons-container">
-          <RouterLink :to="{ name: 'diagnosishistory' }">
+          <RouterLink :to="{ name: 'pillbaghistory' }">
             <button class="button gradient-blue">
               <strong>처방내역 확인</strong>
               <p><strong>모든 약봉투를 확인</strong></p>
             </button>
           </RouterLink>
-          <RouterLink :to="{ name: 'pillbaghistory' }">
+          <RouterLink :to="{ name: 'diagnosishistory' }">
             <button class="button gradient-purple">
               <strong>진단내역 확인</strong>
               <p><strong>모든 진단서를 확인</strong></p>
@@ -63,10 +67,65 @@
           >(다음과 같은 질병으로 진단을 받았어요.)</span
         >
       </div>
-      <div class="appointment-details">
-        <span>2023.03.05</span>
-        <Badge title="Joo" background-color="#d3e0f8" color="black" />
-        <span>국민기(금성)</span>
+      <div class="diseas-list">
+        <div
+          v-for="(diseasedata, index) in diseasedatas.results"
+          :key="`disease-${index}`"
+          class="disease-detail"
+        >
+          <span>{{ formatDate(diseasedata.Date) }}</span>
+          <Badge
+            :title="diseasedata.Code"
+            background-color="#d3e0f8"
+            color="black"
+          />
+          <span>{{ diseasedata.Name }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="appointment-section">
+      <div style="margin: 5px 0px">
+        <strong style="font-size: 18.72px; margin: 5px 0px"> 약력 </strong
+        ><span style="font-size: 10px"
+          >(다음과 같은 질병으로 진단을 받았어요.)</span
+        >
+      </div>
+      <div class="diseas-list">
+        <div style="display: flex">
+          <div class="navy-button">현재 복용중인 약</div>
+        </div>
+        <div
+          v-for="(diseasedata, index) in diseasedatas.results"
+          :key="`disease-${index}`"
+          class="disease-detail"
+        >
+          <span>{{ formatDate(diseasedata.Date) }}</span>
+          <Badge
+            :title="diseasedata.Code"
+            background-color="#d3e0f8"
+            color="black"
+          />
+          <span>{{ diseasedata.Name }}</span>
+        </div>
+      </div>
+      <div class="diseas-list">
+        <div style="display: flex">
+          <div class="gray-button">한달 이내에 복용한 약</div>
+        </div>
+        <div
+          v-for="(diseasedata, index) in diseasedatas.results"
+          :key="`disease-${index}`"
+          class="disease-detail"
+        >
+          <span>{{ formatDate(diseasedata.Date) }}</span>
+          <Badge
+            :title="diseasedata.Code"
+            background-color="#d3e0f8"
+            color="black"
+          />
+          <span>{{ diseasedata.Name }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -74,6 +133,40 @@
 
 <script setup>
 import Badge from "@/common/Badge.vue";
+import { instance } from "@/util/mainAxios";
+import { ref, onMounted } from "vue";
+import dayjs from "dayjs";
+
+const userdata = ref({});
+const diseasedatas = ref({});
+const takelistdatas = ref({});
+const takelistdatas2 = ref({});
+
+async function fetchData() {
+  try {
+    userdata.value = (await instance.get("/profile")).data;
+    diseasedatas.value = (await instance.get("/record/disease")).data;
+    takelistdatas.value = await instance.get("/take-list", {
+      params: { period: true },
+    });
+  } catch (error) {
+    console.error("API 데이터를 불러오는데 실패했습니다.", error);
+  }
+}
+
+function formatDate(date, format = "YYYY.MM.DD") {
+  return dayjs(date).format(format);
+}
+
+function calculateBMI(weight, height) {
+  if (!weight || !height) return ""; // 무게나 키가 없으면 빈 문자열 반환
+  const bmi = (weight / (height * height)) * 10000;
+  return bmi.toFixed(2); // 소수점 두 자리까지의 문자열 반환
+}
+
+onMounted(() => {
+  fetchData();
+});
 </script>
 
 <style scoped>
@@ -213,13 +306,43 @@ div p {
   padding: 18px;
 }
 
-.appointment-details {
-  display: flex;
-  justify-content: space-between;
+.diseas-list {
   align-items: center;
   background-color: white;
   border-radius: 15px;
-  padding: 18px;
+  padding: 1px 18px;
+  margin: 10px 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.disease-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.navy-button {
+  background-color: #242291;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-top: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+}
+
+.gray-button {
+  background-color: #cccccc;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 5px 15px;
+  margin-top: 10px;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
 }
 </style>
