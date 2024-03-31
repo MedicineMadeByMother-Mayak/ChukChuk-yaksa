@@ -37,11 +37,13 @@
       ]"
     />  -->
 
-    <SelectPillModal v-model="msg" :modalData="[
+    <!-- <SelectPillModal v-model="msg" :modalData="[
     ['약 사진을 찍어서 등록하기', true, { params: {}, Link:'pillpic'}],
     ['약 검색해서 등록하기', true, { params: {}, Link:'pillsearch'}],
     ['약봉투 찍어서 등록하기', true, { params: {}, Link:'diagnosisfilming'}],
-    ]" /> 
+    ]" />  -->
+
+    <DeleteCheckModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/>
 
 
 </template>
@@ -65,6 +67,9 @@ import SelectModal from '@/views/take_list/components/SelectModal.vue';
 
 //SelectPillModal.vue
 import SelectPillModal from '@/views/take_list/components/SelectPillModal.vue';
+
+import DeleteCheckModal from '@/views/take_list/components/DeleteCheckModal.vue';
+
 import { ref } from "vue";
 const msg = ref(true);
 </script>
