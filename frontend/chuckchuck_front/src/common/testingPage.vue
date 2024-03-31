@@ -43,7 +43,9 @@
     ['약봉투 찍어서 등록하기', true, { params: {}, Link:'diagnosisfilming'}],
     ]" />  -->
 
-    <DeleteCheckModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/>
+    <!-- <DeleteCheckModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/> -->
+    <DeleteModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/>
+
 
 
 </template>
@@ -70,6 +72,7 @@ import SelectPillModal from '@/views/take_list/components/SelectPillModal.vue';
 
 import DeleteCheckModal from '@/views/take_list/components/DeleteCheckModal.vue';
 
+import DeleteModal from '@/views/take_list/components/DeleteModal.vue';
 import { ref } from "vue";
 const msg = ref(true);
 </script>
