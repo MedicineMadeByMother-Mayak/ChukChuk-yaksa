@@ -6,16 +6,7 @@
 <template>
   <div class="header">
     <div class="inner-header flex">
-      <RouterLink style="z-index: 3" :to="{ name: Link }">
-        <div>
-          <font-awesome-icon
-            icon="angle-left"
-            size="2xl"
-            style="color: #303030"
-          />
-        </div>
-      </RouterLink>
-      <h1 class="bold" :style="{ fontSize }">{{ title }}</h1>
+      <HeaderFormOnlyString :title="title" :Link="Link" />
       <p></p>
     </div>
     <container class="inner-header flex" :style="{ height: headerHeight }">
@@ -62,6 +53,7 @@
 
 <script setup>
 import { computed } from "vue";
+import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
 
 const props = defineProps({
   title: {
