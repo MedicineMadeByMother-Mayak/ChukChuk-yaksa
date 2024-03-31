@@ -37,10 +37,10 @@
       ]"
     />  -->
 
-    <SelectModal v-model="msg" :modalData="[
-    ['제목 수정하기', true, { params: {}, Link:'TakeList'}],
-    ['리스트 삭제하기', true, { params: {}, Link:'Setting'}],
-    ['복용 완료 처리하기', true, { params: {}, Link:'Setting'}],
+    <SelectPillModal v-model="msg" :modalData="[
+    ['약 사진을 찍어서 등록하기', true, { params: {}, Link:'pillpic'}],
+    ['약 검색해서 등록하기', true, { params: {}, Link:'pillsearch'}],
+    ['약봉투 찍어서 등록하기', true, { params: {}, Link:'diagnosisfilming'}],
     ]" /> 
 
 
@@ -62,6 +62,9 @@ import AlarmModalTime from '@/views/take_list/components/AlarmModalTime.vue';
 
 // SelectModal.vue
 import SelectModal from '@/views/take_list/components/SelectModal.vue';
+
+//SelectPillModal.vue
+import SelectPillModal from '@/views/take_list/components/SelectPillModal.vue';
 import { ref } from "vue";
 const msg = ref(true);
 </script>
