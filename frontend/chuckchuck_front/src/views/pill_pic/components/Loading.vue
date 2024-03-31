@@ -23,13 +23,13 @@ onUnmounted(() => {
   clearInterval(intervalId);
 });
 
-onMounted(() => {
-  //로딩창 진입 5초후 분석화면 실행
-  setTimeout(() => {
-    console.log("5초 후 3단계로 이동");
-    store.endLoading(3);
-  }, 5000); // 5000밀리초 = 5초
-});
+// onMounted(() => {
+//   //로딩창 진입 5초후 분석화면 실행
+//   setTimeout(() => {
+//     console.log("5초 후 3단계로 이동");
+//     store.endLoading(3);
+//   }, 5000); // 5000밀리초 = 5초
+// });
 </script>
 <style scoped>
 img {
@@ -47,6 +47,6 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  /* margin-top: 20px; */
 }
 </style>
