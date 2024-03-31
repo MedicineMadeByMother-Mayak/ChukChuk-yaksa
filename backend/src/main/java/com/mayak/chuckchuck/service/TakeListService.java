@@ -7,7 +7,7 @@ import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.ChukchukAdviceDto;
 import com.mayak.chuckchuck.dto.TakeListEach;
 import com.mayak.chuckchuck.dto.request.AddPillsToTakeListRequest;
-import com.mayak.chuckchuck.dto.request.TakeListRequest;
+//import com.mayak.chuckchuck.dto.request.TakeListRequest;
 import com.mayak.chuckchuck.dto.request.UpdateTakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.dto.response.ChukChukAdviceResponse;
@@ -21,6 +21,7 @@ import com.mayak.chuckchuck.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
 
@@ -101,10 +102,12 @@ public class TakeListService {
      * period=true : 문진표
      * 한달 이내 복용리스트 조회, isFinish=false 라면 기간 상관없이 전체조회.
      */
-    public TakeListResponse getTakeList(User user, TakeListRequest takeListRequest) {
+    public TakeListResponse getTakeList(User user, Boolean period) {
         /**period t/f 별 기준일자(baseDate) 분기*/
         LocalDateTime baseDate;
-        if (takeListRequest.period()) {
+        System.out.println(period);
+        System.out.println(user);
+        if (period) {
             baseDate = LocalDateTime.now().minusMonths(1);
         } else {
             baseDate = LocalDateTime.of(1910, 1, 1, 0, 0, 0);

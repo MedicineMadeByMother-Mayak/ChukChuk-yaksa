@@ -4,7 +4,7 @@ package com.mayak.chuckchuck.controller;
 import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.request.*;
 import com.mayak.chuckchuck.dto.request.AlarmRequest;
-import com.mayak.chuckchuck.dto.request.TakeListRequest;
+//import com.mayak.chuckchuck.dto.request.TakeListRequest;
 import com.mayak.chuckchuck.dto.response.ActiveAlarmListResponse;
 import com.mayak.chuckchuck.dto.response.ChukChukAdviceResponse;
 import com.mayak.chuckchuck.security.oauth2.user.UserPrincipal;
@@ -34,11 +34,10 @@ public class TakeListController {
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> getTakeList(@AuthenticationPrincipal UserPrincipal principal, @RequestBody TakeListRequest takeListRequest) {
+    public ResponseEntity<?> getTakeList(@AuthenticationPrincipal UserPrincipal principal, @RequestParam("period") Boolean period) {
         User user = commonService.getUserOrException(principal);
-        return new ResponseEntity<>(takeListService.getTakeList(user, takeListRequest), HttpStatus.OK);
+        return new ResponseEntity<>(takeListService.getTakeList(user, period), HttpStatus.OK);
     }
-    
     /**
      * 복용리스트 약 추가
      * @author:김보경
