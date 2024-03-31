@@ -29,13 +29,20 @@
       v-model="msg"
       :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"
     />   -->
-    <AlarmModalTime
+    <!-- <AlarmModalTime
       v-model="msg"
       :modalData="[
         [1, '매일 17:35에 알람을 울립니다.'],
         [2, '17:35 기준, 12시간마다 알람을 울립니다.'],
       ]"
-    /> 
+    />  -->
+
+    <SelectModal v-model="msg" :modalData="[
+    ['제목 수정하기', true, { params: {}, Link:'TakeList'}],
+    ['리스트 삭제하기', true, { params: {}, Link:'Setting'}],
+    ['복용 완료 처리하기', true, { params: {}, Link:'Setting'}],
+    ]" /> 
+
 
 </template>
 
@@ -51,6 +58,10 @@ import AddListAlertModalForm from '@/common/Form/AddListAlertModalForm.vue'
 
 // AlarmModalTime.vue
 import AlarmModalTime from '@/views/take_list/components/AlarmModalTime.vue';
+
+
+// SelectModal.vue
+import SelectModal from '@/views/take_list/components/SelectModal.vue';
 import { ref } from "vue";
 const msg = ref(true);
 </script>
