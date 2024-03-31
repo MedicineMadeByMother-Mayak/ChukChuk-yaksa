@@ -5,7 +5,6 @@ import App from "./App.vue";
 
 import router from "./router";
 import "./assests/css/fonts.css";
-import "./assests/css/carousel.css";
 
 // fontawesome import
 import { library } from "@fortawesome/fontawesome-svg-core";

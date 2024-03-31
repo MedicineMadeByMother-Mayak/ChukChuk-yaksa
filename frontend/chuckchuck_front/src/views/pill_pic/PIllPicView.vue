@@ -49,18 +49,19 @@ watch(
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
+  height: 460px;
   /* gap: 10px; */
 }
 
 .text {
   margin-top: 20px;
-  height: 5%;
+  /* height: 5%; */
   display: flex;
 }
 .timeline {
-  height: 15%;
+  /* height: 15%; */
 }
 .bottom-componenet {
-  height: 50%;
+  /* height: 50%; */
 }
 </style>

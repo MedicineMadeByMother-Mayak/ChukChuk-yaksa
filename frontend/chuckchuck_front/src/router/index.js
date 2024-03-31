@@ -30,7 +30,7 @@ import UserPillEffectView from "@/views/user_pill_effect/UserPillEffectView.vue"
 import EffectDetailView from "@/views/user_pill_effect/EffectDetailView.vue";
 import LoadingView from "@/views/home/LoadingView.vue";
 import RegistInfoView from "@/views/home/RegistInfoView.vue";
-
+import testingPage from "@/common/testingPage.vue";
 
 const routes = [
   {
@@ -168,6 +168,12 @@ const routes = [
     path: "/registinfo",
     name: "registinfo",
     component: RegistInfoView,
+  },
+  {
+    // 모달 등 공용 컴포넌트 사용 예시
+    path: "/tt",
+    name: "testingpage",
+    component: testingPage,
   }
 ];
 const router = createRouter({
