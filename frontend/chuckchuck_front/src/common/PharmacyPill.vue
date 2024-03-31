@@ -1,6 +1,6 @@
 <template>
   <div class="pill-card">
-    <img src="@/assests/img/dumypillimg.jpg" alt="약 이미지" />
+    <img :src="dumypillimg" alt="약 이미지" />
     <div class="pill-info">
       <div class="pill-type">{{ type }}</div>
       <div class="pill-name">{{ pillName }}</div>
@@ -11,14 +11,19 @@
 </template>
 
 <script setup>
+import dumypillimg from "@/assests/img/dumypillimg.jpg";
 const props = defineProps({
   pillName: {
     type: String,
-    default: "프로다나서캡슐",
+    default: "약 이름",
   },
   type: {
     type: String,
-    default: "항히스타민제",
+    default: "약 타입",
+  },
+  imageUrl: {
+    type: String,
+    default: dumypillimg,
   },
 });
 </script>

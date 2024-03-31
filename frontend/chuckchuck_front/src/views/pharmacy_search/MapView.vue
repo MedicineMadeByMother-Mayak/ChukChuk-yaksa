@@ -36,7 +36,7 @@ import PharmacyCard from "@/common/PharmacyCard.vue";
 import mapLine from "@/assests/img/mapLine.svg";
 import { instance } from "@/util/mainAxios";
 import axios from "axios";
-
+const pillId = localStorage.getItem("pillId");
 const map = ref(null);
 // 슬라이드를 위한 margin
 const heightNum = ref(550);
@@ -48,8 +48,6 @@ const long = ref(127.298295);
 const city = ref("대전");
 // 사용자 지역
 const area = ref("유성구");
-// 약 ID
-const pillId = ref(1);
 // 마커를 위한 배열
 const positions = [];
 // 결과목록
@@ -76,7 +74,6 @@ script.onload = function () {
   saveLocal();
   kakao.maps.load(initMap);
 };
-
 function saveLocal() {
   // 사용자 위치 구하기
   navigator.geolocation.getCurrentPosition(showYourLocation, showErrorMsg, {
@@ -98,9 +95,9 @@ function showErrorMsg(error) {
       alert("위치 정보 활용을 동의해주시기 바랍니다.");
       break;
 
-    default:
-      alert("알 수 없는 오류로 추후 다시 시도해주시기 바랍니다.");
-      break;
+    // default:
+    //   alert("알 수 없는 오류로 추후 다시 시도해주시기 바랍니다.");
+    //   break;
   }
 }
 
@@ -109,7 +106,7 @@ async function searchPharmacy() {
     params: {
       city: city.value,
       area: area.value,
-      pillId: pillId.value,
+      pillId: pillId,
       page: 1,
     },
   });
@@ -299,11 +296,12 @@ const listUp = () => {
 }
 
 .pharmacy-list {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 13px;
-  /* overflow: scroll; */
+  overflow: scroll;
+  padding-bottom: 43%;
 }
 </style>

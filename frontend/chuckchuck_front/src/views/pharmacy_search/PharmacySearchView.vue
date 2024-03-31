@@ -22,8 +22,7 @@
       </div>
       <SearchBar
         :value="keyword"
-        @input="test"
-        @keyup.enter="submit"
+        @input="input"
         :width="'90%'"
         :height="'55px'"
         :iconWidth="'30px'"
@@ -46,9 +45,14 @@
       </div>
 
       <div v-if="keyword" class="search-result-container">
-        <PharmacyPill @click="click" />
-        <PharmacyPill @click="click" />
-        <PharmacyPill @click="click" />
+        <PharmacyPill
+          v-for="pill in list"
+          :key="pill.pillId"
+          :pillName="pill.pillName"
+          @click="click(pill.pillId)"
+          :type="pill.type"
+          :imageUrl="pill.imageUrl"
+        />
       </div>
     </div>
   </div>
@@ -62,26 +66,28 @@ import SearchBar from "@/common/SearchBar.vue";
 import PharmacyPill from "@/common/PharmacyPill.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { instance } from "@/util/mainAxios";
 
 const router = useRouter();
 const keyword = ref("");
 const count = ref(0);
-// SearchBar 컴포넌트에서 입력 이벤트를 감지하는 메서드
-const submit = (event) => {
-  if (event.key === "Enter" && event.target.value.trim().length > 0) {
-    // 엔터 키를 눌렀는지 확인
-    router.push({
-      name: "pharmacy-search-result",
-      query: { keyword: event.target.value.trim() },
-    }); // 검색어와 함께 라우트 변경
-  }
-};
+const list = ref([]);
 
-const test = (event) => {
+async function input(event) {
   keyword.value = event.target.value;
-};
+  const { data } = await instance.get("/pill/search", {
+    params: {
+      keyword: event.target.value,
+      page: 1,
+    },
+  });
 
-const click = (event) => {
+  list.value = data.pills;
+  return data.pills;
+}
+
+const click = (pillId) => {
+  localStorage.setItem("pillId", pillId);
   router.push({
     name: "map",
   });

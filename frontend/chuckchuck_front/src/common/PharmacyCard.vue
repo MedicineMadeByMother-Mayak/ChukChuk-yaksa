@@ -50,7 +50,7 @@ if (props.status) {
 }
 
 .card-container {
-  width: 100%;
+  width: 80%;
   color: white;
   background-size: cover;
   position: relative;
