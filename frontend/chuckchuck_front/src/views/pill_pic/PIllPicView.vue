@@ -33,7 +33,7 @@ import { pillPicStore } from "@/stores/pillPic";
 
 const router = useRouter();
 const store = pillPicStore();
-const currentStep = ref(2);
+const currentStep = ref(1);
 //selectPic에서 사진첨부 이벤트 발생시(currentStep 변화시) 실행
 watch(
   () => store.currentStep,
