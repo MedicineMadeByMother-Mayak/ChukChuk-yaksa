@@ -36,7 +36,7 @@ import PharmacyCard from "@/common/PharmacyCard.vue";
 import mapLine from "@/assests/img/mapLine.svg";
 import { instance } from "@/util/mainAxios";
 import axios from "axios";
-const pillId = localStorage.getItem("pillId");
+const pillId = sessionStorage.getItem("pillId");
 const map = ref(null);
 // 슬라이드를 위한 margin
 const heightNum = ref(550);
@@ -64,7 +64,7 @@ const formattedDate = `${year}/${month < 10 ? `0${month}` : month}/${
 }`;
 
 // 오늘의 요일 1:월, 2:화, 3:수, 4:목, 5:금, 6:토, 7:일
-const today = now.getDay() === 0 ? 7 : today;
+const today = now.getDay() === 0 ? 7 : now.getDay();
 
 // 카카오 맵 API를 위한 초기 설정 script
 const script = document.createElement("script");

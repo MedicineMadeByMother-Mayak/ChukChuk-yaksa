@@ -83,13 +83,13 @@ async function input(event) {
       page: 1,
     },
   });
-
   list.value = data.pills;
+  count.value = data.count;
   return data.pills;
 }
 
 const click = (pillId) => {
-  localStorage.setItem("pillId", pillId);
+  sessionStorage.setItem("pillId", pillId);
   router.push({
     name: "map",
   });

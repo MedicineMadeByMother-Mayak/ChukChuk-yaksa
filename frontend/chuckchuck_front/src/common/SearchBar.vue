@@ -7,7 +7,7 @@
       placeholder="검색할 약의 이름을 입력하세요."
       type="text"
       :value="keyword"
-      :style="{ fontSize, marginLeft }"
+      :style="{ fontSize, marginLeft, fontWeight }"
     />
   </div>
 </template>
@@ -36,6 +36,10 @@ const props = defineProps({
   marginLeft: {
     type: String,
     default: "20%",
+  },
+  fontWeight: {
+    type: String,
+    default: "600",
   },
 });
 </script>
@@ -72,7 +76,6 @@ const props = defineProps({
   border: none;
   outline: 0;
   background-color: transparent;
-  font-weight: 600;
   padding: 0;
   color: #606060;
   z-index: 2;
