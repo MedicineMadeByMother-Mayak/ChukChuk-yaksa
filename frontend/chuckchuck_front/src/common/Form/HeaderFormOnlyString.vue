@@ -1,7 +1,9 @@
 <template>
   <div class="header-background-color">
     <header class="heads">
-      <img :src="backIcon" alt="" />
+      <RouterLink :to="{ name: Link }">
+        <img class="backIcon" :src="backIcon" alt="" />
+      </RouterLink>
       <h1>{{ title }}</h1>
     </header>
   </div>
@@ -13,6 +15,10 @@ const props = defineProps({
   title: {
     type: String,
     default: "title : 제목",
+  },
+  Link: {
+    type: String,
+    default: "home",
   },
 });
 </script>
@@ -36,10 +42,11 @@ const props = defineProps({
   position: relative;
 }
 
-.heads > img {
+.backIcon {
   height: 100%;
   position: absolute;
   left: 0;
+  top: 0;
   margin-left: 14px;
 }
 
