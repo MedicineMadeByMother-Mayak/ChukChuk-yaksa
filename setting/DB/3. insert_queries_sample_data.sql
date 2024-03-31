@@ -20,7 +20,7 @@ VALUES
     ('Pill A', 12345, 'Company A', 'Headache relief', 'For adults only', 'Do not exceed recommended dose', '10 tablets', 'url_a', 'Type A', true, false, false, false, NOW(), NOW(), false),
     ('Pill B', 67890, 'Company B', 'Stomachache relief', 'For adults and children over 12', 'Avoid if allergic to aspirin', '20 tablets', 'url_b', 'Type B', false, false, true, false, NOW(), NOW(), false);
 
-INSERT INTO `user` (`user_name`, `social_code`, `social`, `birth`, `blood_type`, `height`, `weight`, `sex`, `token`, `create_date`, `modify_date`, `is_delete`)
+INSERT INTO `user` (`user_name`, `social_code`, `email`, `birth`, `blood_type`, `height`, `weight`, `sex`, `token`, `create_date`, `modify_date`, `is_delete`)
 VALUES
     ('John', 'GOOGLE', 'google_user123', '1990-05-15', 'A', 175, 70, 'male', 'token123', NOW(), NOW(), false),
     ('Emily', 'NAVER', 'naver_user456', '1985-08-20', 'B', 160, 55, 'female', 'token456', NOW(), NOW(), false),
@@ -111,11 +111,3 @@ insert into tag(tag_name, user_id, category_id, create_date, modify_date, is_del
     ("효과-개운함3", 1, 3, now(), null, null),
     ("효과-개운함4", 1, 3, now(), null, null);
     
-insert into take_pills (pill_id, take_list_id, create_date, modify_date, is_delete)
-	values 
-		(2, 6, now(), null, 0),
-        (3, 6, now(), null, 0),
-        (4, 6, now(), null, 0),
-        (6, 6, now(), null, 0),
-        (8, 6, now(), null, 0),
-        (27, 6, now(), null, 0);
