@@ -45,35 +45,29 @@
 <script setup>
 import Wave from "@/common/Wave.vue";
 
-const waveTitle = "활명수"; // 약 이름 받아오기
-const imagePath = "../../assests/img/tempPill.png"; // 이미지 경로 받아오기
+import { ref, onMounted } from "vue";
+import { pillSearchStore } from "@/stores/pillSearch"
 
-const appointmentDetails = [
-  { title: "제조사", content: "동화약품 (주)" },
-  {
-    title: "주의사항",
-    content:
-      "주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항",
-  },
-  { title: "종류", content: "진통제 (painkiller)" },
-  {
-    title: "효능",
-    content:
-      "기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음",
-  },
-  { title: "사용법", content: "동화약품 (주)" },
-  { title: "주성분", content: "시나몬, 초코, 얼음" },
-  {
-    title: "약 사용 전 반드시 알아야 할 내용",
-    content:
-      "알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용",
-  },
-  {
-    title: "보관시 주의사항",
-    content:
-      "상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관",
-  },
-];
+const waveTitle = ref('');
+const imagePath = ref('');
+const appointmentDetails = ref([]);
+
+onMounted(async () => {
+  const store = pillSearchStore();
+
+  waveTitle.value = store.name;
+  imagePath.value = store.imageUrl; // 이미지 경로 받아오기
+  appointmentDetails.value = [
+    { title: "제조사", content: store.company },
+    { title: "주의사항", content: store.caution },
+    { title: "종류", content: store.type },
+    { title: "효능", content: store.effect },
+    { title: "사용법", content: store.capacity },
+    { title: "주성분", content: store.basis },
+    // { title: "약 사용 전 반드시 알아야 할 내용", content: store. },
+    // { title: "보관시 주의사항", content:  },
+  ];
+})
 </script>
 
 <style scoped>

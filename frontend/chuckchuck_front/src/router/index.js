@@ -23,7 +23,6 @@ import TakeListView from "@/views/take_list/TakeListView.vue";
 
 import MapView from "@/views/pharmacy_search/MapView.vue";
 import PharmacySearchView from "@/views/pharmacy_search/PharmacySearchView.vue";
-import ResultView from "@/views/pharmacy_search/ResultView.vue";
 
 import PIllPicView from "@/views/pill_pic/PIllPicView.vue";
 
@@ -89,12 +88,6 @@ const routes = [
     component: PharmacySearchView,
   },
   {
-    //약국 검색 결과
-    path: "/mapview/resultview",
-    name: "resultview",
-    component: ResultView,
-  },
-  {
     //약 사진으로 검색
     path: "/pillpic",
     name: "pillpic",
@@ -147,7 +140,6 @@ const routes = [
     name: "test",
     component: testView,
   },
-
   {
     //약효기록
     path: "/userpilleffect",

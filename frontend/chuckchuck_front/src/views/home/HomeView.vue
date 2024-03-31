@@ -9,7 +9,7 @@
           src="@/assests/icon/main_page/main_icon.svg"
           style="border-radius: 30px"
         />
-        <div class="hello-text">안녕하세요 기미중님!</div>
+        <div class="hello-text">안녕하세요 {{ store.userName }}님!</div>
         <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
       </div>
       <div class="temp">
@@ -52,7 +52,7 @@
                 class="column"
                 style="border-right: 0.5px solid rgb(231, 231, 231)"
               >
-                <a href="/map"
+                <a href="/map/pharmacysearch"
                   ><img src="@/assests/icon/main_page/pharmacy_search.svg"
                 /></a>
               </div>
@@ -114,9 +114,6 @@
     <a href="/map/pharmacysearch">약국 검색창 페이지 (/map/pharmacysearch)</a>
   </div>
   <div>
-    <a href="/mapview/resultview">약국 검색 결과 (/mapview/resultview)</a>
-  </div>
-  <div>
     <a href="/pillpic">약 사진으로 검색 (/pillpic)</a>
   </div>
   <div>
@@ -164,11 +161,15 @@
   <div>
     <a href="/registinfo">개인정보등록 페이지 (/registinfo)</a>
   </div>
-    <!-- Nav-bar용 -->
-    <div style="height: 85px; background-color: #f9f9f9;"></div>
+  <!-- Nav-bar용 -->
+  <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 
-<script setup></script>
+<script setup>
+import { userStore } from '@/stores/user';
+const store = userStore();
+store.getUserInfo();  // 유저 이름 가져오기 위함
+</script>
 
 <style scoped>
 .header-background {
