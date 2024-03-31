@@ -11,7 +11,7 @@
     <div style="height: 42px"></div>
 
     <div class="profile-container">
-      <h3>{{ userdata.userName }}</h3>
+      <h3>{{ userstore.userName }}</h3>
       <hr style="margin: 8px 18px" />
     </div>
 
@@ -21,25 +21,25 @@
         <div class="info-card">
           <div class="info-item">
             <p class="info-title">생년월일</p>
-            <p class="info-content">{{ formatDate(userdata.birth) }}</p>
+            <p class="info-content">{{ formatDate(userstore.birth) }}</p>
           </div>
           <hr />
           <div class="info-item">
             <p class="info-title">혈액형</p>
-            <p class="info-content">{{ userdata.bloodType }}</p>
+            <p class="info-content">{{ userstore.bloodType }}</p>
           </div>
           <hr />
           <div class="info-item">
             <p class="info-title">키/몸무게</p>
             <p class="info-content">
-              {{ userdata.height }}cm/ {{ userdata.weight }}kg
+              {{ userstore.height }}cm/ {{ userstore.weight }}kg
             </p>
           </div>
           <hr />
           <div class="info-item">
             <p class="info-title">BMI</p>
             <p class="info-content">
-              {{ calculateBMI(userdata.weight, userdata.height) }}
+              {{ calculateBMI(userstore.weight, userstore.height) }}
             </p>
           </div>
         </div>
@@ -136,14 +136,16 @@ import Badge from "@/common/Badge.vue";
 import { instance } from "@/util/mainAxios";
 import { ref, onMounted } from "vue";
 import dayjs from "dayjs";
+import { userStore } from "@/stores/user";
+import { diseaseStore } from "@/stores/disease";
 
-const userdata = ref({});
+const userstore = userStore();
+const diseasestore = diseaseStore();
 const diseasedatas = ref({});
 const takelistdatas = ref({});
 
 async function fetchData() {
   try {
-    userdata.value = (await instance.get("/profile")).data;
     diseasedatas.value = (await instance.get("/record/disease")).data;
     takelistdatas.value = (
       await instance.get("/take-list", {
@@ -168,6 +170,8 @@ function calculateBMI(weight, height) {
 
 onMounted(() => {
   fetchData();
+  userstore.getUserInfo();
+  diseasestore.getDiseaseInfo();
 });
 </script>
 
