@@ -34,6 +34,7 @@ import os
 import platform
 import sys
 from pathlib import Path
+import uuid
 
 import torch
 
@@ -68,11 +69,12 @@ from utils.general import (
 from utils.torch_utils import select_device, smart_inference_mode
 
 class Info:
-    def __init__(self, cls, name, acc, save_dir):
+    def __init__(self, cls, name, acc, save_dir, crop_img):
         self.name = name
         self.cls = cls
         self.acc = acc
         self.save_dir = save_dir
+        self.crop_img = crop_img
 
 @smart_inference_mode()
 def run(
@@ -227,7 +229,9 @@ def run(
                             f.write(" " + mapping_dic[label] + "\n")
 
                     if return_info:  # Write to file
-                        info = Info(c, mapping_dic[label], conf * 100, save_dir)
+                        random_img_name = uuid.uuid1()
+                        save_one_box(xyxy, imc, file=save_dir / "crops" / names[c] / f"{random_img_name}.jpg", BGR=True)
+                        info = Info(names[c], mapping_dic[label], conf * 100, save_dir, f"{random_img_name}.jpg")
                         result.append(info)
 
                     if save_img or save_crop or view_img:  # Add bbox to image
