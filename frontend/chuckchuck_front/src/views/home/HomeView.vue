@@ -9,7 +9,7 @@
           src="@/assests/icon/main_page/main_icon.svg"
           style="border-radius: 30px"
         />
-        <div class="hello-text">안녕하세요 기미중님!</div>
+        <div class="hello-text">안녕하세요 {{ store.userName }}님!</div>
         <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
       </div>
       <div class="temp">
@@ -165,7 +165,11 @@
   <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 
-<script setup></script>
+<script setup>
+import { userStore } from '@/stores/user';
+const store = userStore();
+store.getUserInfo();  // 유저 이름 가져오기 위함
+</script>
 
 <style scoped>
 .header-background {
