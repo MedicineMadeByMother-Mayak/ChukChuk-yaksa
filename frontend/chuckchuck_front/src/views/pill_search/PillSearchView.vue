@@ -31,7 +31,7 @@
       <div class="search-result-container">
         <PillInfoPlus
           v-for="pill in pills"
-          @click="click"
+          @click="click(pill.pillId)"
           :key="pill.pillId"
           :pillId="pill.pillId"
           :pillName="pill.pillName"
@@ -44,33 +44,71 @@
         />
       </div>
     </div>
+    <!-- Nav-bar용 -->
+    <div class="save-nav-bar"></div>
   </div>
-  <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #ffffff"></div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { pillSearchStore } from "@/stores/pillSearch";
 import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
+import { useRouter } from "vue-router";
 
 const store = pillSearchStore();
+const router = useRouter();
 
 const keyword = ref(store.keyword);
 const page = ref(store.page);
 const count = ref(0);
 const pills = ref([]);
+const isLoading = ref(false);
 
 onMounted(() => {
   input();
+  window.addEventListener("scroll", handleScroll);
 });
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// 스크롤 이벤트 핸들러
+function handleScroll() {
+  const nearBottom =
+    window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight;
+  if (nearBottom && count.value > pills.value.length) {
+    // 페이지 끝에 근접했을 때 실행할 로직
+    loadMoreData();
+  }
+}
+
+// 더 많은 데이터 로딩
+async function loadMoreData() {
+  if (isLoading.value) return;
+  isLoading.value = true;
+  // 페이지 번호 증가
+  page.value++;
+  const data = await store.input(keyword.value, page.value);
+  count.value = data.count;
+  pills.value = [...pills.value, ...data.pills];
+  isLoading.value = false;
+}
+
+async function click(pillId) {
+  await store.getPillInfo(pillId);
+  router.push({
+    name: "pilldetail",
+  });
+}
 
 async function input(event) {
   if (event !== undefined) {
     keyword.value = event.target.value;
   }
+  page.value = 1;
   const data = await store.input(keyword.value, page.value);
   count.value = data.count;
   pills.value = data.pills;
@@ -111,9 +149,15 @@ async function input(event) {
 }
 
 .search-result-container {
+  height: 100%;
   margin: 0;
   gap: 17px;
   display: flex;
   flex-direction: column;
+}
+
+.save-nav-bar {
+  content: "";
+  height: 85px;
 }
 </style>
