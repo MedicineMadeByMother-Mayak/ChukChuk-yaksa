@@ -44,7 +44,7 @@
     ]" />  -->
 
     <!-- <DeleteCheckModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/> -->
-    <DeleteModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/>
+    <DeleteModal/>
 
 
 
