@@ -54,14 +54,9 @@ const appointmentDetails = ref([]);
 
 onMounted(async () => {
   const store = pillSearchStore();
-  const temp = await store.getPillInfo(10); // getPillInfo를 비동기로 호출
 
-  console.log(temp);
   waveTitle.value = store.name;
-
-  console.log(waveTitle);
   imagePath.value = store.imageUrl; // 이미지 경로 받아오기
-  console.log(imagePath.value);
   appointmentDetails.value = [
     { title: "제조사", content: store.company },
     { title: "주의사항", content: store.caution },
