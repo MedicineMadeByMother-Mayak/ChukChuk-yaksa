@@ -140,15 +140,17 @@ import dayjs from "dayjs";
 const userdata = ref({});
 const diseasedatas = ref({});
 const takelistdatas = ref({});
-const takelistdatas2 = ref({});
 
 async function fetchData() {
   try {
     userdata.value = (await instance.get("/profile")).data;
     diseasedatas.value = (await instance.get("/record/disease")).data;
-    takelistdatas.value = await instance.get("/take-list", {
-      params: { period: true },
-    });
+    takelistdatas.value = (
+      await instance.get("/take-list", {
+        params: { period: true },
+      })
+    ).data.results;
+    // console.log(takelistdatas.value);
   } catch (error) {
     console.error("API 데이터를 불러오는데 실패했습니다.", error);
   }
