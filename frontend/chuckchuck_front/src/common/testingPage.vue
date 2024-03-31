@@ -20,10 +20,7 @@
     <!-- 3. AlarmModal 사용 예시 -->
     <!-- <AlarmModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/> -->
 
-    <!-- 4. AddListAlertModalForm 사용 예시 -->
-    <!-- <AddListAlertModalForm v-model="msg" :modalData="[
-    ['원하는 텍스트', true, {params:{}, Link:'home'}],
-    ]" />  -->
+  
 <!-- 
     <AlarmModalTimeForm
       v-model="msg"
@@ -44,7 +41,7 @@
     ]" />  -->
 
     <!-- <DeleteCheckModal v-model="msg" :modalData="[['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]]"/> -->
-    <DeleteModal/>
+    <AlertModal/>
 
 
 
@@ -57,8 +54,7 @@ import AddModalForm from "@/common/Form/AddModalForm.vue";
 import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
 //AlarmModal 사용 예시
 import AlarmModal from '@/views/take_list/components/AlarmModal.vue';
-// AddListAlertModalForm 사용 예시  => SelectListModalForm 하고 같은 듯
-import AddListAlertModalForm from '@/common/Form/AddListAlertModalForm.vue'
+
 
 // AlarmModalTime.vue
 import AlarmModalTime from '@/views/take_list/components/AlarmModalTime.vue';
@@ -72,7 +68,7 @@ import SelectPillModal from '@/views/take_list/components/SelectPillModal.vue';
 
 import DeleteCheckModal from '@/views/take_list/components/DeleteCheckModal.vue';
 
-import DeleteModal from '@/views/take_list/components/DeleteModal.vue';
+import AlertModal from '@/common/Form/AlertModal.vue';
 import { ref } from "vue";
 const msg = ref(true);
 </script>

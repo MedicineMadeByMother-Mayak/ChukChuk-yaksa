@@ -36,7 +36,7 @@
 
 <script setup>
 import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
-import AddListAlertModalForm from "@/common/Form/AddListAlertModalForm.vue";
+
 import { ref } from "vue";
 const msg = ref(true);
 </script>
