@@ -9,8 +9,7 @@
       <HeaderFormOnlyString :title="title" :Link="Link" />
       <p></p>
     </div>
-    <container class="inner-header flex" :style="{ height: headerHeight }">
-    </container>
+    <p class="inner-header flex" :style="{ height: headerHeight }"></p>
 
     <!--Waves Container-->
     <div>

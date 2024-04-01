@@ -69,7 +69,7 @@
       </div>
       <div class="diseas-list">
         <div
-          v-for="(diseasedata, index) in diseasedatas.results"
+          v-for="(diseasedata, index) in diseasestore.diseaseInfos"
           :key="`disease-${index}`"
           class="disease-detail"
         >
@@ -96,17 +96,16 @@
           <div class="navy-button">현재 복용중인 약</div>
         </div>
         <div
-          v-for="(diseasedata, index) in diseasedatas.results"
-          :key="`disease-${index}`"
-          class="disease-detail"
+          v-for="(takelist, index) in currentMedications"
+          :key="`current-${index}`"
+          class="current-detail"
         >
-          <span>{{ formatDate(diseasedata.Date) }}</span>
-          <Badge
-            :title="diseasedata.Code"
-            background-color="#d3e0f8"
-            color="black"
-          />
-          <span>{{ diseasedata.Name }}</span>
+          <div
+            v-for="(curpillinfo, index) in takelist.takeListPillInfoList"
+            :key="`cur-pillinfo-${index}`"
+          >
+            {{ curpillinfo.name }}
+          </div>
         </div>
       </div>
       <div class="diseas-list">
@@ -114,17 +113,16 @@
           <div class="gray-button">한달 이내에 복용한 약</div>
         </div>
         <div
-          v-for="(diseasedata, index) in diseasedatas.results"
+          v-for="(takelist, index) in recentMedications"
           :key="`disease-${index}`"
           class="disease-detail"
         >
-          <span>{{ formatDate(diseasedata.Date) }}</span>
-          <Badge
-            :title="diseasedata.Code"
-            background-color="#d3e0f8"
-            color="black"
-          />
-          <span>{{ diseasedata.Name }}</span>
+          <div
+            v-for="(pastpillinfo, index) in takelist.takeListPillInfoList"
+            :key="`past-pillinfo-${index}`"
+          >
+            {{ pastpillinfo.name }}
+          </div>
         </div>
       </div>
     </div>
@@ -133,30 +131,15 @@
 
 <script setup>
 import Badge from "@/common/Badge.vue";
-import { instance } from "@/util/mainAxios";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import dayjs from "dayjs";
 import { userStore } from "@/stores/user";
 import { diseaseStore } from "@/stores/disease";
+import { takelistStore } from "@/stores/takelist";
 
 const userstore = userStore();
 const diseasestore = diseaseStore();
-const diseasedatas = ref({});
-const takelistdatas = ref({});
-
-async function fetchData() {
-  try {
-    diseasedatas.value = (await instance.get("/record/disease")).data;
-    takelistdatas.value = (
-      await instance.get("/take-list", {
-        params: { period: true },
-      })
-    ).data.results;
-    // console.log(takelistdatas.value);
-  } catch (error) {
-    console.error("API 데이터를 불러오는데 실패했습니다.", error);
-  }
-}
+const takeliststore = takelistStore();
 
 function formatDate(date, format = "YYYY.MM.DD") {
   return dayjs(date).format(format);
@@ -168,10 +151,21 @@ function calculateBMI(weight, height) {
   return bmi.toFixed(2); // 소수점 두 자리까지의 문자열 반환
 }
 
+// 현재 복용 중인 약 (isFinished: false)
+const currentMedications = computed(() =>
+  takeliststore.takelistdatas.filter((item) => !item.isFinished)
+);
+
+// 한 달 이내에 복용한 약 (isFinished: true)
+const recentMedications = computed(() =>
+  takeliststore.takelistdatas.filter((item) => item.isFinished)
+);
+
 onMounted(() => {
-  fetchData();
+  // fetchData();
   userstore.getUserInfo();
   diseasestore.getDiseaseInfo();
+  takeliststore.getUserMedicalInfoTakelist();
 });
 </script>
 
