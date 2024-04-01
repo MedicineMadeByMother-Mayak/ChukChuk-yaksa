@@ -40,11 +40,7 @@ public class UserPillEffectService {
      * @param pillId (
      * @return userPillEffectList (사용자 약효 기록 내역)
      */
-    public UserPillEffectResponse registUserPillEffect(Long pillId) {
-        // == 임시 유저 정보 (추후 변경 필요) ==
-        User user = userRepository.findById(1L).get();
-        // =================================
-
+    public UserPillEffectResponse registUserPillEffect(User user, Long pillId) {
         // user의 약효기록 리스트 조회
         List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndPill_pillId(user, pillId);
 
@@ -80,8 +76,7 @@ public class UserPillEffectService {
                                                 "JOIN Tag t ON uptt.tag.tagId = t.tagId " +
                                             "WHERE up.user.userId = :userId " +
                                                 "AND up.pill.pillId = :pillId " +
-                                                "AND up.category.categoryId = :categoryId ";
-
+                                                "AND t.category.categoryId = :categoryId ";
 
             // 현재 약에서 사용하지 않는 태그들
             String jpqlQueryForNotUsedTags = "SELECT up.category.categoryId, t.tagId, t.tagName " +
@@ -90,19 +85,19 @@ public class UserPillEffectService {
                                                     "JOIN Tag t ON uptt.tag.tagId = t.tagId " +
                                                 "WHERE up.user.userId = :userId " +
                                                     "AND up.pill.pillId != :pillId " +
-                                                    "AND up.category.categoryId = :categoryId ";
+                                                    "AND t.category.categoryId = :categoryId ";
 
             // 카테고리별 사용중인 태그들
             List<TagDto> tempUsedTags = entityManager.createQuery(jpqlQueryForUsedTags, TagDto.class)
                     .setParameter("categoryId", categoryId)
-                    .setParameter("userId", 1L)
+                    .setParameter("userId", user.getUserId())
                     .setParameter("pillId", pillId)
                     .getResultList();
 
             // 카테고리별 사용중이지 않은 태그들
             List<TagDto> tempNotUsedTags = entityManager.createQuery(jpqlQueryForNotUsedTags, TagDto.class)
                     .setParameter("categoryId", categoryId)
-                    .setParameter("userId", 1L)
+                    .setParameter("userId", user.getUserId())
                     .setParameter("pillId", pillId)
                     .getResultList();
 

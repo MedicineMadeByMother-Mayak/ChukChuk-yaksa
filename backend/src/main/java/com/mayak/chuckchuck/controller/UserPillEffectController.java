@@ -1,5 +1,6 @@
 package com.mayak.chuckchuck.controller;
 
+import com.mayak.chuckchuck.domain.User;
 import com.mayak.chuckchuck.dto.request.RegistTagRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
 import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
@@ -7,6 +8,7 @@ import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
 import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
+import com.mayak.chuckchuck.security.oauth2.user.UserPrincipal;
 import com.mayak.chuckchuck.service.CommonService;
 import com.mayak.chuckchuck.service.TagService;
 import com.mayak.chuckchuck.service.UserPillEffectService;
@@ -14,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserPillEffectController {
     private final UserPillEffectService userPillEffectService;
     private final TagService tagService;
+    private final CommonService commonService;
 
     /**
      * 약효기록 리스트 조회 및 검색
@@ -55,8 +59,9 @@ public class UserPillEffectController {
      * @return UserPillEffectResponse
      */
     @GetMapping("/pill/{pillId}")
-    public ResponseEntity<UserPillEffectResponse> registUserPillEffect(@PathVariable Long pillId) {
-        UserPillEffectResponse userPillEffectResponse = userPillEffectService.registUserPillEffect(pillId);
+    public ResponseEntity<UserPillEffectResponse> registUserPillEffect(@AuthenticationPrincipal UserPrincipal principal, @PathVariable Long pillId) {
+        User user = commonService.getUserOrException(principal);
+        UserPillEffectResponse userPillEffectResponse = userPillEffectService.registUserPillEffect(user, pillId);
 
         return ResponseEntity.ok(userPillEffectResponse);
     }
