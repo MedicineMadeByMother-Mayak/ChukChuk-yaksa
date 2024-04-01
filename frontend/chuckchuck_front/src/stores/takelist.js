@@ -4,7 +4,7 @@ import { instance } from "@/util/mainAxios";
 
 export const takelistStore = defineStore("takelist", () => {
   const takelistdatas = ref([]);
-
+  const takelistpagedatas = ref([]);
   const getUserMedicalInfoTakelist = async () => {
     try {
       takelistdatas.value = (
@@ -17,8 +17,20 @@ export const takelistStore = defineStore("takelist", () => {
     }
   };
 
+  const getTakeListPageDatas = async () => {
+    try {
+      takelistpagedatas.value = (
+        await instance.get("/take-list", {
+          params: { period: false },
+        })
+      ).data.results;
+    } catch (error) {
+      console.log("복용리스트 GET 가져오지 못했습니다", error);
+    };
+  };
   return {
     takelistdatas,
     getUserMedicalInfoTakelist,
-  };
-});
+    takelistpagedatas,
+    getTakeListPageDatas
+}});
