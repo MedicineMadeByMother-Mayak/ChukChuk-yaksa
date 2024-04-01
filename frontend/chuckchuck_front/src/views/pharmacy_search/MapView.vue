@@ -160,6 +160,7 @@ const placesCallback = async function (result, status) {
         latlng: new kakao.maps.LatLng(result[0].y, result[0].x),
       });
 
+      // console.log([city.value, area.value, today, result[0].place_name]);
       axios
         .get(
           "https://apis.data.go.kr/B552657/ErmctInsttInfoInqireService/getParmacyListInfoInqire",
@@ -183,31 +184,20 @@ const placesCallback = async function (result, status) {
           );
 
           try {
-            if (`dutyTime${today}s` in response.data.response.body.items) {
-              const start =
-                response.data.response.body.items.item[`dutyTime${today}s`];
-              const end =
-                response.data.response.body.items.item[`dutyTime${today}c`];
-              const status =
-                currentTime >= start && currentTime <= end ? true : false;
-
-              resultList.value.push({
-                title: result[0].place_name,
-                address: result[0].address_name,
-                end: end.toString(),
-                status: status,
-              });
-            } else {
-              // 휴무로 인해 영업시간이 없음
-              resultList.value.push({
-                title: result[0].place_name,
-                address: result[0].address_name,
-                end: null,
-                status: false,
-              });
-            }
+            const start =
+              response.data.response.body.items.item[`dutyTime${today}s`];
+            const end =
+              response.data.response.body.items.item[`dutyTime${today}c`];
+            const status =
+              currentTime >= start && currentTime <= end ? true : false;
+            resultList.value.push({
+              title: result[0].place_name,
+              address: result[0].address_name,
+              end: end.toString(),
+              status: status,
+            });
           } catch (error) {
-            // api key 인식 못함, 일단 휴무로 처리
+            // 에러 발생 휴무로 처리
             resultList.value.push({
               title: result[0].place_name,
               address: result[0].address_name,
