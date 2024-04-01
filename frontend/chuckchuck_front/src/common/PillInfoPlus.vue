@@ -1,9 +1,9 @@
 <template>
   <div class="pill-card">
-    <div class="pill-image">
+    <div class="pill-image" @click="clickDetail(pillId)">
       <img src="@/assests/img/tempPill.png" alt="약 이미지" />
     </div>
-    <div class="pill-info">
+    <div class="pill-info" @click="clickDetail(pillId)">
       <div class="pill-type">
         <strong>{{ type }}</strong>
       </div>
@@ -26,15 +26,20 @@
       :icon="['fas', 'circle-plus']"
       size="2xl"
       style="color: #1454b5"
+      @click="$emit('clickModal')"
     />
   </div>
 </template>
 
 <script setup>
+import { pillSearchStore } from "@/stores/pillSearch";
+import { useRouter } from "vue-router";
 import Badge from "@/common/Badge.vue";
 
+const router = useRouter();
+const store = pillSearchStore();
 const props = defineProps({
-  pillId: 1,
+  pillId: Number,
   pillName: {
     type: String,
     default: "프로다나서캡슐",
@@ -61,6 +66,17 @@ const props = defineProps({
     default: false,
   },
 });
+
+async function clickDetail(pillId) {
+  await store.getPillInfo(pillId);
+  router.push({
+    name: "pilldetail",
+  });
+}
+
+async function clickModal() {
+  console.log(1);
+}
 
 const truncateName = (name) => {
   if (name.length > 10) {

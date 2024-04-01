@@ -31,7 +31,6 @@
       <div class="search-result-container">
         <PillInfoPlus
           v-for="pill in pills"
-          @click="click(pill.pillId)"
           :key="pill.pillId"
           :pillId="pill.pillId"
           :pillName="pill.pillName"
@@ -41,12 +40,37 @@
           :warningUseDate="pill.warningUseDate"
           :warningElders="pill.warningElders"
           :warningTogether="pill.warningTogether"
+          @click-modal="clickModal(pill.pillId)"
         />
       </div>
     </div>
     <!-- Nav-bar용 -->
     <div class="save-nav-bar"></div>
   </div>
+
+  <ModalForm
+    v-model="msg"
+    :modalData="[
+      [
+        '복용중인 약 리스트에 추가하기',
+        false,
+        { params: { pillId }, Link: '' },
+      ],
+      [
+        '나의 약효기록에 후기 추가 하기',
+        false,
+        { params: { pillId }, Link: '' },
+      ],
+    ]"
+  />
+
+  <SelectListModalForm
+    v-model="showModal"
+    :modalData="[
+      [1, '달디달디달디달'],
+      [2, '단 밤양갱'],
+    ]"
+  />
 </template>
 
 <script setup>
@@ -55,16 +79,19 @@ import { pillSearchStore } from "@/stores/pillSearch";
 import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
-import { useRouter } from "vue-router";
+import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
+import ModalForm from "@/common/Form/AddModalForm.vue";
 
 const store = pillSearchStore();
-const router = useRouter();
 
 const keyword = ref(store.keyword);
 const page = ref(store.page);
 const count = ref(0);
 const pills = ref([]);
 const isLoading = ref(false);
+const pillId = ref(null);
+const msg = ref(false);
+const showModal = ref(false);
 
 onMounted(() => {
   input();
@@ -74,6 +101,11 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
+
+function clickModal(currentPillId) {
+  pillId.value = currentPillId;
+  msg.value = true;
+}
 
 // 스크롤 이벤트 핸들러
 function handleScroll() {
@@ -95,13 +127,6 @@ async function loadMoreData() {
   count.value = data.count;
   pills.value = [...pills.value, ...data.pills];
   isLoading.value = false;
-}
-
-async function click(pillId) {
-  await store.getPillInfo(pillId);
-  router.push({
-    name: "pilldetail",
-  });
 }
 
 async function input(event) {
