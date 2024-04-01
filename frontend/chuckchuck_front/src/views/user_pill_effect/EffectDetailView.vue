@@ -34,10 +34,18 @@
           </div>
         </div>
       </div>
+      <div class="add-tag" v-if="isVisibleUsed">
+        <input class="add-tag-used-input" type="text" >
+        <button class="add-tag-used-button">추가</button>
+      </div>
       <div class="unused-tag-list" @click="tagClick(false)">
         <div class="badge-custom" v-for="(tag, index) in unUsedTags" :key="index">
           <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
         </div>
+      </div>
+      <div class="add-tag" v-if="isVisibleUnUsed">
+        <input class="add-tag-unused-input" type="text" >
+        <button class="add-tag-unused-button">추가</button>
       </div>
       <img :src="underDirection" style="display: block; margin: 20px auto 12px;">
       <div style="border-bottom: 1px solid black; "></div>
@@ -79,6 +87,8 @@ const usedTags = ref('');
 const unUsedTags = ref('');
 const userPillEffectId = ref();
 const memo = ref('');
+const isVisibleUsed = ref(false);
+const isVisibleUnUsed = ref(false);
 
 onMounted(async () => {
   await userPillEffect.getUserPillEffectInfo(4);  // 약효 기록 리스트에서 클릭할 때 해당 pillId로 실행할거라 삭제될 코드
@@ -142,10 +152,13 @@ const memoUpdate = (event) => {
 const tagClick = (param) => {
   if (param === true) {
     console.log("true!!!!!");
+    isVisibleUsed.value = !isVisibleUsed.value;
+    
   } else {
     console.log('false!!!!!');
+    isVisibleUnUsed.value = !isVisibleUnUsed.value;
   }
-}
+};
 
 </script>
 
@@ -216,6 +229,56 @@ const tagClick = (param) => {
   border-radius: 5px;
   padding: 12px 7px;
   overflow-x: auto; /* 수평 스크롤바 추가 */
+}
+
+/* 태그 추가 div */
+.add-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 0 0;
+}
+
+/* 사용중 태그 추가 input */
+.add-tag-used-input {
+  display: flex;
+  width: 30%;
+  height: 1.2rem;
+  align-items: center;
+  margin: 0 10px 0 0;
+  border-radius: 5px;
+  border: 1px solid lightblue;
+}
+
+/* 사용중 태그 추가 버튼 */
+.add-tag-used-button {
+  height: 1.5rem;
+  background-color: rgb(105, 190, 255);
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 3px 6px;
+}
+
+/* 사용중 태그 추가 input */
+.add-tag-unused-input {
+  display: flex;
+  width: 30%;
+  height: 1.2rem;
+  align-items: center;
+  margin: 0 10px 0 0;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+
+/* 사용중 태그 추가 버튼 */
+.add-tag-unused-button {
+  height: 1.5rem;
+  background-color: lightgray;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 3px 6px;
 }
 
 /* 제목 스타일 */
