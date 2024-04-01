@@ -47,5 +47,6 @@ const props = defineProps({
 
 .badge-text {
   white-space: nowrap; /* 텍스트가 한 줄로 나타나도록 설정 */
+  caret-color: transparent;
 }
 </style>
