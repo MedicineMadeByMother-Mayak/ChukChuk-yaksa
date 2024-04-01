@@ -40,6 +40,11 @@
       ></TableForm>
     </li>
   </div>
+  <AlertModal
+    v-if="showModal"
+    :text="'진단서가 저장 되었습니다.'"
+    :showModal="showModal"
+  />
 </template>
 
 <script setup>
@@ -48,6 +53,9 @@ import { ref, computed } from "vue";
 import TableForm from "@/common/Form/TableForm.vue";
 import dayjs from "dayjs";
 import { ocrListStore } from "@/stores/ocrList";
+import AlertModal from "@/common/Form/AlertModal.vue";
+const showModal = ref(false);
+
 const store = ocrListStore();
 
 function formatDate(date, format = "YYYY/MM/DD") {
@@ -59,7 +67,10 @@ const data = ref(store.diagnosisResult);
 const saveDiagnosis = async () => {
   try {
     await store.saveDiagnosis();
-    //Alert 모달 사용
+    showModal.value = true;
+    setTimeout(() => {
+      showModal.value = false;
+    }, 2500);
   } catch (error) {
     alert("진단서 저장중 오류가 발생하였습니다.");
   }

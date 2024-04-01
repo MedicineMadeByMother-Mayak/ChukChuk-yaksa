@@ -68,6 +68,7 @@ import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
 import SearchBar from "@/common/SearchBar.vue";
 import PharmacyPill from "@/common/PharmacyPill.vue";
 import Observer from "@/views/pharmacy_search/components/Observer.vue";
+import _ from "lodash";
 import { useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted } from "vue";
 import { instance } from "@/util/mainAxios";
@@ -90,7 +91,7 @@ onUnmounted(() => {
 
 // 더 많은 데이터 로딩
 async function loadMoreData() {
-  if (count.value == list.value.length) return;
+  if (count.value <= list.value.length) return;
   // 페이지 번호 증가
   page.value++;
   const { data } = await instance.get("/pill/search", {
@@ -99,10 +100,8 @@ async function loadMoreData() {
       page: page.value,
     },
   });
-  console.log(keyword.value, page.value);
   count.value = data.count;
   list.value = [...list.value, ...data.pills];
-  console.log(list.value, page.value);
 }
 
 // 스크롤 위치를 저장할 반응형 참조
@@ -114,10 +113,10 @@ function handleScroll() {
 }
 
 async function input(event) {
+  if (keyword.value) return debouncedInput(event.target.value);
   list.value = [];
   keyword.value = event.target.value;
   page.value = 1;
-  console.log(keyword.value, page.value);
   const { data } = await instance.get("/pill/search", {
     params: {
       keyword: keyword.value,
@@ -125,10 +124,25 @@ async function input(event) {
     },
   });
   list.value = data.pills;
-  console.log(list.value, data.pills);
   count.value = data.count;
   return data;
 }
+
+// 디바운스 함수 정의
+const debouncedInput = _.debounce(async (value) => {
+  list.value = [];
+  keyword.value = value;
+  page.value = 1;
+  const { data } = await instance.get("/pill/search", {
+    params: {
+      keyword: keyword.value,
+      page: page.value,
+    },
+  });
+  list.value = data.pills;
+  count.value = data.count;
+  return data;
+}, 200);
 
 const click = (pillId) => {
   sessionStorage.setItem("pillId", pillId);

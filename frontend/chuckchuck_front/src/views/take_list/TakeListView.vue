@@ -2,7 +2,7 @@
   <div>
     <!-- 복용관리 -->
     <Wave title="복용 관리" height="30px" />
-    <Carousel :autoplay="false" :wrap-around="true">
+    <Carousel :autoplay="1500" :wrap-around="true">
       <Slide v-for="slide in 3" :key="slide">
         <div class="carousel__item">{{ slide }}</div>
       </Slide>
@@ -12,9 +12,10 @@
         <Pagination />
       </template>
     </Carousel>
+
     <div class="alarms">
       <div
-        v-for="(pillDatas, index) in dumydata.result"
+        v-for="(takeListData, index) in currentTakeList"
         :key="`pill-date-${index}`"
       >
         <button class="rounded-button">
@@ -23,7 +24,7 @@
               class="fa-solid fa-bell"
               style="color: #ffd43b; margin-right: 8px"
             ></i
-            >{{ pillDatas.takeListName }}</span
+            >{{ takeListData.takeListName }}</span
           >
         </button>
       </div>
@@ -38,6 +39,7 @@
         </button>
       </div>
     </div>
+
     <div class="menu">
       <div class="menu-left">
         <img src="@/assests/icon/pill.png" alt="복용리스트" />
@@ -48,31 +50,38 @@
         <button class="navy-button">추가</button>
       </div>
     </div>
+
     <hr style="margin: 3px" />
+
+    <!-- 복용리스트 목록 -->
     <div
-      v-for="(pillDatas, index) in dumydata.result"
+      v-for="(takeListData, index) in currentTakeList"
       :key="`pill-date-${index}`"
       class="pill-entry"
     >
+      <!-- 복용리스트 날짜와 제목 -->
       <div class="pill-date">
-        {{ pillDatas.createDate }} [{{ pillDatas.takeListName }}]
+        {{ takeListData.createDate }} [{{ takeListData.takeListName }}]
         <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
       </div>
+
+      <!-- 리스트 별 약 목록 -->
       <ul class="pills-list">
         <li
-          v-for="(pillData, index) in pillDatas.pills"
+          v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
           :key="`pill-details-${index}`"
           class="pill-info"
         >
+          <!-- 약 카드 -->
           <Content
-            :pillId="pillData.pillId"
-            :pillName="pillData.pillName"
-            :imageUrl="pillData.imageUrl"
-            :type="pillData.type"
-            :warningPregnant="pillData.warningPregnant"
-            :warningUseDate="pillData.warningUseDate"
-            :warningElders="pillData.warningElders"
-            :warningTogether="pillData.warningTogether"
+            :pillId="currentPillData.pillId"
+            :pillName="currentPillData.name"
+            :imageUrl="currentPillData.imageUrl"
+            :type="currentPillData.type"
+            :warningPregnant="currentPillData.warningPregnant"
+            :warningUseDate="currentPillData.warningUseDate"
+            :warningElders="currentPillData.warningElders"
+            :warningTogether="currentPillData.warningTogether"
           />
         </li>
       </ul>
@@ -82,125 +91,28 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
+import dayjs from "dayjs";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
+import { takelistStore } from "@/stores/takelist";
+const store = takelistStore();
 
-const dumydata = ref({
-  count: 5,
-  result: [
-    {
-      createDate: "2024-03-04",
-      takeListName: "위염약",
-      pills: [
-        {
-          pillId: 1,
-          pillName:
-            "중외5%포도당생리식염액(수출명:5%DextroseinnormalsalineInj.)",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: true,
-          warningUseDate: true,
-          warningElders: true,
-          warningTogether: true,
-        },
-        {
-          pillId: 2,
-          pillName: "디고신정(디곡신)",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: true,
-          warningUseDate: false,
-          warningElders: true,
-          warningTogether: false,
-        },
-      ],
-    },
-    {
-      createDate: "2024-03-05",
-      takeListName: "감기약",
-      pills: [
-        {
-          pillId: 3,
-          pillName: "옥시톤주사액5아이유(옥시토신)",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: false,
-          warningUseDate: false,
-          warningElders: true,
-          warningTogether: true,
-        },
-        {
-          pillId: 4,
-          pillName: "아주디곡신주사액",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: false,
-          warningUseDate: true,
-          warningElders: true,
-          warningTogether: false,
-        },
-        {
-          pillId: 5,
-          pillName: "삐콤정",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: true,
-          warningUseDate: true,
-          warningElders: true,
-          warningTogether: false,
-        },
-        {
-          pillId: 2,
-          pillName: "디고신정(디곡신)",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: true,
-          warningUseDate: false,
-          warningElders: true,
-          warningTogether: false,
-        },
-      ],
-    },
-    {
-      createDate: "2024-03-06",
-      takeListName: "해열제",
-      pills: [
-        {
-          pillId: 3,
-          pillName: "옥시톤주사액5아이유(옥시토신)",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: false,
-          warningUseDate: false,
-          warningElders: true,
-          warningTogether: true,
-        },
-        {
-          pillId: 4,
-          pillName: "아주디곡신주사액",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: false,
-          warningUseDate: true,
-          warningElders: true,
-          warningTogether: false,
-        },
-        {
-          pillId: 5,
-          pillName: "삐콤정",
-          imageUrl: "../../assests/img/tempPill.png",
-          type: "진통제 (painkiller)",
-          warningPregnant: true,
-          warningUseDate: true,
-          warningElders: true,
-          warningTogether: false,
-        },
-      ],
-    },
-  ],
+// 현재 복용중인 리스트
+const currentTakeList = computed(() =>
+  store.takelistpagedatas.filter((item) => !item.isFinished)
+);
+
+// 복용 완료한 리스트
+const finishedTakeList = computed(() =>
+  store.takelistpagedatas.filter((item) => item.isFinished)
+);
+
+onMounted(async () => {
+  await store.getTakeListPageDatas();
+  console.log(store.takelistpagedatas);
 });
 </script>
 

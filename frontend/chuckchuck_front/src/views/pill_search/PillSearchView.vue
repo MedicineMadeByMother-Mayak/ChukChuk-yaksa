@@ -2,7 +2,7 @@
   <!-- PillSearchView(약검색) -->
   <div class="basic-background">
     <Wave title="약 검색" height="1px" />
-    <div style="padding: 8%; height: 100%">
+    <div style="padding: 8%; padding-bottom: 0">
       <SearchBar
         class="searchBar"
         @input="input"
@@ -27,25 +27,24 @@
         </div>
         <hr />
       </div>
-
-      <div class="search-result-container">
-        <PillInfoPlus
-          v-for="pill in pills"
-          :key="pill.pillId"
-          :pillId="pill.pillId"
-          :pillName="pill.pillName"
-          :imageUrl="pill.imageUrl"
-          :type="pill.type"
-          :warningPregnant="pill.warningPregnant"
-          :warningUseDate="pill.warningUseDate"
-          :warningElders="pill.warningElders"
-          :warningTogether="pill.warningTogether"
-          @click-modal="clickModal(pill.pillId)"
-        />
-      </div>
     </div>
-    <!-- Nav-bar용 -->
-    <div class="save-nav-bar"></div>
+
+    <div class="search-result-container">
+      <PillInfoPlus
+        v-for="pill in pills"
+        @click="click(pill.pillId)"
+        :key="pill.pillId"
+        :pillId="pill.pillId"
+        :pillName="pill.pillName"
+        :imageUrl="pill.imageUrl"
+        :type="pill.type"
+        :warningPregnant="pill.warningPregnant"
+        :warningUseDate="pill.warningUseDate"
+        :warningElders="pill.warningElders"
+        :warningTogether="pill.warningTogether"
+      />
+      <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
+    </div>
   </div>
 
   <ModalForm
@@ -79,64 +78,74 @@ import { pillSearchStore } from "@/stores/pillSearch";
 import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
-import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
-import ModalForm from "@/common/Form/AddModalForm.vue";
+import Observer from "@/views/pharmacy_search/components/Observer.vue";
+import { useRouter } from "vue-router";
+import _ from "lodash";
 
 const store = pillSearchStore();
 
-const keyword = ref(store.keyword);
-const page = ref(store.page);
-const count = ref(0);
+const keyword = ref("");
+const page = ref(0);
+const count = ref(null);
 const pills = ref([]);
-const isLoading = ref(false);
-const pillId = ref(null);
-const msg = ref(false);
-const showModal = ref(false);
+const isScrolled = ref(false);
 
 onMounted(() => {
-  input();
   window.addEventListener("scroll", handleScroll);
+  if (store.backButton) {
+    loadMoreData();
+  } else {
+    keyword.value = store.keyword;
+    page.value = store.page;
+    count.value = store.count;
+    pills.value = store.pills;
+  }
+  store.backButton = true;
 });
 
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
 
-function clickModal(currentPillId) {
-  pillId.value = currentPillId;
-  msg.value = true;
-}
-
-// 스크롤 이벤트 핸들러
-function handleScroll() {
-  const nearBottom =
-    window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight;
-  if (nearBottom && count.value > pills.value.length) {
-    // 페이지 끝에 근접했을 때 실행할 로직
-    loadMoreData();
-  }
-}
-
-// 더 많은 데이터 로딩
 async function loadMoreData() {
-  if (isLoading.value) return;
-  isLoading.value = true;
-  // 페이지 번호 증가
+  if (count.value && count.value <= pills.value.length) return;
   page.value++;
   const data = await store.input(keyword.value, page.value);
   count.value = data.count;
   pills.value = [...pills.value, ...data.pills];
-  isLoading.value = false;
 }
 
-async function input(event) {
-  if (event !== undefined) {
-    keyword.value = event.target.value;
-  }
+function handleScroll() {
+  isScrolled.value = window.scrollY > 0;
+}
+
+async function click(pillId) {
+  store.backButton = false;
+  store.pills = pills.value;
+  store.count = count.value;
+  store.keyword = keyword.value;
+  store.page = page.value;
+  await store.getPillInfo(pillId);
+  router.push({
+    name: "pilldetail",
+  });
+}
+
+// 디바운스 함수 정의
+const debouncedInput = _.debounce(async (value) => {
+  keyword.value = value;
+  pills.value = [];
   page.value = 1;
   const data = await store.input(keyword.value, page.value);
-  count.value = data.count;
-  pills.value = data.pills;
+  if (data) {
+    count.value = data.count;
+    pills.value = data.pills;
+  }
+}, 200);
+
+// input 이벤트 핸들러
+function input(event) {
+  debouncedInput(event.target.value);
 }
 </script>
 
@@ -174,15 +183,10 @@ async function input(event) {
 }
 
 .search-result-container {
-  height: 100%;
-  margin: 0;
+  margin: 0 27px;
   gap: 17px;
   display: flex;
   flex-direction: column;
-}
-
-.save-nav-bar {
-  content: "";
-  height: 85px;
+  padding-bottom: 28%;
 }
 </style>
