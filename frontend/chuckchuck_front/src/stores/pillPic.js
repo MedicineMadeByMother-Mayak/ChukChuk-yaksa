@@ -32,7 +32,6 @@ export const pillPicStore = defineStore("pillPic", () => {
         }
       });
       results.value = response.data
-      console.log(results.value);
     } catch (error) {
       console.error('Error posting data:', error);
       throw error;
