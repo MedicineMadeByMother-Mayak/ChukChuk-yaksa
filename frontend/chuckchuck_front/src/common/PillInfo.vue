@@ -53,6 +53,8 @@ const props = defineProps({
 }
 
 .pill-image img {
+  max-width: 80px;
+  max-height: 50px;
   min-width: 80px;
   min-height: 50px;
   margin: 5px;

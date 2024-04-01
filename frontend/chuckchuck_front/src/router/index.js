@@ -3,10 +3,9 @@ import HomeView from "@/views/home/HomeView.vue";
 import LoginSuccessView from "@/views/login/LoginSuccessView.vue";
 
 import OcrListView from "@/views/ocr_list/OcrListView.vue";
-import DiagnosisFilmingView from "@/views/ocr_list/DiagnosisFilmingView.vue";
 import DiagnosisResultView from "@/views/ocr_list/DiagnosisResultView.vue";
-import PillBagFilmingView from "@/views/ocr_list/PillBagFilmingView.vue";
 import PillBagResultView from "@/views/ocr_list/PillBagResultView.vue";
+import OcrSelectView from "@/views/ocr_list/OcrSelectView.vue";
 
 import testView from "@/common/testView.vue";
 import PillBagHistoryView from "@/views/user_medical_info/PillBagHistoryView.vue";
@@ -31,7 +30,7 @@ import UserPillEffectView from "@/views/user_pill_effect/UserPillEffectView.vue"
 import EffectDetailView from "@/views/user_pill_effect/EffectDetailView.vue";
 import LoadingView from "@/views/home/LoadingView.vue";
 import RegistInfoView from "@/views/home/RegistInfoView.vue";
-
+import FilmingView from "@/views/ocr_list/FilmingView.vue";
 
 const routes = [
   {
@@ -51,27 +50,30 @@ const routes = [
     path: "/ocrlist",
     name: "ocrlist",
     component: OcrListView,
+    children: [
+      {
+        //로딩화면
+        path: "/filming",
+        name: "filming",
+        component: FilmingView,
+      },
+      {
+        //버튼 선택화면
+        path: "/ocrSelect",
+        name: "ocrSelect",
+        component: OcrSelectView,
+      },
+    ],
   },
+
   {
-    //약봉투 촬영
-    path: "/ocrlist/diagnosisfilming",
-    name: "diagnosisfilming",
-    component: DiagnosisFilmingView,
-  },
-  {
-    //약봉투 촬영 결과
+    //진단서 촬영 결과
     path: "/ocrlist/diagnosisresult",
     name: "diagnosisresult",
     component: DiagnosisResultView,
   },
   {
-    //진단서 촬영
-    path: "/ocrlist/pillbagfilming",
-    name: "pillbagfilming",
-    component: PillBagFilmingView,
-  },
-  {
-    //진단서 촬영 결과
+    //약봉투 촬영 결과
     path: "/ocrlist/pillbagresult",
     name: "pillbagresult",
     component: PillBagResultView,
@@ -176,7 +178,7 @@ const routes = [
     path: "/registinfo",
     name: "registinfo",
     component: RegistInfoView,
-  }
+  },
 ];
 const router = createRouter({
   history: createWebHistory(),
