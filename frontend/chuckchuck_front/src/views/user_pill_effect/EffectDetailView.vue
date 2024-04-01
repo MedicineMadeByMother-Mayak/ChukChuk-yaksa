@@ -6,29 +6,27 @@
       <div class="center-aligned">
         <div class="in-header-pill-name">
           <div>
-            <strong>{{ userPillEffectList[0].name }}</strong>
-            <div>{{ userPillEffectList[0].company }}</div>
+            <strong>{{ pillName }}</strong>
+            <div>{{ company }}</div>
           </div>
         </div>
       </div>
     </HeaderForm>
-    <!-- 수정 start -->
     <div class="icon-container">
       <div class="icon-container">
-        <img id="effectFace" :src="EffectFace" alt="Effect Face Icon" @click="toggleOpacity('effectFace')" />
-        <img id="stopFace" :src="StopFace" alt="StopFace Face Icon" @click="toggleOpacity('stopFace')" />
-        <img id="sideEffectFace" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="toggleOpacity('sideEffectFace')" />
+        <img id="effectFace" data-value="3" :src="EffectFace" alt="Effect Face Icon" @click="clickFace('effectFace')" />
+        <img id="stopFace" data-value="2" :src="StopFace" alt="StopFace Face Icon" @click="clickFace('stopFace')" />
+        <img id="sideEffectFace" data-value="1" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="clickFace('sideEffectFace')" />
       </div>
     </div>
-    <!-- 수정 end -->
     <div class="appointment-section">
       <strong class="title-style">TAG</strong>
       <div class="used-tag-list">
         <div class="badge-list">
-          <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].usedTags" :key="index">
+          <div class="badge-custom" v-for="(tag, index) in usedTags" :key="index">
             <Badge
               :title="tag.tagName"
-              :backgroundColor="getBackgroundColor(tag.categoryId)"
+              backgroundColor="#7fc2ff"
               color="white"
               fontSize="12"
               padding="4px 15px 4px 15px"
@@ -37,7 +35,7 @@
         </div>
       </div>
       <div class="unused-tag-list">
-        <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].unUsedTags" :key="index">
+        <div class="badge-custom" v-for="(tag, index) in unUsedTags" :key="index">
           <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
         </div>
       </div>
@@ -64,95 +62,62 @@ import EffectFace from "@/assests/icon/effectFace.svg";
 import StopFace from "@/assests/icon/stopFace.svg";
 import SideEffectFace from "@/assests/icon/sideEffectFace.svg";
 import underDirection from "@/assests/icon/underDirection.svg";
+import { ref, onMounted } from "vue";
+import { userPillEffectStore } from '@/stores/userPillEffect';
+import { pillSearchStore } from '@/stores/pillSearch';
+
+const userPillEffect = userPillEffectStore();
+const pillSearch = pillSearchStore();
+
+const userPillEffectDtoList = ref('');
+const sideEffectList = ref([]);
+const stopList = ref([]);
+const effectList = ref([]);
+
+const pillName = ref('');
+const company = ref('');
+
+const usedTags = ref('');
+const unUsedTags = ref('');
+const memo = ref('');
+
+onMounted(async () => {
+  await userPillEffect.getUserPillEffectInfo(4);  // 약효 기록 리스트에서 클릭할 때 해당 pillId로 실행할거라 삭제될 코드
+  await pillSearch.getPillInfo(4);  // 이것도 마찬가지
+
+  pillName.value = pillSearch.name;
+  company.value = pillSearch.company;
+
+  sideEffectList.value = userPillEffect.sideEffect;
+  stopList.value = userPillEffect.stop;
+  effectList.value = userPillEffect.effect;
+  userPillEffectDtoList.value = userPillEffect.userPillEffectDtoList;
+
+  clickFace('effectFace');  // 시작하면 '효과' 클릭하도록 디폴트 세팅
+})
+
 
 // 이미지 투명도를 토글하는 함수
-const toggleOpacity = (imageId) => {
+const clickFace = (imageId) => {
   const images = ["effectFace", "stopFace", "sideEffectFace"];
+
   images.forEach((img) => {
     const currentImage = document.getElementById(img);
-
-    if (img !== imageId) {
+    
+    if (img == imageId) {
       if (currentImage) { // 이미지 요소가 존재하는지 확인
-        currentImage.style.opacity = "0.5";
+        const currentCategoryId = currentImage.dataset.value - 1;
+        const userPillEffect = userPillEffectDtoList.value[currentCategoryId];
+        
+        currentImage.style.opacity = "1.0";
+        usedTags.value = userPillEffect.usedTags;
+        unUsedTags.value = userPillEffect.unUsedTags;
+        memo.value = userPillEffect.memo;
+        console.log('============');
       }
-    } else {
-      currentImage.style.opacity = "1.0";
-
-    }
+    } else { currentImage.style.opacity = "0.5"; }
   });
 };
-const userPillEffectList = [
-  {
-    pillId: 1,
-    name: "프라닥사캡슐",
-    company: "메딕스제약",
-    imageUrl: "../../assests/img/tempPill.png",
-    categories: [
-      {
-        userPillEffectId: 32,
-        categoryId: 1,
-        categoryName: "부작용",
-        usedTags: [
-          // 사용 중인 태그
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "졸림",
-          },
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "피곤",
-          },
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "물려",
-          },
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "체력약화",
-          },
-        ],
-        unUsedTags: [
-          // 사용하지 않은 태그
-          {
-            categoryId: 1,
-            tagId: 10,
-            tagName: "안씀1",
-          },
-          {
-            categoryId: 1,
-            tagId: 11,
-            tagName: "안씀2",
-          },
-          {
-            categoryId: 1,
-            tagId: 12,
-            tagName: "안씀3",
-          },
-          {
-            categoryId: 1,
-            tagId: 13,
-            tagName: "안씀4",
-          },
-          {
-            categoryId: 1,
-            tagId: 14,
-            tagName: "안씀5",
-          },
-          {
-            categoryId: 1,
-            tagId: 15,
-            tagName: "안씀6",
-          },
-        ],
-        memo: "부작용 메모",
-      },
-    ],
-  },
-];
 
 // categoryId에 따라 다른 backgroundColor를 반환하는 함수
 const getBackgroundColor = (categoryId) => {
@@ -162,11 +127,12 @@ const getBackgroundColor = (categoryId) => {
     case 2:
       return "#ffbb7f"; // categoryId가 2인 경우
     case 3:
-      return "#7fc2ff"; // categoryId가 3인 경우
+      return "#ffbb7f"; // categoryId가 3인 경우
     default:
       return "#ffffff"; // 기본값은 흰색
   }
 };
+
 </script>
 
 <style scoped>

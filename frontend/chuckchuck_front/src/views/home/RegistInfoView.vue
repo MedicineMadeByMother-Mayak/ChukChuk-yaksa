@@ -69,7 +69,6 @@ import { ref, onMounted } from "vue";
 import { userStore } from '@/stores/user';
 
 const store = userStore();
-
 const userName = ref('');
 const bloodType = ref('');
 const birth = ref('');
