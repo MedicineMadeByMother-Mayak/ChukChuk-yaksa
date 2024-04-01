@@ -38,8 +38,6 @@ export const pillSearchStore = defineStore("pillSearch", () => {
       warningUseDate.value = pillInfo.pillDetailDto.warning_use_date;
       warningElders.value = pillInfo.pillDetailDto.warning_elders;
       warningTogether.value = pillInfo.pillDetailDto.warning_together;
-
-      console.log(pillInfo);
     } catch (error) {
       console.log(error);
     }

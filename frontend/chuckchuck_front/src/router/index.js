@@ -174,7 +174,12 @@ const router = createRouter({
 // 전역 네비게이션 가드 설정
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
-  if (!token && to.name !== "login" && to.name !== "loginSuccess") {
+  if (
+    !token &&
+    to.name !== "login" &&
+    to.name !== "loginSuccess" &&
+    to.name !== "loading"
+  ) {
     next({ name: "login" });
   } else {
     next();
