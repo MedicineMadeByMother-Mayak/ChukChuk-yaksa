@@ -1,33 +1,16 @@
-<!-- 
-[사용법]
-
-템플릿 추가 예시
+<!-- 사용법 RouterLink편
 <template>
-    <SelectListModalForm
-      v-model="msg"
-      :modalData="[
-        [1, '달디달디달디달'],
-        [2, '단 밤양갱'],
-        [3, '단 밤양갱'],
-        [4, '밤양갱밤양갱밤갱'],
-        [5, '밤양갱이얌'],
-      ]"
-    />
+    <ModalForm v-model="msg" :modalData="[
+    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
+    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
+    ]" /> 
 </template> 
 
-[1, '달디달디달디달']는 순서대로 ['리스트 index', '리스트 이름']이다
-
-
-스크립트에 아래 세줄 추가 필
 <script setup>
-import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
-import { ref } from "vue";
-const msg = ref(true);
+    import { ref } from "vue";
+    const msg = ref(true); //모달창 관리하는 변수 ref로 반드시 설정해주세요
 </script>
 -->
-
-<!-- 사용법 axios편
-추후 추가 예정 -->
 
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">

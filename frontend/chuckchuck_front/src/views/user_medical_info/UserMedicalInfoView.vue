@@ -11,7 +11,7 @@
     <div style="height: 42px"></div>
 
     <div class="profile-container">
-      <h3>{{ userstore.userName }}</h3>
+      <h3>{{ userstore.userName }}({{ sex }})</h3>
       <hr style="margin: 8px 18px" />
     </div>
 
@@ -26,7 +26,9 @@
           <hr />
           <div class="info-item">
             <p class="info-title">혈액형</p>
-            <p class="info-content">{{ userstore.bloodType }}</p>
+            <p class="info-content">
+              {{ userstore.bloodType }} <span style="font-size: 8px">RH+</span>
+            </p>
           </div>
           <hr />
           <div class="info-item">
@@ -79,7 +81,7 @@
             background-color="#d3e0f8"
             color="black"
           />
-          <span>{{ diseasedata.Name }}</span>
+          <span class="txt_line">{{ diseasedata.Name }}</span>
         </div>
       </div>
     </div>
@@ -140,6 +142,16 @@ import { takelistStore } from "@/stores/takelist";
 const userstore = userStore();
 const diseasestore = diseaseStore();
 const takeliststore = takelistStore();
+let sex = ref("");
+
+function kotextsex(en_sex) {
+  console.log(en_sex);
+  if (en_sex === "MALE") {
+    sex.value = "남";
+  } else {
+    sex.value = "여";
+  }
+}
 
 function formatDate(date, format = "YYYY.MM.DD") {
   return dayjs(date).format(format);
@@ -161,11 +173,13 @@ const recentMedications = computed(() =>
   takeliststore.takelistdatas.filter((item) => item.isFinished)
 );
 
-onMounted(() => {
+onMounted(async () => {
   // fetchData();
-  userstore.getUserInfo();
+  await userstore.getUserInfo();
   diseasestore.getDiseaseInfo();
   takeliststore.getUserMedicalInfoTakelist();
+
+  kotextsex(userstore.sex);
 });
 </script>
 
@@ -237,7 +251,7 @@ div p {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 5px 3px;
   box-sizing: border-box;
 }
 
@@ -258,13 +272,19 @@ div p {
 
 .info-title {
   font-weight: bold;
-  font-size: 8px;
+  font-size: 10px;
   color: #666;
+  width: 50%;
+  text-align: center;
+  margin: 4px;
 }
 
 .info-content {
-  font-size: 8px;
+  font-size: 10px;
   color: #333;
+  width: 50%;
+  text-align: center;
+  margin: 4px;
 }
 
 .buttons-container {
@@ -290,10 +310,12 @@ div p {
 
 .gradient-blue {
   background: linear-gradient(145deg, #a0b7ef, #d5f2e8);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .gradient-purple {
   background: linear-gradient(145deg, #a0b7ef, #e3b8fb);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 @media (max-width: 768px) {
@@ -315,6 +337,14 @@ div p {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
+.txt_line {
+  width: 80px;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .disease-detail {
   display: flex;
   justify-content: space-between;
@@ -323,11 +353,11 @@ div p {
 }
 
 .navy-button {
-  background-color: #242291;
+  background-color: #30579f;
   color: #ffffff;
   font-weight: bold;
-  border-radius: 5px;
-  padding: 5px 15px;
+  border-radius: 2px;
+  padding: 2px 20px;
   margin-top: 10px;
   font-size: 12px;
   border: none;
@@ -338,11 +368,19 @@ div p {
   background-color: #cccccc;
   color: #ffffff;
   font-weight: bold;
-  border-radius: 5px;
-  padding: 5px 15px;
+  border-radius: 2px;
+  padding: 2px 15px;
   margin-top: 10px;
   font-size: 12px;
   border: none;
   cursor: pointer;
+}
+
+.current-detail {
+  margin: 8px 0px;
+}
+
+.disease-detail {
+  margin: 8px 0px;
 }
 </style>
