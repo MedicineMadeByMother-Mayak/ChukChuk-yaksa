@@ -11,7 +11,12 @@
         <strong>{{ truncateName(pillName) }}</strong>
       </div>
 
-      <span v-if="categoryflag" class="badge-custom" v-for="(badge, index) in badges" :key="index">
+      <span
+        v-if="categoryflag"
+        class="badge-custom"
+        v-for="(badge, index) in badges"
+        :key="index"
+      >
         <Badge
           :title="badge.title"
           :backgroundColor="badge.backgroundColor"
@@ -22,20 +27,25 @@
           v-if="badge.condition"
         />
       </span>
-      <span v-else class="badge-custom" v-for="(badge, elseindex) in props.tags" :key="elseindex">
+      <span
+        v-else
+        class="badge-custom"
+        v-for="(badge, elseindex) in props.tags"
+        :key="elseindex"
+      >
         <Badge
           :title="badge.tagName"
           backgroundColor="#898989"
           color="white"
           fontSize="8px"
           padding="1px 4px 1px 4px"
-          style="margin: 0px 1px;"
+          style="margin: 0px 1px"
         />
       </span>
     </div>
     <div class="ellipsis-icon">
-    <font-awesome-icon :icon="['fas', 'ellipsis-vertical']" />
-  </div>
+      <font-awesome-icon :icon="['fas', 'ellipsis-vertical']" />
+    </div>
   </div>
 </template>
 
@@ -47,7 +57,7 @@ const categoryflag = defineModel();
 const props = defineProps({
   pillId: {
     type: Number,
-    default: 1
+    default: 1,
   },
   pillName: {
     type: String,
@@ -62,32 +72,33 @@ const props = defineProps({
     type: String,
     default: "항히스타민제",
   },
-  categories : {
-    type : Array,
+  categories: {
+    type: Array,
     default: [
       {
-        categoryId : 0,
-        categoryName : "전체"
+        categoryId: 0,
+        categoryName: "전체",
       },
       {
-        categoryId : 1, //대분류 id
-        categoryName : "부작용"   //대분류 이름
+        categoryId: 1, //대분류 id
+        categoryName: "부작용", //대분류 이름
       },
       {
-        categoryId : 2,
-        categoryName : "중단"
-      }
-    ]
+        categoryId: 2,
+        categoryName: "중단",
+      },
+    ],
   },
-  tags : {
-   type : Array, 
-   default : [         //태그 리스트(String List)
-				{
-					tagId : 0, //태그 id값
-					tagName : "알러지 진정" //태그 이름
-				}
-			]
-  }
+  tags: {
+    type: Array,
+    default: [
+      //태그 리스트(String List)
+      {
+        tagId: 0, //태그 id값
+        tagName: "알러지 진정", //태그 이름
+      },
+    ],
+  },
 });
 
 const truncateName = (name) => {
@@ -112,7 +123,7 @@ props.categories.forEach((category, index) => {
   } else if (category.categoryName === "효과") {
     effectbadge = true;
   }
-})
+});
 
 badges.value = [
   {
@@ -140,6 +151,7 @@ badges.value = [
 }
 
 .pill-card {
+  caret-color: transparent;
   font-size: 12px;
   position: relative;
   display: flex;
