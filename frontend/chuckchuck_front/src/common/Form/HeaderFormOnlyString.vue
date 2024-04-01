@@ -51,6 +51,7 @@ const props = defineProps({
 }
 
 .heads > h1 {
-  font-size: small;
+  font-size: medium;
+  color: #2d2d2d !important;
 }
 </style>

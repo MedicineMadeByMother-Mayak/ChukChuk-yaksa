@@ -1,11 +1,13 @@
 <template>
   <!-- 약국검색창 -->
   <div class="basic-background-color">
-    <HeaderFormOnlyString :title="'약국검색'" />
+    <div class="header-container">
+      <HeaderFormOnlyString :title="'약국검색'" />
+      <transition name="slide">
+        <div class="header-back" :class="{ 'header-back-up': keyword }"></div>
+      </transition>
+    </div>
 
-    <transition name="slide">
-      <div class="header-back" :class="{ 'header-back-up': keyword }"></div>
-    </transition>
     <div v-if="!keyword" class="header-string">
       <img class="logo" :src="logo" alt="" />
       <div>
@@ -81,13 +83,13 @@ async function input(event) {
       page: 1,
     },
   });
-
   list.value = data.pills;
+  count.value = data.count;
   return data.pills;
 }
 
 const click = (pillId) => {
-  localStorage.setItem("pillId", pillId);
+  sessionStorage.setItem("pillId", pillId);
   router.push({
     name: "map",
   });
@@ -95,6 +97,12 @@ const click = (pillId) => {
 </script>
 
 <style scoped>
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
 .basic-background-color {
   background-color: #f9f9f9;
   height: 100%;
@@ -134,6 +142,7 @@ const click = (pillId) => {
   color: white;
   position: relative;
   top: 8%;
+  z-index: 9999;
 }
 
 .header-string > div > p {
