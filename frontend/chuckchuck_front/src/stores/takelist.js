@@ -32,10 +32,66 @@ export const takelistStore = defineStore("takelist", () => {
     }
   };
 
+  // 복용리스트 약 추가
+  async function addPill(takeListId, pills) {
+    try {
+      const { data } = await instance.post(`/take-list/${takeListId}`, {
+        pills,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // 복용리스트 이름 수정
+  async function rename(takeListId, newTitle) {
+    try {
+      const { data } = await instance.put(`/take-list/${takeListId}`, {
+        pilupdateTakeName: newTitle,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // 복용리스트 약 삭제
+  async function deletePill(takeListId, pillId) {
+    try {
+      const { data } = await instance.delete(
+        `/take-list/${takeListId}/${pillId}`
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // 복용리스트 완료
+  async function finishTakeList(takeListId) {
+    try {
+      const { data } = await instance.put(`/take-list/${takeListId}/finish`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // 복용리스트 삭제
+  async function deleteTakeList(takeListId) {
+    try {
+      const { data } = await instance.delete(`/take-list/${takeListId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return {
     takelistdatas,
     getUserMedicalInfoTakelist,
     takelistpagedatas,
     getTakeListPageDatas,
+    addPill,
+    rename,
+    deletePill,
+    finishTakeList,
+    deleteTakeList,
   };
 });

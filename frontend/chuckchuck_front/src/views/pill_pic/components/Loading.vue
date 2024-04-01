@@ -7,6 +7,7 @@
 <script setup>
 import { ref, watchEffect, onUnmounted, onMounted } from "vue";
 import { pillPicStore } from "@/stores/pillPic";
+import { instance } from "@/util/mainAxios";
 const store = pillPicStore();
 const dots = ref(0);
 const analyzingText = ref("분석중" + ".".repeat(dots.value));
@@ -23,13 +24,10 @@ onUnmounted(() => {
   clearInterval(intervalId);
 });
 
-// onMounted(() => {
-//   //로딩창 진입 5초후 분석화면 실행
-//   setTimeout(() => {
-//     console.log("5초 후 3단계로 이동");
-//     store.endLoading(3);
-//   }, 5000); // 5000밀리초 = 5초
-// });
+onMounted(async() => {
+  await store.photoSearch()
+  store.endLoading(3)
+});
 </script>
 <style scoped>
 img {
