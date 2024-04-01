@@ -191,6 +191,7 @@ const getBackgroundColor = (categoryId) => {
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   padding: 7px 7px;
+  overflow-x: auto; /* 수평 스크롤바 추가 */
 }
 
 /* 사용중이지 않은 태그 리스트 */
@@ -200,6 +201,7 @@ const getBackgroundColor = (categoryId) => {
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 12px 7px;
+  overflow-x: auto; /* 수평 스크롤바 추가 */
 }
 
 /* 제목 스타일 */
