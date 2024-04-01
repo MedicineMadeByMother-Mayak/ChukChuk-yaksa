@@ -3,7 +3,7 @@
     <div class="header">
       <h3>설정</h3>
     </div>
-    <div class="settings-option">
+    <div class="settings-option" @click="modalhandler">
       <span>개인정보 수정</span>
     </div>
     <div class="settings-option">
@@ -17,20 +17,27 @@
     </div>
     <div class="settings-option">로그아웃</div>
   </div>
+  <UserUpdateModal v-if="modalflag" v-model="modalflag"></UserUpdateModal>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import UserUpdateModal from "./components/UserUpdateModal.vue";
 
 const router = useRouter();
 const pushNotificationsEnabled = ref(false);
+const modalflag = ref(false);
 
 const navigateTo = (path) => {
   router.push({ name: path });
 };
 
 const logout = () => {};
+
+const modalhandler = () => {
+  modalflag.value = true;
+};
 </script>
 
 <style scoped>
@@ -51,6 +58,7 @@ const logout = () => {};
 
 .settings-option,
 .settings-toggle {
+  caret-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
