@@ -78,13 +78,17 @@ public class UserPillEffectService {
                                                 "AND up.pill.pillId = :pillId " +
                                                 "AND t.category.categoryId = :categoryId ";
 
-            // 현재 약에서 사용하지 않는 태그들
-            String jpqlQueryForNotUsedTags = "SELECT up.category.categoryId, t.tagId, t.tagName " +
-                                                "FROM UserPillEffect up " +
-                                                    "JOIN UserPillEffectToTag uptt ON up.userPillEffectId = uptt.userPillEffect.userPillEffectId " +
-                                                    "JOIN Tag t ON uptt.tag.tagId = t.tagId " +
-                                                "WHERE up.user.userId = :userId " +
-                                                    "AND up.pill.pillId != :pillId " +
+            // 현재 약에서 사용하지 않는, 내가 작성했던 태그들
+            String jpqlQueryForNotUsedTags = "SELECT t.category.categoryId, t.tagId, t.tagName " +
+                                                "FROM Tag t" +
+                                                " WHERE t.tagId NOT IN  (SELECT t.tagId " +
+                                                                            "FROM UserPillEffect up " +
+                                                                                "JOIN UserPillEffectToTag uptt ON up.userPillEffectId = uptt.userPillEffect.userPillEffectId " +
+                                                                                "JOIN Tag t ON uptt.tag.tagId = t.tagId " +
+                                                                            "WHERE up.user.userId = :userId " +
+                                                                                "AND up.pill.pillId = :pillId " +
+                                                                                "AND t.category.categoryId = :categoryId) " +
+                                                    "AND t.user.userId = :userId " +
                                                     "AND t.category.categoryId = :categoryId ";
 
             // 카테고리별 사용중인 태그들
