@@ -6,29 +6,27 @@
       <div class="center-aligned">
         <div class="in-header-pill-name">
           <div>
-            <strong>{{ userPillEffectList[0].name }}</strong>
-            <div>{{ userPillEffectList[0].company }}</div>
+            <strong>{{ pillName }}</strong>
+            <div>{{ company }}</div>
           </div>
         </div>
       </div>
     </HeaderForm>
-    <!-- 수정 start -->
     <div class="icon-container">
       <div class="icon-container">
-        <img id="effectFace" :src="EffectFace" alt="Effect Face Icon" @click="toggleOpacity('effectFace')" />
-        <img id="stopFace" :src="StopFace" alt="StopFace Face Icon" @click="toggleOpacity('stopFace')" />
-        <img id="sideEffectFace" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="toggleOpacity('sideEffectFace')" />
+        <img id="effectFace" data-value="3" :src="EffectFace" alt="Effect Face Icon" @click="clickFace('effectFace')" />
+        <img id="stopFace" data-value="2" :src="StopFace" alt="StopFace Face Icon" @click="clickFace('stopFace')" />
+        <img id="sideEffectFace" data-value="1" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="clickFace('sideEffectFace')" />
       </div>
     </div>
-    <!-- 수정 end -->
     <div class="appointment-section">
       <strong class="title-style">TAG</strong>
-      <div class="used-tag-list">
+      <div class="used-tag-list" @click="tagClick(true)">
         <div class="badge-list">
-          <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].usedTags" :key="index">
+          <div class="badge-custom" v-for="(tag, index) in usedTags" :key="index">
             <Badge
               :title="tag.tagName"
-              :backgroundColor="getBackgroundColor(tag.categoryId)"
+              backgroundColor="#7fc2ff"
               color="white"
               fontSize="12"
               padding="4px 15px 4px 15px"
@@ -36,17 +34,25 @@
           </div>
         </div>
       </div>
-      <div class="unused-tag-list">
-        <div class="badge-custom" v-for="(tag, index) in userPillEffectList[0].categories[0].unUsedTags" :key="index">
+      <div class="add-tag" v-if="isVisibleUsed">
+        <input class="add-tag-used-input" type="text" >
+        <button class="add-tag-used-button">추가</button>
+      </div>
+      <div class="unused-tag-list" @click="tagClick(false)">
+        <div class="badge-custom" v-for="(tag, index) in unUsedTags" :key="index">
           <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
         </div>
+      </div>
+      <div class="add-tag" v-if="isVisibleUnUsed">
+        <input class="add-tag-unused-input" type="text" >
+        <button class="add-tag-unused-button">추가</button>
       </div>
       <img :src="underDirection" style="display: block; margin: 20px auto 12px;">
       <div style="border-bottom: 1px solid black; "></div>
       <strong class="title-style">MEMO</strong>
 
       <div class="memo">
-        <textarea class="memo-input" type="text" v-model="memo" placeholder="메모를 입력하세요" maxlength="100" />
+        <textarea class="memo-input" type="text" v-model="memo" @change="memoUpdate" placeholder="메모를 입력하세요" maxlength="100" />
       </div>
     </div>
   </div>
@@ -64,95 +70,63 @@ import EffectFace from "@/assests/icon/effectFace.svg";
 import StopFace from "@/assests/icon/stopFace.svg";
 import SideEffectFace from "@/assests/icon/sideEffectFace.svg";
 import underDirection from "@/assests/icon/underDirection.svg";
+import { ref, onMounted } from "vue";
+import { userPillEffectStore } from '@/stores/userPillEffect';
+import { pillSearchStore } from '@/stores/pillSearch';
+
+const userPillEffect = userPillEffectStore();
+const pillSearch = pillSearchStore();
+
+const userPillEffectDtoList = ref('');
+const sideEffectList = ref([]);
+const stopList = ref([]);
+const effectList = ref([]);
+const pillName = ref('');
+const company = ref('');
+const usedTags = ref('');
+const unUsedTags = ref('');
+const userPillEffectId = ref();
+const memo = ref('');
+const isVisibleUsed = ref(false);
+const isVisibleUnUsed = ref(false);
+
+onMounted(async () => {
+  await userPillEffect.getUserPillEffectInfo(4);  // 약효 기록 리스트에서 클릭할 때 해당 pillId로 실행할거라 삭제될 코드
+  await pillSearch.getPillInfo(4);  // 이것도 마찬가지
+
+  pillName.value = pillSearch.name;
+  company.value = pillSearch.company;
+
+  sideEffectList.value = userPillEffect.sideEffect;
+  stopList.value = userPillEffect.stop;
+  effectList.value = userPillEffect.effect;
+  userPillEffectDtoList.value = userPillEffect.userPillEffectDtoList;
+
+  clickFace('effectFace');  // 시작하면 '효과' 클릭하도록 디폴트 세팅
+})
+
 
 // 이미지 투명도를 토글하는 함수
-const toggleOpacity = (imageId) => {
+const clickFace = (imageId) => {
   const images = ["effectFace", "stopFace", "sideEffectFace"];
+
   images.forEach((img) => {
     const currentImage = document.getElementById(img);
-
-    if (img !== imageId) {
+    
+    if (img == imageId) {
       if (currentImage) { // 이미지 요소가 존재하는지 확인
-        currentImage.style.opacity = "0.5";
+        const currentCategoryId = currentImage.dataset.value - 1;
+        const userPillEffect = userPillEffectDtoList.value[currentCategoryId];
+        
+        userPillEffectId.value = userPillEffect.userPillEffectId;
+        currentImage.style.opacity = "1.0";
+        usedTags.value = userPillEffect.usedTags;
+        unUsedTags.value = userPillEffect.unUsedTags;
+        memo.value = userPillEffect.memo;
       }
-    } else {
-      currentImage.style.opacity = "1.0";
-
-    }
+    } else { currentImage.style.opacity = "0.5"; }
   });
 };
-const userPillEffectList = [
-  {
-    pillId: 1,
-    name: "프라닥사캡슐",
-    company: "메딕스제약",
-    imageUrl: "../../assests/img/tempPill.png",
-    categories: [
-      {
-        userPillEffectId: 32,
-        categoryId: 1,
-        categoryName: "부작용",
-        usedTags: [
-          // 사용 중인 태그
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "졸림",
-          },
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "피곤",
-          },
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "물려",
-          },
-          {
-            categoryId: 1,
-            tagId: 1,
-            tagName: "체력약화",
-          },
-        ],
-        unUsedTags: [
-          // 사용하지 않은 태그
-          {
-            categoryId: 1,
-            tagId: 10,
-            tagName: "안씀1",
-          },
-          {
-            categoryId: 1,
-            tagId: 11,
-            tagName: "안씀2",
-          },
-          {
-            categoryId: 1,
-            tagId: 12,
-            tagName: "안씀3",
-          },
-          {
-            categoryId: 1,
-            tagId: 13,
-            tagName: "안씀4",
-          },
-          {
-            categoryId: 1,
-            tagId: 14,
-            tagName: "안씀5",
-          },
-          {
-            categoryId: 1,
-            tagId: 15,
-            tagName: "안씀6",
-          },
-        ],
-        memo: "부작용 메모",
-      },
-    ],
-  },
-];
 
 // categoryId에 따라 다른 backgroundColor를 반환하는 함수
 const getBackgroundColor = (categoryId) => {
@@ -162,11 +136,30 @@ const getBackgroundColor = (categoryId) => {
     case 2:
       return "#ffbb7f"; // categoryId가 2인 경우
     case 3:
-      return "#7fc2ff"; // categoryId가 3인 경우
+      return "#ffbb7f"; // categoryId가 3인 경우
     default:
       return "#ffffff"; // 기본값은 흰색
   }
 };
+
+
+// 메모 업데이트
+const memoUpdate = (event) => {
+  console.log('입력 값이 변경되었습니다:', event.target.value);
+  userPillEffect.updateMemo(userPillEffectId.value, memo.value)
+};
+
+const tagClick = (param) => {
+  if (param === true) {
+    console.log("true!!!!!");
+    isVisibleUsed.value = !isVisibleUsed.value;
+    
+  } else {
+    console.log('false!!!!!');
+    isVisibleUnUsed.value = !isVisibleUnUsed.value;
+  }
+};
+
 </script>
 
 <style scoped>
@@ -225,6 +218,7 @@ const getBackgroundColor = (categoryId) => {
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   padding: 7px 7px;
+  overflow-x: auto; /* 수평 스크롤바 추가 */
 }
 
 /* 사용중이지 않은 태그 리스트 */
@@ -234,6 +228,57 @@ const getBackgroundColor = (categoryId) => {
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 12px 7px;
+  overflow-x: auto; /* 수평 스크롤바 추가 */
+}
+
+/* 태그 추가 div */
+.add-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 0 0;
+}
+
+/* 사용중 태그 추가 input */
+.add-tag-used-input {
+  display: flex;
+  width: 30%;
+  height: 1.2rem;
+  align-items: center;
+  margin: 0 10px 0 0;
+  border-radius: 5px;
+  border: 1px solid lightblue;
+}
+
+/* 사용중 태그 추가 버튼 */
+.add-tag-used-button {
+  height: 1.5rem;
+  background-color: rgb(105, 190, 255);
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 3px 6px;
+}
+
+/* 사용중 태그 추가 input */
+.add-tag-unused-input {
+  display: flex;
+  width: 30%;
+  height: 1.2rem;
+  align-items: center;
+  margin: 0 10px 0 0;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+}
+
+/* 사용중 태그 추가 버튼 */
+.add-tag-unused-button {
+  height: 1.5rem;
+  background-color: lightgray;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 3px 6px;
 }
 
 /* 제목 스타일 */

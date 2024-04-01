@@ -21,7 +21,6 @@ const store = pillPicStore();
 
 const handleImageUpload = (event) => {
   const file = ref(event.target.files[0]);
-  console.log("파일이 첨부됨");
   store.getPillPic(file.value, 2);
 };
 </script>
