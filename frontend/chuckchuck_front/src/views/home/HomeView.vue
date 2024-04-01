@@ -166,9 +166,9 @@
 </template>
 
 <script setup>
-import { userStore } from '@/stores/user';
+import { userStore } from "@/stores/user";
 const store = userStore();
-store.getUserInfo();  // 유저 이름 가져오기 위함
+store.getUserInfo(); // 유저 이름 가져오기 위함
 </script>
 
 <style scoped>

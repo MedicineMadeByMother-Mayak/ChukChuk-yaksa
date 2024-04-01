@@ -2,141 +2,162 @@
   <!-- PillSearchView(약검색) -->
   <div class="basic-background">
     <Wave title="약 검색" height="1px" />
-    <div style="padding: 15px">
-      <div style="padding: 0 0 20px 0">
-        검색 상자 추후에 추가 예정
-        <input />
+    <div style="padding: 8%; height: 100%">
+      <SearchBar
+        class="searchBar"
+        @input="input"
+        :value="keyword"
+        :keyword="keyword"
+        :width="'100%'"
+        :height="'33px'"
+        :iconWidth="'15px'"
+        :font-size="'15px'"
+        :fontWeight="'400'"
+        :marginLeft="'15%'"
+      />
+
+      <div class="count-container">
+        <div class="count-box">
+          <p class="keyword">{{ keyword ? keyword : "전체" }}</p>
+          <p class="count">
+            검색결과:
+            <strong>{{ count }}</strong
+            >건
+          </p>
+        </div>
+        <hr />
       </div>
-      <div style="font-size: 10px">
-        전체 | <strong>{{ dumydata.count }}</strong> 건
-      </div>
-      <div style="border-bottom: 1px solid lightgray"></div>
-      <div
-        v-for="pillData in dumydata.pills"
-        :key="pillData.pillId"
-        style="margin-top: 13px"
-      >
+
+      <div class="search-result-container">
         <PillInfoPlus
-          :pillId="pillData.pillId"
-          :pillName="pillData.pillName"
-          :imageUrl="pillData.imageUrl"
-          :type="pillData.type"
-          :warningPregnant="pillData.warningPregnant"
-          :warningUseDate="pillData.warningUseDate"
-          :warningElders="pillData.warningElders"
-          :warningTogether="pillData.warningTogether"
+          v-for="pill in pills"
+          @click="click(pill.pillId)"
+          :key="pill.pillId"
+          :pillId="pill.pillId"
+          :pillName="pill.pillName"
+          :imageUrl="pill.imageUrl"
+          :type="pill.type"
+          :warningPregnant="pill.warningPregnant"
+          :warningUseDate="pill.warningUseDate"
+          :warningElders="pill.warningElders"
+          :warningTogether="pill.warningTogether"
         />
       </div>
     </div>
+    <!-- Nav-bar용 -->
+    <div class="save-nav-bar"></div>
   </div>
-  <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #ffffff"></div>
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from "vue";
+import { pillSearchStore } from "@/stores/pillSearch";
 import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
-import { ref } from "vue";
+import SearchBar from "@/common/SearchBar.vue";
+import { useRouter } from "vue-router";
 
-const dumydata = ref({
-  count: 5,
-  pills: [
-    {
-      pillId: 1,
-      pillName: "중외5%포도당생리식염액(수출명:5%DextroseinnormalsalineInj.)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 2,
-      pillName: "디고신정(디곡신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 3,
-      pillName: "옥시톤주사액5아이유(옥시토신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 4,
-      pillName: "아주디곡신주사액",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 5,
-      pillName: "삐콤정",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 2,
-      pillName: "디고신정(디곡신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 3,
-      pillName: "옥시톤주사액5아이유(옥시토신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 4,
-      pillName: "아주디곡신주사액",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 5,
-      pillName: "삐콤정",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-  ],
+const store = pillSearchStore();
+const router = useRouter();
+
+const keyword = ref(store.keyword);
+const page = ref(store.page);
+const count = ref(0);
+const pills = ref([]);
+const isLoading = ref(false);
+
+onMounted(() => {
+  input();
+  window.addEventListener("scroll", handleScroll);
 });
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// 스크롤 이벤트 핸들러
+function handleScroll() {
+  const nearBottom =
+    window.innerHeight + window.scrollY + 100 >= document.body.offsetHeight;
+  if (nearBottom && count.value > pills.value.length) {
+    // 페이지 끝에 근접했을 때 실행할 로직
+    loadMoreData();
+  }
+}
+
+// 더 많은 데이터 로딩
+async function loadMoreData() {
+  if (isLoading.value) return;
+  isLoading.value = true;
+  // 페이지 번호 증가
+  page.value++;
+  const data = await store.input(keyword.value, page.value);
+  count.value = data.count;
+  pills.value = [...pills.value, ...data.pills];
+  isLoading.value = false;
+}
+
+async function click(pillId) {
+  await store.getPillInfo(pillId);
+  router.push({
+    name: "pilldetail",
+  });
+}
+
+async function input(event) {
+  if (event !== undefined) {
+    keyword.value = event.target.value;
+  }
+  page.value = 1;
+  const data = await store.input(keyword.value, page.value);
+  count.value = data.count;
+  pills.value = data.pills;
+}
 </script>
 
 <style scoped>
 .basic-background {
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
+  height: 100%;
+}
+
+.count-container {
+  margin: 0;
+  width: 100%;
+}
+
+.count-container > hr {
+  margin-bottom: 13px;
+}
+
+.count-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+.count-box > p {
+  margin: 0;
+  margin-top: 22px;
+}
+
+.keyword {
+  width: 65%;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search-result-container {
+  height: 100%;
+  margin: 0;
+  gap: 17px;
+  display: flex;
+  flex-direction: column;
+}
+
+.save-nav-bar {
+  content: "";
+  height: 85px;
 }
 </style>

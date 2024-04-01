@@ -1,11 +1,13 @@
 <template>
   <!-- 약국검색창 -->
   <div class="basic-background-color">
-    <HeaderFormOnlyString :title="'약국검색'" />
+    <div class="header-container">
+      <HeaderFormOnlyString :title="'약국검색'" />
+      <transition name="slide">
+        <div class="header-back" :class="{ 'header-back-up': keyword }"></div>
+      </transition>
+    </div>
 
-    <transition name="slide">
-      <div class="header-back" :class="{ 'header-back-up': keyword }"></div>
-    </transition>
     <div v-if="!keyword" class="header-string">
       <img class="logo" :src="logo" alt="" />
       <div>
@@ -22,7 +24,7 @@
       </div>
       <SearchBar
         :value="keyword"
-        @input="input"
+        @keyup="input"
         :width="'90%'"
         :height="'55px'"
         :iconWidth="'30px'"
@@ -53,6 +55,7 @@
           :type="pill.type"
           :imageUrl="pill.imageUrl"
         />
+        <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
       </div>
     </div>
   </div>
@@ -64,30 +67,71 @@ import logo from "@/assests/img/logo.png";
 import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
 import SearchBar from "@/common/SearchBar.vue";
 import PharmacyPill from "@/common/PharmacyPill.vue";
+import Observer from "@/views/pharmacy_search/components/Observer.vue";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { instance } from "@/util/mainAxios";
 
 const router = useRouter();
 const keyword = ref("");
 const count = ref(0);
 const list = ref([]);
+const page = ref(1);
 
-async function input(event) {
-  keyword.value = event.target.value;
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+  // 초기 로드 시 스크롤 위치 확인
+  loadMoreData;
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// 더 많은 데이터 로딩
+async function loadMoreData() {
+  if (count.value == list.value.length) return;
+  // 페이지 번호 증가
+  page.value++;
   const { data } = await instance.get("/pill/search", {
     params: {
-      keyword: event.target.value,
-      page: 1,
+      keyword: keyword.value,
+      page: page.value,
     },
   });
+  console.log(keyword.value, page.value);
+  count.value = data.count;
+  list.value = [...list.value, ...data.pills];
+  console.log(list.value, page.value);
+}
 
+// 스크롤 위치를 저장할 반응형 참조
+const isScrolled = ref(false);
+
+// 스크롤 이벤트 핸들러
+function handleScroll() {
+  isScrolled.value = window.scrollY > 0;
+}
+
+async function input(event) {
+  list.value = [];
+  keyword.value = event.target.value;
+  page.value = 1;
+  console.log(keyword.value, page.value);
+  const { data } = await instance.get("/pill/search", {
+    params: {
+      keyword: keyword.value,
+      page: page.value,
+    },
+  });
   list.value = data.pills;
-  return data.pills;
+  console.log(list.value, data.pills);
+  count.value = data.count;
+  return data;
 }
 
 const click = (pillId) => {
-  localStorage.setItem("pillId", pillId);
+  sessionStorage.setItem("pillId", pillId);
   router.push({
     name: "map",
   });
@@ -95,6 +139,12 @@ const click = (pillId) => {
 </script>
 
 <style scoped>
+.header-container {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
 .basic-background-color {
   background-color: #f9f9f9;
   height: 100%;
@@ -134,6 +184,7 @@ const click = (pillId) => {
   color: white;
   position: relative;
   top: 8%;
+  z-index: 9999;
 }
 
 .header-string > div > p {
@@ -212,5 +263,6 @@ const click = (pillId) => {
   gap: 13px;
   display: flex;
   flex-direction: column;
+  padding-bottom: 28%;
 }
 </style>

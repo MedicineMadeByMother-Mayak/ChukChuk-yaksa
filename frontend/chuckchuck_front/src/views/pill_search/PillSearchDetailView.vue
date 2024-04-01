@@ -1,7 +1,7 @@
 <!-- 약 상세 페이지 -->
 <template>
   <div class="basic-background-color">
-    <Wave :title="waveTitle" height="10px" />
+    <Wave :title="waveTitle" :Link="'pillsearch'" height="10px" />
     <div class="container">
       <img :src="imagePath" alt="Image description" />
     </div>
@@ -29,7 +29,9 @@
             :icon="['fas', 'circle-info']"
             style="color: #509af8; margin-right: 5px"
           />
-          <span class="info-title" style="vertical-align: middle">{{ item.title }}</span>
+          <span class="info-title" style="vertical-align: middle">{{
+            item.title
+          }}</span>
         </strong>
         <span style="font-size: 10px"></span>
       </div>
@@ -46,10 +48,10 @@
 import Wave from "@/common/Wave.vue";
 
 import { ref, onMounted } from "vue";
-import { pillSearchStore } from "@/stores/pillSearch"
+import { pillSearchStore } from "@/stores/pillSearch";
 
-const waveTitle = ref('');
-const imagePath = ref('');
+const waveTitle = ref("");
+const imagePath = ref("");
 const appointmentDetails = ref([]);
 
 onMounted(async () => {
@@ -67,7 +69,7 @@ onMounted(async () => {
     // { title: "약 사용 전 반드시 알아야 할 내용", content: store. },
     // { title: "보관시 주의사항", content:  },
   ];
-})
+});
 </script>
 
 <style scoped>
@@ -114,7 +116,7 @@ img {
   /* color: rgb(86, 86, 86); */
 }
 
-.info-title { 
+.info-title {
   /* color: rgb(86, 86, 86); */
 }
 </style>

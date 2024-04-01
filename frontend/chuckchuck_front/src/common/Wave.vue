@@ -9,8 +9,7 @@
       <HeaderFormOnlyString :title="title" :Link="Link" />
       <p></p>
     </div>
-    <container class="inner-header flex" :style="{ height: headerHeight }">
-    </container>
+    <p class="inner-header flex" :style="{ height: headerHeight }"></p>
 
     <!--Waves Container-->
     <div>
@@ -108,11 +107,14 @@ h1 {
 }
 
 .header {
-  position: relative;
+  position: sticky;
+  width: 100%;
+  top: 0;
   text-align: center;
   background: linear-gradient(to right, #3183ff 0%, #86e7ee 100%);
   color: black;
   margin-bottom: 10px;
+  z-index: 999;
 }
 
 .inner-header {
