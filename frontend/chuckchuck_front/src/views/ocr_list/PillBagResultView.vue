@@ -1,6 +1,5 @@
 <template>
   <HeaderForm title="약봉투 촬영" height="275px">
-    <div class="image-container"></div>
     <div class="white-box">
       <img class="receipt-image" :src="pillBagImageSrc" alt="약 봉투 이미지" />
     </div>
@@ -37,6 +36,11 @@
       </div>
     </li>
   </div>
+  <AlertModal
+    v-if="showModal"
+    :text="'복용관리에 추가 되었습니다.'"
+    :showModal="showModal"
+  />
 </template>
 
 <script setup>
@@ -46,6 +50,9 @@ import TableForm from "@/common/Form/TableForm.vue";
 import PillBagContent from "@/common/PillInfo.vue";
 import dayjs from "dayjs";
 import { ocrListStore } from "@/stores/ocrList";
+import AlertModal from "@/common/Form/AlertModal.vue";
+const showModal = ref(false);
+
 const store = ocrListStore();
 
 const pillBagImageSrc = computed(() => store.pillBagImageSrc);
@@ -59,7 +66,10 @@ const data = ref(store.pillBagResult);
 const savePillBag = async () => {
   try {
     await store.savePillBag();
-    //Alert 모달 사용
+    showModal.value = true;
+    setTimeout(() => {
+      showModal.value = false;
+    }, 2500);
   } catch (error) {
     alert("약봉투 저장중 오류가 발생하였습니다.");
   }
