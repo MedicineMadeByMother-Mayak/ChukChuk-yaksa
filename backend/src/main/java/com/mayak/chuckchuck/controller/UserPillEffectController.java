@@ -33,9 +33,18 @@ public class UserPillEffectController {
      * @param:
      * @return userPillSideEffectListResponse(부작용 리스트) or userPillEffectListAndSearchResponse(조회 및 검색)
      */
+//    public ResponseEntity<Object> getUserPillEffectListAndSearch(@AuthenticationPrincipal UserPrincipal principal,
+//                                                                 @PathVariable Long categoryId,
+//                                                                 @PathVariable String keyword,
+//                                                                 @PathVariable String page) {
     @GetMapping("")
-    public ResponseEntity<Object> getUserPillEffectListAndSearch(@AuthenticationPrincipal UserPrincipal principal, @RequestBody UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+    public ResponseEntity<Object> getUserPillEffectListAndSearch(@AuthenticationPrincipal UserPrincipal principal,
+                                                                 @RequestParam("categoryid") Long categoryId,
+                                                                 @RequestParam("keyword") String keyword,
+                                                                 @RequestParam("page") String page) {
         User user = commonService.getUserOrException(principal);
+        UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest = new UserPillEffectListAndSearchRequest(categoryId, keyword, page);
+
 
         // if   : 페이징 X, 문진표 - 부작용 리스트 조회
         // else : 페이징 O, 약효 기록 리스트 조회 or 검색
