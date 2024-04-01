@@ -39,7 +39,10 @@ const props = defineProps({
     type: String,
     default: "프로다나서캡슐",
   },
-  imageUrl: "../../assests/img/tempPill.png",
+  imageUrl: {
+    type: String,
+    default: "../../assests/img/tempPill.png",
+  },
   type: {
     type: String,
     default: "항히스타민제",
