@@ -75,7 +75,7 @@ public class TakeList {
     }
 
     public void updateTakeListName(UpdateTakeListRequest updateTakeListRequest){
-        this.takeListName = updateTakeListRequest.updateTakeName();
+        this.takeListName = updateTakeListRequest.pilupdateTakeName();
     }
 
     // 복용리스트 완료

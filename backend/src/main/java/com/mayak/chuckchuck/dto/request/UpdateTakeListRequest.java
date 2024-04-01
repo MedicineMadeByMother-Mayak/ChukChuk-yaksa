@@ -4,6 +4,6 @@ package com.mayak.chuckchuck.dto.request;
  * @author:김보경
  */
 public record UpdateTakeListRequest (
-        String updateTakeName
+        String pilupdateTakeName
 )
 {}

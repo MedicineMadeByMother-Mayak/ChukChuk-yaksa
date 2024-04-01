@@ -1,8 +1,6 @@
 package com.mayak.chuckchuck.service;
 
 import com.mayak.chuckchuck.dto.PharmacyDto;
-import com.mayak.chuckchuck.exception.ErrorResponse;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,7 +33,7 @@ public class PharmacyService {
                     .ignoreContentType(true) // JSON 등의 컨텐츠 타입을 받기 위함
                     // form 데이터 설정
                     .data("page_url", "finding-store")
-                    .data("form_build_id", "form-L4ndx5L6Pqmes1WPIIJexIgPv8XdSsxvNS_XZCxbark")
+                    .data("form_build_id", "form-6yQKmDVlwy-4F0s4eW9tkWqDQsZJBZYLXv1ErF3bYtM")
                     .data("form_id", "jjbos_apac_storefinder_form")
                     .data("_triggering_element_name", "op")
                     .data("_triggering_element_value", "Address Filter Search")
