@@ -3,10 +3,10 @@ import HomeView from "@/views/home/HomeView.vue";
 import LoginSuccessView from "@/views/login/LoginSuccessView.vue";
 
 import OcrListView from "@/views/ocr_list/OcrListView.vue";
-import DiagnosisFilmingView from "@/views/ocr_list/DiagnosisFilmingView.vue";
 import DiagnosisResultView from "@/views/ocr_list/DiagnosisResultView.vue";
-import PillBagFilmingView from "@/views/ocr_list/PillBagFilmingView.vue";
 import PillBagResultView from "@/views/ocr_list/PillBagResultView.vue";
+import OcrSelectView from "@/views/ocr_list/OcrSelectView.vue";
+import FilmingView from "@/views/ocr_list/FilmingView.vue";
 
 import testView from "@/common/testView.vue";
 import PillBagHistoryView from "@/views/user_medical_info/PillBagHistoryView.vue";
@@ -51,26 +51,15 @@ const routes = [
     name: "ocrlist",
     component: OcrListView,
   },
+
   {
-    //약봉투 촬영
-    path: "/ocrlist/diagnosisfilming",
-    name: "diagnosisfilming",
-    component: DiagnosisFilmingView,
-  },
-  {
-    //약봉투 촬영 결과
+    //진단서 촬영 결과
     path: "/ocrlist/diagnosisresult",
     name: "diagnosisresult",
     component: DiagnosisResultView,
   },
   {
-    //진단서 촬영
-    path: "/ocrlist/pillbagfilming",
-    name: "pillbagfilming",
-    component: PillBagFilmingView,
-  },
-  {
-    //진단서 촬영 결과
+    //약봉투 촬영 결과
     path: "/ocrlist/pillbagresult",
     name: "pillbagresult",
     component: PillBagResultView,
@@ -174,8 +163,9 @@ const routes = [
     path: "/tt",
     name: "testingpage",
     component: testingPage,
-  }
+  },
 ];
+
 const router = createRouter({
   history: createWebHistory(),
   routes,

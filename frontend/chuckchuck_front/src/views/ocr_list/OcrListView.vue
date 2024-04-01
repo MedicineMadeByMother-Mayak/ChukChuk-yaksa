@@ -1,73 +1,83 @@
 <template>
-  <div class="base-backgound-color">
-    <Wave title="약봉투/진단서 촬영" height="0px" />
-    <!-- OcrListView -->
-    <div class="text">
-      <div>약봉투나 진단서를 촬영하여</div>
-      <div>약력과 병력을 체계적으로 관리해보세요</div>
+  <section>
+    <div class="container">
+      <!--선택화면 -->
+      <OcrSelectView v-if="!isLoading" class="bottom-componenet" />
+      <!--로딩화면 -->
+      <FilmingView
+        v-if="isLoading && analysisType == 'pillBag'"
+        :analysis="text"
+        class="bottom-componenet"
+      />
+      <FilmingView
+        v-if="isLoading && analysisType == 'diagnosis'"
+        :analysis="text"
+        class="bottom-componenet"
+      />
     </div>
-    <div class="buttons">
-      <div>
-        <button><strong>약봉투</strong> 촬영하기</button>
-      </div>
-      <div>
-        <button><strong>진단서</strong> 촬영하기</button>
-      </div>
-    </div>
-  </div>
-  <div
-    style="
-      position: relative;
-      text-align: center;
-      background: linear-gradient(60deg, #3183ff 0%, #86e7ee 100%);
-      color: black;
-      margin-bottom: 10px;
-      height: 117px;
-    "
-  ></div>
+  </section>
+  <Footer></Footer>
 </template>
 
 <script setup>
 import Wave from "@/common/Wave.vue";
+import Footer from "@/common/Footer.vue";
+import OcrSelectView from "@/views/ocr_list/OcrSelectView.vue";
+import FilmingView from "@/views/ocr_list/FilmingView.vue";
 
-import { instance } from "@/util/mainAxios";
-//요청 test
-const server = async () => {
-  const { data } = await instance.get("/pill/search?keyword=활&page=1");
-  console.log(data);
-};
+import { ref, watch, computed } from "vue";
+import { useRouter } from "vue-router";
+import { ocrListStore } from "@/stores/ocrList";
 
-server();
+const router = useRouter();
+const store = ocrListStore();
+
+const isLoading = ref(false);
+const analysisType = ref();
+const text = ref();
+
+// 사진이 첨부되면 isLoading=true로 바꿔 로딩화면 띄우기
+// 분석이 완료되면 분석화면으로 push하기
+watch(
+  () => store.pillBagImage,
+  async (pillBagImage) => {
+    text.value = "약봉투";
+    isLoading.value = true;
+    analysisType.value = "pillBag";
+    await store.analysisPillBagImage();
+    router.push({ name: "pillbagresult" });
+  }
+);
+watch(
+  () => store.diagnosisImage,
+  async (diagnosisImage) => {
+    console.log("dd");
+    text.value = "진단서";
+    isLoading.value = true;
+    analysisType.value = "diagnosis";
+    await store.analysisDianosisImage();
+    router.push({ name: "diagnosisresult" });
+  }
+);
 </script>
 
 <style scoped>
-.base-backgound-color {
+.container {
   background-color: #f9f9f9;
-  height: 82vh;
+  display: flex;
+  flex-direction: column;
+  /* gap: 10px; */
 }
 
 .text {
+  margin-top: 20px;
+  height: 5%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 50px 0;
-  font-size: 14px;
 }
-
-.buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0px;
+.timeline {
+  height: 15%;
 }
-
-button {
-  background-color: white; /* 흰색 배경 */
-  border: none; /* outline 없음 */
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
-  padding: 27px 70px;
-  margin: 15px;
-  border-radius: 5px;
-  font-size: 18px;
+.bottom-componenet {
+  height: 50%;
 }
 </style>
