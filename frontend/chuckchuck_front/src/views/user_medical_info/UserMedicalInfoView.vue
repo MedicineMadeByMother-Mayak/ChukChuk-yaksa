@@ -377,10 +377,10 @@ div p {
 }
 
 .current-detail {
-  margin: 8px;
+  margin: 8px 0px;
 }
 
 .disease-detail {
-  margin: 8px;
+  margin: 8px 0px;
 }
 </style>
