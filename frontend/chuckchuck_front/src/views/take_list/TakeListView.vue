@@ -5,7 +5,7 @@
     <Wave title="복용 관리" height="30px" />
 
     <!-- 척척약사의 조언 -->
-    <Carousel :autoplay="1500" :itemsToShow="1.45" :wrapAround="true" :transition="500">
+    <Carousel :autoplay="1500" :itemsToShow="1.25" :wrapAround="true" :transition="500">
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
           <div class="carousel__img">
@@ -23,7 +23,7 @@
         </div>
       </Slide>
       <template #addons>
-        <Navigation />
+        <!-- <Navigation /> -->
       </template>
     </Carousel>
     
@@ -345,6 +345,7 @@ button {
   transform: rotateY(0) scale(1.1);
 }
 .carousel__item {
+  margin-top: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -357,7 +358,7 @@ button {
 }
 
 .carousel__text {
-  margin-top: 10px;
+  margin-top: 0px;
   text-align: left;
   font-size: 10px;
   margin-left: -34%;
