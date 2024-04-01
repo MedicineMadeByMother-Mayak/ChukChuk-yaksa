@@ -34,18 +34,19 @@ public class UserPillEffectController {
      * @return userPillSideEffectListResponse(부작용 리스트) or userPillEffectListAndSearchResponse(조회 및 검색)
      */
     @GetMapping("")
-    public ResponseEntity<Object> getUserPillEffectListAndSearch(@RequestBody UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+    public ResponseEntity<Object> getUserPillEffectListAndSearch(@AuthenticationPrincipal UserPrincipal principal, @RequestBody UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+        User user = commonService.getUserOrException(principal);
 
         // if   : 페이징 X, 문진표 - 부작용 리스트 조회
         // else : 페이징 O, 약효 기록 리스트 조회 or 검색
         if (userPillEffectListAndSearchRequest.page() == null) {
             UserPillSideEffectListResponse userPillSideEffectListResponse
-                    = userPillEffectService.getUserPillSideEffectList();
+                    = userPillEffectService.getUserPillSideEffectList(user);
 
             return ResponseEntity.ok(userPillSideEffectListResponse);
         } else {
             UserPillEffectListAndSearchResponse userPillEffectListAndSearchResponse
-                    = userPillEffectService.getUserPillEffectListAndSearch(userPillEffectListAndSearchRequest);
+                    = userPillEffectService.getUserPillEffectListAndSearch(user, userPillEffectListAndSearchRequest);
 
             return ResponseEntity.ok(userPillEffectListAndSearchResponse);
         }
@@ -73,8 +74,9 @@ public class UserPillEffectController {
      * @return:
      */
     @PostMapping("/")
-    public ResponseEntity<Void> registUserPillEffect(@RequestBody UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
-        userPillEffectService.updateUserPillEffect(userPillEffectRegistInfoRequest);
+    public ResponseEntity<Void> registUserPillEffect(@AuthenticationPrincipal UserPrincipal principal, @RequestBody UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
+        User user = commonService.getUserOrException(principal);
+        userPillEffectService.updateUserPillEffect(user, userPillEffectRegistInfoRequest);
 
         return ResponseEntity.ok().build();
     }

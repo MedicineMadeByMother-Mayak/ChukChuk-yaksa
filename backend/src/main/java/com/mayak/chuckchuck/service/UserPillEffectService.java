@@ -130,7 +130,7 @@ public class UserPillEffectService {
      * @return 없음
      */
     public void updateUserPillEffectMemo(UserPillEffectMemoRequest userPillEffectMemoRequest) {
-        UserPillEffect userPillEffect = userPillEffectRepository.findById(userPillEffectMemoRequest.usePillEffectId()).get();
+        UserPillEffect userPillEffect = userPillEffectRepository.findById(userPillEffectMemoRequest.userPillEffectId()).get();
         userPillEffect.updateMemo(userPillEffectMemoRequest.memo());
     }
 
@@ -140,13 +140,9 @@ public class UserPillEffectService {
      * @param userPillEffectRegistInfoRequest (약효 기록 업데이트 request)
      * @return 없음
      */
-    public void updateUserPillEffect(UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
+    public void updateUserPillEffect(User user, UserPillEffectRegistInfoRequest userPillEffectRegistInfoRequest) {
         Long currentPillId = userPillEffectRegistInfoRequest.pillId();
         List<CategoryDto> categoryDtos = userPillEffectRegistInfoRequest.category();
-
-        // == 임시 유저 정보 (추후 변경 필요) ==
-        User user = userRepository.findById(1L).get();
-        // =================================
 
         // 카테고리마다 약효 기록을 추가 해야함
         for (CategoryDto currentCategory : categoryDtos) {
@@ -187,11 +183,7 @@ public class UserPillEffectService {
      * @param
      * @return 없음
      */
-    public UserPillSideEffectListResponse getUserPillSideEffectList() {
-        // === 임시 유저 정보 ===
-        User user = userRepository.findById(1L).get();
-        // ====================
-
+    public UserPillSideEffectListResponse getUserPillSideEffectList(User user) {
         List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUserAndCategory_CategoryIdOrderByCommonData_createDate(user, 1L);
 
         return UserPillSideEffectListResponse.fromEntity(userPillEffectList);
@@ -204,7 +196,7 @@ public class UserPillEffectService {
      * @param userPillEffectListAndSearchRequest ()
      * @return 없음
      */
-    public UserPillEffectListAndSearchResponse getUserPillEffectListAndSearch(UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
+    public UserPillEffectListAndSearchResponse getUserPillEffectListAndSearch(User user, UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
         Long categoryId = userPillEffectListAndSearchRequest.categoryId();
         String keyword = userPillEffectListAndSearchRequest.keyword();
         String page = userPillEffectListAndSearchRequest.page();
@@ -215,7 +207,6 @@ public class UserPillEffectService {
         List<PillDetailDto> stopPillDtoList = new ArrayList<>();
         List<PillDetailDto> effectPillDtoList = new ArrayList<>();
 
-        User user = userRepository.findById(1L).get();
         PagingDto pagingDto = new PagingDto(1, "createDate");
 
         // if : 키워드 X (전체 리스트 조회)
