@@ -1,28 +1,46 @@
+<!-- 
+사용예시 By.서현
+알림 애니메이션이 있어 setTimeOut써야함 다른방법 찾지못했음
+    
+
+<AlertModal
+      v-if="showModal"
+      :text="'삭제 되었습니다.'"
+      :showModal="showModal"
+    />
+import AlertModal from "@/common/Form/AlertModal.vue";
+const showModal = ref(false);
+const click = () => {
+  showModal.value = true;
+  setTimeout(() => {
+    showModal.value = false;
+  }, 2500);
+};
+
+
+-->
+
 <template>
-  <div>
-    <button @click="deleteItem">Delete</button>
-    <div v-if="showMessage" class="modal">
-      <p>복용리스트가 삭제되었습니다.</p>
+  <div v-if="showModal">
+    <div class="modal">
+      <p>{{ text }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from "vue";
 
-const showMessage = ref(false);
-
-const deleteItem = () => {
-  // 아이템 삭제 로직 실행
-
-  // 삭제됨을 나타내는 메시지 표시
-  showMessage.value = true;
-
-  // 일정 시간 후에 메시지 숨기기
-  setTimeout(() => {
-    showMessage.value = false;
-  }, 2000); // 2초 후에 메시지를 숨김
-};
+const props = defineProps({
+  text: {
+    type: String,
+    default: "알림내용",
+  },
+  showModal: {
+    type: Boolean,
+    default: false,
+  },
+});
 </script>
 
 <style scoped>
@@ -33,10 +51,10 @@ const deleteItem = () => {
   height: 30px;
   width: 58%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.9);
   color: white;
   border-radius: 5px;
-  animation: fadeInOut 2s ease-in-out; 
+  animation: fadeInOut 2.5s ease-in-out;
   display: flex;
   align-items: center;
 }
@@ -48,10 +66,7 @@ const deleteItem = () => {
 }
 
 @keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-  50% {
+  10% {
     opacity: 1;
   }
   100% {
