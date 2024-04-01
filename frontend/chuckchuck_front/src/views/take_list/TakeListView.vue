@@ -12,6 +12,7 @@
         <Pagination />
       </template>
     </Carousel>
+
     <div class="alarms">
       <div
         v-for="(takeListData, index) in currentTakeList"
@@ -38,6 +39,7 @@
         </button>
       </div>
     </div>
+
     <div class="menu">
       <div class="menu-left">
         <img src="@/assests/icon/pill.png" alt="복용리스트" />
@@ -48,22 +50,29 @@
         <button class="navy-button">추가</button>
       </div>
     </div>
+
     <hr style="margin: 3px" />
+
+    <!-- 복용리스트 목록 -->
     <div
       v-for="(takeListData, index) in currentTakeList"
       :key="`pill-date-${index}`"
       class="pill-entry"
     >
+      <!-- 복용리스트 날짜와 제목 -->
       <div class="pill-date">
         {{ takeListData.createDate }} [{{ takeListData.takeListName }}]
         <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
       </div>
+
+      <!-- 리스트 별 약 목록 -->
       <ul class="pills-list">
         <li
           v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
           :key="`pill-details-${index}`"
           class="pill-info"
         >
+          <!-- 약 카드 -->
           <Content
             :pillId="currentPillData.pillId"
             :pillName="currentPillData.name"
@@ -89,20 +98,21 @@ import List from "./components/List.vue";
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { takelistStore } from "@/stores/takelist";
-const takeliststore = takelistStore();
+const store = takelistStore();
 
 // 현재 복용중인 리스트
 const currentTakeList = computed(() =>
-  takeliststore.takelistpagedatas.filter((item) => !item.isFinished)
+  store.takelistpagedatas.filter((item) => !item.isFinished)
 );
 
 // 복용 완료한 리스트
 const finishedTakeList = computed(() =>
-  takeliststore.takelistpagedatas.filter((item) => item.isFinished)
+  store.takelistpagedatas.filter((item) => item.isFinished)
 );
 
 onMounted(async () => {
-  await takeliststore.getTakeListPageDatas();
+  await store.getTakeListPageDatas();
+  console.log(store.takelistpagedatas);
 });
 </script>
 

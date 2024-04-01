@@ -5,6 +5,8 @@ import { instance } from "@/util/mainAxios";
 export const takelistStore = defineStore("takelist", () => {
   const takelistdatas = ref([]);
   const takelistpagedatas = ref([]);
+
+  // 문진표 조회
   const getUserMedicalInfoTakelist = async () => {
     try {
       takelistdatas.value = (
@@ -17,20 +19,23 @@ export const takelistStore = defineStore("takelist", () => {
     }
   };
 
+  // 복용리스트 조회
   const getTakeListPageDatas = async () => {
     try {
-      takelistpagedatas.value = (
-        await instance.get("/take-list", {
-          params: { period: false },
-        })
-      ).data.results;
+      const { data } = await instance.get("/take-list", {
+        params: { period: false },
+      });
+
+      takelistpagedatas.value = data.results;
     } catch (error) {
       console.log("복용리스트 GET 가져오지 못했습니다", error);
-    };
+    }
   };
+
   return {
     takelistdatas,
     getUserMedicalInfoTakelist,
     takelistpagedatas,
-    getTakeListPageDatas
-}});
+    getTakeListPageDatas,
+  };
+});
