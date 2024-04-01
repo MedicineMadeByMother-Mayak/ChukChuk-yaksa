@@ -1,16 +1,20 @@
 <template>
   <div class="header-background">
-    <img src="@/assests/img/main_page_background.svg" />
+    <!-- <img src="@/assests/img/main_page_background.svg" /> -->
+    <img src="@/assests/img/Rectangle.svg" />
+    <!-- <img src="@/assests/img/Pil.png" /> -->
   </div>
   <div class="basic-background">
     <div class="basic-content">
       <div class="hello">
-        <img
-          src="@/assests/icon/main_page/main_icon.svg"
-          style="border-radius: 30px"
-        />
-        <div class="hello-text">안녕하세요 {{ store.userName }}님!</div>
-        <img class="hello-pic" src="@/assests/icon/main_page/pill_img.svg" />
+        <div class="hello-section">
+          <img
+            src="@/assests/icon/main_page/main_icon.svg"
+            style="border-radius: 30px"
+          />
+          <div class="hello-text">안녕하세요, {{ store.userName }}님!</div>
+        </div>
+        <img class="hello-pic" src="@/assests/img/Pil.png" />
       </div>
       <div class="temp">
         <div class="icon-container">
@@ -166,9 +170,9 @@
 </template>
 
 <script setup>
-import { userStore } from '@/stores/user';
+import { userStore } from "@/stores/user";
 const store = userStore();
-store.getUserInfo();  // 유저 이름 가져오기 위함
+store.getUserInfo(); // 유저 이름 가져오기 위함
 </script>
 
 <style scoped>
@@ -189,7 +193,7 @@ store.getUserInfo();  // 유저 이름 가져오기 위함
 .header-background img {
   width: 320px;
   height: 600px;
-  margin-top: 20px;
+  margin-top: 100px;
   border-radius: 100px;
 }
 
@@ -210,20 +214,24 @@ store.getUserInfo();  // 유저 이름 가져오기 위함
   justify-content: left; /* 가로 가운데 정렬 */
   align-items: center;
   position: relative; /* 상대 위치 설정 */
-  z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+  z-index: 5; /* 다른 요소 위에 표시되도록 설정 */
   margin: 0 0 10px 20px;
 }
 
+.hello-section {
+  z-index: 7; /* 다른 요소 위에 표시되도록 설정 */
+}
 .hello-text {
   color: white;
   margin: 0 0 0 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 설정 */
 }
 
 .hello-pic {
-  display: flex;
-  justify-content: right; /* 가로 가운데 정렬 */
-  align-items: center;
-  margin: -50px -30px -18px -10px;
+  width: 155px;
+  margin: -50px 0px -18px 0px;
 }
 
 .icon-container {
@@ -239,10 +247,10 @@ store.getUserInfo();  // 유저 이름 가져오기 위함
   border-radius: 10px; /* 바깥 모서리에 border-radius 적용 */
   border: 1px solid rgb(231, 231, 231);
   position: relative; /* 상대 위치 설정 */
-  z-index: 1; /* 다른 요소 위에 표시되도록 설정 */
+  z-index: 3; /* 다른 요소 위에 표시되도록 설정 */
   background-color: white;
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.4); /* 아래쪽에만 그림자 추가 */
-  margin: 43px 0 50px 0;
+  /* margin: 43px 0 50px 0; */
 }
 
 .row {

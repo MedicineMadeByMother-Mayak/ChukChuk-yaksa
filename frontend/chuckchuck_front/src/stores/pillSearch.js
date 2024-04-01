@@ -19,9 +19,9 @@ export const pillSearchStore = defineStore("pillSearch", () => {
   const keyword = ref("");
   const page = ref(1);
 
-  const getPillInfo = async (input_pillId) => {
+  const getPillInfo = async (inputPillId) => {
     try {
-      const response = await instance.get("pill/detail/" + input_pillId);
+      const response = await instance.get("pill/detail/" + inputPillId);
       const pillInfo = response.data;
 
       pillId.value = pillInfo.pillDetailDto.pill_id;

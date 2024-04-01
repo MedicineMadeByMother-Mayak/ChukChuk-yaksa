@@ -56,7 +56,9 @@
             </div>
           </div>
           <div>
-            <button class="next-button" @click="updateUserInfo">다음으로</button>
+            <button class="next-button" @click="updateUserInfo">
+              다음으로
+            </button>
           </div>
         </div>
       </div>
@@ -66,16 +68,16 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { userStore } from '@/stores/user';
+import { userStore } from "@/stores/user";
 
 const store = userStore();
 
-const userName = ref('');
-const bloodType = ref('');
-const birth = ref('');
-const sex = ref('');
-const height = ref('');
-const weight = ref('');
+const userName = ref("");
+const bloodType = ref("");
+const birth = ref("");
+const sex = ref("");
+const height = ref("");
+const weight = ref("");
 
 onMounted(async () => {
   await store.getUserInfo();
@@ -96,10 +98,9 @@ const updateUserInfo = () => {
     sex.value,
     height.value,
     weight.value
-  )
-}
+  );
+};
 </script>
-
 
 <style scoped>
 .basic-background {
@@ -116,6 +117,7 @@ const updateUserInfo = () => {
 }
 
 .noti-text {
+  font-size: 0.9rem;
   color: white;
   margin: 25px 0 10px 0;
 }
@@ -219,7 +221,6 @@ input {
 }
 
 .next-button {
-  height: 22px;
   width: 160px;
   background-color: #242291;
   color: white;
@@ -227,5 +228,7 @@ input {
   border-radius: 5px;
   cursor: pointer;
   margin: 15px 0 0 0;
+  padding: 5px 0px;
+  font-weight: 900;
 }
 </style>
