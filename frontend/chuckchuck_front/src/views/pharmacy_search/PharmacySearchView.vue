@@ -1,6 +1,7 @@
 <template>
   <!-- 약국검색창 -->
-  <div class="basic-background-color">
+  <RouterView />
+  <div v-if="$route.path === '/pharmacy'" class="basic-background-color">
     <div class="header-container">
       <HeaderFormOnlyString :title="'약국검색'" />
       <transition name="slide">
@@ -71,6 +72,7 @@ import Observer from "@/views/pharmacy_search/components/Observer.vue";
 import { useRouter } from "vue-router";
 import { ref, onMounted, onUnmounted } from "vue";
 import { instance } from "@/util/mainAxios";
+import { RouterLink, RouterView } from "vue-router";
 
 const router = useRouter();
 const keyword = ref("");
