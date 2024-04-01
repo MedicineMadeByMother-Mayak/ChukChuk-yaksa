@@ -10,3 +10,6 @@
 			(오리지널은 48000개가 넘으니 테스트 시엔 라이트 추천)
 		(2) 3. insert_querries_sample_data.sql 실행 
 			(pill 테이블 외 나머지 테이블을 채우기 위한 용도)
+	3) API 테스트시 계정에 할당된 샘플 데이터 필요
+		(1) 4. DB_setting_for_API.sql 실행 (dumy_data_for_API라는 이름의 프로시저(함수) 생성)
+		(2) CALL dumy_data_for_API(user_id) 넣어서 더미데이터 생성 실행
