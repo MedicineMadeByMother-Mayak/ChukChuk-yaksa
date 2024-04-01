@@ -17,7 +17,9 @@ export const pillSearchStore = defineStore("pillSearch", () => {
   const warningElders = ref("");
   const warningTogether = ref("");
   const keyword = ref("");
-  const page = ref(1);
+  const page = ref(0);
+  const pills = ref([]);
+  const backButton = ref(true);
 
   const getPillInfo = async (inputPillId) => {
     try {
@@ -39,7 +41,7 @@ export const pillSearchStore = defineStore("pillSearch", () => {
       warningElders.value = pillInfo.pillDetailDto.warning_elders;
       warningTogether.value = pillInfo.pillDetailDto.warning_together;
 
-      console.log(pillInfo);
+      // console.log(pillInfo);
     } catch (error) {
       console.log(error);
     }
@@ -74,6 +76,8 @@ export const pillSearchStore = defineStore("pillSearch", () => {
     getPillInfo,
     keyword,
     page,
+    pills,
     input,
+    backButton,
   };
 });

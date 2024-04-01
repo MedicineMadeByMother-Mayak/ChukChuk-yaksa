@@ -34,7 +34,7 @@
 import Badge from "@/common/Badge.vue";
 
 const props = defineProps({
-  pillId: 1,
+  pillId: Number,
   pillName: {
     type: String,
     default: "프로다나서캡슐",
