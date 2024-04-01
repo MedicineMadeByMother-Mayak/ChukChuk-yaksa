@@ -236,7 +236,7 @@ public class UserPillEffectService {
             // if   : 전체 목록
             // else : 각 카테고리 별 목록
             List<Pill> tempPillList = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
-                    .setParameter("userId", 2L)
+                    .setParameter("userId", user.getUserId())
                     .setParameter("keyword", keyword)
                     .getResultList();
         
@@ -249,7 +249,7 @@ public class UserPillEffectService {
             Map<Integer, List<PillDetailDto>> pillMap = new HashMap<>();
             for (int i = 1; i <= 3; i++) {
                 List<Pill> temp = entityManager.createQuery(jpqlQueryForPillList, Pill.class)
-                        .setParameter("userId", 2L)
+                        .setParameter("userId", user.getUserId())
                         .setParameter("keyword", keyword)
                         .setParameter("categoryId", i)
                         .getResultList();
