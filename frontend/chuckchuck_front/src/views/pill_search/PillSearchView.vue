@@ -45,6 +45,8 @@
       />
       <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
     </div>
+    <!-- Nav-bar용 -->
+    <!-- <div class="save-nav-bar"></div> -->
   </div>
 
   <ModalForm
