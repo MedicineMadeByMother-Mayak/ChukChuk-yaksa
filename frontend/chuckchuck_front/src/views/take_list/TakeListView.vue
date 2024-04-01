@@ -1,43 +1,58 @@
 <template>
   <div>
-    <!-- 복용관리 -->
-    <Wave title="복용 관리" height="30px" />
-    <Carousel :autoplay="1500" :wrap-around="true">
-      <Slide v-for="slide in 3" :key="slide">
-        <div class="carousel__item">{{ slide }}</div>
-      </Slide>
 
+    <!-- 헤더 -->
+    <Wave title="복용 관리" height="30px" />
+
+    <!-- 척척약사의 조언 -->
+    <Carousel :autoplay="1500" :itemsToShow="1.45" :wrapAround="true" :transition="500">
+      <Slide v-for="(item, index) in advice" :key="index">
+        <div class="carousel__item">
+          <div class="carousel__img">
+            <img :src="item.imageUrl" alt="Logo"/>
+          </div>
+          <div class="carousel__text">
+            <div style="font-size: 12px;"><strong>{{ item.title }}</strong></div>
+            <div>
+              <span style="font-weight: bold; color: blue;">{{ item.pill1 }}</span>
+              <span>{{ item.content1 }}</span>
+              <span style="font-weight: bold; color: blue;">{{ item.pill2 }}</span>
+              <span>{{ item.content2 }}</span>
+            </div>
+          </div>
+        </div>
+      </Slide>
       <template #addons>
         <Navigation />
-        <Pagination />
       </template>
     </Carousel>
-
+    
+    <!-- 알람 리스트 -->
     <div class="alarms">
+
+      <!-- 알람 추가 버튼 -->
+      <div>
+        <button class="rounded-button">
+          <span
+            ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" /></span>
+        </button>
+      </div>
+      
+      <!-- 등록된 알람 리스트 -->
       <div
         v-for="(takeListData, index) in currentTakeList"
         :key="`pill-date-${index}`"
       >
         <button class="rounded-button">
-          <span
-            ><i
-              class="fa-solid fa-bell"
-              style="color: #ffd43b; margin-right: 8px"
-            ></i
-            >{{ takeListData.takeListName }}</span
-          >
+          <span class="alarm">
+            <font-awesome-icon :icon="['fas', 'bell']" size="xs" style="color: #FFD43B;" />
+            <span>{{ takeListData.takeListName }}</span>
+          </span>
         </button>
       </div>
-      <div>
-        <button class="rounded-button" style="height: 28px">
-          <span
-            ><i
-              class="fa-solid fa-circle-plus fa-lg icon"
-              style="color: #1454b5; margin: 2px 15px"
-            ></i
-          ></span>
-        </button>
-      </div>
+
+      
+      
     </div>
 
     <div class="menu">
@@ -98,6 +113,8 @@ import List from "./components/List.vue";
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { takelistStore } from "@/stores/takelist";
+import logo from "@/assests/img/Group.png";
+
 const store = takelistStore();
 
 // 현재 복용중인 리스트
@@ -114,6 +131,20 @@ onMounted(async () => {
   await store.getTakeListPageDatas();
   console.log(store.takelistpagedatas);
 });
+
+// 척척약사의 조언 
+const advice = ref([
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+
+])
 </script>
 
 <style scoped>
@@ -123,11 +154,14 @@ ol {
 
 .alarms {
   padding: 15px 10px;
+  margin-top: 20px;
   background-color: #c0e6fc;
   display: flex;
   width: 300px;
-  flex-wrap: wrap;
+  height: 35px;
+  white-space: nowrap;
   gap: 10px;
+  overflow-x: auto; 
 }
 .menu {
   display: flex;
@@ -251,10 +285,11 @@ button {
   width: 25px;
   height: 25px;
 }
+
+.alarm > *:first-child {
+  margin-right: 8px;
+}
 .rounded-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   border: none;
   background-color: white;
   padding: 5px 15px;
@@ -263,5 +298,72 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s;
+}
+
+/* 척척약사의 조언 CSS */
+.carousel__slide {
+  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  border-radius: 12px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.carousel__viewport {
+  perspective: 2000px;
+}
+
+.carousel__track {
+  transform-style: preserve-3d;
+}
+
+.carousel__slide--sliding {
+  transition: 0.5s;
+}
+
+.carousel__slide {
+  opacity: 0.9;
+  transform: rotateY(-20deg) scale(0.9);
+}
+
+.carousel__slide--active ~ .carousel__slide {
+  transform: rotateY(20deg) scale(0.9);
+}
+
+.carousel__slide--prev {
+  opacity: 1;
+  transform: rotateY(-10deg) scale(0.95);
+}
+
+.carousel__slide--next {
+  opacity: 1;
+  transform: rotateY(10deg) scale(0.95);
+}
+
+.carousel__slide--active {
+  opacity: 1;
+  transform: rotateY(0) scale(1.1);
+}
+.carousel__item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.carousel__item img {
+  max-width: 20%;
+  margin-left: -60%;
+  margin-top: 5px;
+  /* height: auto; */
+}
+
+.carousel__text {
+  margin-top: 10px;
+  text-align: left;
+  font-size: 10px;
+  margin-left: -34%;
+  margin-right: 10px;
+}
+.carousel__icon {
+  display: none;
 }
 </style>
