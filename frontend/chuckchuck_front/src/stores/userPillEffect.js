@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import { instance } from "@/util/mainAxios";
+import { isStaticProperty } from "vue/compiler-sfc";
 
 export const userPillEffectStore = defineStore("userPillEffect", () => {
 
@@ -27,11 +28,24 @@ export const userPillEffectStore = defineStore("userPillEffect", () => {
         }
     }
 
+    const updateMemo = async (userPillEffectId, memo) => {
+        try {
+            const response = await instance.put('/effects/pill/memo', {
+                userPillEffectId: userPillEffectId,
+                memo: memo
+              });
+            
+        } catch (error) {
+            console.log("error", error);
+        }
+    }
+
     return {
         sideEffect,
         stop,
         effect,
         userPillEffectDtoList,
-        getUserPillEffectInfo
+        getUserPillEffectInfo,
+        updateMemo
     }
 })

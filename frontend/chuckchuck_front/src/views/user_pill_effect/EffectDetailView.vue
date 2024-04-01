@@ -21,7 +21,7 @@
     </div>
     <div class="appointment-section">
       <strong class="title-style">TAG</strong>
-      <div class="used-tag-list">
+      <div class="used-tag-list" @click="tagClick(true)">
         <div class="badge-list">
           <div class="badge-custom" v-for="(tag, index) in usedTags" :key="index">
             <Badge
@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <div class="unused-tag-list">
+      <div class="unused-tag-list" @click="tagClick(false)">
         <div class="badge-custom" v-for="(tag, index) in unUsedTags" :key="index">
           <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
         </div>
@@ -44,7 +44,7 @@
       <strong class="title-style">MEMO</strong>
 
       <div class="memo">
-        <textarea class="memo-input" type="text" v-model="memo" placeholder="메모를 입력하세요" maxlength="100" />
+        <textarea class="memo-input" type="text" v-model="memo" @change="memoUpdate" placeholder="메모를 입력하세요" maxlength="100" />
       </div>
     </div>
   </div>
@@ -73,12 +73,11 @@ const userPillEffectDtoList = ref('');
 const sideEffectList = ref([]);
 const stopList = ref([]);
 const effectList = ref([]);
-
 const pillName = ref('');
 const company = ref('');
-
 const usedTags = ref('');
 const unUsedTags = ref('');
+const userPillEffectId = ref();
 const memo = ref('');
 
 onMounted(async () => {
@@ -109,11 +108,11 @@ const clickFace = (imageId) => {
         const currentCategoryId = currentImage.dataset.value - 1;
         const userPillEffect = userPillEffectDtoList.value[currentCategoryId];
         
+        userPillEffectId.value = userPillEffect.userPillEffectId;
         currentImage.style.opacity = "1.0";
         usedTags.value = userPillEffect.usedTags;
         unUsedTags.value = userPillEffect.unUsedTags;
         memo.value = userPillEffect.memo;
-        console.log('============');
       }
     } else { currentImage.style.opacity = "0.5"; }
   });
@@ -132,6 +131,21 @@ const getBackgroundColor = (categoryId) => {
       return "#ffffff"; // 기본값은 흰색
   }
 };
+
+
+// 메모 업데이트
+const memoUpdate = (event) => {
+  console.log('입력 값이 변경되었습니다:', event.target.value);
+  userPillEffect.updateMemo(userPillEffectId.value, memo.value)
+};
+
+const tagClick = (param) => {
+  if (param === true) {
+    console.log("true!!!!!");
+  } else {
+    console.log('false!!!!!');
+  }
+}
 
 </script>
 
