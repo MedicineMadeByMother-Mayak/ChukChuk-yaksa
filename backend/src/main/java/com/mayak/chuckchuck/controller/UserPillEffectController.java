@@ -1,10 +1,7 @@
 package com.mayak.chuckchuck.controller;
 
 import com.mayak.chuckchuck.domain.User;
-import com.mayak.chuckchuck.dto.request.RegistTagRequest;
-import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
-import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
-import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
+import com.mayak.chuckchuck.dto.request.*;
 import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
@@ -77,6 +74,19 @@ public class UserPillEffectController {
     }
 
     /**
+     * 기존태그 사용하기
+     * @author 최서현
+     * @param
+     */
+    @PostMapping("/pill/tag")
+    public ResponseEntity<Void> useRegistedTag(@AuthenticationPrincipal UserPrincipal principal, @RequestBody UseRegistedTagRequest request) {
+        User user = commonService.getUserOrException(principal);
+        userPillEffectService.useRegistedTag(user, request);
+
+        return ResponseEntity.ok().build();
+    }
+
+    /**
      * 약효기록 추가 (있으면 가져오기, 없으면 추가)
      * @author 최진학
      * @param:
@@ -110,11 +120,11 @@ public class UserPillEffectController {
      * @return:
      */
     @PostMapping("/tag")
-    public ResponseEntity<Void> registTag(@AuthenticationPrincipal UserPrincipal principal,@Valid @RequestBody RegistTagRequest registTagRequest) {
+    public ResponseEntity<Long> registTag(@AuthenticationPrincipal UserPrincipal principal,@Valid @RequestBody RegistTagRequest registTagRequest) {
         User user = commonService.getUserOrException(principal);
-        tagService.reigstTag(user, registTagRequest.tagName(), registTagRequest.categoryId());
+        Long id = tagService.reigstTag(user, registTagRequest.tagName(), registTagRequest.categoryId());
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(id);
     }
 
     /**

@@ -29,6 +29,14 @@ public class UserPillEffectToTag {
     @Embedded
     private CommonData commonData = new CommonData();;
 
+    private UserPillEffectToTag(Tag tag, UserPillEffect userPillEffect){
+        this.tag = tag;
+        this.userPillEffect = userPillEffect;
+    }
+    public static UserPillEffectToTag createUserPillEffectToTag(Tag tag, UserPillEffect userPillEffect){
+        return new UserPillEffectToTag(tag, userPillEffect);
+    }
+
     public void updateUserPillEffectToTag (UserPillEffect userPillEffect, Tag tag, CommonData commonData) {
         this.userPillEffect = userPillEffect;
         this.tag = tag;

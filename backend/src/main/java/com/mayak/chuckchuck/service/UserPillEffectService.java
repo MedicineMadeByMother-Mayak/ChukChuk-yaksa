@@ -5,22 +5,21 @@ import com.mayak.chuckchuck.dto.CategoryDto;
 import com.mayak.chuckchuck.dto.PagingDto;
 import com.mayak.chuckchuck.dto.PillDetailDto;
 import com.mayak.chuckchuck.dto.TagDto;
-import com.mayak.chuckchuck.dto.request.UserPillEffectListAndSearchRequest;
-import com.mayak.chuckchuck.dto.request.UserPillEffectMemoRequest;
-import com.mayak.chuckchuck.dto.request.UserPillEffectRegistInfoRequest;
+import com.mayak.chuckchuck.dto.request.*;
 import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
+import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
+import com.mayak.chuckchuck.exception.RestApiException;
 import com.mayak.chuckchuck.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.mayak.chuckchuck.domain.UserPillEffectToTag.createUserPillEffectToTag;
 
 @Service
 @Transactional
@@ -271,5 +270,20 @@ public class UserPillEffectService {
         }
 
         return new UserPillEffectListAndSearchResponse(totalPillDtoList, siedEffectPillDtoList, stopPillDtoList, effectPillDtoList);
+    }
+
+    /**
+     * 기존태그를 현재상태에 추가
+     * @author 최서현
+     * @param
+     */
+    public void useRegistedTag(User user, UseRegistedTagRequest request) {
+        //추가하려는 Tag 찾기
+        Tag tag = tagRepository.findById(request.tagId()).orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));
+        //연결하려는 UserPillEffect찾기 -> user, category, pill 정보가 필요함
+        UserPillEffect userPillEffect = userPillEffectRepository.findByUserAndCategoryAndPill_pillId(user, tag.getCategory(),
+                request.pillId()).orElseThrow(() -> new RestApiException(CommonErrorCode.RESOURCE_NOT_FOUND));;
+
+        userPillEffectToTagRepository.save(UserPillEffectToTag.createUserPillEffectToTag(tag, userPillEffect));
     }
 }

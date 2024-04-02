@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserPillEffectRepository extends JpaRepository<UserPillEffect, Long> {
     List<UserPillEffect> findByUserAndPill_pillId(User user, Long pillId);
@@ -12,4 +13,6 @@ public interface UserPillEffectRepository extends JpaRepository<UserPillEffect, 
     List<UserPillEffect> findByUserAndCategory_CategoryIdOrderByCommonData_createDate(User user, Long categoryId);
     List<UserPillEffect> findByUserAndCategory_CategoryId(User user, Long categoryId);
     List<UserPillEffect> findByUser(User user, Pageable pageable);
+
+    Optional<UserPillEffect> findByUserAndCategoryAndPill_pillId(User user, Category category, Long pillId);
 }

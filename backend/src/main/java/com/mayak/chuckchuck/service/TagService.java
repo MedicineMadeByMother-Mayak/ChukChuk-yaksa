@@ -25,11 +25,12 @@ public class TagService {
      * @param categoryId (등록될 카테고리 ID)
      * @return
      */
-    public void reigstTag(User user, String tagName, Long categoryId) {
+    public Long reigstTag(User user, String tagName, Long categoryId) {
 
         Category category = categoryRepository.findById(categoryId).get();
         Tag tag = Tag.createTag(tagName, user, category);
 
-        tagRepository.save(tag);
+        Tag savedTag = tagRepository.save(tag);
+        return savedTag.getTagId();
     }
 }
