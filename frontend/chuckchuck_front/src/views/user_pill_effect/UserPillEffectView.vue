@@ -34,6 +34,9 @@
   </HeaderForm>
   <!-- {{ pilldatas }} -->
   <div class="pill-content">
+    <div style="margin: 5px 10px; caret-color: transparent">
+      전체 : {{ counts }}
+    </div>
     <div
       v-for="(pillData, index) in pilldatas"
       :key="`pill-data-${index}`"
@@ -72,21 +75,24 @@ import { ref, computed, onMounted, watchEffect } from "vue";
 import AddModalForm from "@/common/Form/AddModalForm.vue";
 import { pillEffectStore } from "@/stores/pilleffect";
 
+const counts = ref(0);
 const msg = ref(false); //모달창 관리하는 변수 ref로 반드시 설정해주세요
 const categoryflag = ref(true);
 const tabnum = ref(0);
 const pilleffectstore = pillEffectStore();
 const pilldatas = ref({});
+const page = ref(1);
 
 function setCategoryflagData(num) {
   categoryflag.value = 0 == num;
   tabnum.value = num;
-  if (num == 0) {
+  if (num === 0 && pilleffectstore.pillEffectDatas.totalPillDtoList) {
     pilldatas.value = pilleffectstore.pillEffectDatas.totalPillDtoList.sort(
       (a, b) => {
         return a.name.localeCompare(b.name); // pill_name을 기준으로 정렬
       }
     );
+    counts.value = pilleffectstore.pillEffectDatas.totalPillDtoListCount;
     pilldatas.value.forEach((pilldata, pillindex) => {
       pilldata.categories = [];
       pilleffectstore.pillEffectDatas.siedEffectPillDtoList.forEach(
@@ -113,16 +119,19 @@ function setCategoryflagData(num) {
     });
   } else if (num === 3) {
     pilldatas.value = pilleffectstore.pillEffectDatas.siedEffectPillDtoList;
+    counts.value = pilleffectstore.pillEffectDatas.siedEffectPillDtoListCount;
   } else if (num === 2) {
     pilldatas.value = pilleffectstore.pillEffectDatas.stopPillDtoList;
+    counts.value = pilleffectstore.pillEffectDatas.stopPillDtoListCount;
   } else {
     pilldatas.value = pilleffectstore.pillEffectDatas.effectPillDtoList;
+    counts.value = pilleffectstore.pillEffectDatas.effectPillDtoListCount;
   }
 }
 
 const effectData = computed(() => pilleffectstore.pillEffectDatas);
 
-watchEffect(async () => {
+watchEffect(() => {
   if (effectData.value) {
     setCategoryflagData(tabnum.value);
   }
@@ -133,7 +142,8 @@ function openModal() {
 }
 
 onMounted(async () => {
-  await pilleffectstore.getpillEffectDatas("");
+  await pilleffectstore.getpillEffectDatas("", page.value);
+  counts.value = pilleffectstore.pillEffectDatas.totalPillDtoListCount;
 });
 </script>
 
