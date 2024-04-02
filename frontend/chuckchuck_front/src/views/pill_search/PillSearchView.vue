@@ -220,7 +220,6 @@ function input(event) {
 }
 
 .keyword {
-  width: 65%;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
