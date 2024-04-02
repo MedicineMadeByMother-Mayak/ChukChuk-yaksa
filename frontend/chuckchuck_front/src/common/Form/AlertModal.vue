@@ -29,8 +29,6 @@ const click = () => {
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
-
 const props = defineProps({
   text: {
     type: String,
