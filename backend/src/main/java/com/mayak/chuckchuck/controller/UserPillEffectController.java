@@ -33,10 +33,6 @@ public class UserPillEffectController {
      * @param:
      * @return userPillSideEffectListResponse(부작용 리스트) or userPillEffectListAndSearchResponse(조회 및 검색)
      */
-//    public ResponseEntity<Object> getUserPillEffectListAndSearch(@AuthenticationPrincipal UserPrincipal principal,
-//                                                                 @PathVariable Long categoryId,
-//                                                                 @PathVariable String keyword,
-//                                                                 @PathVariable String page) {
     @GetMapping("")
     public ResponseEntity<Object> getUserPillEffectListAndSearch(@AuthenticationPrincipal UserPrincipal principal,
                                                                  @RequestParam("categoryid") Long categoryId,

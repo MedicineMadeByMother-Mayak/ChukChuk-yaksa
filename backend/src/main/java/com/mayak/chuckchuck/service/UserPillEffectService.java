@@ -17,10 +17,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional
@@ -199,7 +196,7 @@ public class UserPillEffectService {
     public UserPillEffectListAndSearchResponse getUserPillEffectListAndSearch(User user, UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
         Long categoryId = userPillEffectListAndSearchRequest.categoryId();
         String keyword = userPillEffectListAndSearchRequest.keyword();
-        String page = userPillEffectListAndSearchRequest.page();
+        int page = Integer.parseInt(userPillEffectListAndSearchRequest.page());
 
         // 값 담을 Dto list 생성
         List<PillDetailDto> totalPillDtoList = new ArrayList<>();
@@ -207,16 +204,21 @@ public class UserPillEffectService {
         List<PillDetailDto> stopPillDtoList = new ArrayList<>();
         List<PillDetailDto> effectPillDtoList = new ArrayList<>();
 
-        PagingDto pagingDto = new PagingDto(1, "createDate");
+        PagingDto pagingDto = new PagingDto(page, "commonData.createDate");
 
         // if : 키워드 X (전체 리스트 조회)
         // else : 키워드 O (검색)
-        if (keyword == null) {
+        if (Objects.equals(keyword, "")) {
             List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUser(user, pagingDto.getPageable());
 
             for (UserPillEffect temp : userPillEffectList) {
                 long currentCategoryId = temp.getCategory().getCategoryId();
-                PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp);
+
+                List<UserPillEffectToTag> userPillEffectToTags = userPillEffectToTagRepository.findByUserPillEffect(temp);
+
+                List<TagDto> usedTagDtos = TagDto.fromEntity(userPillEffectToTags);
+
+                PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp, usedTagDtos);
 
                 // 전체 목록에는 항상 추가
                 totalPillDtoList.add(currentPillDto);
@@ -267,9 +269,11 @@ public class UserPillEffectService {
             System.out.println(siedEffectPillDtoList);
             System.out.println(stopPillDtoList);
             System.out.println(effectPillDtoList);
-
         }
 
-        return new UserPillEffectListAndSearchResponse(totalPillDtoList, siedEffectPillDtoList, stopPillDtoList, effectPillDtoList);
+        return new UserPillEffectListAndSearchResponse(totalPillDtoList.size(), totalPillDtoList,
+                                                        siedEffectPillDtoList.size(), siedEffectPillDtoList,
+                                                        stopPillDtoList.size(), stopPillDtoList,
+                                                        effectPillDtoList.size(), effectPillDtoList);
     }
 }
