@@ -106,8 +106,9 @@ public class UserPillEffectController {
      * @return:
      */
     @PostMapping("/tag")
-    public ResponseEntity<Void> registTag(@RequestBody RegistTagRequest registTagRequest) {
-        tagService.reigstTag(registTagRequest.tagName(), registTagRequest.categoryId());
+    public ResponseEntity<Void> registTag(@AuthenticationPrincipal UserPrincipal principal,@Valid @RequestBody RegistTagRequest registTagRequest) {
+        User user = commonService.getUserOrException(principal);
+        tagService.reigstTag(user, registTagRequest.tagName(), registTagRequest.categoryId());
 
         return ResponseEntity.ok().build();
     }
