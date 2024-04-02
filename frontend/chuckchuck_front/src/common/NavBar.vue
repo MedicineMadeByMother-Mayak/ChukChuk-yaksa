@@ -27,9 +27,9 @@
 
 <style scoped>
 .nav-bar {
-  position: fixed;
-  bottom: 25px;
-  left: 50%;
+  position: absolute;
+  bottom: 0px;
+  left: 160px;
   transform: translateX(-50%);
   width: 280px;
   height: 55px;

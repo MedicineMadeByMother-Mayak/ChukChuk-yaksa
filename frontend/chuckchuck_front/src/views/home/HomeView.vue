@@ -98,7 +98,7 @@ store.getUserInfo(); // 유저 이름 가져오기 위함
 /* 본문영역 */
 .basic-background {
   background-color: #f9f9f9;
-  height: 100vh; /* 100vb가 아닌 100vh로 수정 */
+  height: 100%; /* 100vb가 아닌 100vh로 수정 */
   display: flex;
   justify-content: top; /* 가로 가운데 정렬 */
   flex-direction: column; /* 요소들을 세로로 정렬 */
