@@ -118,9 +118,9 @@ public class TakeListController {
      * @return:
      */
     @GetMapping("/alarms")
-    public ResponseEntity<ActiveAlarmListResponse> getAlarmList(@AuthenticationPrincipal UserPrincipal principal){
+    public ResponseEntity<ActiveAlarmListResponse> getAlarmList(@AuthenticationPrincipal UserPrincipal principal, @RequestParam("isAlarm") Boolean isAlarm){
         User user = commonService.getUserOrException(principal);
-        ActiveAlarmListResponse activeAlarmListResponse = takeListService.getAlarmList(user);
+        ActiveAlarmListResponse activeAlarmListResponse = takeListService.getAlarmList(user, isAlarm);
         return ResponseEntity.ok(activeAlarmListResponse);
     }
 
