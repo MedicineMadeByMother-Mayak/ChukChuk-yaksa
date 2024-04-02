@@ -1,8 +1,8 @@
 <!-- 사용법 RouterLink편
 <template>
     <ModalForm v-model="msg" :modalData="[
-    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
-    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
+    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'}],
+    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'}],
     ]" /> 
 </template> 
 
@@ -14,17 +14,20 @@
 
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">
-    <div class="modal">
+    <div class="modal" style="padding: 10px">
       <ul class="modal-menu">
         <li v-for="(item, index) in modalData" :key="index">
           <RouterLink
-            v-if="item[1]"
-            :to="{ name: item[2].Link, params: item[2].params }"
+            v-if="item[2]"
+            :to="{ name: item[3].Link, params: item[3].params }"
             class="router-link-item"
           >
-            <div style="margin: 9px; font-size: 14px">{{ item[0] }}</div>
+            <div style="width: 100%; height: 100%; font-size: 14px">
+              <strong>{{ item[0] }}</strong
+              >{{ item[1] }}
+            </div>
           </RouterLink>
-          <hr style="margin: 0px 10px" v-if="index < modalData.length - 1" />
+          <hr v-if="index < modalData.length - 1" />
         </li>
       </ul>
     </div>
@@ -59,6 +62,7 @@ const closeModal = () => {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
+  z-index: 9999;
 }
 
 .modal {
@@ -79,7 +83,6 @@ const closeModal = () => {
   text-align: center;
   background: white;
   color: black;
-  font-weight: bold;
   cursor: pointer;
 }
 
@@ -100,5 +103,6 @@ const closeModal = () => {
 .router-link-item {
   text-decoration: none;
   color: inherit;
+  padding: 1px 1px;
 }
 </style>
