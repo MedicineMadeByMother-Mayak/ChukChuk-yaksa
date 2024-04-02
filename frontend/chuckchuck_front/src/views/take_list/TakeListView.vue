@@ -9,7 +9,7 @@
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
           <div class="carousel__img">
-            <img :src="item.imageUrl" alt="Logo"/>
+            <img :src="item.img" alt="Logo"/>
           </div>
           <div class="carousel__text">
             <div style="font-size: 12px;"><strong>{{ item.title }}</strong></div>
@@ -25,6 +25,7 @@
       </Slide>
       <template #addons>
         <!-- <Navigation /> -->
+        <Pagination />
       </template>
     </Carousel>
     
@@ -33,27 +34,29 @@
 
       <!-- 알람 추가 버튼 -->
       <div>
-        <button class="rounded-button">
+        <button class="rounded-button" @click="showModal = true">
           <span
             ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" /></span>
         </button>
+        
+        <!-- 알람 모달 -->
+        <div v-if="showModal">
+            <AlarmModal v-model="showModal" :modalData="modalData" />
+        </div>
       </div>
       
       <!-- 등록된 알람 리스트 -->
       <div
-        v-for="(takeListData, index) in currentTakeList"
+        v-for="(alarm, index) in alarmstore.alarmList"
         :key="`pill-date-${index}`"
       >
         <button class="rounded-button">
           <span class="alarm">
             <font-awesome-icon :icon="['fas', 'bell']" size="xs" style="color: #FFD43B;" />
-            <span>{{ takeListData.takeListName }}</span>
+            <span>{{ alarm.takeListName }}</span>
           </span>
         </button>
       </div>
-
-      
-      
     </div>
 
     <div class="menu">
@@ -123,8 +126,10 @@ import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import "@/assests/css/carousel.css";
 import { takelistStore } from "@/stores/takelist";
+import { alarmStore } from '@/stores/alarm';
 import logo from "@/assests/img/Group.png";
-
+import AlarmModal from '@/views/take_list/components/AlarmModal.vue';
+const alarmstore = alarmStore();
 const store = takelistStore();
 // ----------------------------------------
 const isTakeListModalOpen = ref(false)
@@ -163,21 +168,27 @@ const finishedTakeList = computed(() =>
   store.takelistpagedatas.filter((item) => item.isFinished)
 );
 
+const showModal = ref(false);
+const modalData = [
+  ['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]
+];
+
 onMounted(async () => {
   await store.getTakeListPageDatas();
+  alarmstore.getAlarmList();
 });
 
 // 척척약사의 조언 
 const advice = ref([
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { imageUrl: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
+  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
 
 ])
 </script>
