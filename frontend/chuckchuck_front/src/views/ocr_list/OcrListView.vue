@@ -1,5 +1,6 @@
 <template>
-  <section>
+  <RouterView />
+  <section v-if="$route.path === '/ocrlist'">
     <div class="container">
       <!--선택화면 -->
       <OcrSelectView v-if="!isLoading" class="bottom-componenet" />
@@ -24,10 +25,10 @@ import Wave from "@/common/Wave.vue";
 import Footer from "@/common/Footer.vue";
 import OcrSelectView from "@/views/ocr_list/OcrSelectView.vue";
 import FilmingView from "@/views/ocr_list/FilmingView.vue";
-
 import { ref, watch, computed } from "vue";
 import { useRouter } from "vue-router";
 import { ocrListStore } from "@/stores/ocrList";
+import { RouterLink, RouterView } from "vue-router";
 
 const router = useRouter();
 const store = ocrListStore();
@@ -35,6 +36,10 @@ const store = ocrListStore();
 const isLoading = ref(false);
 const analysisType = ref();
 const text = ref();
+
+import { getCurrentInstance } from "vue";
+
+const instance = getCurrentInstance();
 
 // 사진이 첨부되면 isLoading=true로 바꿔 로딩화면 띄우기
 // 분석이 완료되면 분석화면으로 push하기

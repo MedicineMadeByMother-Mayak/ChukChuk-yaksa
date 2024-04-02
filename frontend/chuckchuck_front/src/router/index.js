@@ -30,7 +30,6 @@ import UserPillEffectView from "@/views/user_pill_effect/UserPillEffectView.vue"
 import EffectDetailView from "@/views/user_pill_effect/EffectDetailView.vue";
 import LoadingView from "@/views/home/LoadingView.vue";
 import RegistInfoView from "@/views/home/RegistInfoView.vue";
-import testingPage from "@/common/testingPage.vue";
 
 const routes = [
   {
@@ -50,31 +49,34 @@ const routes = [
     path: "/ocrlist",
     name: "ocrlist",
     component: OcrListView,
-  },
-
-  {
-    //진단서 촬영 결과
-    path: "/ocrlist/diagnosisresult",
-    name: "diagnosisresult",
-    component: DiagnosisResultView,
-  },
-  {
-    //약봉투 촬영 결과
-    path: "/ocrlist/pillbagresult",
-    name: "pillbagresult",
-    component: PillBagResultView,
-  },
-  {
-    //약국 검색 메인페이지
-    path: "/map",
-    name: "map",
-    component: MapView,
+    children: [
+      {
+        //진단서 촬영결과
+        path: "dianosis",
+        name: "diagnosisresult",
+        component: DiagnosisResultView,
+      },
+      {
+        //약봉투 촬영결과
+        path: "pill-bag",
+        name: "pillbagresult",
+        component: PillBagResultView,
+      },
+    ],
   },
   {
-    //약국 검색창 페이지
-    path: "/map/pharmacysearch",
+    //약국검색 - 약검색 페이지
+    path: "/pharmacy",
     name: "pharmacysearch",
     component: PharmacySearchView,
+    children: [
+      {
+        //약국 검색창 페이지
+        path: "result",
+        name: "map",
+        component: MapView,
+      },
+    ],
   },
   {
     //약 사진으로 검색
@@ -84,16 +86,17 @@ const routes = [
   },
   {
     //약 이름으로 검색
-    path: "/pillsearch",
+    path: "/pill",
     name: "pillsearch",
     component: PillSearchView,
   },
   {
-    //약 상세정보 페이지
-    path: "/pillsearch/pillsearchdetail",
+    //약 상세
+    path: "/pill/:id",
     name: "pilldetail",
     component: PillSearchDetailView,
   },
+
   {
     //설정
     path: "/setting",
@@ -106,63 +109,61 @@ const routes = [
     name: "TakeList",
     component: TakeListView,
   },
+
   {
     //문진표
-    path: "/usermedicalinfo",
+    path: "/medical-info",
     name: "usermedicalinfo",
     component: UserMedicalInfoView,
   },
-  {
-    //처방내역
-    path: "/usermedicalinfo/pillbag",
-    name: "pillbaghistory",
-    component: PillBagHistoryView,
-  },
+
   {
     //진단내역
-    path: "/usermedicalinfo/diagnosishistory",
+    path: "/medical-info/diagnosishistory",
     name: "diagnosishistory",
     component: DiagnosisHistoryView,
   },
+
   {
-    path: "/test",
-    name: "test",
-    component: testView,
+    //처방내역
+    path: "/medical-info/pillbag",
+    name: "pillbaghistory",
+    component: PillBagHistoryView,
   },
+
   {
     //약효기록
-    path: "/userpilleffect",
+    path: "/user-pill-effect",
     name: "userpilleffect",
     component: UserPillEffectView,
   },
+
   {
-    path: "/userpilleffect/effectdetail",
+    //약효기록 상세
+    path: "/user-pill-effect/:pillId",
     name: "/effectdetail",
     component: EffectDetailView,
   },
+
   {
     // 로그인 화면
     path: "/login",
     name: "login",
     component: LoginView,
+    meta: { hideNavBar: true }
   },
   {
     // 로딩 화면
     path: "/loading",
     name: "loading",
     component: LoadingView,
+    meta: { hideNavBar: true }
   },
   {
     // 개인정보등록
     path: "/registinfo",
     name: "registinfo",
     component: RegistInfoView,
-  },
-  {
-    // 모달 등 공용 컴포넌트 사용 예시
-    path: "/tt",
-    name: "testingpage",
-    component: testingPage,
   },
 ];
 
@@ -174,7 +175,12 @@ const router = createRouter({
 // 전역 네비게이션 가드 설정
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
-  if (!token && to.name !== "login" && to.name !== "loginSuccess") {
+  if (
+    !token &&
+    to.name !== "login" &&
+    to.name !== "loginSuccess" &&
+    to.name !== "loading"
+  ) {
     next({ name: "login" });
   } else {
     next();

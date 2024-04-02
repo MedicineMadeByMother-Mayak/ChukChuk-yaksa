@@ -1,6 +1,7 @@
 <template>
   <!-- 약국검색창 -->
-  <div class="basic-background-color">
+  <RouterView />
+  <div v-if="$route.path === '/pharmacy'" class="basic-background-color">
     <div class="header-container">
       <HeaderFormOnlyString :title="'약국검색'" />
       <transition name="slide">
@@ -24,7 +25,7 @@
       </div>
       <SearchBar
         :value="keyword"
-        @input="input"
+        @keyup="input"
         :width="'90%'"
         :height="'55px'"
         :iconWidth="'30px'"
@@ -55,6 +56,7 @@
           :type="pill.type"
           :imageUrl="pill.imageUrl"
         />
+        <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
       </div>
     </div>
   </div>
@@ -66,27 +68,83 @@ import logo from "@/assests/img/logo.png";
 import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
 import SearchBar from "@/common/SearchBar.vue";
 import PharmacyPill from "@/common/PharmacyPill.vue";
+import Observer from "@/views/pharmacy_search/components/Observer.vue";
+import _ from "lodash";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { instance } from "@/util/mainAxios";
+import { RouterLink, RouterView } from "vue-router";
 
 const router = useRouter();
 const keyword = ref("");
 const count = ref(0);
 const list = ref([]);
+const page = ref(1);
 
-async function input(event) {
-  keyword.value = event.target.value;
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+  // 초기 로드 시 스크롤 위치 확인
+  loadMoreData;
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// 더 많은 데이터 로딩
+async function loadMoreData() {
+  if (count.value <= list.value.length) return;
+  // 페이지 번호 증가
+  page.value++;
   const { data } = await instance.get("/pill/search", {
     params: {
-      keyword: event.target.value,
-      page: 1,
+      keyword: keyword.value,
+      page: page.value,
+    },
+  });
+  count.value = data.count;
+  list.value = [...list.value, ...data.pills];
+}
+
+// 스크롤 위치를 저장할 반응형 참조
+const isScrolled = ref(false);
+
+// 스크롤 이벤트 핸들러
+function handleScroll() {
+  isScrolled.value = window.scrollY > 0;
+}
+
+async function input(event) {
+  if (keyword.value) return debouncedInput(event.target.value);
+  list.value = [];
+  keyword.value = event.target.value;
+  page.value = 1;
+  const { data } = await instance.get("/pill/search", {
+    params: {
+      keyword: keyword.value,
+      page: page.value,
     },
   });
   list.value = data.pills;
   count.value = data.count;
-  return data.pills;
+  return data;
 }
+
+// 디바운스 함수 정의
+const debouncedInput = _.debounce(async (value) => {
+  list.value = [];
+  keyword.value = value;
+  page.value = 1;
+  const { data } = await instance.get("/pill/search", {
+    params: {
+      keyword: keyword.value,
+      page: page.value,
+    },
+  });
+  list.value = data.pills;
+  count.value = data.count;
+  return data;
+}, 200);
 
 const click = (pillId) => {
   sessionStorage.setItem("pillId", pillId);
@@ -221,5 +279,6 @@ const click = (pillId) => {
   gap: 13px;
   display: flex;
   flex-direction: column;
+  padding-bottom: 28%;
 }
 </style>

@@ -27,16 +27,7 @@
       />
     </div>
   </div>
-  <div
-    style="
-      position: relative;
-      text-align: center;
-      background: linear-gradient(60deg, #3183ff 0%, #86e7ee 100%);
-      color: black;
-      margin-bottom: 10px;
-      height: 117px;
-    "
-  ></div>
+  <Footer></Footer>
 </template>
 
 <script setup>
