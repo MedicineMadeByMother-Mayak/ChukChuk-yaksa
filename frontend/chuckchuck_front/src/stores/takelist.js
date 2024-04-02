@@ -5,6 +5,7 @@ import { instance } from "@/util/mainAxios";
 export const takelistStore = defineStore("takelist", () => {
   const takelistdatas = ref([]);
   const takelistpagedatas = ref([]);
+  const currentTakeList = ref();
 
   // 문진표 조회
   const getUserMedicalInfoTakelist = async () => {
