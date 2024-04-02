@@ -2,7 +2,7 @@
   <div class="user-madical-info">
     <div class="header">
       <h3 style="margin: 10px">문진표</h3>
-      <p>본인의 약국에 프로필을 보여주고 더 정확한 진단을 받아보세요.</p>
+      <p>병원이나 약국에 프로필을 보여주고 더 정확한 진단을 받아보세요.</p>
       <div class="profile-picture">
         <img :src="imgUrl" alt="프로필 사진" />
       </div>
