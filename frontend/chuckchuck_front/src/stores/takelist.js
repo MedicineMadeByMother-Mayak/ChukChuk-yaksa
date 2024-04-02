@@ -27,10 +27,22 @@ export const takelistStore = defineStore("takelist", () => {
       });
 
       takelistpagedatas.value = data.results;
+      return data;
     } catch (error) {
       console.log("복용리스트 GET 가져오지 못했습니다", error);
     }
   };
+
+  // 복용리스트 생성 및 약추가
+  async function createAndAddPill(pills) {
+    try {
+      const { data } = await instance.post(`/take-list`, {
+        pills,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // 복용리스트 약 추가
   async function addPill(takeListId, pills) {
@@ -88,6 +100,7 @@ export const takelistStore = defineStore("takelist", () => {
     getUserMedicalInfoTakelist,
     takelistpagedatas,
     getTakeListPageDatas,
+    createAndAddPill,
     addPill,
     rename,
     deletePill,

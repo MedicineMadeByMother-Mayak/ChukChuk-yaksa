@@ -32,26 +32,34 @@ const msg = ref(true);
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">
     <div class="modal">
-      <div class="modal-title">
-        <img src="@/assests/img/Group.png" />
-        <span><strong>추가할 리스트를 선택하세요.</strong></span>
+      <div class="modal-menu">
+        <div class="modal-title">
+          <img src="@/assests/img/Group.png" />
+          <p>추가할 리스트를 선택하세요.</p>
+        </div>
+        <ul>
+          <li
+            v-for="(item, index) in modalData"
+            :key="item[0]"
+            @click.stop="select(item[0])"
+          >
+            <div class="router-link-item">
+              <input
+                type="radio"
+                class="radio-button"
+                :id="'radio_' + item[0]"
+                name="selecteListId"
+                :value="item[0]"
+                v-model="selecteListId"
+              />
+              <label :for="'radio_' + item[0]">{{ item[1] }}</label>
+            </div>
+          </li>
+        </ul>
       </div>
-      <ul class="modal-menu">
-        <li v-for="(item, index) in modalData" :key="index">
-          <div class="router-link-item">
-            <input
-              type="radio"
-              class="radio-button"
-              :id="'radio_' + index"
-              name="selecteListId"
-              :value="index"
-              v-model="selecteListId"
-            />
-            <label :for="'radio_' + index">{{ item[1] }}</label>
-          </div>
-        </li>
-        <button class="modal-button">save</button>
-      </ul>
+      <button @click="$emit(`save`, selecteListId)" class="modal-button">
+        save
+      </button>
     </div>
   </div>
 </template>
@@ -60,12 +68,17 @@ const msg = ref(true);
 import { ref } from "vue";
 const selecteListId = ref(null); // 선택된 항목을 저장하는 변수
 const showModal = defineModel();
+defineEmits(["save"]);
 const props = defineProps({
   modalData: {
     type: Array,
     default: [[1, "원하는 텍스트 넣으세요"]],
   },
 });
+
+function select(Id) {
+  selecteListId.value = Id;
+}
 
 const closeModal = () => {
   showModal.value = !showModal.value;
@@ -83,36 +96,63 @@ const closeModal = () => {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
+  z-index: 9999;
 }
 
 .modal {
   background: white;
   width: 80%;
-  max-width: 265px;
+  max-height: 50%;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18%;
   overflow: hidden;
+}
+
+.modal-menu {
+  margin: 0;
+  margin-top: 10%;
+  padding: 0;
+  height: 100%;
+}
+
+.modal-menu > ul {
+  height: 200px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: scroll;
+}
+
+.modal-menu li {
+  background: white;
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .modal-title {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 25px 0 20px -10px;
+  margin-bottom: 8%;
   font-weight: bold;
   font-size: 13px;
   color: rgb(40, 40, 40);
 }
 
-.modal-title img {
-  width: 15px;
-  margin: 0 7px 0 0;
+.modal-title > p {
+  font-size: medium;
+  font-weight: 1000;
+  margin: 0;
+  margin: 0;
 }
 
-.modal-menu li {
-  background: white;
-  font-size: 11px;
-  display: flex;
-  margin: 0 0 12px 0;
+.modal-title img {
+  width: 20px;
+  margin: 0 7px 0 0;
 }
 
 .router-link-item {
@@ -128,16 +168,16 @@ const closeModal = () => {
 }
 
 .modal-button {
+  border: none; /* border 없음 */
+  background-color: navy; /* 남색 배경 */
+  border-radius: 5px;
+  color: white;
+  width: 80%;
+  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 25px;
-  width: 80%;
-  border: none; /* border 없음 */
-  background-color: navy; /* 남색 배경 */
-  color: white;
-  border-radius: 3px;
-  margin: 21px 0 28px 0;
-  padding: 0px;
+  margin: 2% 0 8% 0;
+  padding: 2%;
 }
 </style>

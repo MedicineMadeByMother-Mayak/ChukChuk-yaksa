@@ -13,7 +13,7 @@
 -->
 
 <template>
-  <div class="modal-overlay" v-if="showModal" @click="closeModal">
+  <div class="modal-overlay" v-if="msg" @click="closeModal">
     <div class="modal">
       <ul class="modal-menu">
         <li v-for="(item, index) in modalData" :key="index">
@@ -24,6 +24,12 @@
           >
             <div style="margin: 9px; font-size: 14px">{{ item[0] }}</div>
           </RouterLink>
+
+          <div v-else class="router-link-item" @click="$emit(item[2].emitName)">
+            <div style="margin: 9px; font-size: 14px">
+              {{ item[0] }}
+            </div>
+          </div>
           <hr style="margin: 0px 10px" v-if="index < modalData.length - 1" />
         </li>
       </ul>
@@ -32,18 +38,23 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-
-const showModal = defineModel();
+const msg = defineModel();
+defineEmits(["addPillInTakeList"]);
 const props = defineProps({
   modalData: {
     type: Array,
-    default: [["원하는 텍스트 넣으세요", true, { params: {}, Link: "home" }]],
+    default: [
+      [
+        "원하는 텍스트 넣으세요",
+        true,
+        { params: {}, Link: "home", emitName: "메서드 이름" },
+      ],
+    ],
   },
 });
 
 const closeModal = () => {
-  showModal.value = !showModal.value;
+  msg.value = !msg.value;
 };
 </script>
 

@@ -112,7 +112,6 @@ const finishedTakeList = computed(() =>
 
 onMounted(async () => {
   await store.getTakeListPageDatas();
-  console.log(store.takelistpagedatas);
 });
 </script>
 
