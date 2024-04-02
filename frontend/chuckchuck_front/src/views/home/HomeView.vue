@@ -46,7 +46,7 @@
                 class="column"
                 style="border-left: 0.5px solid rgb(231, 231, 231)"
               >
-                <a href="/pillsearch"
+                <a href="/pill"
                   ><img src="@/assests/icon/main_page/pill_search.svg"
                 /></a>
               </div>
@@ -56,7 +56,7 @@
                 class="column"
                 style="border-right: 0.5px solid rgb(231, 231, 231)"
               >
-                <a href="/map/pharmacysearch"
+                <a href="/pharmacy"
                   ><img src="@/assests/icon/main_page/pharmacy_search.svg"
                 /></a>
               </div>
@@ -67,7 +67,7 @@
                   border-right: 0.5px solid rgb(231, 231, 231);
                 "
               >
-                <a href="/userpilleffect"
+                <a href="/user-pill-effect"
                   ><img src="@/assests/icon/main_page/effect_record.svg"
                 /></a>
               </div>
@@ -90,7 +90,7 @@
     </div>
     <!-- 수정 end -->
   </div>
-  <div>
+  <!-- <div>
     <a href="/ocrlist">약봉투/진단서 촬영 메인페이지 (/ocrlist)</a>
   </div>
   <div>
@@ -112,10 +112,10 @@
     >
   </div>
   <div>
-    <a href="/map">약국 검색 메인페이지 (/map)</a>
+    <a href="/pharmacy">약국 검색 메인페이지 (/map)</a>
   </div>
   <div>
-    <a href="/map/pharmacysearch">약국 검색창 페이지 (/map/pharmacysearch)</a>
+    <a href="/pharmacy">약국 검색창 페이지 (/map/pharmacysearch)</a>
   </div>
   <div>
     <a href="/pillpic">약 사진으로 검색 (/pillpic)</a>
@@ -164,7 +164,7 @@
   </div>
   <div>
     <a href="/registinfo">개인정보등록 페이지 (/registinfo)</a>
-  </div>
+  </div> -->
   <!-- Nav-bar용 -->
   <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>

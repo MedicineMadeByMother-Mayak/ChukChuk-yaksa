@@ -1,10 +1,10 @@
 <template>
   <div class="user-madical-info">
     <div class="header">
-      <h3>문진표</h3>
+      <h3 style="margin: 10px">문진표</h3>
       <p>본인의 약국에 프로필을 보여주고 더 정확한 진단을 받아보세요.</p>
       <div class="profile-picture">
-        <img src="../../assests/img/woman.jpg" alt="프로필 사진" />
+        <img :src="imgUrl" alt="프로필 사진" />
       </div>
     </div>
 
@@ -142,14 +142,17 @@ import { takelistStore } from "@/stores/takelist";
 const userstore = userStore();
 const diseasestore = diseaseStore();
 const takeliststore = takelistStore();
+const imgUrl = ref("");
 let sex = ref("");
 
 function kotextsex(en_sex) {
   console.log(en_sex);
   if (en_sex === "MALE") {
     sex.value = "남";
+    imgUrl.value = "/src/assests/img/Male.svg";
   } else {
     sex.value = "여";
+    imgUrl.value = "/src/assests/img/Female.svg";
   }
 }
 
@@ -177,7 +180,7 @@ onMounted(async () => {
   // fetchData();
   await userstore.getUserInfo();
   diseasestore.getDiseaseInfo();
-  takeliststore.getUserMedicalInfoTakelist();
+  await takeliststore.getUserMedicalInfoTakelist();
 
   kotextsex(userstore.sex);
 });

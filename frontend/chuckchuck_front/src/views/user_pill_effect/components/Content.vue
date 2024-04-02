@@ -74,20 +74,7 @@ const props = defineProps({
   },
   categories: {
     type: Array,
-    default: [
-      {
-        categoryId: 0,
-        categoryName: "전체",
-      },
-      {
-        categoryId: 1, //대분류 id
-        categoryName: "부작용", //대분류 이름
-      },
-      {
-        categoryId: 2,
-        categoryName: "중단",
-      },
-    ],
+    default: ["전체", "부작용"],
   },
   tags: {
     type: Array,
@@ -116,11 +103,11 @@ let effectbadge = false;
 let stopbadge = false;
 
 props.categories.forEach((category, index) => {
-  if (category.categoryName === "부작용") {
+  if (category === "부작용") {
     sideeffectbadge = true;
-  } else if (category.categoryName === "중단") {
+  } else if (category === "중단") {
     stopbadge = true;
-  } else if (category.categoryName === "효과") {
+  } else if (category === "효과") {
     effectbadge = true;
   }
 });

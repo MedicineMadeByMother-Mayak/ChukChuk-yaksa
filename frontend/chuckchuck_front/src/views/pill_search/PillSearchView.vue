@@ -45,6 +45,8 @@
       />
       <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
     </div>
+    <!-- Nav-bar용 -->
+    <!-- <div class="save-nav-bar"></div> -->
   </div>
   <ModalForm
     v-model="msg"
@@ -146,14 +148,10 @@ function handleScroll() {
 }
 
 async function click(pillId) {
-  store.backButton = false;
-  store.pills = pills.value;
-  store.count = count.value;
-  store.keyword = keyword.value;
-  store.page = page.value;
-  await store.getPillInfo(pillId);
+  // await store.getPillInfo(pillId);
   router.push({
     name: "pilldetail",
+    params: { id: pillId },
   });
 }
 

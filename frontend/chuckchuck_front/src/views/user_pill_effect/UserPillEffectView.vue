@@ -21,7 +21,7 @@
       </div>
       <div>
         <div>
-          <button class="navy-button">
+          <button class="navy-button" @click="openModal">
             <font-awesome-icon
               :icon="['fas', 'circle-plus']"
               style="color: #ffffff"
@@ -32,312 +32,106 @@
       </div>
     </div>
   </HeaderForm>
+  <!-- {{ pilldatas }} -->
   <div class="pill-content">
     <div
-      v-for="(pillData, index) in filteredPills"
+      v-for="(pillData, index) in pilldatas"
       :key="`pill-data-${index}`"
       class="pill-info"
     >
       <PillContent
         v-model="categoryflag"
-        :pillId="pillData.pillId"
+        :pillId="pillData.pill_Id"
         :pillName="pillData.name"
         :imageURL="pillData.imageURL"
         :company="pillData.company"
         :categories="pillData.categories"
-        :tags="pillData.tags"
       />
     </div>
   </div>
+  <AddModalForm
+    v-model="msg"
+    :modalData="[
+      [
+        '이름으로 검색',
+        '해서 약 추가하기',
+        true,
+        { params: {}, Link: 'pillsearch' },
+      ],
+      ['약 사진', '을 찍어 약 선택하기', true, { params: {}, Link: 'pillpic' }],
+    ]"
+  />
 </template>
 
 <script setup>
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 import PillContent from "./components/Content.vue";
 import SearchBar from "@/common/SearchBar.vue";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
+import AddModalForm from "@/common/Form/AddModalForm.vue";
+import { pillEffectStore } from "@/stores/pilleffect";
 
+const msg = ref(false); //모달창 관리하는 변수 ref로 반드시 설정해주세요
 const categoryflag = ref(true);
 const tabnum = ref(0);
+const pilleffectstore = pillEffectStore();
+const pilldatas = ref({});
+const searchword = ref("");
 
 function setCategoryflagData(num) {
   categoryflag.value = 0 == num;
   tabnum.value = num;
-}
-
-const filteredPills = computed(() => {
-  return dumyData.value.pills.filter((pill) => {
-    return pill.categories.some(
-      (category) => category.categoryId === tabnum.value
+  if (num == 0) {
+    pilldatas.value = pilleffectstore.pillEffectDatas.totalPillDtoList.sort(
+      (a, b) => {
+        return a.name.localeCompare(b.name); // pill_name을 기준으로 정렬
+      }
     );
-  });
-});
-
-function setTabflag(categoryDatas) {
-  categoryDatas.forEach((categoryData, index) => {
-    if (categoryData.categoryId == tabnum.value) {
-      return true;
-    }
-    return false;
-  });
+    pilldatas.value.forEach((pilldata, pillindex) => {
+      pilldata.categories = [];
+      pilleffectstore.pillEffectDatas.siedEffectPillDtoList.forEach(
+        (flagdata, flagindex) => {
+          if (pilldata.pill_id === flagdata.pill_id) {
+            pilldata.categories.push("부작용");
+          }
+        }
+      );
+      pilleffectstore.pillEffectDatas.stopPillDtoList.forEach(
+        (flagdata, flagindex) => {
+          if (pilldata.pill_id === flagdata.pill_id) {
+            pilldata.categories.push("중단");
+          }
+        }
+      );
+      pilleffectstore.pillEffectDatas.effectPillDtoList.forEach(
+        (flagdata, flagindex) => {
+          if (pilldata.pill_id === flagdata.pill_id) {
+            pilldata.categories.push("효과");
+          }
+        }
+      );
+    });
+  } else if (num === 3) {
+    pilldatas.value = pilleffectstore.pillEffectDatas.siedEffectPillDtoList;
+  } else if (num === 2) {
+    pilldatas.value = pilleffectstore.pillEffectDatas.stopPillDtoList;
+  } else {
+    pilldatas.value = pilleffectstore.pillEffectDatas.effectPillDtoList;
+  }
 }
 
-const dumyData = ref({
-  page: 1, // 페이지 번호
-  pills: [
-    //(사용자가 등록한 약 목록)
-    {
-      pillId: 1, //약 id값
-      name: "타이레놀", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 1, //대분류 id
-          categoryName: "부작용", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-    {
-      pillId: 1, //약 id값
-      name: "프라닥사캡슐", //약 이름
-      imageURL: "@/assests/img/tempPill.png", //약 이미지 URI
-      type: "항히스타민제", //약 분류
-      company: "싸피사랑약국", // 제조사
-      categories: [
-        //대분류 (전체, 부작용, 중단, 효과)
-        {
-          categoryId: 0, //대분류 id
-          categoryName: "전체", //대분류 이름
-        },
-        {
-          categoryId: 2, //대분류 id
-          categoryName: "중단", //대분류 이름
-        },
-      ],
-      tags: [
-        //태그 리스트(String List)
-        {
-          tagId: 0, //태그 id값
-          tagName: "알러지 진정", //태그 이름
-        },
-      ],
-    },
-  ],
+function openModal() {
+  msg.value = true;
+}
+
+onMounted(async () => {
+  await pilleffectstore.getpillEffectDatas("");
+  setCategoryflagData(0);
 });
+
+async function searchBarhandler() {
+  await pilleffectstore.getpillEffectDatas("");
+}
 </script>
 
 <style scoped>

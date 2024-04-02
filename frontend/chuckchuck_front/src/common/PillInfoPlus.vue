@@ -1,7 +1,7 @@
 <template>
   <div class="pill-card">
-    <div class="pill-image" @click="clickDetail(pillId)">
-      <img src="@/assests/img/tempPill.png" alt="약 이미지" />
+    <div class="pill-image">
+      <img :src="imageUrl" alt="약 이미지" />
     </div>
     <div class="pill-info" @click="clickDetail(pillId)">
       <div class="pill-type">
@@ -45,7 +45,10 @@ const props = defineProps({
     type: String,
     default: "프로다나서캡슐",
   },
-  imageUrl: "../../assests/img/tempPill.png",
+  imageUrl: {
+    type: String,
+    default: "../../assests/img/tempPill.png",
+  },
   type: {
     type: String,
     default: "항히스타민제",
@@ -69,9 +72,10 @@ const props = defineProps({
 });
 
 async function clickDetail(pillId) {
-  await store.getPillInfo(pillId);
+  // await store.getPillInfo(pillId);
   router.push({
     name: "pilldetail",
+    params: { id: pillId },
   });
 }
 
