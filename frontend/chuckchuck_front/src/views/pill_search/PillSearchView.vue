@@ -81,6 +81,7 @@ import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
 import { useRouter } from "vue-router";
+import _ from "lodash";
 
 const store = pillSearchStore();
 
