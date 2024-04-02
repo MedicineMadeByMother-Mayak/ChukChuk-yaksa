@@ -32,7 +32,6 @@
     <div class="search-result-container">
       <PillInfoPlus
         v-for="pill in pills"
-        @click="click(pill.pillId)"
         :key="pill.pillId"
         :pillId="pill.pillId"
         :pillName="pill.pillName"
@@ -42,53 +41,83 @@
         :warningUseDate="pill.warningUseDate"
         :warningElders="pill.warningElders"
         :warningTogether="pill.warningTogether"
+        @click-modal="openModal"
       />
       <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
     </div>
     <!-- Nav-bar용 -->
     <!-- <div class="save-nav-bar"></div> -->
   </div>
-
   <ModalForm
     v-model="msg"
+    @add-pill-in-take-list="addPill"
     :modalData="[
       [
-        '복용중인 약 리스트에 추가하기',
+        '복용중인 약 리스트',
+        '에 추가하기',
         false,
-        { params: { pillId }, Link: '' },
+        { emitName: 'addPillInTakeList' },
       ],
-      [
-        '나의 약효기록에 후기 추가 하기',
-        false,
-        { params: { pillId }, Link: '' },
-      ],
+      ['나의 약효기록', '에 후기 추가하기', false, { method: '' }],
     ]"
   />
 
   <SelectListModalForm
+    @save="savePill"
     v-model="showModal"
-    :modalData="[
-      [1, '달디달디달디달'],
-      [2, '단 밤양갱'],
-    ]"
+    :modalData="modalData"
   />
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import { pillSearchStore } from "@/stores/pillSearch";
 import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
+import Observer from "@/views/pharmacy_search/components/Observer.vue";
+import _ from "lodash";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
+import { pillSearchStore } from "@/stores/pillSearch";
+import ModalForm from "@/common/Form/AddModalForm.vue";
+import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
+import { takelistStore } from "@/stores/takelist";
 
+const takeListStore = takelistStore();
 const store = pillSearchStore();
+const router = useRouter();
 
 const keyword = ref("");
 const page = ref(0);
 const count = ref(null);
 const pills = ref([]);
-const isLoading = ref(false);
+const isScrolled = ref(false);
+const msg = ref(false);
+const showModal = ref(false);
+const modalData = ref([[1, "새로운 리스트에 추가하기"]]);
+const selectPill = ref(0);
+
+async function savePill(selectId) {
+  if (selectId === 1) {
+    await takeListStore.createAndAddPill([selectPill.value]);
+  } else {
+    await takeListStore.addPill(selectId, [selectPill.value]);
+  }
+}
+
+async function addPill() {
+  modalData.value = [[1, "새로운 리스트에 추가하기"]];
+  await takeListStore.getTakeListPageDatas();
+  takeListStore.takelistpagedatas.forEach((item) => {
+    modalData.value.push([item.takeListId, item.takeListName]);
+  });
+
+  showModal.value = !showModal.value;
+}
+
+function openModal(pillId) {
+  selectPill.value = pillId;
+  msg.value = !msg.value;
+}
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -106,11 +135,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
 });
-
-function clickModal(currentPillId) {
-  pillId.value = currentPillId;
-  msg.value = true;
-}
 
 async function loadMoreData() {
   if (count.value && count.value <= pills.value.length) return;

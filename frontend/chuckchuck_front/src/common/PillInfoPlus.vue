@@ -26,7 +26,7 @@
       :icon="['fas', 'circle-plus']"
       size="2xl"
       style="color: #1454b5"
-      @click="$emit('clickModal')"
+      @click="$emit('clickModal', pillId)"
     />
   </div>
 </template>
@@ -38,6 +38,7 @@ import Badge from "@/common/Badge.vue";
 
 const router = useRouter();
 const store = pillSearchStore();
+defineEmits(["clickModal"]);
 const props = defineProps({
   pillId: Number,
   pillName: {

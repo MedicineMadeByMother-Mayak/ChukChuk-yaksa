@@ -165,7 +165,6 @@ const finishedTakeList = computed(() =>
 
 onMounted(async () => {
   await store.getTakeListPageDatas();
-  console.log(store.takelistpagedatas);
 });
 
 // 척척약사의 조언 
