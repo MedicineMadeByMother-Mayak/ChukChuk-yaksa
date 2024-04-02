@@ -13,14 +13,15 @@
           </div>
           <div class="carousel__text">
             <div style="font-size: 12px;"><strong>{{ item.title }}</strong></div>
-            <div>
-              <span style="font-weight: bold; color: blue;">{{ item.pill1 }}</span>
-              <span>{{ item.content1 }}</span>
-              <span style="font-weight: bold; color: blue;">{{ item.pill2 }}</span>
-              <span>{{ item.content2 }}</span>
+              <div>
+                <span style="font-weight: bold; color: blue;">{{ item.pill1 }}</span>
+                <span>{{ item.content1 }}</span>
+                <span style="font-weight: bold; color: blue;">{{ item.pill2 }}</span>
+                <span>{{ item.content2 }}</span>
+              </div>
             </div>
           </div>
-        </div>
+          
       </Slide>
       <template #addons>
         <!-- <Navigation /> -->
@@ -76,8 +77,14 @@
     >
       <!-- 복용리스트 날짜와 제목 -->
       <div class="pill-date">
-        {{ takeListData.createDate }} [{{ takeListData.takeListName }}]
-        <img src="@/assests/icon/edit.png" alt="편집 아이콘" />
+        {{ takeListData.createDate }} <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
+        <input
+          v-else 
+          v-model="takeListData.takeListName" 
+          @blur="saveChangeName(takeListData)"
+          @keydown.enter="saveChangeName(takeListData)"
+         />
+        <img src="@/assests/icon/edit.png" alt="편집 아이콘" @click="openTakeListModal(takeListData.takeListId, index)"/>
       </div>
 
       <!-- 리스트 별 약 목록 -->
@@ -101,6 +108,7 @@
         </li>
       </ul>
     </div>
+    <ListEditModal v-if="isTakeListModalOpen" @close="closeTakeListModal" @update="handleUpdate"/>
   </div>
 </template>
 
@@ -110,12 +118,39 @@ import { ref, onMounted, computed } from "vue";
 import dayjs from "dayjs";
 import Content from "./components/Content.vue";
 import List from "./components/List.vue";
+import ListEditModal from './components/ListEditModal.vue';
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import { takelistStore } from "@/stores/takelist";
 import logo from "@/assests/img/Group.png";
 
 const store = takelistStore();
+// ----------------------------------------
+const isTakeListModalOpen = ref(false)
+
+//리스트 모달창 띄우기
+const openTakeListModal = (id, index) => {
+  store.currentTakeList = currentTakeList.value[index];
+  isTakeListModalOpen.value = true;
+};
+
+//리스트 모달창 종료
+const closeTakeListModal = () => {
+  isTakeListModalOpen.value = false;
+}
+
+// 모달에서 전달받은 데이터로 복용 리스트 리로드
+const handleUpdate = () => {
+  console.log("들어왔냐?")
+  window.location.reload(true);
+};
+
+//이름 변경 후 저장
+const saveChangeName = async (takeListData) => {
+  takeListData.edit = false; // 편집 모드 종료
+  await store.rename(takeListData.takeListId, takeListData.takeListName);
+};
+// ----------------------------------------
 
 // 현재 복용중인 리스트
 const currentTakeList = computed(() =>
