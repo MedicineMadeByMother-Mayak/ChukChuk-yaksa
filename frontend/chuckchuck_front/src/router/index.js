@@ -141,7 +141,7 @@ const routes = [
   {
     //약효기록 상세
     path: "/user-pill-effect/:pillId",
-    name: "/effectdetail",
+    name: "effectdetail",
     component: EffectDetailView,
   },
 
@@ -150,14 +150,14 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
-    meta: { hideNavBar: true }
+    meta: { hideNavBar: true },
   },
   {
     // 로딩 화면
     path: "/loading",
     name: "loading",
     component: LoadingView,
-    meta: { hideNavBar: true }
+    meta: { hideNavBar: true },
   },
   {
     // 개인정보등록

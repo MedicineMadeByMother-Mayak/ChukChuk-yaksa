@@ -19,12 +19,21 @@ export const pillEffectStore = defineStore("pilleffect", () => {
         })
       ).data;
     } catch (error) {
-      console.log("개인 정보를 가져오는데 실패했습니다:", error);
+      console.log("약효 기록을 불러오는데 실패했습니다.", error);
+    }
+  };
+
+  const deletFillEffect = async (pillId) => {
+    try {
+      const response = await instance.delete(`/effects/pill/${pillId}`);
+    } catch (error) {
+      console.log("약효 기록을 불러오는데 실패했습니다.", error);
     }
   };
 
   return {
     pillEffectDatas,
     getpillEffectDatas,
+    deletFillEffect,
   };
 });

@@ -41,11 +41,12 @@
     >
       <PillContent
         v-model="categoryflag"
-        :pillId="pillData.pill_Id"
+        :pillId="pillData.pill_id"
         :pillName="pillData.name"
-        :imageURL="pillData.imageURL"
+        :imageURL="pillData.image_url"
         :company="pillData.company"
         :categories="pillData.categories"
+        :tags="pillData.usedTags"
       />
     </div>
   </div>
@@ -67,7 +68,7 @@
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 import PillContent from "./components/Content.vue";
 import SearchBar from "@/common/SearchBar.vue";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watchEffect } from "vue";
 import AddModalForm from "@/common/Form/AddModalForm.vue";
 import { pillEffectStore } from "@/stores/pilleffect";
 
@@ -76,7 +77,6 @@ const categoryflag = ref(true);
 const tabnum = ref(0);
 const pilleffectstore = pillEffectStore();
 const pilldatas = ref({});
-const searchword = ref("");
 
 function setCategoryflagData(num) {
   categoryflag.value = 0 == num;
@@ -120,18 +120,21 @@ function setCategoryflagData(num) {
   }
 }
 
+const effectData = computed(() => pilleffectstore.pillEffectDatas);
+
+watchEffect(async () => {
+  if (effectData.value) {
+    setCategoryflagData(tabnum.value);
+  }
+});
+
 function openModal() {
   msg.value = true;
 }
 
 onMounted(async () => {
   await pilleffectstore.getpillEffectDatas("");
-  setCategoryflagData(0);
 });
-
-async function searchBarhandler() {
-  await pilleffectstore.getpillEffectDatas("");
-}
 </script>
 
 <style scoped>
