@@ -25,10 +25,7 @@ public class TagService {
      * @param categoryId (등록될 카테고리 ID)
      * @return
      */
-    public void reigstTag(String tagName, Long categoryId) {
-        // === 임시 User ===
-        User user = userRepository.findById(1L).get();
-        // =================
+    public void reigstTag(User user, String tagName, Long categoryId) {
 
         Category category = categoryRepository.findById(categoryId).get();
         Tag tag = Tag.createTag(tagName, user, category);
