@@ -18,8 +18,10 @@
       <ul class="modal-menu">
         <li v-for="(item, index) in modalData" :key="index">
           <RouterLink
+            :Link="Link"
             v-if="item[2]"
             :to="{ name: item[3].Link, params: item[3].params }"
+            @click="clickLink(index)"
             class="router-link-item"
           >
             <div style="margin: 9px; font-size: 14px">
@@ -45,10 +47,12 @@
 const msg = defineModel();
 defineEmits(["addPillInTakeList"]);
 const props = defineProps({
+  Link: String,
   modalData: {
     type: Array,
     default: [
       [
+        "원하는 텍스트 넣으세요",
         "원하는 텍스트 넣으세요",
         true,
         { params: {}, Link: "home", emitName: "메서드 이름" },
@@ -56,6 +60,10 @@ const props = defineProps({
     ],
   },
 });
+
+function clickLink(index) {
+  sessionStorage.setItem("Link", props.modalData[index][3].params.Link);
+}
 
 const closeModal = () => {
   msg.value = !msg.value;

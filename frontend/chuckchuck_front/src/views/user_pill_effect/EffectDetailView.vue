@@ -1,8 +1,12 @@
 <!-- 약효기록 상세 -->
 <template>
   <div class="effect-detail-view">
-    <HeaderForm :title="'약효기록 작성'" :height="'260px'">
-      <img class="pill-img" src="../../assests/img/tempPill.png" alt="Image description" />
+    <HeaderForm :title="'약효기록 작성'" :height="'260px'" :Link="Link">
+      <img
+        class="pill-img"
+        src="../../assests/img/tempPill.png"
+        alt="Image description"
+      />
       <div class="center-aligned">
         <div class="in-header-pill-name">
           <div>
@@ -14,16 +18,38 @@
     </HeaderForm>
     <div class="icon-container">
       <div class="icon-container">
-        <img id="effectFace" data-value="3" :src="EffectFace" alt="Effect Face Icon" @click="clickFace('effectFace')" />
-        <img id="stopFace" data-value="2" :src="StopFace" alt="StopFace Face Icon" @click="clickFace('stopFace')" />
-        <img id="sideEffectFace" data-value="1" :src="SideEffectFace" alt="SideEffectFace Face Icon" @click="clickFace('sideEffectFace')" />
+        <img
+          id="effectFace"
+          data-value="3"
+          :src="EffectFace"
+          alt="Effect Face Icon"
+          @click="clickFace('effectFace')"
+        />
+        <img
+          id="stopFace"
+          data-value="2"
+          :src="StopFace"
+          alt="StopFace Face Icon"
+          @click="clickFace('stopFace')"
+        />
+        <img
+          id="sideEffectFace"
+          data-value="1"
+          :src="SideEffectFace"
+          alt="SideEffectFace Face Icon"
+          @click="clickFace('sideEffectFace')"
+        />
       </div>
     </div>
     <div class="appointment-section">
       <strong class="title-style">TAG</strong>
       <div class="used-tag-list" @click="tagClick(true)">
         <div class="badge-list">
-          <div class="badge-custom" v-for="(tag, index) in usedTags" :key="index">
+          <div
+            class="badge-custom"
+            v-for="(tag, index) in usedTags"
+            :key="index"
+          >
             <Badge
               :title="tag.tagName"
               backgroundColor="#7fc2ff"
@@ -35,24 +61,44 @@
         </div>
       </div>
       <div class="add-tag" v-if="isVisibleUsed">
-        <input class="add-tag-used-input" type="text" >
+        <input class="add-tag-used-input" type="text" />
         <button class="add-tag-used-button">추가</button>
       </div>
       <div class="unused-tag-list" @click="tagClick(false)">
-        <div class="badge-custom" v-for="(tag, index) in unUsedTags" :key="index">
-          <Badge :title="tag.tagName" backgroundColor="#dfdfdf" color="white" fontSize="12" padding="4px" />
+        <div
+          class="badge-custom"
+          v-for="(tag, index) in unUsedTags"
+          :key="index"
+        >
+          <Badge
+            :title="tag.tagName"
+            backgroundColor="#dfdfdf"
+            color="white"
+            fontSize="12"
+            padding="4px"
+          />
         </div>
       </div>
       <div class="add-tag" v-if="isVisibleUnUsed">
-        <input class="add-tag-unused-input" type="text" >
+        <input class="add-tag-unused-input" type="text" />
         <button class="add-tag-unused-button">추가</button>
       </div>
-      <img :src="underDirection" style="display: block; margin: 20px auto 12px;">
-      <div style="border-bottom: 1px solid black; "></div>
+      <img
+        :src="underDirection"
+        style="display: block; margin: 20px auto 12px"
+      />
+      <div style="border-bottom: 1px solid black"></div>
       <strong class="title-style">MEMO</strong>
 
       <div class="memo">
-        <textarea class="memo-input" type="text" v-model="memo" @change="memoUpdate" placeholder="메모를 입력하세요" maxlength="100" />
+        <textarea
+          class="memo-input"
+          type="text"
+          v-model="memo"
+          @change="memoUpdate"
+          placeholder="메모를 입력하세요"
+          maxlength="100"
+        />
       </div>
     </div>
   </div>
@@ -60,7 +106,7 @@
     <EffectFaceIcon />
   </div>
   <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #f9f9f9;"></div>
+  <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 
 <script setup>
@@ -71,28 +117,32 @@ import StopFace from "@/assests/icon/stopFace.svg";
 import SideEffectFace from "@/assests/icon/sideEffectFace.svg";
 import underDirection from "@/assests/icon/underDirection.svg";
 import { ref, onMounted } from "vue";
-import { userPillEffectStore } from '@/stores/userPillEffect';
-import { pillSearchStore } from '@/stores/pillSearch';
+import { userPillEffectStore } from "@/stores/userPillEffect";
+import { pillSearchStore } from "@/stores/pillSearch";
 
 const userPillEffect = userPillEffectStore();
 const pillSearch = pillSearchStore();
 
-const userPillEffectDtoList = ref('');
+const userPillEffectDtoList = ref("");
 const sideEffectList = ref([]);
 const stopList = ref([]);
 const effectList = ref([]);
-const pillName = ref('');
-const company = ref('');
-const usedTags = ref('');
-const unUsedTags = ref('');
+const pillName = ref("");
+const company = ref("");
+const usedTags = ref("");
+const unUsedTags = ref("");
 const userPillEffectId = ref();
-const memo = ref('');
+const memo = ref("");
 const isVisibleUsed = ref(false);
 const isVisibleUnUsed = ref(false);
+const Link = ref(null);
 
+const props = defineProps({
+  Link: String,
+});
 onMounted(async () => {
-  await userPillEffect.getUserPillEffectInfo(4);  // 약효 기록 리스트에서 클릭할 때 해당 pillId로 실행할거라 삭제될 코드
-  await pillSearch.getPillInfo(4);  // 이것도 마찬가지
+  await userPillEffect.getUserPillEffectInfo(4); // 약효 기록 리스트에서 클릭할 때 해당 pillId로 실행할거라 삭제될 코드
+  await pillSearch.getPillInfo(4); // 이것도 마찬가지
 
   pillName.value = pillSearch.name;
   company.value = pillSearch.company;
@@ -102,9 +152,9 @@ onMounted(async () => {
   effectList.value = userPillEffect.effect;
   userPillEffectDtoList.value = userPillEffect.userPillEffectDtoList;
 
-  clickFace('effectFace');  // 시작하면 '효과' 클릭하도록 디폴트 세팅
-})
-
+  clickFace("effectFace"); // 시작하면 '효과' 클릭하도록 디폴트 세팅
+  Link.value = sessionStorage.getItem("Link");
+});
 
 // 이미지 투명도를 토글하는 함수
 const clickFace = (imageId) => {
@@ -112,19 +162,22 @@ const clickFace = (imageId) => {
 
   images.forEach((img) => {
     const currentImage = document.getElementById(img);
-    
+
     if (img == imageId) {
-      if (currentImage) { // 이미지 요소가 존재하는지 확인
+      if (currentImage) {
+        // 이미지 요소가 존재하는지 확인
         const currentCategoryId = currentImage.dataset.value - 1;
         const userPillEffect = userPillEffectDtoList.value[currentCategoryId];
-        
+
         userPillEffectId.value = userPillEffect.userPillEffectId;
         currentImage.style.opacity = "1.0";
         usedTags.value = userPillEffect.usedTags;
         unUsedTags.value = userPillEffect.unUsedTags;
         memo.value = userPillEffect.memo;
       }
-    } else { currentImage.style.opacity = "0.5"; }
+    } else {
+      currentImage.style.opacity = "0.5";
+    }
   });
 };
 
@@ -142,24 +195,21 @@ const getBackgroundColor = (categoryId) => {
   }
 };
 
-
 // 메모 업데이트
 const memoUpdate = (event) => {
-  console.log('입력 값이 변경되었습니다:', event.target.value);
-  userPillEffect.updateMemo(userPillEffectId.value, memo.value)
+  console.log("입력 값이 변경되었습니다:", event.target.value);
+  userPillEffect.updateMemo(userPillEffectId.value, memo.value);
 };
 
 const tagClick = (param) => {
   if (param === true) {
     console.log("true!!!!!");
     isVisibleUsed.value = !isVisibleUsed.value;
-    
   } else {
-    console.log('false!!!!!');
+    console.log("false!!!!!");
     isVisibleUnUsed.value = !isVisibleUnUsed.value;
   }
 };
-
 </script>
 
 <style scoped>
