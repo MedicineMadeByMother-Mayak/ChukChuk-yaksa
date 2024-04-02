@@ -25,6 +25,7 @@ export const takelistStore = defineStore("takelist", () => {
       const { data } = await instance.get("/take-list", {
         params: { period: false },
       });
+      console.log(data)
 
       takelistpagedatas.value = data.results;
       return data;
