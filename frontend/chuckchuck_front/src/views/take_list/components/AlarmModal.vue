@@ -115,9 +115,7 @@ onMounted(async () => {
   width: 320px;
   height: 658px;
   margin-left: -10px;
-  z-index: 100;
   background: rgba(0, 0, 0, 0.6);
-  /* background-color: red; */
   caret-color: transparent;
   z-index: 9999;
 }

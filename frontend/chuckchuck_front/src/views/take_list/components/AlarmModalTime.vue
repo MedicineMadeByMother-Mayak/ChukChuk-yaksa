@@ -129,6 +129,8 @@ async function turnOn() {
       );
     }
   }
+  store.getAlarmList();
+  store.getOffAlarmList();
   closeModal();
 }
 
@@ -156,7 +158,8 @@ function getCurrentDateTime() {
   position: fixed;
   bottom: 0;
   width: 320px;
-  height: 120%;
+  height: 658px;
+  margin-left: -10px;
   background: rgba(0, 0, 0, 0.6);
   caret-color: transparent;
   z-index: 9999;
