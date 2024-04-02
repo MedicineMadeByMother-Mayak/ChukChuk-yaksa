@@ -125,9 +125,10 @@ function handleScroll() {
 }
 
 async function click(pillId) {
-  await store.getPillInfo(pillId);
+  // await store.getPillInfo(pillId);
   router.push({
     name: "pilldetail",
+    params: { id: pillId },
   });
 }
 

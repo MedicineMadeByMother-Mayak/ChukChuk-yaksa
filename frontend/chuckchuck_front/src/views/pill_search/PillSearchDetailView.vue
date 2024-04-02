@@ -49,6 +49,11 @@ import Wave from "@/common/Wave.vue";
 
 import { ref, onMounted } from "vue";
 import { pillSearchStore } from "@/stores/pillSearch";
+import { useRoute } from "vue-router";
+
+// route 파라미터로부터 pillId 값을 가져옴
+const route = useRoute();
+const pillId = ref(route.params.id);
 
 const waveTitle = ref("");
 const imagePath = ref("");
@@ -56,6 +61,7 @@ const appointmentDetails = ref([]);
 
 onMounted(async () => {
   const store = pillSearchStore();
+  await store.getPillInfo(pillId.value);
 
   waveTitle.value = store.name;
   imagePath.value = store.imageUrl; // 이미지 경로 받아오기
