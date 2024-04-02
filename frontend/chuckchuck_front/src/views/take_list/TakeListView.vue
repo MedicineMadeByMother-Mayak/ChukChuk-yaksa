@@ -32,10 +32,11 @@
 
       <!-- 알람 추가 버튼 -->
       <div>
-        <button class="rounded-button">
+        <button class="rounded-button" @click="showModal = true">
           <span
             ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" /></span>
         </button>
+        
       </div>
       
       <!-- 등록된 알람 리스트 -->
@@ -113,7 +114,7 @@ import "vue3-carousel/dist/carousel.css";
 import { takelistStore } from "@/stores/takelist";
 import { alarmStore } from '@/stores/alarm';
 import logo from "@/assests/img/Group.png";
-
+import AlarmModal from '@/views/take_list/components/AlarmModal.vue';
 
 const store = takelistStore();
 const alarmstore = alarmStore();
@@ -128,6 +129,7 @@ const finishedTakeList = computed(() =>
   store.takelistpagedatas.filter((item) => item.isFinished)
 );
 
+const showModal = ref(false);
 
 onMounted(async () => {
   await store.getTakeListPageDatas();
