@@ -89,12 +89,14 @@ public class UserPillEffectController {
     /**
      * 약효기록 삭제
      * @author 최진학
-     * @param userPillEffectId (약효 효과 ID)
+     * @param pillId (약효 효과 ID)
      * @return HttpStatus.OK
      */
-    @DeleteMapping("/pill/{userPillEffectId}")
-    public ResponseEntity<Void> updateUserPillEffectIsDelete(@PathVariable Long userPillEffectId){
-        userPillEffectService.updateUserPillEffectIsDelete(userPillEffectId);
+    @DeleteMapping("/pill/{pillId}")
+    public ResponseEntity<Void> updateUserPillEffectIsDelete(@AuthenticationPrincipal UserPrincipal principal, @PathVariable Long pillId){
+        User user = commonService.getUserOrException(principal);
+
+        userPillEffectService.updateUserPillEffectIsDelete(user, pillId);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -106,7 +108,7 @@ public class UserPillEffectController {
      * @return:
      */
     @PostMapping("/tag")
-    public ResponseEntity<Void> registTag(@AuthenticationPrincipal UserPrincipal principal,@Valid @RequestBody RegistTagRequest registTagRequest) {
+    public ResponseEntity<Void> registTag(@AuthenticationPrincipal UserPrincipal principal, @Valid @RequestBody RegistTagRequest registTagRequest) {
         User user = commonService.getUserOrException(principal);
         tagService.reigstTag(user, registTagRequest.tagName(), registTagRequest.categoryId());
 

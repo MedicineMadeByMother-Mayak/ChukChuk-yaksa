@@ -12,9 +12,11 @@ import com.mayak.chuckchuck.dto.response.UserPillEffectListAndSearchResponse;
 import com.mayak.chuckchuck.dto.response.UserPillEffectResponse;
 import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
 import com.mayak.chuckchuck.repository.*;
+import com.mayak.chuckchuck.security.oauth2.user.UserPrincipal;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,11 +27,11 @@ import java.util.*;
 public class UserPillEffectService {
     private final UserPillEffectRepository userPillEffectRepository;
     private final UserPillEffectToTagRepository userPillEffectToTagRepository;
-    private final UserRepository userRepository;
     private final PillRepository pillRepository;
     private final CategoryRepository categoryRepository;
     private final EntityManager entityManager;
     private final TagRepository tagRepository;
+    private final CommonService commonService;
 
     /**
      * 약효기록 상세 조회 & 등록
@@ -112,12 +114,13 @@ public class UserPillEffectService {
     /**
      * 약효기록 삭제
      * @author 최진학
-     * @param userPillEffectId (약효 기록 id)
+     * @param pillId (약효 기록 id)
      * @return 없음
      */
-    public void updateUserPillEffectIsDelete(Long userPillEffectId) {
-        UserPillEffect userPillEffect = userPillEffectRepository.findById(userPillEffectId).get();
-        userPillEffect.getCommonData().toggleDelete();
+    public void updateUserPillEffectIsDelete(User user, Long pillId) {
+        List<UserPillEffect> userPillEffect = userPillEffectRepository.findByUserAndPill_pillId(user, pillId);
+
+        userPillEffect.forEach(tempUserPillEffect -> tempUserPillEffect.getCommonData().toggleDelete());
     }
 
     /**
