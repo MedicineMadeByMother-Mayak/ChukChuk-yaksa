@@ -49,6 +49,7 @@
   <ModalForm
     v-model="msg"
     @add-pill-in-take-list="addPill"
+    :Link="'pillsearch'"
     :modalData="[
       [
         '복용중인 약 리스트',
@@ -56,7 +57,15 @@
         false,
         { emitName: 'addPillInTakeList' },
       ],
-      ['나의 약효기록', '에 후기 추가하기', false, { method: '' }],
+      [
+        '나의 약효기록',
+        '에 후기 추가하기',
+        true,
+        {
+          params: { pillId: selectPill, Link: 'pillsearch' },
+          Link: 'effectdetail',
+        },
+      ],
     ]"
   />
 
