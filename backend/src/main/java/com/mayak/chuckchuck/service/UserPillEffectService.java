@@ -212,7 +212,8 @@ public class UserPillEffectService {
         // if : 키워드 X (전체 리스트 조회)
         // else : 키워드 O (검색)
         if (Objects.equals(keyword, "")) {
-            List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUser(user, pagingDto.getPageable());
+            List<UserPillEffect> userPillEffectList
+                    = userPillEffectRepository.findByUserAndCommonData_IsDelete(user, pagingDto.getPageable(), false);
 
             for (UserPillEffect temp : userPillEffectList) {
                 long currentCategoryId = temp.getCategory().getCategoryId();
@@ -233,10 +234,11 @@ public class UserPillEffectService {
             }
         } else {
             String jpqlQueryForPillList = "SELECT DISTINCT p " +
-                    "FROM UserPillEffect upe " +
-                    "JOIN upe.pill p " +
-                    "WHERE upe.user.userId = :userId " +
-                    "AND p.name LIKE CONCAT('%', :keyword, '%')";
+                                                "FROM UserPillEffect upe " +
+                                                    "JOIN upe.pill p " +
+                                                "WHERE upe.user.userId = :userId " +
+                                                    "AND p.name LIKE CONCAT('%', :keyword, '%')" +
+                                                    "AND upe.commonData.isDelete = false ";
 
             // if   : 전체 목록
             // else : 각 카테고리 별 목록
