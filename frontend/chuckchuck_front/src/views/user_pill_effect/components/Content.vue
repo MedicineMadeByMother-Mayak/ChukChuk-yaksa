@@ -43,18 +43,39 @@
         />
       </span>
     </div>
-    <div class="ellipsis-icon">
+    <div class="ellipsis-icon" @click="openModal">
       <font-awesome-icon :icon="['fas', 'ellipsis-vertical']" />
     </div>
   </div>
+  <AddModalForm
+    v-model="msg"
+    @delet-pill-effect="deletPillEffect"
+    :modalData="[
+      [
+        '수정',
+        '하기',
+        true,
+        { params: { pillId: props.pillId }, Link: 'effectdetail' },
+      ],
+      ['삭제', '하기', false, { emitName: 'deletPillEffect' }],
+    ]"
+  />
 </template>
 
 <script setup>
 import Badge from "@/common/Badge.vue";
 import { ref } from "vue";
+import AddModalForm from "@/common/Form/AddModalForm.vue";
+import { pillEffectStore } from "@/stores/pilleffect";
 
+const msg = ref(false); //모달창 관리하는 변수 ref로 반드시 설정해주세요
+const pilleffectstore = pillEffectStore();
 const categoryflag = defineModel();
 const props = defineProps({
+  tabnum: {
+    type: Number,
+    default: 0,
+  },
   pillId: {
     type: Number,
     default: 1,
@@ -87,6 +108,11 @@ const props = defineProps({
     ],
   },
 });
+
+async function deletPillEffect() {
+  await pilleffectstore.deletFillEffect();
+  await pilleffectstore.getpillEffectDatas();
+}
 
 const truncateName = (name) => {
   if (name.length > 10) {
@@ -129,6 +155,10 @@ badges.value = [
     condition: stopbadge,
   },
 ];
+
+function openModal() {
+  msg.value = true;
+}
 </script>
 
 <style scoped>

@@ -1,8 +1,8 @@
 <!-- 사용법 RouterLink편
 <template>
     <ModalForm v-model="msg" :modalData="[
-    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'}],
-    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'}],
+    ['strong에 원하는 텍스트', '그냥 원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
+    ['strong에 원하는 텍스트', '그냥 원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
     ]" /> 
 </template> 
 
@@ -22,15 +22,16 @@
             :to="{ name: item[3].Link, params: item[3].params }"
             class="router-link-item"
           >
-            <div style="width: 100%; height: 100%; font-size: 14px">
+            <div style="margin: 9px; font-size: 14px">
               <strong>{{ item[0] }}</strong
               >{{ item[1] }}
             </div>
           </RouterLink>
 
-          <div v-else class="router-link-item" @click="$emit(item[2].emitName)">
+          <div v-else class="router-link-item" @click="$emit(item[3].emitName)">
             <div style="margin: 9px; font-size: 14px">
-              {{ item[0] }}
+              <strong>{{ item[0] }}</strong
+              >{{ item[1] }}
             </div>
           </div>
           <hr style="margin: 0px 10px" v-if="index < modalData.length - 1" />
@@ -114,6 +115,5 @@ const closeModal = () => {
 .router-link-item {
   text-decoration: none;
   color: inherit;
-  padding: 1px 1px;
 }
 </style>

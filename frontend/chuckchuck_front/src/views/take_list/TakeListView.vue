@@ -121,6 +121,7 @@ import List from "./components/List.vue";
 import ListEditModal from './components/ListEditModal.vue';
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
+import "@/assests/css/carousel.css";
 import { takelistStore } from "@/stores/takelist";
 import logo from "@/assests/img/Group.png";
 
