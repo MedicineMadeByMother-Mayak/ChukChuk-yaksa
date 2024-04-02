@@ -1,39 +1,41 @@
 <template>
   <Wave title="처방내역" height="30px" Link="usermedicalinfo" />
 
-  <div style="margin: 5px 10px">
-    총 {{ pillbaghistorydata.count }}건의 처방내역이 있습니다.
-  </div>
-  <hr style="margin: 10px" />
+  <section>
+    <div style="margin: 5px 10px">
+      총 {{ pillbaghistorydata.count }}건의 처방내역이 있습니다.
+    </div>
+    <hr style="margin: 10px" />
 
-  <div v-for="data in pillbaghistorydata.result">
-    <Accordian
-      style="margin: 10px"
-      :title="formatDate(data.receipt.buildDate, 'YYYY/MM/DD 처방내역')"
-    >
-      <li>
-        <strong>영수증</strong>
-        <TableForm
-          style="margin-top: 10px"
-          :tableData="[
-            ['약국정보', data.receipt.pharmacyName],
-            ['조제일자', formatDate(data.receipt.buildDate, 'YYYY/MM/DD')],
-            ['수납금액', data.receipt.cost],
-          ]"
-        ></TableForm>
-      </li>
-      <li style="margin: 10px 0px">
-        <strong>복약안내</strong>
-        <div v-for="pillData in data.guide" style="margin-top: 10px">
-          <PillBagContent
-            :pillName="pillData.pillName"
-            :type="pillData.type"
-            :capacity="pillData.capacity"
-          />
-        </div>
-      </li>
-    </Accordian>
-  </div>
+    <div v-for="data in pillbaghistorydata.result">
+      <Accordian
+        style="margin: 10px"
+        :title="formatDate(data.receipt.buildDate, 'YYYY/MM/DD 처방내역')"
+      >
+        <li>
+          <strong>영수증</strong>
+          <TableForm
+            style="margin-top: 10px"
+            :tableData="[
+              ['약국정보', data.receipt.pharmacyName],
+              ['조제일자', formatDate(data.receipt.buildDate, 'YYYY/MM/DD')],
+              ['수납금액', data.receipt.cost],
+            ]"
+          ></TableForm>
+        </li>
+        <li style="margin: 10px 0px">
+          <strong>복약안내</strong>
+          <div v-for="pillData in data.guide" style="margin-top: 10px">
+            <PillBagContent
+              :pillName="pillData.pillName"
+              :type="pillData.type"
+              :capacity="pillData.capacity"
+            />
+          </div>
+        </li>
+      </Accordian>
+    </div>
+  </section>
 </template>
 
 <script setup>
@@ -114,4 +116,8 @@ function formatDate(date, format = "YYYY/MM/DD") {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+section {
+  background-color: #f9f9f9;
+}
+</style>

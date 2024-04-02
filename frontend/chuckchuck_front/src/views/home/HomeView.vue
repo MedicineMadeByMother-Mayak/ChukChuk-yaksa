@@ -6,197 +6,96 @@
   </div>
   <div class="basic-background">
     <div class="basic-content">
-      <div class="hello">
-        <div class="hello-section">
-          <img
-            src="@/assests/icon/main_page/main_icon.svg"
-            style="border-radius: 30px"
-          />
-          <div class="hello-text">안녕하세요, {{ store.userName }}님!</div>
-        </div>
-        <img class="hello-pic" src="@/assests/img/Pil.png" />
+      <div class="hello-section">
+        <img src="@/assests/icon/main_page/main_icon.svg" style="border-radius: 30px" />
+        <div class="hello-text">안녕하세요, {{ store.userName }}님!</div>
       </div>
+      <img class="hello-pill" src="@/assests/img/Pil.png" />
       <div class="temp">
         <div class="icon-container">
           <div class="box">
-            <div
-              class="row"
-              style="border-bottom: 0.5px solid rgb(231, 231, 231)"
-            >
-              <div
-                class="column"
-                style="border-right: 0.5px solid rgb(231, 231, 231)"
-              >
-                <a href="/pillpic"
-                  ><img src="@/assests/icon/main_page/find_pill_by_pic.svg"
-                /></a>
+            <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
+              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
+                <a href="/pillpic"><img src="@/assests/icon/main_page/find_pill_by_pic.svg" /></a>
               </div>
               <div
                 class="column"
-                style="
-                  border-left: 0.5px solid rgb(231, 231, 231);
-                  border-right: 0.5px solid rgb(231, 231, 231);
-                "
+                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
               >
-                <a href="/ocrlist"
-                  ><img src="@/assests/icon/main_page/take_pic.svg"
-                /></a>
+                <a href="/ocrlist"><img src="@/assests/icon/main_page/take_pic.svg" /></a>
               </div>
-              <div
-                class="column"
-                style="border-left: 0.5px solid rgb(231, 231, 231)"
-              >
-                <a href="/pill"
-                  ><img src="@/assests/icon/main_page/pill_search.svg"
-                /></a>
+              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
+                <a href="/pill"><img src="@/assests/icon/main_page/pill_search.svg" /></a>
               </div>
             </div>
             <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
-              <div
-                class="column"
-                style="border-right: 0.5px solid rgb(231, 231, 231)"
-              >
-                <a href="/pharmacy"
-                  ><img src="@/assests/icon/main_page/pharmacy_search.svg"
-                /></a>
+              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
+                <a href="/pharmacy"><img src="@/assests/icon/main_page/pharmacy_search.svg" /></a>
               </div>
               <div
                 class="column"
-                style="
-                  border-left: 0.5px solid rgb(231, 231, 231);
-                  border-right: 0.5px solid rgb(231, 231, 231);
-                "
+                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
               >
-                <a href="/user-pill-effect"
-                  ><img src="@/assests/icon/main_page/effect_record.svg"
-                /></a>
+                <a href="/user-pill-effect"><img src="@/assests/icon/main_page/effect_record.svg" /></a>
               </div>
-              <div
-                class="column"
-                style="border-left: 0.5px solid rgb(231, 231, 231)"
-              >
-                <a href="/take-list"
-                  ><img src="@/assests/icon/main_page/take_pill_management.svg"
-                /></a>
+              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
+                <a href="/take-list"><img src="@/assests/icon/main_page/take_pill_management.svg" /></a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <!-- 수정 start -->
     <div class="middle-content">
-      <img src="@/assests/icon/main_page/noti_background.svg" />
+      <carousel autoplay="true" wrapAround="true" transition="3000" :items-to-show="1">
+        <slide v-for="(slide, index) in slides" :key="index"> <img :src="slide" alt="안내배너" /> </slide>
+        <template #addons>
+          <pagination />
+        </template>
+      </carousel>
     </div>
     <!-- 수정 end -->
   </div>
-  <!-- <div>
-    <a href="/ocrlist">약봉투/진단서 촬영 메인페이지 (/ocrlist)</a>
-  </div>
-  <div>
-    <a href="/ocrlist/diagnosisfilming"
-      >약봉투 촬영 (/ocrlist/diagnosisfilming)</a
-    >
-  </div>
-  <div>
-    <a href="/ocrlist/diagnosisresult"
-      >약봉투 촬영 결과 (/ocrlist/diagnosisresult)</a
-    >
-  </div>
-  <div>
-    <a href="/ocrlist/pillbagfilming">진단서 촬영 (/ocrlist/pillbagfilming)</a>
-  </div>
-  <div>
-    <a href="/ocrlist/pillbagresult"
-      >진단서 촬영 결과 (/ocrlist/pillbagresult)</a
-    >
-  </div>
-  <div>
-    <a href="/pharmacy">약국 검색 메인페이지 (/map)</a>
-  </div>
-  <div>
-    <a href="/pharmacy">약국 검색창 페이지 (/map/pharmacysearch)</a>
-  </div>
-  <div>
-    <a href="/pillpic">약 사진으로 검색 (/pillpic)</a>
-  </div>
-  <div>
-    <a href="/pillsearch">약 이름으로 검색 (/pillsearch)</a>
-  </div>
-  <div>
-    <a href="/pillsearch/pillsearchdetail"
-      >약 상세정보 페이지 (/pillsearch/pillsearchdetail)</a
-    >
-  </div>
-  <div>
-    <a href="/setting">설정 (/setting)</a>
-  </div>
-  <div>
-    <a href="/take-list">복용리스트 (/take-list)</a>
-  </div>
-  <div>
-    <a href="/usermedicalinfo">문진표 (/usermedicalinfo)</a>
-  </div>
-  <div>
-    <a href="/usermedicalinfo/pillbag">처방내역 (/usermedicalinfo/pillbag)</a>
-  </div>
-  <div>
-    <a href="/usermedicalinfo/diagnosishistory"
-      >진단내역 (/usermedicalinfo/diagnosishistory)</a
-    >
-  </div>
-  <div>
-    <a href="/test">테스트 (/test)</a>
-  </div>
-  <div>
-    <a href="/userpilleffect">약효기록 (/userpilleffect)</a>
-  </div>
-  <div>
-    <a href="/userpilleffect/effectdetail"
-      >약효기록 상세정보 페이지 (/userpilleffect/effectdetail)</a
-    >
-  </div>
-  <div>
-    <a href="/login">로그인 화면 (/login)</a>
-  </div>
-  <div>
-    <a href="/loading">로딩 화면 (/loading)</a>
-  </div>
-  <div>
-    <a href="/registinfo">개인정보등록 페이지 (/registinfo)</a>
-  </div> -->
   <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #f9f9f9"></div>
+  <!-- <div style="height: 85px; background-color: #f9f9f9"></div> -->
 </template>
 
 <script setup>
 import { userStore } from "@/stores/user";
+import { ref } from "vue";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
+
+const slides = ref([
+  "/src/assests/icon/main_page/noti_background.svg",
+  "/src/assests/icon/main_page/noti_background.svg",
+  "/src/assests/icon/main_page/noti_background.svg",
+]);
+
 const store = userStore();
 store.getUserInfo(); // 유저 이름 가져오기 위함
 </script>
 
 <style scoped>
+/* 베경 영역 */
 .header-background {
   height: 400px;
   width: 320px;
-  position: relative;
-  text-align: center;
-  color: black;
   margin-top: -110px; /*위로 올려 원 일부를 가리는 용도 */
   margin-bottom: -257px; /*밑에 사진 삼키는 용도 */
-  border-radius: 500%;
   display: flex;
   justify-items: center;
   align-items: center;
 }
-
+/* 배경사진 */
 .header-background img {
   width: 320px;
   height: 600px;
   margin-top: 100px;
   border-radius: 100px;
 }
-
+/* 본문영역 */
 .basic-background {
   background-color: #f9f9f9;
   height: 100vh; /* 100vb가 아닌 100vh로 수정 */
@@ -205,33 +104,50 @@ store.getUserInfo(); // 유저 이름 가져오기 위함
   flex-direction: column; /* 요소들을 세로로 정렬 */
 }
 
+/* 상단마진 */
 .basic-content {
   margin: 90px 0 0 0;
+  position: relative;
 }
 
-.hello {
-  display: flex;
-  justify-content: left; /* 가로 가운데 정렬 */
-  align-items: center;
-  position: relative; /* 상대 위치 설정 */
-  z-index: 5; /* 다른 요소 위에 표시되도록 설정 */
-  margin: 0 0 10px 20px;
-}
-
+/* 아이콘+이름 */
 .hello-section {
-  z-index: 7; /* 다른 요소 위에 표시되도록 설정 */
+  display: flex;
+  align-items: center;
+  position: absolute;
+  z-index: 3; /* 다른 요소 위에 표시되도록 설정 */
+  left: 10px;
+  top: -10px;
 }
+
 .hello-text {
   color: white;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 5px;
   font-size: 1rem;
   font-weight: 600;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* 그림자 설정 */
 }
 
-.hello-pic {
-  width: 155px;
-  margin: -50px 0px -18px 0px;
+/* 알약그림 */
+.hello-pill {
+  width: 150px;
+  z-index: 2;
+  position: absolute;
+  left: 170px;
+  bottom: 125px;
+  animation: floatUpDown 3s ease-in-out infinite; /* 애니메이션을 3초간 재생하고, ease-in-out 함수로 부드럽게 변화시키며, 무한 반복합니다. */
+}
+
+@keyframes floatUpDown {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .icon-container {
@@ -239,7 +155,9 @@ store.getUserInfo(); // 유저 이름 가져오기 위함
   height: 180px; /* 높이 80px */
 }
 
+/* 메뉴박스 */
 .box {
+  margin-top: 40px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -276,27 +194,15 @@ store.getUserInfo(); // 유저 이름 가져오기 위함
 }
 
 .middle-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-width: 270px;
-  margin: 80px auto 0; /* 상단 여백을 조절하기 위해 auto로 수정 */
-  text-align: center; /* 내부 요소를 가운데 정렬 */
+  width: 100%;
+  margin-top: 80px; /* 상단 여백을 조절하기 위해 auto로 수정 */
 }
 
 .middle-content img {
-  max-width: 270px;
-  border-radius: 20px;
+  width: 300px;
 }
 
-.middle-content-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 1;
-  color: white;
-  justify-items: left;
+.carousel__pagination {
+  margin-left: -35px;
 }
 </style>
