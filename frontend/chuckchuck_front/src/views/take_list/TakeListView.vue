@@ -1,58 +1,73 @@
 <template>
   <div>
-
     <!-- 헤더 -->
     <Wave title="복용 관리" height="30px" />
 
     <!-- 척척약사의 조언 -->
-    <Carousel :autoplay="1500" :itemsToShow="1.25" :wrapAround="true" :transition="500">
+    <Carousel
+      :autoplay="1500"
+      :itemsToShow="1.25"
+      :wrapAround="true"
+      :transition="500"
+    >
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
           <div class="carousel__img">
-            <img :src="item.img" alt="Logo"/>
+            <img :src="item.img" alt="Logo" />
           </div>
           <div class="carousel__text">
-            <div style="font-size: 12px;"><strong>{{ item.title }}</strong></div>
-              <div>
-                <span style="font-weight: bold; color: blue;">{{ item.pill1 }}</span>
-                <span>{{ item.content1 }}</span>
-                <span style="font-weight: bold; color: blue;">{{ item.pill2 }}</span>
-                <span>{{ item.content2 }}</span>
-              </div>
+            <div style="font-size: 12px">
+              <strong>{{ item.title }}</strong>
+            </div>
+            <div>
+              <span style="font-weight: bold; color: blue">{{
+                item.pill1
+              }}</span>
+              <span>{{ item.content1 }}</span>
+              <span style="font-weight: bold; color: blue">{{
+                item.pill2
+              }}</span>
+              <span>{{ item.content2 }}</span>
             </div>
           </div>
-          
+        </div>
       </Slide>
       <template #addons>
         <!-- <Navigation /> -->
         <Pagination />
       </template>
     </Carousel>
-    
+
     <!-- 알람 리스트 -->
     <div class="alarms">
-
       <!-- 알람 추가 버튼 -->
       <div>
-        <button class="rounded-button" @click="toggleModal(true)">
+        <button class="rounded-button" @click="toggleModal">
           <span
-            ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" /></span>
+            ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg"
+          /></span>
         </button>
-        
+
         <!-- 알람 모달 -->
-        <div v-if="showModal">
-            <AlarmModal v-model="showModal" :modalData="modalData" />
-        </div>
+        <AlarmModal
+          v-model="showModal"
+          :modalData="modalData"
+          @save="saveAlarm"
+        />
       </div>
-      
+
       <!-- 등록된 알람 리스트 -->
       <div
         v-for="(alarm, index) in alarmstore.alarmList"
         :key="`pill-date-${index}`"
       >
-        <button class="rounded-button">
+        <button class="rounded-button" @click="modifyAlarm(alarm.takeListId)">
           <span class="alarm">
-            <font-awesome-icon :icon="['fas', 'bell']" size="xs" style="color: #FFD43B;" />
+            <font-awesome-icon
+              :icon="['fas', 'bell']"
+              size="xs"
+              style="color: #ffd43b"
+            />
             <span>{{ alarm.takeListName }}</span>
           </span>
         </button>
@@ -80,14 +95,19 @@
     >
       <!-- 복용리스트 날짜와 제목 -->
       <div class="pill-date">
-        {{ takeListData.createDate }} <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
+        {{ takeListData.createDate }}
+        <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
         <input
-          v-else 
-          v-model="takeListData.takeListName" 
+          v-else
+          v-model="takeListData.takeListName"
           @blur="saveChangeName(takeListData)"
           @keydown.enter="saveChangeName(takeListData)"
-         />
-        <img src="@/assests/icon/edit.png" alt="편집 아이콘" @click="openTakeListModal(takeListData.takeListId, index)"/>
+        />
+        <img
+          src="@/assests/icon/edit.png"
+          alt="편집 아이콘"
+          @click="openTakeListModal(takeListData.takeListId, index)"
+        />
       </div>
 
       <!-- 리스트 별 약 목록 -->
@@ -111,28 +131,59 @@
         </li>
       </ul>
     </div>
-    <ListEditModal v-if="isTakeListModalOpen" @close="closeTakeListModal" @update="handleUpdate"/>
+    <ListEditModal
+      v-if="isTakeListModalOpen"
+      @close="closeTakeListModal"
+      @update="handleUpdate"
+    />
+    <AlarmModalTime
+      v-model="showAlarmModalTime"
+      :selectTakeList="selectTakeList"
+      :createOrModify="createOrModify"
+    />
   </div>
 </template>
 
 <script setup>
 import Wave from "@/common/Wave.vue";
 import { ref, onMounted, computed } from "vue";
-import dayjs from "dayjs";
 import Content from "./components/Content.vue";
-import List from "./components/List.vue";
-import ListEditModal from './components/ListEditModal.vue';
+import ListEditModal from "./components/ListEditModal.vue";
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
 import "@/assests/css/carousel.css";
 import { takelistStore } from "@/stores/takelist";
-import { alarmStore } from '@/stores/alarm';
+import { alarmStore } from "@/stores/alarm";
 import logo from "@/assests/img/Group.png";
-import AlarmModal from '@/views/take_list/components/AlarmModal.vue';
+import AlarmModal from "@/views/take_list/components/AlarmModal.vue";
+import AlarmModalTime from "@/views/take_list/components/AlarmModalTime.vue";
 const alarmstore = alarmStore();
 const store = takelistStore();
 // ----------------------------------------
-const isTakeListModalOpen = ref(false)
+const isTakeListModalOpen = ref(false);
+const showAlarmModalTime = ref(false);
+const selectTakeList = ref(0);
+const showModal = ref(false);
+// 0 이면 생성 1 이면 수정
+const createOrModify = ref(0);
+
+onMounted(async () => {
+  await store.getTakeListPageDatas();
+  alarmstore.getAlarmList();
+});
+
+function modifyAlarm(id) {
+  createOrModify.value = 1;
+  selectTakeList.value = id;
+  showAlarmModalTime.value = true;
+}
+
+function saveAlarm(id) {
+  createOrModify.value = 0;
+  showModal.value = false;
+  selectTakeList.value = id;
+  showAlarmModalTime.value = true;
+}
 
 //리스트 모달창 띄우기
 const openTakeListModal = (id, index) => {
@@ -143,11 +194,11 @@ const openTakeListModal = (id, index) => {
 //리스트 모달창 종료
 const closeTakeListModal = () => {
   isTakeListModalOpen.value = false;
-}
+};
 
 // 모달에서 전달받은 데이터로 복용 리스트 리로드
 const handleUpdate = () => {
-  console.log("들어왔냐?")
+  console.log("들어왔냐?");
   window.location.reload(true);
 };
 
@@ -155,7 +206,9 @@ const handleUpdate = () => {
 const saveChangeName = async (takeListData) => {
   takeListData.edit = false; // 편집 모드 종료
   //1. alramList에서 takeListId가 takeListData.takeListId와 같은 리스트 찾기
-  const index = alarmstore.alarmList.findIndex(item => item.takeListId == takeListData.takeListId);
+  const index = alarmstore.alarmList.findIndex(
+    (item) => item.takeListId == takeListData.takeListId
+  );
   //2. alramList.takeListname을 takeListDat.takeListName으로 변경하기
   if (index !== -1) {
     alarmstore.alarmList[index].takeListName = takeListData.takeListName;
@@ -174,31 +227,97 @@ const finishedTakeList = computed(() =>
   store.takelistpagedatas.filter((item) => item.isFinished)
 );
 
-const showModal = ref(false);
-const modalData = [
-  ['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]
-];
-const toggleModal = (value) => {
-  showModal.value = value;
+const modalData = [["어떤 약에 대한 알람을 등록하시겠어요?", true, {}, {}]];
+
+const toggleModal = async () => {
+  await alarmstore.getOffAlarmList();
+  showModal.value = !showModal.value;
 };
-onMounted(async () => {
-  await store.getTakeListPageDatas();
-  alarmstore.getAlarmList();
-});
 
-// 척척약사의 조언 
+// 척척약사의 조언
 const advice = ref([
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-  { img: logo, title: '척척약사의 조언', pill1: '트루포뮬러', pill2: '프라닥사캡슐', content1: '(오메가3)와 ', content2: '(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.' },
-
-])
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+  {
+    img: logo,
+    title: "척척약사의 조언",
+    pill1: "트루포뮬러",
+    pill2: "프라닥사캡슐",
+    content1: "(오메가3)와 ",
+    content2:
+      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+  },
+]);
 </script>
 
 <style scoped>
@@ -215,7 +334,7 @@ ol {
   height: 35px;
   white-space: nowrap;
   gap: 10px;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 .menu {
   display: flex;
