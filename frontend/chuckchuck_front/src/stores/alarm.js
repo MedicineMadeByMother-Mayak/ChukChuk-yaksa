@@ -24,6 +24,7 @@ export const alarmStore = defineStore("alarm", () => {
         params: { isAlarm: false }
       });
       offAlarmList.value = data.alarmDtos;
+      return data;
     } catch (error) {
       console.log("비활성화된 알람리스트를 가져오지 못했습니다", error);
     }

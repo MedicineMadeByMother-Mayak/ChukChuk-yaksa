@@ -33,9 +33,10 @@ const msg = ref(true);
               <div style="margin: 9px; font-size: 14px; font-weight: bold;">어떤 약에 대한 알람을 <span style="color:green;">등록</span>하시겠어요?</div>
             </div>
             <div class="button-container">
-              <button v-for="(medicine, name) in medicines" :key="name" @click="toggleActive(name)" :class="{ 'active': medicine.isActive }">
-                <font-awesome-icon :icon="medicine.isActive ? ['fas', 'bell'] : ['fas', 'bell-slash']" style="color: gray;"/>
-                <span class="text">{{ name }}</span>
+              <button v-for="(alarm, idx) in store.offAlarmList" :key="idx">
+                <font-awesome-icon :icon="['fas', 'bell-slash']" size="xs" style="color: gray;" />
+                <!-- <font-awesome-icon :icon="medicine.isActive ? ['fas', 'bell'] : ['fas', ]" style="color: gray;"/> -->
+                <span class="text">{{ alarm.takeListName }}</span>
               </button>
             </div>
             <button class="save-button" @click="redirectToAlarmModalTime">SAVE</button>
@@ -50,52 +51,47 @@ const msg = ref(true);
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useRouter } from 'vue-router';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
-
+import { alarmStore } from '@/stores/alarm'
 library.add(faBell, faBellSlash);
-const router = useRouter();
 
+const router = useRouter();
+const store = alarmStore();
+const showModal = ref(true);
+
+const props = defineProps({
+  modalData: Array,
+});
+const offAlarms = ref([]);
+const medicines = reactive({});
+onMounted(async () => {
+  const offAlarmList = await store.getOffAlarmList();
+  
+  // offAlarmList.alarmDtos.forEach(alarm => {
+  //   medicines[alarm.takeListName] = { isActive: false };
+  // });
+});
 const redirectToAlarmModalTime = () => {
   router.push({ name: 'alarmmodaltime' }); // 'AlarmModalTime'은 목적지 컴포넌트의 라우터 이름입니다.
 };
-const showModal = ref(true);
-const medicines = reactive({
-  '빈혈약': { isActive: false },
-  '저혈압약': { isActive: false },
-  '고혈압약': { isActive: false },
-  '당뇨약': { isActive: false },
-  '심장약': { isActive: false },
-});
+
 
 const toggleActive = (name) => {
   medicines[name].isActive = !medicines[name].isActive;
 };
 
+// 창 닫기
 const closeModal = () => {
   showModal.value = false;
 };
-// const showModal = defineModel();
-const props = defineProps({
-  modalData: {
-    type: Array,
-    default: [["원하는 텍스트 넣으세요", true, { params: {}, Link: "home" }]],
-  },
+
+onMounted(async () => {
+  store.getOffAlarmList();
 });
-
-
-// const performAction = (action) => {
-//   console.log("Action performed:", action);
-//   showModal.value = !showModal.value;
-// };
-// const closeModal = () => {
-//   showModal.value = !showModal.value;
-// };
-
-
 </script>
 
 <style scoped>

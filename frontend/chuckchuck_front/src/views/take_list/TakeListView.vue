@@ -34,7 +34,7 @@
 
       <!-- 알람 추가 버튼 -->
       <div>
-        <button class="rounded-button" @click="showModal = true">
+        <button class="rounded-button" @click="toggleModal(true)">
           <span
             ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" /></span>
         </button>
@@ -154,6 +154,12 @@ const handleUpdate = () => {
 //이름 변경 후 저장
 const saveChangeName = async (takeListData) => {
   takeListData.edit = false; // 편집 모드 종료
+  //1. alramList에서 takeListId가 takeListData.takeListId와 같은 리스트 찾기
+  const index = alarmstore.alarmList.findIndex(item => item.takeListId == takeListData.takeListId);
+  //2. alramList.takeListname을 takeListDat.takeListName으로 변경하기
+  if (index !== -1) {
+    alarmstore.alarmList[index].takeListName = takeListData.takeListName;
+  }
   await store.rename(takeListData.takeListId, takeListData.takeListName);
 };
 // ----------------------------------------
@@ -172,7 +178,9 @@ const showModal = ref(false);
 const modalData = [
   ['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]
 ];
-
+const toggleModal = (value) => {
+  showModal.value = value;
+};
 onMounted(async () => {
   await store.getTakeListPageDatas();
   alarmstore.getAlarmList();
