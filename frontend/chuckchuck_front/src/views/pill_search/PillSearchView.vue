@@ -53,11 +53,12 @@
     @add-pill-in-take-list="addPill"
     :modalData="[
       [
-        '복용중인 약 리스트에 추가하기',
+        '복용중인 약 리스트',
+        '에 추가하기',
         false,
         { emitName: 'addPillInTakeList' },
       ],
-      ['나의 약효기록에 추가하기', false, { method: '' }],
+      ['나의 약효기록', '에 후기 추가하기', false, { method: '' }],
     ]"
   />
 

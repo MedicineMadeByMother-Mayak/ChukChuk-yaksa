@@ -78,6 +78,7 @@ const closeModal = () => {
 }
 
 .modal {
+  padding: 3% 0;
   background: white;
   width: 80%;
   max-width: 300px;
