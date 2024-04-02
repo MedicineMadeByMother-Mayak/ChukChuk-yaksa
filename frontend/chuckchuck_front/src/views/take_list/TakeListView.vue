@@ -24,6 +24,7 @@
       </Slide>
       <template #addons>
         <!-- <Navigation /> -->
+        <Pagination />
       </template>
     </Carousel>
     
@@ -37,6 +38,10 @@
             ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg" /></span>
         </button>
         
+        <!-- 알람 모달 -->
+        <div v-if="showModal">
+            <AlarmModal v-model="showModal" :modalData="modalData" />
+        </div>
       </div>
       
       <!-- 등록된 알람 리스트 -->
@@ -51,7 +56,6 @@
           </span>
         </button>
       </div>
-      
     </div>
 
     <div class="menu">
@@ -108,9 +112,9 @@ import Wave from "@/common/Wave.vue";
 import { ref, onMounted, computed } from "vue";
 import dayjs from "dayjs";
 import Content from "./components/Content.vue";
-import List from "./components/List.vue";
 import { Carousel, Pagination, Slide, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
+import "@/assests/css/carousel.css"
 import { takelistStore } from "@/stores/takelist";
 import { alarmStore } from '@/stores/alarm';
 import logo from "@/assests/img/Group.png";
@@ -130,6 +134,9 @@ const finishedTakeList = computed(() =>
 );
 
 const showModal = ref(false);
+const modalData = [
+  ['어떤 약에 대한 알람을 등록하시겠어요?', true, {}, {}]
+];
 
 onMounted(async () => {
   await store.getTakeListPageDatas();

@@ -27,6 +27,7 @@ const msg = ref(true);
             <div class="close-button">
               <div class="close" @click="closeModal">&times;</div>
             </div>
+            
             <div class="top">
               <img style="width: 20px; height: 20px" src="@/assests/img/startLogo.png" alt="">
               <div style="margin: 9px; font-size: 14px; font-weight: bold;">어떤 약에 대한 알람을 <span style="color:green;">등록</span>하시겠어요?</div>
@@ -100,15 +101,18 @@ const props = defineProps({
 <style scoped>
 
 .button-container button.active {
-  background-color: #FFD43B; /* 활성 버튼 배경 */
-  color: white; /* 활성 버튼 텍스트 색상 */
+  background-color: #FFD43B; 
+  color: white;
 }
 .modal-overlay {
   position: fixed;
   bottom: 0;
   width: 320px;
-  height: 120%;
+  height: 658px;
+  margin-left: -10px;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.6);
+  /* background-color: red; */
   caret-color: transparent;
 }
 
