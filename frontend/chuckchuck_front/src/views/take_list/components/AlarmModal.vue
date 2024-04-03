@@ -44,7 +44,7 @@ const msg = ref(true);
                   @click.prevent="clickAlarm(alarm.takeListId)"
                 >
                   <font-awesome-icon
-                    :icon="['fas', 'bell-slash']"
+                    :icon="['fas', 'bell']"
                     size="xs"
                     style="color: gray"
                   />
@@ -105,6 +105,15 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
 .button-container button.active {
   background-color: #ffd43b;
   color: white;
@@ -115,11 +124,10 @@ onMounted(async () => {
   width: 320px;
   height: 658px;
   margin-left: -10px;
-  z-index: 100;
   background: rgba(0, 0, 0, 0.6);
-  /* background-color: red; */
   caret-color: transparent;
   z-index: 9999;
+  backdrop-filter: blur(1px);
 }
 
 .modal {
@@ -131,6 +139,7 @@ onMounted(async () => {
   overflow: hidden;
   bottom: 0px;
   position: absolute;
+  animation: slideIn 0.7s ease-in-out;
 }
 
 .modal-menu {
@@ -261,7 +270,7 @@ onMounted(async () => {
   font-weight: bold;
   font-size: 12px;
   color: white;
-  background-color: navy;
+  background-color:#242291;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -270,6 +279,6 @@ onMounted(async () => {
 
 .save-button:active {
   background-color: white;
-  color: navy;
+  color: #242291;
 }
 </style>

@@ -5,7 +5,7 @@
 
     <!-- 척척약사의 조언 -->
     <Carousel
-      :autoplay="1500"
+      :autoplay="2000"
       :itemsToShow="1.25"
       :wrapAround="true"
       :transition="500"
@@ -13,7 +13,7 @@
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
           <div class="carousel__img">
-            <img :src="item.img" alt="Logo" />
+            <img class="logo" :src=logo alt="chukchuklogo" />
           </div>
           <div class="carousel__text">
             <div style="font-size: 12px">
@@ -33,7 +33,6 @@
         </div>
       </Slide>
       <template #addons>
-        <!-- <Navigation /> -->
         <Pagination />
       </template>
     </Carousel>
@@ -42,7 +41,7 @@
     <div class="alarms">
       <!-- 알람 추가 버튼 -->
       <div>
-        <button class="rounded-button" @click="toggleModal">
+        <button v-if="alarmstore.offAlarmList.length" class="rounded-button" @click="toggleModal">
           <span
             ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg"
           /></span>
@@ -65,82 +64,85 @@
           <span class="alarm">
             <font-awesome-icon
               :icon="['fas', 'bell']"
-              size="xs"
               style="color: #ffd43b"
             />
-            <span>{{ alarm.takeListName }}</span>
+            <span style="font-weight: bold; font-size: smaller;">{{ alarm.takeListName }}</span>
           </span>
         </button>
       </div>
     </div>
 
-    <div class="menu">
-      <div class="menu-left">
-        <img src="@/assests/icon/pill.png" alt="복용리스트" />
-        <div><strong>복용중</strong></div>
-      </div>
-      <div class="menu-right">
-        <button class="gray-button">과거에 먹은 약</button>
-        <button class="navy-button">추가</button>
-      </div>
-    </div>
-
-    <hr style="margin: 3px" />
-
-    <!-- 복용리스트 목록 -->
-    <div
-      v-for="(takeListData, index) in currentTakeList"
-      :key="`pill-date-${index}`"
-      class="pill-entry"
-    >
-      <!-- 복용리스트 날짜와 제목 -->
-      <div class="pill-date">
-        {{ takeListData.createDate }}
-        <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
-        <input
-          v-else
-          v-model="takeListData.takeListName"
-          @blur="saveChangeName(takeListData)"
-          @keydown.enter="saveChangeName(takeListData)"
-        />
-        <img
-          src="@/assests/icon/edit.png"
-          alt="편집 아이콘"
-          @click="openTakeListModal(takeListData.takeListId, index)"
-        />
+    <div class="takelist-container">
+      <div class="menu">
+        <div class="menu-left">
+          <img src="@/assests/icon/pill.png" alt="복용리스트" />
+          <div><strong>복용중</strong></div>
+        </div>
+        <div class="menu-right">
+          <button class="gray-button">과거에 먹은 약</button>
+          <button class="navy-button">추가</button>
+        </div>
       </div>
 
-      <!-- 리스트 별 약 목록 -->
-      <ul class="pills-list">
-        <li
-          v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
-          :key="`pill-details-${index}`"
-          class="pill-info"
-        >
-          <!-- 약 카드 -->
-          <Content
-            :pillId="currentPillData.pillId"
-            :pillName="currentPillData.name"
-            :imageUrl="currentPillData.imageUrl"
-            :type="currentPillData.type"
-            :warningPregnant="currentPillData.warningPregnant"
-            :warningUseDate="currentPillData.warningUseDate"
-            :warningElders="currentPillData.warningElders"
-            :warningTogether="currentPillData.warningTogether"
+      <hr style="margin: 3px" />
+
+      <!-- 복용리스트 목록 -->
+      <div
+        v-for="(takeListData, index) in currentTakeList"
+        :key="`pill-date-${index}`"
+        class="pill-entry"
+      >
+        <!-- 복용리스트 날짜와 제목 -->
+        <div class="pill-date">
+          <div class="pill-date-date">
+            {{ formatDate(takeListData.createDate) }}
+          </div>
+          <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
+          <input
+            v-else
+            v-model="takeListData.takeListName"
+            @blur="saveChangeName(takeListData)"
+            @keydown.enter="saveChangeName(takeListData)"
           />
-        </li>
-      </ul>
+          <img
+            src="@/assests/icon/edit.png"
+            alt="편집 아이콘"
+            @click="openTakeListModal(takeListData.takeListId, index)"
+          />
+        </div>
+
+        <!-- 리스트 별 약 목록 -->
+        <ul class="pills-list">
+          <li
+            v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
+            :key="`pill-details-${index}`"
+            class="pill-info"
+          >
+            <!-- 약 카드 -->
+            <Content
+              :pillId="currentPillData.pillId"
+              :pillName="currentPillData.name"
+              :imageUrl="currentPillData.imageUrl"
+              :type="currentPillData.type"
+              :warningPregnant="currentPillData.warningPregnant"
+              :warningUseDate="currentPillData.warningUseDate"
+              :warningElders="currentPillData.warningElders"
+              :warningTogether="currentPillData.warningTogether"
+            />
+          </li>
+        </ul>
+      </div>
+      <ListEditModal
+        v-if="isTakeListModalOpen"
+        @close="closeTakeListModal"
+        @update="handleUpdate"
+      />
+      <AlarmModalTime
+        v-model="showAlarmModalTime"
+        :selectTakeList="selectTakeList"
+        :createOrModify="createOrModify"
+      />
     </div>
-    <ListEditModal
-      v-if="isTakeListModalOpen"
-      @close="closeTakeListModal"
-      @update="handleUpdate"
-    />
-    <AlarmModalTime
-      v-model="showAlarmModalTime"
-      :selectTakeList="selectTakeList"
-      :createOrModify="createOrModify"
-    />
   </div>
 </template>
 
@@ -234,6 +236,14 @@ const toggleModal = async () => {
   showModal.value = !showModal.value;
 };
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = ("0" + (date.getMonth() + 1)).slice(-2);
+  const day = ("0" + date.getDate()).slice(-2);
+  return `${year}. ${month}. ${day}`;
+};
+
 // 척척약사의 조언
 const advice = ref([
   {
@@ -321,8 +331,20 @@ const advice = ref([
 </script>
 
 <style scoped>
-ol {
-  padding-inline-start: 0px;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@keyframes rotateAndPause {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  55% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .alarms {
@@ -331,10 +353,15 @@ ol {
   background-color: #c0e6fc;
   display: flex;
   width: 300px;
-  height: 35px;
+  height: 30px;
   white-space: nowrap;
   gap: 10px;
   overflow-x: auto;
+}
+
+.takelist-container {
+  margin: 0px 12px 0px 12px;
+
 }
 .menu {
   display: flex;
@@ -348,24 +375,31 @@ ol {
 .menu-left {
   display: flex;
   align-items: center;
+  margin-left: 5px;
+  margin-bottom: -17px;
+  font-weight: bolder;
+  font-size: small;
+
 }
 .menu-left img {
-  width: 80px;
+  width: 100px;
   margin-right: 5px;
+  margin-left: -4px;
 }
 .menu-right {
   text-align: right;
   margin-bottom: 5px;
 }
 .menu img {
-  width: 10px;
-  height: 10px;
+  width: 15px;
+  height: 17px;
 }
 
 button {
   display: inline;
   margin-right: 5px;
-  margin-top: 10px;
+  margin-top: 20px;
+  margin-bottom: -10px;
 }
 .gray-button {
   background-color: #cccccc;
@@ -373,7 +407,7 @@ button {
   font-weight: bold;
   border-radius: 5px;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 10px;
   border: none;
   cursor: pointer;
   margin-right: 5px;
@@ -385,9 +419,13 @@ button {
   font-weight: bold;
   border-radius: 5px;
   padding: 5px 15px;
-  font-size: 12px;
+  font-size: 10px;
   border: none;
   cursor: pointer;
+}
+
+ol {
+  padding-inline-start: 0px;
 }
 
 .line {
@@ -447,7 +485,14 @@ button {
   display: flex;
   align-items: center;
   font-weight: bold;
+  margin-top: 10px;
 }
+.pill-date-date {
+  color: #083688;
+  margin-right: 3px;
+  margin-bottom: -1px;
+}
+
 
 .pill-info + .pill-info {
   margin-top: 10px;
@@ -460,20 +505,26 @@ button {
 }
 
 .alarm > *:first-child {
-  margin-right: 8px;
+  margin-right: 10px;
+  margin-left: 0px;
 }
 .rounded-button {
   border: none;
   background-color: white;
   padding: 5px 15px;
-  margin: 0px;
-  border-radius: 30px;
+  margin: 2.5px;
+  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 /* 척척약사의 조언 CSS */
+
+.logo {
+  animation: rotateAndPause 2s ease-in-out infinite;
+}
+
 .carousel__slide {
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.3);
   background-color: #ffffff;
