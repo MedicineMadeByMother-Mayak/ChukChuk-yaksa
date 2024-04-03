@@ -25,23 +25,44 @@
       <span v-if="flag == 4">..</span>
       <!-- 수정 end -->
     </div>
-    <font-awesome-icon class="delete-icon" :icon="['fas', 'x']" />
+    <font-awesome-icon class="delete-icon" :icon="['fas', 'x']" @click="openDeletePillModal()"/>
+    <DeleteCheckModal 
+      v-if="isDeletePillModalOpen" 
+      @close="closeDeletePillModal"
+      :pillId="pillId"
+      :pillName="pillName"
+      :takeListId="takeListId"
+      :takeListName="takeListName"
+      :imageUrl="imageUrl"
+    />
   </div>
 </template>
 
 <script setup>
 import Badge from "@/common/Badge.vue";
+import DeleteCheckModal from './DeleteCheckModal.vue';
 import { ref } from "vue";
 
+const isDeletePillModalOpen = ref(false);
 const flag = ref(0);
-
 const props = defineProps({
-  pillId: 1,
+  takeListId: {
+    type: Number
+  },
+  takeListName: {
+    type: String
+  },
+  pillId: {
+    type: Number
+  },
   pillName: {
     type: String,
     default: "프로다나서캡슐",
   },
-  imageUrl: "@/assests/img/tempPill.png",
+  imageUrl: {
+    type: String,
+    default: "@/assests/img/tempPill.png",
+  },
   type: {
     type: String,
     default: "항히스타민제",
@@ -71,6 +92,16 @@ const truncateName = (name) => {
     return name;
   }
 };
+
+//리스트 모달창 띄우기
+const openDeletePillModal = () => {
+  isDeletePillModalOpen.value = true;
+};
+
+//리스트 모달창 종료
+const closeDeletePillModal = () => {
+  isDeletePillModalOpen.value = false;
+}
 
 // badges 배열 생성
 const badges = [
