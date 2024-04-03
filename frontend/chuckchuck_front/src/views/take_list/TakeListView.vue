@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 헤더 -->
-    <Wave title="복용 관리" height="30px" />
+    <Wave title="복용 관리" height="120px" />
 
     <!-- 척척약사의 조언 -->
     <Carousel
@@ -33,7 +33,7 @@
         </div>
       </Slide>
       <template #addons>
-        <Pagination />
+        <Pagination class="page" />
       </template>
     </Carousel>
 
@@ -68,11 +68,16 @@
         :key="`pill-date-${index}`"
       >
         <button class="rounded-button" @click="modifyAlarm(alarm.takeListId)">
-          <span class="alarm">
-            <font-awesome-icon :icon="['fas', 'bell']" style="color: #ffd43b" />
-            <span style="font-weight: bold; font-size: smaller">{{
-              alarm.takeListName
-            }}</span>
+          <font-awesome-icon
+            class="alarm-icon"
+            :icon="['fas', 'bell']"
+            style="color: #ffd43b"
+          />
+          <span
+            class="alarm-text"
+            style="font-weight: bold; font-size: smaller"
+          >
+            {{ truncateName(alarm.takeListName) }}
           </span>
         </button>
       </div>
@@ -262,6 +267,7 @@ const isNow = ref(false);
 async function toggleIsNow() {
   isNow.value = !isNow.value;
 }
+
 // 0 이면 생성 1 이면 수정
 const createOrModify = ref(0);
 
@@ -269,6 +275,14 @@ onMounted(async () => {
   await store.getTakeListPageDatas();
   alarmstore.getAlarmList();
 });
+
+const truncateName = (name) => {
+  if (name.length > 8) {
+    return name.slice(0, 7) + " ..";
+  } else {
+    return name;
+  }
+};
 
 function modifyAlarm(id) {
   createOrModify.value = 1;
@@ -384,7 +398,6 @@ const advice = ref([
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 @keyframes rotateAndPause {
   0% {
     transform: rotate(0deg);
@@ -553,20 +566,26 @@ ol {
   height: 25px;
 }
 
-.alarm > *:first-child {
-  margin-right: 10px;
-  margin-left: 0px;
-}
 .rounded-button {
   width: 95px;
   border: none;
   background-color: white;
-  padding: 5px 15px;
+  padding: 5px 8px;
   margin: 2.5px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  transition: background-color 0.3s;
+  position: relative;
+}
+
+.alarm-icon {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+}
+
+.alarm-text {
+  margin-left: 10px;
 }
 
 /* 척척약사의 조언 CSS */

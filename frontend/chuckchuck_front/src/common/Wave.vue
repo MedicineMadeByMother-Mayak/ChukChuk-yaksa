@@ -4,11 +4,11 @@
 -->
 
 <template>
-  <header>
+  <header :style="{ height }">
     <div class="container">
       <img :src="wave" id="pin" />
-      <img :src="wave1" id="left" @animationend="handleAnimationEnd" />
-      <!-- <img :src="wave2" id="right" @animationend="handleAnimationEnd" /> -->
+      <!-- <img :src="wave3" id="wave1" @animationend="handleAnimationEnd" /> -->
+      <img :src="wave3" id="wave3" @animationend="handleAnimationEnd" />
     </div>
   </header>
 </template>
@@ -18,6 +18,14 @@ import { ref, onMounted } from "vue";
 import wave from "@/assests/img/waves/wave.svg";
 import wave1 from "@/assests/img/waves/wave-1.svg";
 import wave2 from "@/assests/img/waves/wave-2.svg";
+import wave3 from "@/assests/img/waves/wave-3.svg";
+
+const props = defineProps({
+  height: {
+    type: Number,
+    default: "500px",
+  },
+});
 
 let isLeftAnimation = ref(true);
 
@@ -28,7 +36,7 @@ const handleAnimationEnd = () => {
 
 <style scoped>
 header {
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   height: 10vh;
 }
 
@@ -37,32 +45,27 @@ header {
   max-height: 100%;
   position: relative;
 }
+
 #pin {
   position: absolute;
-  top: -20px;
+  top: -30px;
 }
 
-#left {
+#wave1 {
   position: absolute;
-  bottom: -150px;
-  animation: move-1 4s infinite;
+  top: -15px;
+  animation: move-3 4s infinite;
 }
 
-#right {
+#wave3 {
   position: absolute;
-  bottom: -150px;
-  animation: move-2 5s infinite;
+  top: -30px;
+  animation: move-3 4s infinite;
 }
 
-@keyframes move-1 {
+@keyframes move-3 {
   50% {
-    transform: translateY(70px);
-  }
-}
-
-@keyframes move-2 {
-  50% {
-    transform: translateY(50px);
+    transform: translateY(15px);
   }
 }
 </style>
