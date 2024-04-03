@@ -86,7 +86,6 @@
           <button class="navy-button" @click="openSelectPillModal">추가</button>
         </div>
       </div>
-
       <hr style="margin: 3px" />
 
       <!-- 복용리스트 목록 -->
@@ -127,14 +126,16 @@
           >
             <!-- 약 카드 -->
             <Content
-              :pillId="currentPillData.pillId"
-              :pillName="currentPillData.name"
-              :imageUrl="currentPillData.imageUrl"
-              :type="currentPillData.type"
-              :warningPregnant="currentPillData.warningPregnant"
-              :warningUseDate="currentPillData.warningUseDate"
-              :warningElders="currentPillData.warningElders"
-              :warningTogether="currentPillData.warningTogether"
+            :takeListId="takeListData.takeListId"
+            :takeListName="takeListData.takeListName"
+            :pillId="currentPillData.pillId"
+            :pillName="currentPillData.name"
+            :imageUrl="currentPillData.imageUrl"
+            :type="currentPillData.type"
+            :warningPregnant="currentPillData.warningPregnant"
+            :warningUseDate="currentPillData.warningUseDate"
+            :warningElders="currentPillData.warningElders"
+            :warningTogether="currentPillData.warningTogether"
             />
           </li>
         </ul>
@@ -223,7 +224,6 @@ const closeSelectPillModal = () => {
 
 // 모달에서 전달받은 데이터로 복용 리스트 리로드
 const handleUpdate = () => {
-  console.log("들어왔냐?");
   window.location.reload(true);
 };
 
@@ -240,7 +240,7 @@ const saveChangeName = async (takeListData) => {
   }
   await store.rename(takeListData.takeListId, takeListData.takeListName);
 };
-// ----------------------------------------
+// -------------------------------------------------------------
 
 // 현재 복용중인 리스트
 const currentTakeList = computed(() =>
