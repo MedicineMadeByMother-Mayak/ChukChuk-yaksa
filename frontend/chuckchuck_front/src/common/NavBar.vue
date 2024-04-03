@@ -28,10 +28,10 @@
 <style scoped>
 .nav-bar {
   /* background-color: aqua; */
-  position: fixed; /* 고정 위치로 변경 */
-  bottom: 20px; /* 하단에 고정 */
-  left: 160px;
-  transform: translateX(-50%);
+  /* position: fixed; */
+  /* bottom: 20px; */
+  /* left: 160px; */
+  /* transform: translateX(-50%); */
   width: 280px;
   height: 55px;
   display: flex;
