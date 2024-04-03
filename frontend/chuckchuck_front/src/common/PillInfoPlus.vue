@@ -1,8 +1,8 @@
 <template>
   <div class="pill-card">
     <div class="pill-image">
-      <!-- <img :src="imageUrl" alt="약 이미지" /> -->
-      <img src="@/assests/img/tempPill.png" alt="약 이미지" />
+      <img :src="imageUrl" alt="약 이미지" />
+      <!-- <img src="@/assests/img/tempPill.png" alt="약 이미지" /> -->
     </div>
     <div class="pill-info" @click="clickDetail(pillId)">
       <div class="pill-type">
