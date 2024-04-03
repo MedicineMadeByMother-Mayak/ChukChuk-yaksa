@@ -25,9 +25,13 @@
       <span v-if="flag == 4">..</span>
       <!-- 수정 end -->
     </div>
-    <font-awesome-icon class="delete-icon" :icon="['fas', 'x']" @click="openDeletePillModal()"/>
-    <DeleteCheckModal 
-      v-if="isDeletePillModalOpen" 
+    <font-awesome-icon
+      class="delete-icon"
+      :icon="['fas', 'x']"
+      @click="openDeletePillModal()"
+    />
+    <DeleteCheckModal
+      v-if="isDeletePillModalOpen"
       @close="closeDeletePillModal"
       :pillId="pillId"
       :pillName="pillName"
@@ -40,20 +44,20 @@
 
 <script setup>
 import Badge from "@/common/Badge.vue";
-import DeleteCheckModal from './DeleteCheckModal.vue';
+import DeleteCheckModal from "./DeleteCheckModal.vue";
 import { ref } from "vue";
 
 const isDeletePillModalOpen = ref(false);
 const flag = ref(0);
 const props = defineProps({
   takeListId: {
-    type: Number
+    type: Number,
   },
   takeListName: {
-    type: String
+    type: String,
   },
   pillId: {
-    type: Number
+    type: Number,
   },
   pillName: {
     type: String,
@@ -101,7 +105,7 @@ const openDeletePillModal = () => {
 //리스트 모달창 종료
 const closeDeletePillModal = () => {
   isDeletePillModalOpen.value = false;
-}
+};
 
 // badges 배열 생성
 const badges = [

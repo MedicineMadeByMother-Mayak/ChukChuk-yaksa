@@ -11,7 +11,6 @@ import {ref} from "vue";
 const msg = ref(true);
 </script> -->
 
-
 <template>
   <div class="modal-overlay" v-if="showModal">
     <div class="modal">
@@ -21,31 +20,44 @@ const msg = ref(true);
         </div>
         <div>
           <div class="top">
-            <img style="width: 20px; height: 20px" src="@/assests/img/startLogo.png" alt="">
-            <div style="margin: 9px; font-size: 14px; font-weight: bold;">{{ truncateName(pillName) }}를 <span style="color:red;">삭제</span>하시겠어요?</div>
+            <img
+              style="width: 20px; height: 20px"
+              src="@/assests/img/startLogo.png"
+              alt=""
+            />
+            <div style="margin: 18px 9px; font-size: 14px; font-weight: bold">
+              {{ truncateName(pillName) }}을
+              <span style="color: red">삭제</span>하시겠어요?
+            </div>
           </div>
           <div class="text-container">
-              <span class="text">[ <strong style="color:red">{{ takeListName }}</strong> ] 리스트에서</span>
-              <span class="text"><strong>{{ pillName }}</strong>을 삭제합니다.</span>
+            <span class="text"
+              >[ <strong style="">{{ takeListName }}</strong> ] 리스트에서</span
+            >
+            <span class="text" style="margin: 5px 10px"
+              ><strong>{{ pillName }}</strong
+              >을 삭제합니다.</span
+            >
           </div>
-          <button class="delete-button" @click="deletePill">DELETE</button>
-      </div>
+          <div style="display: flex; justify-content: center">
+            <button class="delete-button" @click="deletePill">DELETE</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-
 <script setup>
 import { ref, reactive } from "vue";
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 import { takelistStore } from "@/stores/takelist";
 const store = takelistStore();
 
 const router = useRouter();
 
 const redirectToTakeList = () => {
-  router.push({ name: 'TakeList' }); // 'AlarmModalTime'은 목적지 컴포넌트의 라우터 이름입니다.
+  router.push({ name: "TakeList" }); // 'AlarmModalTime'은 목적지 컴포넌트의 라우터 이름입니다.
 };
 const showModal = ref(true);
 
@@ -55,13 +67,13 @@ const closeModal = () => {
 
 const props = defineProps({
   takeListId: {
-    type: Number
+    type: Number,
   },
   takeListName: {
-    type: String
+    type: String,
   },
   pillId: {
-    type: Number
+    type: Number,
   },
   pillName: {
     type: String,
@@ -71,13 +83,13 @@ const props = defineProps({
     type: String,
     default: "@/assests/img/tempPill.png",
   },
-})
+});
 
 const deletePill = async () => {
-    await store.deletePill(props.takeListId, props.pillId);
-    await store.getTakeListPageDatas();
-    closeModal()
-}
+  await store.deletePill(props.takeListId, props.pillId);
+  await store.getTakeListPageDatas();
+  closeModal();
+};
 
 const truncateName = (name) => {
   if (name.length > 5) {
@@ -86,11 +98,9 @@ const truncateName = (name) => {
     return name;
   }
 };
-
 </script>
 
 <style scoped>
-
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -107,8 +117,8 @@ const truncateName = (name) => {
 
 .modal {
   background: white;
-  width: 95%;
-  height:25%;
+  width: 300px;
+  height: 30%;
   border-radius: 10px;
   overflow: hidden;
 }
@@ -119,20 +129,17 @@ const truncateName = (name) => {
   margin: 0;
 }
 
-
 /* 제목 CSS  */
 .top {
   display: flex;
+  justify-content: center;
   align-items: center;
-  margin-top: 1px;
-  margin-left: 30px;
-  margin-bottom: 10px; 
 }
 
 .top img {
   width: 20px;
   height: 20px;
-  margin-right: 0px; 
+  margin-right: 0px;
 }
 
 .top div {
@@ -141,7 +148,7 @@ const truncateName = (name) => {
 
 /* X버튼 CSS */
 .close-button {
-  position:relative;
+  position: relative;
   margin-left: auto;
 }
 
@@ -161,17 +168,14 @@ const truncateName = (name) => {
 /* 알람 목록 CSS */
 .alarm-img {
   width: 10px;
-  height:10px;
+  height: 10px;
   align-self: flex-start;
 }
 
 .text-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  gap: 8px; 
-  margin-left: 20px;
-  margin-right: 20px;
+  justify-content: center;
 }
 
 .pill-text-container {
@@ -179,23 +183,20 @@ const truncateName = (name) => {
   font-weight: bold;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  gap: 8px; 
+  justify-content: center;
+  gap: 8px;
 }
 
 .text {
   /* white-space: ;  */
   text-align: center;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 
 .delete-button {
-  margin-top: 5px;
-  margin-left: 50%;
-  margin-bottom: 10px;
-  transform: translateX(-50%); 
-  width: 70%;
+  width: 50%;
   height: 27px;
+  margin: 20px;
   font-weight: bold;
   font-size: 12px;
   color: white;
@@ -204,10 +205,9 @@ const truncateName = (name) => {
   border-radius: 6px;
   cursor: pointer;
   transition-duration: 0.3s;
-
 }
 
-.delete-button:active{
+.delete-button:active {
   background-color: white;
   color: navy;
 }
