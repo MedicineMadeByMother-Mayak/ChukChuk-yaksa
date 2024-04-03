@@ -47,6 +47,7 @@ body {
 
 /* 스크롤바 전역 커스텀 */
 body ::-webkit-scrollbar {
-  display: none;
+  width: 0px; /* 스크롤바 너비 설정 */
+  display: none; /* 스크롤바 숨기기 */
 }
 </style>

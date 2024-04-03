@@ -132,7 +132,7 @@
             <div class="pill-date-date">
               {{ formatDate(takeListData.createDate) }}
             </div>
-            <span v-if="!takeListData.edit"
+            <span class="list-title" v-if="!takeListData.edit"
               >[ {{ truncateName(takeListData.takeListName, 10, 8) }} ]</span
             >
             <input
@@ -141,10 +141,15 @@
               @blur="saveChangeName(takeListData)"
               @keydown.enter="saveChangeName(takeListData)"
             />
-            <img
+            <!-- <img
               src="@/assests/icon/edit.png"
               alt="편집 아이콘"
               @click="openTakeListModal(takeListData.takeListId, index)"
+            /> -->
+            <font-awesome-icon
+              @click="openTakeListModal(takeListData.takeListId, index)"
+              :icon="['fas', 'gear']"
+              style="color: #5e5e5e; margin-left: 7px"
             />
           </div>
 
@@ -156,6 +161,7 @@
               ) in takeListData.takeListPillInfoList"
               :key="`pill-details-${index}`"
               class="pill-info"
+              style="margin-left: 17px"
             >
               <!-- 약 카드 -->
               <Content
@@ -186,7 +192,7 @@
               {{ formatDate(takeListData.createDate) }}
             </div>
             <span v-if="!takeListData.edit"
-              >[{{ takeListData.takeListName }}]</span
+              >[ {{ truncateName(takeListData.takeListName, 16, 13) }}]</span
             >
             <input
               v-else
@@ -194,10 +200,15 @@
               @blur="saveChangeName(takeListData)"
               @keydown.enter="saveChangeName(takeListData)"
             />
-            <img
+            <!-- <img
               src="@/assests/icon/edit.png"
               alt="편집 아이콘"
               @click="openTakeListModal(takeListData.takeListId, index)"
+            /> -->
+            <font-awesome-icon
+              @click="openTakeListModal(takeListData.takeListId, index)"
+              :icon="['fas', 'gear']"
+              style="color: #5e5e5e; margin-left: 7px"
             />
           </div>
 
@@ -209,6 +220,7 @@
               ) in takeListData.takeListPillInfoList"
               :key="`pill-details-${index}`"
               class="pill-info"
+              style="margin-left: 17px"
             >
               <!-- 약 카드 -->
               <Content
@@ -372,7 +384,7 @@ const formatDate = (dateString) => {
   const year = date.getFullYear();
   const month = ("0" + (date.getMonth() + 1)).slice(-2);
   const day = ("0" + date.getDate()).slice(-2);
-  return `${year}. ${month}. ${day}`;
+  return `${year}.${month}.${day}`;
 };
 
 // 척척약사의 조언
@@ -420,6 +432,18 @@ const advice = ref([
   100% {
     transform: rotate(360deg);
   }
+}
+
+input {
+  width: 100px;
+  border-radius: 2px;
+  border: none; /* 테두리 제거 */
+  background: none; /* 배경 제거 */
+  margin: 0; /* 마진 제거 */
+  padding: 0; /* 패딩 제거 */
+  font: inherit; /* 폰트 상속 */
+  font-weight: 400;
+  background-color: #c4c4c4;
 }
 
 .alarms {
@@ -524,7 +548,7 @@ ol {
 .pills-list::before {
   content: "";
   position: absolute;
-  left: 0;
+  left: 3px;
   top: 0;
   bottom: 0;
   width: 2px;
@@ -543,16 +567,16 @@ ol {
 
 .pill-info:first-child::before {
   top: -2px;
-  left: -2px;
+  left: 1.5px;
 }
 
 .pill-info:first-child::after {
   bottom: -2px;
-  left: -2px;
+  left: 1.5px;
 }
 
 .pill-entry {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   padding-left: 5px;
 }
 
@@ -561,11 +585,19 @@ ol {
   align-items: center;
   font-weight: bold;
   margin-top: 10px;
+  margin-bottom: 10px;
 }
+
 .pill-date-date {
   color: #083688;
-  margin-right: 3px;
-  margin-bottom: -1px;
+  margin-right: 4px;
+  /* margin-bottom: -1px; */
+  padding: 0px;
+  font-size: 15px;
+}
+.list-title {
+  font-size: 15px;
+  padding: 0px;
 }
 
 .pill-info + .pill-info {
