@@ -82,7 +82,7 @@ import Observer from "@/views/pharmacy_search/components/Observer.vue";
 import SearchBar from "@/common/SearchBar.vue";
 import _ from "lodash";
 
-const counts = ref(11);
+const counts = ref(30);
 const msg = ref(false); //모달창 관리하는 변수 ref로 반드시 설정해주세요
 const categoryflag = ref(true);
 const tabnum = ref(0);
