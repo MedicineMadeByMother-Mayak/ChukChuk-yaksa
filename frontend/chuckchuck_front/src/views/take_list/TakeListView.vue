@@ -261,7 +261,6 @@ const isNow = ref(false);
 
 async function toggleIsNow() {
   isNow.value = !isNow.value;
-  console.log(isNow);
 }
 // 0 이면 생성 1 이면 수정
 const createOrModify = ref(0);
