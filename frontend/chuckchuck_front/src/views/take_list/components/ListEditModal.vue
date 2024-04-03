@@ -2,13 +2,15 @@
     <div class="modal-overlay" @click="$emit('close')">
       <div class="modal">
         <ul class="modal-menu">
-          <li @click="editListName">제목 수정하기</li>
-          <li @click="deleteList">리스트 삭제하기</li>
-          <li @click="finishCurrentList">복용 완료 처리하기</li>
+          <li @click="editListName"><strong style="color:black;">제목 수정</strong>하기</li>
+          <hr style="margin: 0px 10px" />
+          <li @click="deleteList"><strong style="color:black;">리스트 삭제</strong>하기</li>
+          <hr style="margin: 0px 10px" />
+          <li @click="finishCurrentList"><strong style="color:black;">복용 완료</strong> 처리하기</li>
         </ul>
       </div>
     </div>
-</template>
+</template> 
   
 <script setup>
 import "vue3-carousel/dist/carousel.css";
@@ -54,8 +56,8 @@ const finishCurrentList = async() => {
     align-items: center;
     justify-content: center;
     caret-color: transparent;
+    z-index: 9999;
   }
-  
   .modal {
     background: white;
     width: 80%;
@@ -72,11 +74,14 @@ const finishCurrentList = async() => {
   
   .modal-menu li {
     text-align: center;
+    align-content: center;
+    height: 48px;
     background: white;
-    color: black;
-    font-weight: bold;
+    color: #565656;
     cursor: pointer;
-    height: 50px;
+    font-size: 13px;
+    
+
   }
   
   .modal-menu hr {

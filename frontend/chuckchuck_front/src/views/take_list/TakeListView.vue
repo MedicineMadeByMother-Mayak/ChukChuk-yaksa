@@ -470,7 +470,14 @@ ol {
   display: flex;
   align-items: center;
   font-weight: bold;
+  margin-top: 10px;
 }
+.pill-date-date {
+  color: #083688;
+  margin-right: 3px;
+  margin-bottom: -1px;
+}
+
 
 .pill-info + .pill-info {
   margin-top: 10px;
