@@ -210,6 +210,7 @@ function input(event) {
 }
 
 .count-box {
+  /* width: 100%; */
   display: flex;
   justify-content: space-between;
 }
@@ -227,10 +228,12 @@ function input(event) {
 }
 
 .search-result-container {
-  margin: 0 27px;
+  width: 100%;
+  /* padding: 0px 27px 28px 27px; */
   gap: 17px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 28%;
+  align-items: center;
+  justify-content: center;
 }
 </style>

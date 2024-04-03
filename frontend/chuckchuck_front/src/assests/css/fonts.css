@@ -8,14 +8,13 @@
   src: url("./Inter-Bold.ttf");
 }
 
-* {
-  letter-spacing: -0.8px; /* 원하는 자간 값으로 변경하세요 */
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("./Inter-Medium.ttf");
 }
 
-body {
-  font-family: "Inter-SemiBold", sans-serif;
-  font-size: 12px;
-  color: #565656;
+* {
+  letter-spacing: -0.8px; /* 원하는 자간 값으로 변경하세요 */
 }
 
 .bold {
@@ -24,6 +23,10 @@ body {
 
 p,
 span,
+strong {
+  font-family: "Inter-Medium", sans-serif;
+}
+
 h1,
 h2,
 h3,
@@ -31,8 +34,12 @@ h4,
 h5,
 div,
 h6 {
-  font-family: "Inter-SemiBold", sans-serif;
+  /* font-family: "Inter-SemiBold", sans-serif; */
   /* font-weight: 500; */
+
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 12px;
+  color: #565656;
 }
 
 button {

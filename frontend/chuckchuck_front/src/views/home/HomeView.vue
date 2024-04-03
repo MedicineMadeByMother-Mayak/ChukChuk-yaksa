@@ -109,11 +109,14 @@
 import { userStore } from "@/stores/user";
 import { ref } from "vue";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-import Baner from "@/assests/icon/main_page/noti_background.svg";
-const slides = ref([Baner, Baner, Baner]);
+import Baner from "@/assests/icon/main_page/banner/banner1.svg";
+import Baner1 from "@/assests/icon/main_page/banner/banner1.svg";
+import Baner2 from "@/assests/icon/main_page/banner/banner2.svg";
+import Baner3 from "@/assests/icon/main_page/banner/banner3.svg";
+const slides = ref([Baner1, Baner2, Baner3]);
 
 const store = userStore();
-store.getUserInfo(); // 유저 이름 가져오기 위함
+store.getUserName(); // 유저 이름 가져오기 위함
 </script>
 
 <style scoped>

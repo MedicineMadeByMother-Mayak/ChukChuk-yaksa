@@ -192,7 +192,7 @@ const click = (pillId) => {
 }
 
 .header-back-up {
-  top: -80vh; /* keyword가 있을 때 위치 */
+  top: -80%; /* keyword가 있을 때 위치 */
   background: linear-gradient(100deg, #3183ff 0%, #86e7ee 100%);
 }
 

@@ -295,7 +295,7 @@ const memoUpdate = (event) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw; /* 전체 화면 너비 설정 */
+  width: 100%; /* 전체 화면 너비 설정 */
   margin-top: 15px;
 }
 
