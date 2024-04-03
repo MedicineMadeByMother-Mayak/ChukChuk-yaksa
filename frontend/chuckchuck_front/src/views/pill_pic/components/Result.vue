@@ -76,7 +76,7 @@ import { takelistStore } from "@/stores/takelist";
 
 const takeListStore = takelistStore();
 const store = pillPicStore();
-// const data = store.results;
+const data = store.results;
 const picUrl = ref("");
 const msg = ref(false);
 const showModal = ref(false);
@@ -99,101 +99,101 @@ async function savePill(selectId) {
   }, 2500);
 }
 
-const data = ref({
-  count: 5,
-  pills: [
-    {
-      pillId: 1,
-      pillName: "중외5%포도당생리식염액(수출명:5%DextroseinnormalsalineInj.)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 2,
-      pillName: "디고신정(디곡신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 3,
-      pillName: "옥시톤주사액5아이유(옥시토신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 4,
-      pillName: "아주디곡신주사액",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 5,
-      pillName: "삐콤정",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 2,
-      pillName: "디고신정(디곡신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 3,
-      pillName: "옥시톤주사액5아이유(옥시토신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 4,
-      pillName: "아주디곡신주사액",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 5,
-      pillName: "삐콤정",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-  ],
-});
+// const data = ref({
+//   count: 5,
+//   pills: [
+//     {
+//       pillId: 1,
+//       pillName: "중외5%포도당생리식염액(수출명:5%DextroseinnormalsalineInj.)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: true,
+//     },
+//     {
+//       pillId: 2,
+//       pillName: "디고신정(디곡신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 3,
+//       pillName: "옥시톤주사액5아이유(옥시토신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: true,
+//     },
+//     {
+//       pillId: 4,
+//       pillName: "아주디곡신주사액",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 5,
+//       pillName: "삐콤정",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 2,
+//       pillName: "디고신정(디곡신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 3,
+//       pillName: "옥시톤주사액5아이유(옥시토신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: true,
+//     },
+//     {
+//       pillId: 4,
+//       pillName: "아주디곡신주사액",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 5,
+//       pillName: "삐콤정",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//   ],
+// });
 
 async function addPill() {
   modalData.value = [[1, "새로운 리스트에 추가하기"]];
@@ -211,17 +211,17 @@ function openModal(pillId) {
 }
 
 // store의 data.pic_url이 변경될 때마다 picUrl 업데이트
-// watch(
-//   () => store.results.pic_url,
-//   (newPicUrl) => {
-//     picUrl.value = newPicUrl;
-//   }
-// );
+watch(
+  () => store.results.pic_url,
+  (newPicUrl) => {
+    picUrl.value = newPicUrl;
+  }
+);
 
 // 컴포넌트가 마운트될 때 store 데이터 초기화
-// onMounted(() => {
-//   picUrl.value = store.results.pic_url;
-// });
+onMounted(() => {
+  picUrl.value = store.results.pic_url;
+});
 </script>
 
 <style scoped>

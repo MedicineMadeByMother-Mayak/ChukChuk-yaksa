@@ -1,6 +1,6 @@
 <template>
-  <HeaderForm title="진단서 촬영" height="275px">
-    <div class="white-box">
+  <HeaderForm title="진단서 촬영" height="300px">
+    <div class="white-box" style="margin-top: 73px">
       <img class="receipt-image" :src="diagnosisImageSrc" alt="진단서 이미지" />
     </div>
     <button @click="saveDiagnosis" class="custom-button">
@@ -35,6 +35,7 @@
       ></TableForm>
     </li>
   </div>
+  <div style="margin-bottom: 10px"></div>
   <AlertModal
     v-if="showModal"
     :text="'진단서가 저장 되었습니다.'"

@@ -33,7 +33,7 @@ const router = useRouter();
 const store = ocrListStore();
 
 const isLoading = ref(false);
-const analysisType = ref();
+const analysisType = ref(1);
 const text = ref();
 
 import { getCurrentInstance } from "vue";

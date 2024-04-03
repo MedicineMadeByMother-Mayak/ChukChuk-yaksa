@@ -7,13 +7,13 @@
 <style scoped>
 .footer {
   display: none; /* 기본적으로는 표시하지 않음 */
-  position: absolute;
+  position: relative;
   left: 0;
   bottom: 0;
   max-width: 320px;
   width: 100%;
-  background: linear-gradient(60deg, #3183ff 0%, #86e7ee 100%);
-  height: 100px;
+  background: linear-gradient(to right, #3183ff 0%, #86e7ee 100%);
+  height: 120px;
 }
 
 @media (min-height: 658px) {

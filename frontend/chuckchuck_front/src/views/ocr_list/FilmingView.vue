@@ -311,7 +311,7 @@ onUnmounted(() => {
 <style scoped>
 .page {
   background: linear-gradient(to right, #3183ff 0%, #86e7ee 100%);
-  padding-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 .text-container {

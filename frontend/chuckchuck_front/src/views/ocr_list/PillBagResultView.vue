@@ -1,6 +1,6 @@
 <template>
-  <HeaderForm title="약봉투 촬영" height="275px">
-    <div class="white-box">
+  <HeaderForm title="약봉투 촬영" height="300px">
+    <div class="white-box" style="margin-top: 73px">
       <img class="receipt-image" :src="pillBagImageSrc" alt="약 봉투 이미지" />
     </div>
     <button @click="savePillBag" class="custom-button">
@@ -10,10 +10,10 @@
     <div class="grey-oval"></div>
   </HeaderForm>
   <div style="margin: 20px">
-    <div style="text-align: center" class="bold">
+    <div style="text-align: center; margin: 20px 0px" class="bold">
       처방 받으신 약 봉투 분석 결과입니다.
     </div>
-    <hr />
+    <hr style="margin-bottom: 20px" />
     <li>
       <strong>영수증</strong>
       <TableForm
@@ -25,7 +25,7 @@
         ]"
       ></TableForm>
     </li>
-    <li style="margin: 10px 0px">
+    <li style="margin: 30px 0px">
       <strong>복약안내</strong>
       <div v-for="pillData in data.pills" style="margin-top: 10px">
         <PillBagContent
@@ -36,6 +36,7 @@
       </div>
     </li>
   </div>
+  <div style="height: 50px"></div>
   <AlertModal
     v-if="showModal"
     :text="'복용관리에 추가 되었습니다.'"
