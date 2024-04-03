@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ backgroundImage: `url(${img})` }" class="card-container">
+  <div :style="{ backgroundImage: `url(/${img})` }" class="card-container">
     <div class="card-title">{{ title }}</div>
     <div class="card-info">
       <p class="status" v-if="status">영업 중</p>
