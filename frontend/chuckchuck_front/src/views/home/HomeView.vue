@@ -7,39 +7,75 @@
   <div class="basic-background">
     <div class="basic-content">
       <div class="hello-section">
-        <img src="@/assests/icon/main_page/main_icon.svg" style="border-radius: 30px" />
+        <img
+          src="@/assests/icon/main_page/main_icon.svg"
+          style="border-radius: 30px"
+        />
         <div class="hello-text">안녕하세요, {{ store.userName }}님!</div>
       </div>
       <img class="hello-pill" src="@/assests/img/Pil.png" />
       <div class="temp">
         <div class="icon-container">
           <div class="box">
-            <div class="row" style="border-bottom: 0.5px solid rgb(231, 231, 231)">
-              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-                <a href="/pillpic"><img src="@/assests/icon/main_page/find_pill_by_pic.svg" /></a>
+            <div
+              class="row"
+              style="border-bottom: 0.5px solid rgb(231, 231, 231)"
+            >
+              <div
+                class="column"
+                style="border-right: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/pillpic"
+                  ><img src="@/assests/icon/main_page/find_pill_by_pic.svg"
+                /></a>
               </div>
               <div
                 class="column"
-                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+                style="
+                  border-left: 0.5px solid rgb(231, 231, 231);
+                  border-right: 0.5px solid rgb(231, 231, 231);
+                "
               >
-                <a href="/ocrlist"><img src="@/assests/icon/main_page/take_pic.svg" /></a>
+                <a href="/ocrlist"
+                  ><img src="@/assests/icon/main_page/take_pic.svg"
+                /></a>
               </div>
-              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-                <a href="/pill"><img src="@/assests/icon/main_page/pill_search.svg" /></a>
+              <div
+                class="column"
+                style="border-left: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/pill"
+                  ><img src="@/assests/icon/main_page/pill_search.svg"
+                /></a>
               </div>
             </div>
             <div class="row" style="border-top: 0.5px solid rgb(231, 231, 231)">
-              <div class="column" style="border-right: 0.5px solid rgb(231, 231, 231)">
-                <a href="/pharmacy"><img src="@/assests/icon/main_page/pharmacy_search.svg" /></a>
+              <div
+                class="column"
+                style="border-right: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/pharmacy"
+                  ><img src="@/assests/icon/main_page/pharmacy_search.svg"
+                /></a>
               </div>
               <div
                 class="column"
-                style="border-left: 0.5px solid rgb(231, 231, 231); border-right: 0.5px solid rgb(231, 231, 231)"
+                style="
+                  border-left: 0.5px solid rgb(231, 231, 231);
+                  border-right: 0.5px solid rgb(231, 231, 231);
+                "
               >
-                <a href="/user-pill-effect"><img src="@/assests/icon/main_page/effect_record.svg" /></a>
+                <a href="/user-pill-effect"
+                  ><img src="@/assests/icon/main_page/effect_record.svg"
+                /></a>
               </div>
-              <div class="column" style="border-left: 0.5px solid rgb(231, 231, 231)">
-                <a href="/take-list"><img src="@/assests/icon/main_page/take_pill_management.svg" /></a>
+              <div
+                class="column"
+                style="border-left: 0.5px solid rgb(231, 231, 231)"
+              >
+                <a href="/take-list"
+                  ><img src="@/assests/icon/main_page/take_pill_management.svg"
+                /></a>
               </div>
             </div>
           </div>
@@ -49,8 +85,15 @@
 
     <!-- 수정 start -->
     <div class="middle-content">
-      <carousel autoplay="true" wrapAround="true" transition="3000" :items-to-show="1">
-        <slide v-for="(slide, index) in slides" :key="index"> <img :src="slide" alt="안내배너" /> </slide>
+      <carousel
+        autoplay="true"
+        wrapAround="true"
+        transition="3000"
+        :items-to-show="1"
+      >
+        <slide v-for="(slide, index) in slides" :key="index">
+          <img :src="slide" alt="안내배너" />
+        </slide>
         <template #addons>
           <pagination />
         </template>
@@ -66,12 +109,8 @@
 import { userStore } from "@/stores/user";
 import { ref } from "vue";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
-
-const slides = ref([
-  "/src/assests/icon/main_page/noti_background.svg",
-  "/src/assests/icon/main_page/noti_background.svg",
-  "/src/assests/icon/main_page/noti_background.svg",
-]);
+import Baner from "@/assests/icon/main_page/noti_background.svg";
+const slides = ref([Baner, Baner, Baner]);
 
 const store = userStore();
 store.getUserInfo(); // 유저 이름 가져오기 위함
