@@ -54,6 +54,6 @@ public class PillService {
     public PillDetailInfoResultResponse getPillDetailInfoResult(long pillId) {
         Pill pill = pillRepository.findById(pillId).get();
 
-        return PillDetailInfoResultResponse.fromEntity(pill);
+        return PillDetailInfoResultResponse.fromEntity(pill, null);
     }
 }

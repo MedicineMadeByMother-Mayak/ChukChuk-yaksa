@@ -18,9 +18,10 @@ public record PillDetailDto(
         boolean warning_pregnant,
         boolean warning_use_date,
         boolean warning_elders,
-        boolean warning_together
+        boolean warning_together,
+        List<TagDto> usedTags
 ) {
-    public static PillDetailDto fromEntity(UserPillEffect userPillEffect) {
+    public static PillDetailDto fromEntity(UserPillEffect userPillEffect, List<TagDto> usedTags) {
         Pill pill = userPillEffect.getPill();
         return new PillDetailDto(
                 pill.getPillId(),
@@ -35,7 +36,8 @@ public record PillDetailDto(
                 pill.getWarningPregnant(),
                 pill.getWarningUseDate(),
                 pill.getWarningElders(),
-                pill.getWarningTogether()
+                pill.getWarningTogether(),
+                usedTags
         );
     }
 
@@ -54,7 +56,8 @@ public record PillDetailDto(
                         pill.getWarningPregnant(),
                         pill.getWarningUseDate(),
                         pill.getWarningElders(),
-                        pill.getWarningTogether()
+                        pill.getWarningTogether(),
+                        null
                 ))
                 .toList(); // toList()를 추가하여 Stream을 List로 변환합니다.
     }

@@ -15,4 +15,6 @@ public interface UserPillEffectRepository extends JpaRepository<UserPillEffect, 
     List<UserPillEffect> findByUser(User user, Pageable pageable);
 
     Optional<UserPillEffect> findByUserAndCategoryAndPill_pillId(User user, Category category, Long pillId);
+    List<UserPillEffect> findByUserAndCommonData_IsDelete(User user, Pageable pageable, boolean isDelete);
+
 }

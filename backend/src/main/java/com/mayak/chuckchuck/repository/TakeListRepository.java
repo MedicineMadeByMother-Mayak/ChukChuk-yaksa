@@ -18,7 +18,7 @@ public interface TakeListRepository extends JpaRepository<TakeList, Long> {
      * @param: User
      * @return: TakeList
      */
-    List<TakeList> findByUserAndIsAlarmTrue(User user);
+    List<TakeList> findByUserAndIsAlarm(User user, Boolean isAlarm);
 
     /**
      * 복용리스트 조회

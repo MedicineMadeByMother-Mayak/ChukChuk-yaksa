@@ -12,14 +12,17 @@ import com.mayak.chuckchuck.dto.response.UserPillSideEffectListResponse;
 import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
 import com.mayak.chuckchuck.exception.RestApiException;
 import com.mayak.chuckchuck.repository.*;
+import com.mayak.chuckchuck.security.oauth2.user.UserPrincipal;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 import static com.mayak.chuckchuck.domain.UserPillEffectToTag.createUserPillEffectToTag;
+import java.util.*;
 
 @Service
 @Transactional
@@ -32,6 +35,7 @@ public class UserPillEffectService {
     private final CategoryRepository categoryRepository;
     private final EntityManager entityManager;
     private final TagRepository tagRepository;
+    private final CommonService commonService;
 
     /**
      * 약효기록 상세 조회 & 등록
@@ -114,12 +118,13 @@ public class UserPillEffectService {
     /**
      * 약효기록 삭제
      * @author 최진학
-     * @param userPillEffectId (약효 기록 id)
+     * @param pillId (약효 기록 id)
      * @return 없음
      */
-    public void updateUserPillEffectIsDelete(Long userPillEffectId) {
-        UserPillEffect userPillEffect = userPillEffectRepository.findById(userPillEffectId).get();
-        userPillEffect.getCommonData().toggleDelete();
+    public void updateUserPillEffectIsDelete(User user, Long pillId) {
+        List<UserPillEffect> userPillEffect = userPillEffectRepository.findByUserAndPill_pillId(user, pillId);
+
+        userPillEffect.forEach(tempUserPillEffect -> tempUserPillEffect.getCommonData().toggleDelete());
     }
 
     /**
@@ -198,7 +203,7 @@ public class UserPillEffectService {
     public UserPillEffectListAndSearchResponse getUserPillEffectListAndSearch(User user, UserPillEffectListAndSearchRequest userPillEffectListAndSearchRequest) {
         Long categoryId = userPillEffectListAndSearchRequest.categoryId();
         String keyword = userPillEffectListAndSearchRequest.keyword();
-        String page = userPillEffectListAndSearchRequest.page();
+        int page = Integer.parseInt(userPillEffectListAndSearchRequest.page());
 
         // 값 담을 Dto list 생성
         List<PillDetailDto> totalPillDtoList = new ArrayList<>();
@@ -206,16 +211,22 @@ public class UserPillEffectService {
         List<PillDetailDto> stopPillDtoList = new ArrayList<>();
         List<PillDetailDto> effectPillDtoList = new ArrayList<>();
 
-        PagingDto pagingDto = new PagingDto(1, "createDate");
+        PagingDto pagingDto = new PagingDto(page, "commonData.createDate");
 
         // if : 키워드 X (전체 리스트 조회)
         // else : 키워드 O (검색)
-        if (keyword == null) {
-            List<UserPillEffect> userPillEffectList = userPillEffectRepository.findByUser(user, pagingDto.getPageable());
+        if (Objects.equals(keyword, "")) {
+            List<UserPillEffect> userPillEffectList
+                    = userPillEffectRepository.findByUserAndCommonData_IsDelete(user, pagingDto.getPageable(), false);
 
             for (UserPillEffect temp : userPillEffectList) {
                 long currentCategoryId = temp.getCategory().getCategoryId();
-                PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp);
+
+                List<UserPillEffectToTag> userPillEffectToTags = userPillEffectToTagRepository.findByUserPillEffect(temp);
+
+                List<TagDto> usedTagDtos = TagDto.fromEntity(userPillEffectToTags);
+
+                PillDetailDto currentPillDto = PillDetailDto.fromEntity(temp, usedTagDtos);
 
                 // 전체 목록에는 항상 추가
                 totalPillDtoList.add(currentPillDto);
@@ -227,10 +238,11 @@ public class UserPillEffectService {
             }
         } else {
             String jpqlQueryForPillList = "SELECT DISTINCT p " +
-                    "FROM UserPillEffect upe " +
-                    "JOIN upe.pill p " +
-                    "WHERE upe.user.userId = :userId " +
-                    "AND p.name LIKE CONCAT('%', :keyword, '%')";
+                                                "FROM UserPillEffect upe " +
+                                                    "JOIN upe.pill p " +
+                                                "WHERE upe.user.userId = :userId " +
+                                                    "AND p.name LIKE CONCAT('%', :keyword, '%')" +
+                                                    "AND upe.commonData.isDelete = false ";
 
             // if   : 전체 목록
             // else : 각 카테고리 별 목록
@@ -266,10 +278,12 @@ public class UserPillEffectService {
             System.out.println(siedEffectPillDtoList);
             System.out.println(stopPillDtoList);
             System.out.println(effectPillDtoList);
-
         }
 
-        return new UserPillEffectListAndSearchResponse(totalPillDtoList, siedEffectPillDtoList, stopPillDtoList, effectPillDtoList);
+        return new UserPillEffectListAndSearchResponse(totalPillDtoList.size(), totalPillDtoList,
+                                                        siedEffectPillDtoList.size(), siedEffectPillDtoList,
+                                                        stopPillDtoList.size(), stopPillDtoList,
+                                                        effectPillDtoList.size(), effectPillDtoList);
     }
 
     /**

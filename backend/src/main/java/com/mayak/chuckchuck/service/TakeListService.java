@@ -57,14 +57,14 @@ public class TakeListService {
 
 
     /**
-     * 사용자의 모든 활성화 알람 리스트 조회
+     * 사용자의 알람 리스트 조회 (isAlarm 기준으로 조회)
      *
-     * @author: 최서현
+     * @author: 최서현 (수정사항 : 김희중, 김보경 )
      * @param:
      * @return: ActiveAlarmListResponse
      */
-    public ActiveAlarmListResponse getAlarmList(User user) {
-        List<TakeList> takeLists = takeListRepository.findByUserAndIsAlarmTrue(user);
+    public ActiveAlarmListResponse getAlarmList(User user, Boolean isAlarm) {
+        List<TakeList> takeLists = takeListRepository.findByUserAndIsAlarm(user, isAlarm);
         return ActiveAlarmListResponse.fromEntity(takeLists);
     }
 
