@@ -1,6 +1,5 @@
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">
-    
     <div class="modal">
       <ul class="modal-menu">
         <div class="close-button">
@@ -38,7 +37,7 @@ const closeModal = () => {
 
 const selectXButton = () => {
   showModal.value = true;
-}
+};
 </script>
 
 <style scoped>
@@ -67,13 +66,13 @@ const selectXButton = () => {
 
 .modal {
   background: white;
-  width: 100%;
+  width: 320px;
   height: 30%;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   overflow: hidden;
   bottom: 0px;
-	position: absolute;
+  position: absolute;
   animation: slideIn 0.7s ease-in-out;
 }
 
@@ -122,5 +121,4 @@ const selectXButton = () => {
   text-align: right;
   margin-right: 14px;
 }
-
 </style>
