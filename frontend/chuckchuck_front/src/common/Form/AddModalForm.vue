@@ -24,14 +24,14 @@
             @click="clickLink(index)"
             class="router-link-item"
           >
-            <div style="margin: 9px; font-size: 14px">
+            <div style="margin: 12px; font-size: 14px">
               <strong>{{ item[0] }}</strong
               >{{ item[1] }}
             </div>
           </RouterLink>
 
           <div v-else class="router-link-item" @click="$emit(item[3].emitName)">
-            <div style="margin: 9px; font-size: 14px">
+            <div style="margin: 12px; font-size: 14px">
               <strong>{{ item[0] }}</strong
               >{{ item[1] }}
             </div>
@@ -86,7 +86,7 @@ const closeModal = () => {
 }
 
 .modal {
-  padding: 3% 0;
+  padding: 0 0;
   background: white;
   width: 80%;
   max-width: 300px;
@@ -124,5 +124,9 @@ const closeModal = () => {
 .router-link-item {
   text-decoration: none;
   color: inherit;
+}
+
+li {
+  padding: 1px;
 }
 </style>

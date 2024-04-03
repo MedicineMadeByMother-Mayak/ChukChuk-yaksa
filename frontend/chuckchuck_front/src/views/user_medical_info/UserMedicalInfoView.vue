@@ -103,11 +103,11 @@
         <div
           v-for="(takelist, index) in currentMedications"
           :key="`current-${index}`"
-          class="current-detail"
         >
           <div
             v-for="(curpillinfo, index) in takelist.takeListPillInfoList"
             :key="`cur-pillinfo-${index}`"
+            class="current-detail"
           >
             {{ curpillinfo.name }}
           </div>
@@ -120,11 +120,11 @@
         <div
           v-for="(takelist, index) in recentMedications"
           :key="`disease-${index}`"
-          class="disease-detail"
         >
           <div
             v-for="(pastpillinfo, index) in takelist.takeListPillInfoList"
             :key="`past-pillinfo-${index}`"
+            class="disease-detail"
           >
             {{ pastpillinfo.name }}
           </div>
