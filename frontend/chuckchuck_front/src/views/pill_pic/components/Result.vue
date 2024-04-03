@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <section><img :src="picUrl" /></section>
+    <section class="img-container">
+      <div class="scroll-container">
+        <img :src="picUrl" />
+      </div>
+    </section>
     <section class="guide">
       <p>분석된 약들을 복용목록에 추가할 수 있어요.</p>
       <div class="line"></div>
@@ -69,12 +73,26 @@ p {
   gap: 5px;
   width: 100%;
 }
-img {
+.img-container {
   width: 280px;
   height: 200px;
-  border-radius: 20px;
-  object-fit: cover; /* 이미지가 요소에 맞게 잘립니다. */
+  overflow: auto;
+  white-space: nowrap; /* 이미지들을 수평으로 나열 */
+  -ms-overflow-style: none; /* IE와 Edge에서 스크롤바 숨기기 */
 }
+
+.scroll-container img {
+  width: 100%; /* 컨테이너의 너비에 맞춤 */
+  height: 100%; /* 컨테이너의 높이에 맞춤 */
+  object-fit: cover;
+  display: inline-block; /* 이미지들을 수평으로 나열 */
+}
+
+/* 스크롤바 숨기기 */
+::-webkit-scrollbar {
+  display: none;
+}
+
 .guide {
   width: 85%;
   display: flex;
