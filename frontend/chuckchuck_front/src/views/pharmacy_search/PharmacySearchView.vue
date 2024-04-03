@@ -54,7 +54,7 @@
           :type="pill.type"
           :imageUrl="pill.imageUrl"
         />
-        <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
+        <Observer @show="loadMoreData"> 0"></Observer>
       </div>
     </div>
   </div>
@@ -69,9 +69,9 @@ import PharmacyPill from "@/common/PharmacyPill.vue";
 import Observer from "@/views/pharmacy_search/components/Observer.vue";
 import _ from "lodash";
 import { useRouter } from "vue-router";
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted } from "vue";
 import { instance } from "@/util/mainAxios";
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
 
 const router = useRouter();
 const keyword = ref("");
@@ -80,13 +80,7 @@ const list = ref([]);
 const page = ref(1);
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  // 초기 로드 시 스크롤 위치 확인
   loadMoreData;
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
 });
 
 // 더 많은 데이터 로딩
@@ -102,14 +96,6 @@ async function loadMoreData() {
   });
   count.value = data.count;
   list.value = [...list.value, ...data.pills];
-}
-
-// 스크롤 위치를 저장할 반응형 참조
-const isScrolled = ref(false);
-
-// 스크롤 이벤트 핸들러
-function handleScroll() {
-  isScrolled.value = window.scrollY > 0;
 }
 
 async function input(event) {

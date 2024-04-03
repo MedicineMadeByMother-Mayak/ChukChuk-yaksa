@@ -264,7 +264,6 @@ import HeaderForm from "@/common/Form/HeaderForm.vue";
 import { onMounted, onUnmounted, ref } from "vue";
 import EffectFace from "@/assests/icon/effectFace.svg";
 import { useRoute } from "vue-router";
-import { defineProps } from "vue";
 
 const props = defineProps({
   analysis: {

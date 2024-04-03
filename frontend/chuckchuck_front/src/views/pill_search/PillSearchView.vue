@@ -43,7 +43,7 @@
         :warningTogether="pill.warningTogether"
         @click-modal="openModal"
       />
-      <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
+      <Observer @show="loadMoreData"> 0"></Observer>
     </div>
   </div>
   <ModalForm
@@ -90,8 +90,7 @@ import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
 import Observer from "@/views/pharmacy_search/components/Observer.vue";
 import _ from "lodash";
-import { ref, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
 import { pillSearchStore } from "@/stores/pillSearch";
 import ModalForm from "@/common/Form/AddModalForm.vue";
 import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
@@ -100,13 +99,11 @@ import AlertModal from "@/common/Form/AlertModal.vue";
 
 const takeListStore = takelistStore();
 const store = pillSearchStore();
-const router = useRouter();
 
 const keyword = ref("");
 const page = ref(0);
 const count = ref(null);
 const pills = ref([]);
-const isScrolled = ref(false);
 const msg = ref(false);
 const showModal = ref(false);
 const modalData = ref([[1, "새로운 리스트에 추가하기"]]);
@@ -142,7 +139,6 @@ function openModal(pillId) {
 }
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
   if (store.backButton) {
     loadMoreData();
   } else {
@@ -154,28 +150,12 @@ onMounted(() => {
   store.backButton = true;
 });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
-
 async function loadMoreData() {
   if (count.value && count.value <= pills.value.length) return;
   page.value++;
   const data = await store.input(keyword.value, page.value);
   count.value = data.count;
   pills.value = [...pills.value, ...data.pills];
-}
-
-function handleScroll() {
-  isScrolled.value = window.scrollY > 0;
-}
-
-async function click(pillId) {
-  // await store.getPillInfo(pillId);
-  router.push({
-    name: "pilldetail",
-    params: { id: pillId },
-  });
 }
 
 // 디바운스 함수 정의
@@ -212,7 +192,6 @@ function input(event) {
 }
 
 .count-box {
-  /* width: 100%; */
   display: flex;
   justify-content: space-between;
 }
@@ -231,7 +210,6 @@ function input(event) {
 
 .search-result-container {
   width: 100%;
-  /* padding: 0px 27px 28px 27px; */
   gap: 17px;
   display: flex;
   flex-direction: column;
