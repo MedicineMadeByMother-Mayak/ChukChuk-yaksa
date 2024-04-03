@@ -76,7 +76,7 @@ import { takelistStore } from "@/stores/takelist";
 
 const takeListStore = takelistStore();
 const store = pillPicStore();
-const data = store.results;
+// const data = store.results;
 const picUrl = ref("");
 const msg = ref(false);
 const showModal = ref(false);
