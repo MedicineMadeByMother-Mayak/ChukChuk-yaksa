@@ -13,7 +13,7 @@
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
           <div class="carousel__img">
-            <img class="logo" :src=logo alt="chukchuklogo" />
+            <img class="logo" :src="logo" alt="chukchuklogo" />
           </div>
           <div class="carousel__text">
             <div style="font-size: 12px">
@@ -41,7 +41,11 @@
     <div class="alarms">
       <!-- 알람 추가 버튼 -->
       <div>
-        <button v-if="alarmstore.offAlarmList.length" class="rounded-button" @click="toggleModal">
+        <button
+          v-if="alarmstore.offAlarmList.length"
+          class="rounded-button"
+          @click="toggleModal"
+        >
           <span
             ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg"
           /></span>
@@ -62,11 +66,10 @@
       >
         <button class="rounded-button" @click="modifyAlarm(alarm.takeListId)">
           <span class="alarm">
-            <font-awesome-icon
-              :icon="['fas', 'bell']"
-              style="color: #ffd43b"
-            />
-            <span style="font-weight: bold; font-size: smaller;">{{ alarm.takeListName }}</span>
+            <font-awesome-icon :icon="['fas', 'bell']" style="color: #ffd43b" />
+            <span style="font-weight: bold; font-size: smaller">{{
+              alarm.takeListName
+            }}</span>
           </span>
         </button>
       </div>
@@ -80,10 +83,9 @@
         </div>
         <div class="menu-right">
           <button class="gray-button">과거에 먹은 약</button>
-          <button class="navy-button">추가</button>
+          <button class="navy-button" @click="openSelectPillModal">추가</button>
         </div>
       </div>
-
       <hr style="margin: 3px" />
 
       <!-- 복용리스트 목록 -->
@@ -97,7 +99,9 @@
           <div class="pill-date-date">
             {{ formatDate(takeListData.createDate) }}
           </div>
-          <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
+          <span v-if="!takeListData.edit"
+            >[{{ takeListData.takeListName }}]</span
+          >
           <input
             v-else
             v-model="takeListData.takeListName"
@@ -114,20 +118,24 @@
         <!-- 리스트 별 약 목록 -->
         <ul class="pills-list">
           <li
-            v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
+            v-for="(
+              currentPillData, index
+            ) in takeListData.takeListPillInfoList"
             :key="`pill-details-${index}`"
             class="pill-info"
           >
             <!-- 약 카드 -->
             <Content
-              :pillId="currentPillData.pillId"
-              :pillName="currentPillData.name"
-              :imageUrl="currentPillData.imageUrl"
-              :type="currentPillData.type"
-              :warningPregnant="currentPillData.warningPregnant"
-              :warningUseDate="currentPillData.warningUseDate"
-              :warningElders="currentPillData.warningElders"
-              :warningTogether="currentPillData.warningTogether"
+            :takeListId="takeListData.takeListId"
+            :takeListName="takeListData.takeListName"
+            :pillId="currentPillData.pillId"
+            :pillName="currentPillData.name"
+            :imageUrl="currentPillData.imageUrl"
+            :type="currentPillData.type"
+            :warningPregnant="currentPillData.warningPregnant"
+            :warningUseDate="currentPillData.warningUseDate"
+            :warningElders="currentPillData.warningElders"
+            :warningTogether="currentPillData.warningTogether"
             />
           </li>
         </ul>
@@ -141,6 +149,11 @@
         v-model="showAlarmModalTime"
         :selectTakeList="selectTakeList"
         :createOrModify="createOrModify"
+      />
+      <SelectPillModal
+        v-model="isSelectPillModalOpen"
+        :modalData="pillModalData"
+        @close="closeSelectPillModal"
       />
     </div>
   </div>
@@ -159,6 +172,7 @@ import { alarmStore } from "@/stores/alarm";
 import logo from "@/assests/img/Group.png";
 import AlarmModal from "@/views/take_list/components/AlarmModal.vue";
 import AlarmModalTime from "@/views/take_list/components/AlarmModalTime.vue";
+import SelectPillModal from "./components/SelectPillModal.vue";
 const alarmstore = alarmStore();
 const store = takelistStore();
 // ----------------------------------------
@@ -166,6 +180,8 @@ const isTakeListModalOpen = ref(false);
 const showAlarmModalTime = ref(false);
 const selectTakeList = ref(0);
 const showModal = ref(false);
+const isSelectPillModalOpen = ref(false);
+
 // 0 이면 생성 1 이면 수정
 const createOrModify = ref(0);
 
@@ -198,9 +214,16 @@ const closeTakeListModal = () => {
   isTakeListModalOpen.value = false;
 };
 
+const openSelectPillModal = () => {
+  isSelectPillModalOpen.value = true;
+};
+
+const closeSelectPillModal = () => {
+  isSelectPillModalOpen.value = false;
+};
+
 // 모달에서 전달받은 데이터로 복용 리스트 리로드
 const handleUpdate = () => {
-  console.log("들어왔냐?");
   window.location.reload(true);
 };
 
@@ -217,7 +240,7 @@ const saveChangeName = async (takeListData) => {
   }
   await store.rename(takeListData.takeListId, takeListData.takeListName);
 };
-// ----------------------------------------
+// -------------------------------------------------------------
 
 // 현재 복용중인 리스트
 const currentTakeList = computed(() =>
@@ -230,7 +253,11 @@ const finishedTakeList = computed(() =>
 );
 
 const modalData = [["어떤 약에 대한 알람을 등록하시겠어요?", true, {}, {}]];
-
+const pillModalData = [
+  ["약 사진을 찍어서 등록하기", true, { params: {}, Link: "pillpic" }],
+  ["약 검색해서 등록하기", true, { params: {}, Link: "pillsearch" }],
+  ["약봉투 찍어서 등록하기", true, { params: {}, Link: "ocrlist" }],
+];
 const toggleModal = async () => {
   await alarmstore.getOffAlarmList();
   showModal.value = !showModal.value;
@@ -331,7 +358,6 @@ const advice = ref([
 </script>
 
 <style scoped>
-
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 @keyframes rotateAndPause {
   0% {
@@ -361,7 +387,6 @@ const advice = ref([
 
 .takelist-container {
   margin: 0px 12px 0px 12px;
-
 }
 .menu {
   display: flex;
@@ -379,7 +404,6 @@ const advice = ref([
   margin-bottom: -17px;
   font-weight: bolder;
   font-size: small;
-
 }
 .menu-left img {
   width: 100px;
@@ -457,7 +481,7 @@ ol {
 }
 
 .pill-info:first-child::before,
-.pill-info:last-child::before {
+.pill-info:first-child::after {
   content: "";
   position: absolute;
   width: 6px;
@@ -471,7 +495,7 @@ ol {
   left: -2px;
 }
 
-.pill-info:last-child::before {
+.pill-info:first-child::after {
   bottom: -2px;
   left: -2px;
 }
@@ -492,7 +516,6 @@ ol {
   margin-right: 3px;
   margin-bottom: -1px;
 }
-
 
 .pill-info + .pill-info {
   margin-top: 10px;

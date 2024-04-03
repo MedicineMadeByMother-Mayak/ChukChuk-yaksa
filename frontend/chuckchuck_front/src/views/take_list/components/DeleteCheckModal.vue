@@ -15,41 +15,32 @@ const msg = ref(true);
 <template>
   <div class="modal-overlay" v-if="showModal">
     <div class="modal">
-      <ul class="modal-menu">
-        <li v-for="(item, index) in modalData" :key="index">
-          <RouterLink
-            v-if="item[1]"
-            :to="{ name: item[2].Link, params: item[2].params }"
-            class="router-link-item"
-          >
-          <div class="modal-header">
-            
-            <div class="close-button">
-              <div class="close" @click="closeModal">&times;</div>
-            </div>
-            <div class="top">
-              <img style="width: 20px; height: 20px" src="@/assests/img/startLogo.png" alt="">
-              <div style="margin: 9px; font-size: 14px; font-weight: bold;">[페니라민 정]를 <span style="color:red;">삭제</span>하시겠어요?</div>
-            </div>
-            <div class="text-container">
-              
-                <span class="text"><strong>[위염약]</strong> 리스트에서 <strong>페니라민정</strong>을 삭제합니다.</span>
-            
-            </div>
-            <button class="delete-button" @click="redirectToTakeList">DELETE</button>
+      <div class="modal-header">
+        <div class="close-button">
+          <div class="close" @click="$emit('close')">&times;</div>
+        </div>
+        <div>
+          <div class="top">
+            <img style="width: 20px; height: 20px" src="@/assests/img/startLogo.png" alt="">
+            <div style="margin: 9px; font-size: 14px; font-weight: bold;">{{ truncateName(pillName) }}를 <span style="color:red;">삭제</span>하시겠어요?</div>
           </div>
-            
-          </RouterLink>
-          <hr style="margin: 0px 10px" v-if="index < modalData.length - 1" />
-        </li>
-      </ul>
+          <div class="text-container">
+              <span class="text">[ <strong style="color:red">{{ takeListName }}</strong> ] 리스트에서</span>
+              <span class="text"><strong>{{ pillName }}</strong>을 삭제합니다.</span>
+          </div>
+          <button class="delete-button" @click="deletePill">DELETE</button>
+      </div>
+      </div>
     </div>
   </div>
 </template>
 
+
 <script setup>
 import { ref, reactive } from "vue";
 import { useRouter } from 'vue-router';
+import { takelistStore } from "@/stores/takelist";
+const store = takelistStore();
 
 const router = useRouter();
 
@@ -63,11 +54,38 @@ const closeModal = () => {
 };
 
 const props = defineProps({
-  modalData: {
-    type: Array,
-    default: [["원하는 텍스트 넣으세요", true, { params: {}, Link: "home" }]],
+  takeListId: {
+    type: Number
   },
-});
+  takeListName: {
+    type: String
+  },
+  pillId: {
+    type: Number
+  },
+  pillName: {
+    type: String,
+    default: "프로다나서캡슐",
+  },
+  imageUrl: {
+    type: String,
+    default: "@/assests/img/tempPill.png",
+  },
+})
+
+const deletePill = async () => {
+    await store.deletePill(props.takeListId, props.pillId);
+    await store.getTakeListPageDatas();
+    closeModal()
+}
+
+const truncateName = (name) => {
+  if (name.length > 5) {
+    return name.slice(0, 7) + "...";
+  } else {
+    return name;
+  }
+};
 
 </script>
 
@@ -84,6 +102,7 @@ const props = defineProps({
   align-items: center;
   justify-content: center;
   caret-color: transparent;
+  z-index: 1000;
 }
 
 .modal {
@@ -151,20 +170,32 @@ const props = defineProps({
   flex-wrap: wrap;
   justify-content: center; 
   gap: 8px; 
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.pill-text-container {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  gap: 8px; 
 }
 
 .text {
-  overflow: hidden;
-  white-space: nowrap; 
+  /* white-space: ;  */
+  text-align: center;
   text-overflow: ellipsis; 
 }
 
 .delete-button {
-  margin-top: 30px;
+  margin-top: 5px;
   margin-left: 50%;
+  margin-bottom: 10px;
   transform: translateX(-50%); 
   width: 70%;
-  height: 30px;
+  height: 27px;
   font-weight: bold;
   font-size: 12px;
   color: white;
