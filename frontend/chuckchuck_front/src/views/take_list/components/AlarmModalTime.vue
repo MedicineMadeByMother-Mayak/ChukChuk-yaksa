@@ -1,8 +1,14 @@
 <template>
-  <div class="modal-overlay" v-if="showModal" @click="closeModal">
+  <div
+    class="modal-overlay"
+    v-if="showModal"
+    @click="closeModal(), getCurrentDateTime()"
+  >
     <div class="modal" @click.stop="">
       <div class="close-button">
-        <div class="close" @click="closeModal">&times;</div>
+        <div class="close" @click="closeModal(), getCurrentDateTime()">
+          &times;
+        </div>
       </div>
       <div class="modal-title">
         <img src="@/assests/img/Group.png" />
@@ -86,7 +92,9 @@
             >
           </div>
         </li>
-        <button class="save-button" @click="turnOn">SAVE</button>
+        <button class="save-button" @click="turnOn(), getCurrentDateTime()">
+          SAVE
+        </button>
       </ul>
     </div>
   </div>
