@@ -79,67 +79,116 @@
       <div class="menu">
         <div class="menu-left">
           <img src="@/assests/icon/pill.png" alt="복용리스트" />
-          <div><strong>복용중</strong></div>
+          <div v-if="!isNow"><strong>복용중</strong></div>
+          <div v-if="isNow"><strong>복용 완료</strong></div>
         </div>
         <div class="menu-right">
-          <button class="gray-button">과거에 먹은 약</button>
+          <button v-if="isNow" class="gray-button" @click="currentTab = 'current', toggleIsNow()">현재 복용중인 약</button>
+          <button v-if="!isNow" class="gray-button" @click="currentTab = 'finished', toggleIsNow()">과거에 먹은 약</button>
           <button class="navy-button" @click="openSelectPillModal">추가</button>
         </div>
       </div>
       <hr style="margin: 3px" />
 
       <!-- 복용리스트 목록 -->
-      <div
-        v-for="(takeListData, index) in currentTakeList"
-        :key="`pill-date-${index}`"
-        class="pill-entry"
-      >
-        <!-- 복용리스트 날짜와 제목 -->
-        <div class="pill-date">
-          <div class="pill-date-date">
-            {{ formatDate(takeListData.createDate) }}
-          </div>
-          <span v-if="!takeListData.edit"
-            >[{{ takeListData.takeListName }}]</span
-          >
-          <input
-            v-else
-            v-model="takeListData.takeListName"
-            @blur="saveChangeName(takeListData)"
-            @keydown.enter="saveChangeName(takeListData)"
-          />
-          <img
-            src="@/assests/icon/edit.png"
-            alt="편집 아이콘"
-            @click="openTakeListModal(takeListData.takeListId, index)"
-          />
-        </div>
 
-        <!-- 리스트 별 약 목록 -->
-        <ul class="pills-list">
-          <li
-            v-for="(
-              currentPillData, index
-            ) in takeListData.takeListPillInfoList"
-            :key="`pill-details-${index}`"
-            class="pill-info"
-          >
-            <!-- 약 카드 -->
-            <Content
-            :takeListId="takeListData.takeListId"
-            :takeListName="takeListData.takeListName"
-            :pillId="currentPillData.pillId"
-            :pillName="currentPillData.name"
-            :imageUrl="currentPillData.imageUrl"
-            :type="currentPillData.type"
-            :warningPregnant="currentPillData.warningPregnant"
-            :warningUseDate="currentPillData.warningUseDate"
-            :warningElders="currentPillData.warningElders"
-            :warningTogether="currentPillData.warningTogether"
+      <!-- 현재 복용중인 약 -->
+      <div v-if="currentTab === 'current'">
+        <div
+          v-for="(takeListData, index) in currentTakeList"
+          :key="`pill-date-${index}`"
+          class="pill-entry"
+        >
+          <!-- 복용리스트 날짜와 제목 -->
+          <div class="pill-date">
+            <div class="pill-date-date">
+              {{ formatDate(takeListData.createDate) }}
+            </div>
+            <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
+            <input
+              v-else
+              v-model="takeListData.takeListName"
+              @blur="saveChangeName(takeListData)"
+              @keydown.enter="saveChangeName(takeListData)"
             />
-          </li>
-        </ul>
+            <img
+              src="@/assests/icon/edit.png"
+              alt="편집 아이콘"
+              @click="openTakeListModal(takeListData.takeListId, index)"
+            />
+          </div>
+
+          <!-- 리스트 별 약 목록 -->
+          <ul class="pills-list">
+            <li
+              v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
+              :key="`pill-details-${index}`"
+              class="pill-info"
+            >
+              <!-- 약 카드 -->
+              <Content
+                :pillId="currentPillData.pillId"
+                :pillName="currentPillData.name"
+                :imageUrl="currentPillData.imageUrl"
+                :type="currentPillData.type"
+                :warningPregnant="currentPillData.warningPregnant"
+                :warningUseDate="currentPillData.warningUseDate"
+                :warningElders="currentPillData.warningElders"
+                :warningTogether="currentPillData.warningTogether"
+              />
+            </li>
+          </ul>
+        </div>
       </div>
+
+      <div v-if="currentTab === 'finished'">
+        <div
+          v-for="(takeListData, index) in finishedTakeList"
+          :key="`pill-date-${index}`"
+          class="pill-entry"
+        >
+          <!-- 복용리스트 날짜와 제목 -->
+          <div class="pill-date">
+            <div class="pill-date-date">
+              {{ formatDate(takeListData.createDate) }}
+            </div>
+            <span v-if="!takeListData.edit">[{{ takeListData.takeListName }}]</span>
+            <input
+              v-else
+              v-model="takeListData.takeListName"
+              @blur="saveChangeName(takeListData)"
+              @keydown.enter="saveChangeName(takeListData)"
+            />
+            <img
+              src="@/assests/icon/edit.png"
+              alt="편집 아이콘"
+              @click="openTakeListModal(takeListData.takeListId, index)"
+            />
+          </div>
+
+          <!-- 리스트 별 약 목록 -->
+          <ul class="pills-list">
+            <li
+              v-for="(currentPillData, index) in takeListData.takeListPillInfoList"
+              :key="`pill-details-${index}`"
+              class="pill-info"
+            >
+              <!-- 약 카드 -->
+              <Content
+                :pillId="currentPillData.pillId"
+                :pillName="currentPillData.name"
+                :imageUrl="currentPillData.imageUrl"
+                :type="currentPillData.type"
+                :warningPregnant="currentPillData.warningPregnant"
+                :warningUseDate="currentPillData.warningUseDate"
+                :warningElders="currentPillData.warningElders"
+                :warningTogether="currentPillData.warningTogether"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+      
       <ListEditModal
         v-if="isTakeListModalOpen"
         @close="closeTakeListModal"
@@ -181,7 +230,13 @@ const showAlarmModalTime = ref(false);
 const selectTakeList = ref(0);
 const showModal = ref(false);
 const isSelectPillModalOpen = ref(false);
+const currentTab = ref('current');
+const isNow = ref(false);
 
+async function toggleIsNow() {
+  isNow.value = !isNow.value
+  console.log(isNow)
+}
 // 0 이면 생성 1 이면 수정
 const createOrModify = ref(0);
 
