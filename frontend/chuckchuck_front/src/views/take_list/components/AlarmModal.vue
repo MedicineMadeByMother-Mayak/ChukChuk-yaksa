@@ -105,7 +105,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
 @keyframes slideIn {
   from {
     transform: translateY(100%);
@@ -146,6 +145,15 @@ onMounted(async () => {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+.modal-header {
+  height: 260px;
+  overflow: scroll;
+  -ms-overflow-style: none; /* IE와 Edge에서 스크롤바 숨기기 */
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 /* .modal-menu li {
@@ -221,6 +229,7 @@ onMounted(async () => {
   flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
+  overflow: hidden;
 }
 
 .button-container button {
@@ -270,7 +279,7 @@ onMounted(async () => {
   font-weight: bold;
   font-size: 12px;
   color: white;
-  background-color:#242291;
+  background-color: #242291;
   border: none;
   border-radius: 6px;
   cursor: pointer;
