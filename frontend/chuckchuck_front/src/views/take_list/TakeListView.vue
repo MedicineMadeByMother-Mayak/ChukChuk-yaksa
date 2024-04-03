@@ -80,7 +80,7 @@
         </div>
         <div class="menu-right">
           <button class="gray-button">과거에 먹은 약</button>
-          <button class="navy-button">추가</button>
+          <button class="navy-button" @click="openSelectPillModal">추가</button>
         </div>
       </div>
 
@@ -142,6 +142,11 @@
         :selectTakeList="selectTakeList"
         :createOrModify="createOrModify"
       />
+      <SelectPillModal
+      v-model="isSelectPillModalOpen"
+      :modalData="pillModalData"
+      @close="closeSelectPillModal"
+      />
     </div>
   </div>
 </template>
@@ -159,6 +164,7 @@ import { alarmStore } from "@/stores/alarm";
 import logo from "@/assests/img/Group.png";
 import AlarmModal from "@/views/take_list/components/AlarmModal.vue";
 import AlarmModalTime from "@/views/take_list/components/AlarmModalTime.vue";
+import SelectPillModal from "./components/SelectPillModal.vue";
 const alarmstore = alarmStore();
 const store = takelistStore();
 // ----------------------------------------
@@ -166,6 +172,8 @@ const isTakeListModalOpen = ref(false);
 const showAlarmModalTime = ref(false);
 const selectTakeList = ref(0);
 const showModal = ref(false);
+const isSelectPillModalOpen = ref(false);
+
 // 0 이면 생성 1 이면 수정
 const createOrModify = ref(0);
 
@@ -197,6 +205,14 @@ const openTakeListModal = (id, index) => {
 const closeTakeListModal = () => {
   isTakeListModalOpen.value = false;
 };
+
+const openSelectPillModal = () => {
+  isSelectPillModalOpen.value = true;
+}
+
+const closeSelectPillModal = () => {
+  isSelectPillModalOpen.value = false;
+}
 
 // 모달에서 전달받은 데이터로 복용 리스트 리로드
 const handleUpdate = () => {
@@ -230,7 +246,15 @@ const finishedTakeList = computed(() =>
 );
 
 const modalData = [["어떤 약에 대한 알람을 등록하시겠어요?", true, {}, {}]];
+const pillModalData =  [
 
+  ["약 사진을 찍어서 등록하기", true, { params: {}, Link: "pillpic" }],
+  ["약 검색해서 등록하기", true, { params: {}, Link: "pillsearch" }],
+  ["약봉투 찍어서 등록하기", true, { params: {}, Link: "ocrlist" }],
+
+
+
+]
 const toggleModal = async () => {
   await alarmstore.getOffAlarmList();
   showModal.value = !showModal.value;
