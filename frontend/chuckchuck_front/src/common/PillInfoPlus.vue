@@ -1,7 +1,7 @@
 <template>
   <div class="pill-card">
     <div class="pill-image">
-      <img :src="imageUrl" alt="약 이미지" />
+      <img :src="imageUrl" @error="handleImageError" alt="약 이미지" />
       <!-- <img src="@/assests/img/tempPill.png" alt="약 이미지" /> -->
     </div>
     <div class="pill-info" @click="clickDetail(pillId)">
@@ -34,6 +34,7 @@
 import { pillSearchStore } from "@/stores/pillSearch";
 import { useRouter } from "vue-router";
 import Badge from "@/common/Badge.vue";
+import artpic from "@/assests/img/dumypillimg.jpg";
 
 const router = useRouter();
 const store = pillSearchStore();
@@ -69,6 +70,10 @@ const props = defineProps({
     default: false,
   },
 });
+
+function handleImageError(event) {
+  event.target.src = "/src/assests/img/dumypillimg.jpg";
+}
 
 async function clickDetail(pillId) {
   // await store.getPillInfo(pillId);
