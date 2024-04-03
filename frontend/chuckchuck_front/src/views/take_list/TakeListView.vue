@@ -5,7 +5,7 @@
 
     <!-- 척척약사의 조언 -->
     <Carousel
-      :autoplay="1500"
+      :autoplay="2000"
       :itemsToShow="1.25"
       :wrapAround="true"
       :transition="500"
@@ -13,7 +13,7 @@
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
           <div class="carousel__img">
-            <img :src=logo alt="chukchuklogo" />
+            <img class="logo" :src=logo alt="chukchuklogo" />
           </div>
           <div class="carousel__text">
             <div style="font-size: 12px">
@@ -332,6 +332,21 @@ const advice = ref([
 
 <style scoped>
 
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@keyframes rotateAndPause {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  55% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .alarms {
   padding: 15px 10px;
   margin-top: 20px;
@@ -505,6 +520,11 @@ ol {
 }
 
 /* 척척약사의 조언 CSS */
+
+.logo {
+  animation: rotateAndPause 2s ease-in-out infinite;
+}
+
 .carousel__slide {
   box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.3);
   background-color: #ffffff;

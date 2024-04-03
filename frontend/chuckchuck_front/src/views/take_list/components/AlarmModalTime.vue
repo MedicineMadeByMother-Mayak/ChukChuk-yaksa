@@ -159,10 +159,11 @@ function getCurrentDateTime() {
   bottom: 0;
   width: 320px;
   height: 658px;
-  margin-left: -10px;
+  margin-left: -10px;      
   background: rgba(0, 0, 0, 0.6);
   caret-color: transparent;
   z-index: 9999;
+  backdrop-filter: blur(1px);
 }
 
 .modal {

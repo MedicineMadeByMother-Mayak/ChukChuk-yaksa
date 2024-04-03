@@ -57,6 +57,7 @@ const finishCurrentList = async() => {
     justify-content: center;
     caret-color: transparent;
     z-index: 9999;
+    backdrop-filter: blur(1px);
   }
   .modal {
     background: white;
