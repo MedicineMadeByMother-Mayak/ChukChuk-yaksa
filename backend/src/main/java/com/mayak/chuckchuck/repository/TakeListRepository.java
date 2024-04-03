@@ -28,4 +28,12 @@ public interface TakeListRepository extends JpaRepository<TakeList, Long> {
      */
     @Query("SELECT t FROM TakeList t WHERE t.user = :user AND (t.finishDate >= :baseDate OR t.isFinish = false) AND t.commonData.isDelete = false ORDER BY t.commonData.createDate DESC")
     List<TakeList> findTakeListByUserIdAndFinishDateAndIsFinish(@Param("user") User user, @Param("baseDate") LocalDateTime baseDate);
+
+    /**
+     * 알람 후보 조회
+     * @param user
+     * @param isAlarm
+     * @return
+     */
+    List<TakeList> findByUserAndIsAlarmAndIsFinishFalse(User user, Boolean isAlarm);
 }
