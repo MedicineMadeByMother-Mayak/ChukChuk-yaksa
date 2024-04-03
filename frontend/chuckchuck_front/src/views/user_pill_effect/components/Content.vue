@@ -1,6 +1,7 @@
 <template>
   <div class="pill-card">
     <div class="pill-image">
+      <!-- <img :src="imageUrl" alt="약 이미지" /> -->
       <img src="@/assests/img/tempPill.png" alt="약 이미지" />
     </div>
     <div class="pill-info">
@@ -21,9 +22,6 @@
           :title="badge.title"
           :backgroundColor="badge.backgroundColor"
           color="white"
-          fontSize="8px"
-          padding="1px 3px"
-          style="margin: 0px 1px"
           v-if="badge.condition"
         />
       </span>
@@ -33,18 +31,14 @@
         v-for="(badge, elseindex) in props.tags"
         :key="elseindex"
       >
-        <Badge
-          :title="badge.tagName"
-          backgroundColor="#898989"
-          color="white"
-          fontSize="8px"
-          padding="1px 4px 1px 4px"
-          style="margin: 0px 1px"
-        />
+        <Badge :title="badge.tagName" backgroundColor="#898989" color="white" />
       </span>
     </div>
     <div class="ellipsis-icon" @click="openModal">
-      <font-awesome-icon :icon="['fas', 'ellipsis-vertical']" />
+      <font-awesome-icon
+        :icon="['fas', 'ellipsis-vertical']"
+        style="color: #a1a1a1"
+      />
     </div>
   </div>
   <AddModalForm
@@ -115,7 +109,7 @@ async function deletPillEffect() {
 
 const truncateName = (name) => {
   if (name.length > 10) {
-    return name.slice(0, 13) + "..";
+    return name.slice(0, 8) + "..";
   } else {
     return name;
   }
@@ -150,7 +144,7 @@ badges.value = [
   },
   {
     title: "중단",
-    backgroundColor: "#f9ed84",
+    backgroundColor: "#FFBB55",
     condition: stopbadge,
   },
 ];
@@ -161,48 +155,54 @@ function openModal() {
 </script>
 
 <style scoped>
-.pill-image {
-  display: flex;
-  padding: 5px 2px;
-}
-
 .pill-card {
-  caret-color: transparent;
-  font-size: 12px;
-  position: relative;
+  width: 85%;
+  height: 70px;
   display: flex;
   align-items: center;
+  gap: 7px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 5px 10px;
+}
+
+.pill-image {
+  display: flex;
+  width: 100px;
+  height: 65px; /* 추가 */
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .pill-image img {
-  max-width: 103px;
-  max-height: 80px; /* 추가 */
-  border-radius: 12px;
-  padding: 0px 6px 0 5px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .pill-info {
-  flex-grow: 1;
+  width: 160px;
 }
 
 .pill-type {
   color: #3183ff;
   font-weight: bold;
-  font-size: 9px;
-  margin-bottom: 5px;
+  font-size: 10px;
+  margin-bottom: 2px;
 }
 
 .pill-name {
   font-weight: bold;
   margin-bottom: 5px;
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .icon {
-  padding: 15px;
+  /* padding: 15px; */
+
+  display: flex;
+  font-size: 30px;
 }
 
 .tags {
@@ -211,19 +211,17 @@ function openModal() {
 }
 
 .badge-custom {
-  padding: 0 0 0 0;
+  padding: 0 4px 0 0;
 }
 
 .ellipsis-icon {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 3px;
-  right: 3px;
-  cursor: pointer;
-  margin: 3px 5px;
+  width: 1%;
+  height: 100%;
   display: flex;
+  font-size: 20px;
   justify-content: end;
   align-items: start;
+  cursor: pointer;
+  margin-top: 10px;
 }
 </style>

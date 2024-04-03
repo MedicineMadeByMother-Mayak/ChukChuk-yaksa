@@ -1,15 +1,15 @@
 <template>
-  <HeaderForm class="header-form" title="약효기록" height="120px">
+  <HeaderForm class="header-form" title="약효기록" height="160px">
     <div class="header-content">
       <SearchBar
         @input="input"
         :value="keyword"
         :keyword="keyword"
         class="SearchBar"
-        height="30px"
-        width="300px"
+        height="42px"
+        width="85%"
         iconWidth="15px"
-        fontSize="12px"
+        fontSize="13px"
         marginLeft="15%"
       ></SearchBar>
     </div>
@@ -37,16 +37,15 @@
   </HeaderForm>
   <!-- {{ pilleffectstore.pillEffectDatas.totalPillDtoList }} -->
   <!-- {{ pilldatas }} -->
-  <div class="pill-content">
-    <div style="margin: 5px 10px; caret-color: transparent">
-      전체 : {{ counts }}
+  <div class="pill-content-container">
+    <div style="margin: 12px 10px 18px 10px; caret-color: transparent">
+      전체 <span class="bold">{{ counts }}</span
+      >건
     </div>
-    <div
-      v-for="(pillData, index) in pilldatas"
-      :key="`pill-data-${index}`"
-      class="pill-info"
-    >
+    <div class="pill-content">
       <PillContent
+        v-for="(pillData, index) in pilldatas"
+        :key="`pill-data-${index}`"
         v-model="categoryflag"
         :pillId="pillData.pill_id"
         :pillName="pillData.name"
@@ -230,9 +229,12 @@ const debouncedInput = _.debounce(async (value) => {
 </script>
 
 <style scoped>
-.pill-info {
+/* .pill-info {
   margin: 5px 10px;
   align-items: center;
+} */
+.pill-content-container {
+  background-color: #f9f9f9;
 }
 
 .header-form {
@@ -293,5 +295,14 @@ const debouncedInput = _.debounce(async (value) => {
   display: flex;
   margin-left: auto;
   padding: 0 15px 0 0;
+}
+
+.pill-content {
+  width: 100%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 </style>
