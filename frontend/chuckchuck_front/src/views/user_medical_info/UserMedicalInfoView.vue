@@ -1,8 +1,10 @@
 <template>
   <div class="user-madical-info">
     <div class="header">
-      <h3 style="margin: 10px">문진표</h3>
-      <p>병원이나 약국에 프로필을 보여주고 더 정확한 진단을 받아보세요.</p>
+      <h3>문진표</h3>
+      <p style="margin-bottom: 20px">
+        병원과 약국에 프로필을 보여주고 더 정확한 진단을 받아보세요.
+      </p>
       <div class="profile-picture">
         <img :src="imgUrl" alt="프로필 사진" />
       </div>
@@ -27,7 +29,8 @@
           <div class="info-item">
             <p class="info-title">혈액형</p>
             <p class="info-content">
-              {{ userstore.bloodType }} <span style="font-size: 8px">RH+</span>
+              <strong>{{ userstore.bloodType }}</strong>
+              <span style="font-size: 8px">RH+</span>
             </p>
           </div>
           <hr />
@@ -49,13 +52,13 @@
           <RouterLink :to="{ name: 'pillbaghistory' }">
             <button class="button gradient-blue">
               <strong>처방내역 확인</strong>
-              <p><strong>모든 약봉투를 확인</strong></p>
+              <p>모든 약봉투를 확인</p>
             </button>
           </RouterLink>
           <RouterLink :to="{ name: 'diagnosishistory' }">
             <button class="button gradient-purple">
               <strong>진단내역 확인</strong>
-              <p><strong>모든 진단서를 확인</strong></p>
+              <p>모든 진단서를 확인</p>
             </button>
           </RouterLink>
         </div>
@@ -134,6 +137,8 @@
 
 <script setup>
 import Footer from "@/common/FooterNoColor.vue";
+import Female from "@/assests/img/Female.svg";
+import Male from "@/assests/img/Male.svg";
 import Badge from "@/common/Badge.vue";
 import { ref, onMounted, computed } from "vue";
 import dayjs from "dayjs";
@@ -148,13 +153,12 @@ const imgUrl = ref("");
 let sex = ref("");
 
 function kotextsex(en_sex) {
-  console.log(en_sex);
   if (en_sex === "MALE") {
     sex.value = "남";
-    imgUrl.value = "/src/assests/img/Male.svg";
+    imgUrl.value = Male;
   } else {
     sex.value = "여";
-    imgUrl.value = "/src/assests/img/Female.svg";
+    imgUrl.value = Female;
   }
 }
 

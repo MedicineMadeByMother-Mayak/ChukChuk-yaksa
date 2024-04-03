@@ -8,7 +8,7 @@
       :autoplay="2000"
       :itemsToShow="1.25"
       :wrapAround="true"
-      :transition="500"
+      :transition="1000"
     >
       <Slide v-for="(item, index) in advice" :key="index">
         <div class="carousel__item">
@@ -47,7 +47,10 @@
           @click="toggleModal"
         >
           <span
-            ><font-awesome-icon :icon="['fas', 'circle-plus']" size="lg"
+            ><font-awesome-icon
+              :icon="['fas', 'circle-plus']"
+              style="color: #424242"
+              size="lg"
           /></span>
         </button>
 
@@ -377,60 +380,6 @@ const advice = ref([
     content2:
       "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
   },
-  {
-    img: logo,
-    title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
-    content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
-  },
-  {
-    img: logo,
-    title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
-    content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
-  },
-  {
-    img: logo,
-    title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
-    content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
-  },
-  {
-    img: logo,
-    title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
-    content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
-  },
-  {
-    img: logo,
-    title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
-    content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
-  },
-  {
-    img: logo,
-    title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
-    content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
-  },
 ]);
 </script>
 
@@ -493,7 +442,7 @@ const advice = ref([
 }
 .menu img {
   width: 15px;
-  height: 17px;
+  height: 15px;
 }
 
 button {
@@ -609,6 +558,7 @@ ol {
   margin-left: 0px;
 }
 .rounded-button {
+  width: 95px;
   border: none;
   background-color: white;
   padding: 5px 15px;
@@ -622,7 +572,7 @@ ol {
 /* 척척약사의 조언 CSS */
 
 .logo {
-  animation: rotateAndPause 2s ease-in-out infinite;
+  animation: rotateAndPause 3s ease-in-out infinite;
 }
 
 .carousel__slide {
