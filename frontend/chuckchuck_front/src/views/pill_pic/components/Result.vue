@@ -23,8 +23,8 @@
       </div>
     </section>
   </div>
-    <!-- Nav-bar용 -->
-    <div style="height: 85px; background-color: #f9f9f9;"></div>
+  <!-- Nav-bar용 -->
+  <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 <script setup>
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
@@ -34,18 +34,20 @@ import { ref, onMounted, watch } from "vue";
 const store = pillPicStore();
 const data = store.results;
 console.log(data);
-const picUrl = ref('');
+const picUrl = ref("");
 
 // store의 data.pic_url이 변경될 때마다 picUrl 업데이트
-watch(() => store.results.pic_url, (newPicUrl) => {
-  picUrl.value = newPicUrl;
-});
+watch(
+  () => store.results.pic_url,
+  (newPicUrl) => {
+    picUrl.value = newPicUrl;
+  }
+);
 
 // 컴포넌트가 마운트될 때 store 데이터 초기화
 onMounted(() => {
   picUrl.value = store.results.pic_url;
 });
-
 </script>
 
 <style scoped>
@@ -53,7 +55,8 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2vh;
+  /* gap: 2vh; */
+  gap: 2%;
 }
 p {
   color: #535353;

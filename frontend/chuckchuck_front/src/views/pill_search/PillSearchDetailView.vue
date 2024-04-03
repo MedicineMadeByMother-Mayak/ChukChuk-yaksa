@@ -107,8 +107,8 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 25vh; /* 전체 화면 높이 설정 */
-  width: 100vw; /* 전체 화면 너비 설정 */
+  height: 25%; /* 전체 화면 높이 설정 */
+  width: 100%; /* 전체 화면 너비 설정 */
 }
 
 img {

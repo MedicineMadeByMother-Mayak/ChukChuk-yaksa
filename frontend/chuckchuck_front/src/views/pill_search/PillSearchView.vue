@@ -45,12 +45,11 @@
       />
       <Observer @show="loadMoreData" v-if="isScrolled > 0"></Observer>
     </div>
-    <!-- Nav-bar용 -->
-    <!-- <div class="save-nav-bar"></div> -->
   </div>
   <ModalForm
     v-model="msg"
     @add-pill-in-take-list="addPill"
+    :Link="'pillsearch'"
     :modalData="[
       [
         '복용중인 약 리스트',
@@ -58,7 +57,15 @@
         false,
         { emitName: 'addPillInTakeList' },
       ],
-      ['나의 약효기록', '에 후기 추가하기', false, { method: '' }],
+      [
+        '나의 약효기록',
+        '에 후기 추가하기',
+        true,
+        {
+          params: { pillId: selectPill, Link: 'pillsearch' },
+          Link: 'effectdetail',
+        },
+      ],
     ]"
   />
 
@@ -66,6 +73,12 @@
     @save="savePill"
     v-model="showModal"
     :modalData="modalData"
+  />
+
+  <AlertModal
+    v-if="alertShowModal"
+    :text="'복용 리스트에 추가되었습니다.'"
+    :showModal="alertShowModal"
   />
 </template>
 
@@ -81,6 +94,7 @@ import { pillSearchStore } from "@/stores/pillSearch";
 import ModalForm from "@/common/Form/AddModalForm.vue";
 import SelectListModalForm from "@/common/Form/SelectListModalForm.vue";
 import { takelistStore } from "@/stores/takelist";
+import AlertModal from "@/common/Form/AlertModal.vue";
 
 const takeListStore = takelistStore();
 const store = pillSearchStore();
@@ -95,6 +109,7 @@ const msg = ref(false);
 const showModal = ref(false);
 const modalData = ref([[1, "새로운 리스트에 추가하기"]]);
 const selectPill = ref(0);
+const alertShowModal = ref(false);
 
 async function savePill(selectId) {
   if (selectId === 1) {
@@ -102,6 +117,11 @@ async function savePill(selectId) {
   } else {
     await takeListStore.addPill(selectId, [selectPill.value]);
   }
+
+  alertShowModal.value = true;
+  setTimeout(() => {
+    alertShowModal.value = false;
+  }, 2500);
 }
 
 async function addPill() {
@@ -190,6 +210,7 @@ function input(event) {
 }
 
 .count-box {
+  /* width: 100%; */
   display: flex;
   justify-content: space-between;
 }
@@ -200,7 +221,6 @@ function input(event) {
 }
 
 .keyword {
-  width: 65%;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
@@ -208,10 +228,12 @@ function input(event) {
 }
 
 .search-result-container {
-  margin: 0 27px;
+  width: 100%;
+  /* padding: 0px 27px 28px 27px; */
   gap: 17px;
   display: flex;
   flex-direction: column;
-  padding-bottom: 28%;
+  align-items: center;
+  justify-content: center;
 }
 </style>

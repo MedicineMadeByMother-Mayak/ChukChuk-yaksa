@@ -139,7 +139,8 @@ h1 {
 .waves {
   position: relative;
   width: 100%;
-  height: 15vh;
+  /* height: 15vh; */
+  height: 15%;
   margin-bottom: -7px; /*Fix for safari gap*/
   min-height: 100px;
   max-height: 150px;
@@ -147,7 +148,8 @@ h1 {
 
 .content {
   position: relative;
-  height: 20vh;
+  height: 20%;
+  /* height: 20vh; */
   text-align: center;
   background-color: white;
 }
@@ -189,7 +191,8 @@ h1 {
     min-height: 40px;
   }
   .content {
-    height: 30vh;
+    /* height: 30vh; */
+    height: 30%;
   }
 }
 </style>

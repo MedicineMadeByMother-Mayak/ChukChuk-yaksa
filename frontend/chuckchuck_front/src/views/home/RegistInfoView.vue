@@ -109,7 +109,7 @@ const updateUserInfo = () => {
   background: linear-gradient(to right, #3183ff 0%, #86e7ee 100%);
   color: black;
   margin-bottom: 10px;
-  height: 100vh; /* 부모 요소의 높이를 화면 전체로 설정 */
+  height: 100%; /* 부모 요소의 높이를 화면 전체로 설정 */
 }
 
 .basic-background img {

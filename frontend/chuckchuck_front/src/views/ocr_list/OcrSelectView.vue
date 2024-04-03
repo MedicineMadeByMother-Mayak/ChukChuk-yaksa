@@ -53,7 +53,7 @@ const diagnosis = () => {
 <style scoped>
 .base-backgound-color {
   background-color: #f9f9f9;
-  height: 82vh;
+  /* height: 100%; */
 }
 
 .text {
@@ -69,17 +69,16 @@ const diagnosis = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0px;
   gap: 20px;
+  padding-bottom: 100px;
 }
 
 .custom-button {
-  width: 68vw;
-  height: 8vh;
+  width: 90%;
+  height: 90px;
   display: inline-flex; /* Flexbox 사용 */
   align-items: center; /* 수직 정렬 */
   justify-content: center; /* 수평 정렬 */
-  padding: 10px 20px;
   background-color: #ffffff; /* 하얀색 배경 */
   border-radius: 5px;
   cursor: pointer;
@@ -102,7 +101,7 @@ button {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
   border-radius: 5px;
   font-size: 14px;
-  width: 80vw;
+  width: 90%;
   height: 80px;
 }
 </style>

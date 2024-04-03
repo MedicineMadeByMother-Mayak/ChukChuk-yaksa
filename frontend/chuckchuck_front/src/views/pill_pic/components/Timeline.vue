@@ -49,7 +49,7 @@ const props = defineProps({
 }
 
 .survey-header {
-  width: 90vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,9 +76,10 @@ const props = defineProps({
 }
 
 .survey-steps {
-  width: 100vw;
+  width: 100%;
   display: flex;
   /* justify-content: space-between; */
+  gap: 35px;
   margin-bottom: 1rem;
 }
 

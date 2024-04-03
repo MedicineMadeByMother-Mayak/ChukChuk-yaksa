@@ -2,6 +2,9 @@
   <HeaderForm class="header-form" title="약효기록" height="120px">
     <div class="header-content">
       <SearchBar
+        @input="input"
+        :value="keyword"
+        :keyword="keyword"
         class="SearchBar"
         height="30px"
         width="300px"
@@ -32,8 +35,12 @@
       </div>
     </div>
   </HeaderForm>
+  <!-- {{ pilleffectstore.pillEffectDatas.totalPillDtoList }} -->
   <!-- {{ pilldatas }} -->
   <div class="pill-content">
+    <div style="margin: 5px 10px; caret-color: transparent">
+      전체 : {{ counts }}
+    </div>
     <div
       v-for="(pillData, index) in pilldatas"
       :key="`pill-data-${index}`"
@@ -67,26 +74,75 @@
 <script setup>
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 import PillContent from "./components/Content.vue";
-import SearchBar from "@/common/SearchBar.vue";
-import { ref, computed, onMounted, watchEffect } from "vue";
+import { ref, onMounted, nextTick, onUnmounted } from "vue";
 import AddModalForm from "@/common/Form/AddModalForm.vue";
 import { pillEffectStore } from "@/stores/pilleffect";
+import Observer from "@/views/pharmacy_search/components/Observer.vue";
+import SearchBar from "@/common/SearchBar.vue";
+import _ from "lodash";
 
+const counts = ref(11);
 const msg = ref(false); //모달창 관리하는 변수 ref로 반드시 설정해주세요
 const categoryflag = ref(true);
 const tabnum = ref(0);
 const pilleffectstore = pillEffectStore();
-const pilldatas = ref({});
+const pilldatas = ref([]);
+const page = ref(1);
+const hasNext = ref(true);
+const keyword = ref("");
 
-function setCategoryflagData(num) {
-  categoryflag.value = 0 == num;
-  tabnum.value = num;
-  if (num == 0) {
-    pilldatas.value = pilleffectstore.pillEffectDatas.totalPillDtoList.sort(
-      (a, b) => {
-        return a.name.localeCompare(b.name); // pill_name을 기준으로 정렬
+async function addData() {
+  await pilleffectstore.getpillEffectDatas(keyword.value, page.value);
+  if (tabnum.value === 0) {
+    pilleffectstore.pillEffectDatas.totalPillDtoList.forEach(
+      (pilldata, pillindex) => {
+        pilldata.categories = [];
+        pilleffectstore.pillEffectDatas.siedEffectPillDtoList.forEach(
+          (flagdata, flagindex) => {
+            if (pilldata.pill_id === flagdata.pill_id) {
+              pilldata.categories.push("부작용");
+            }
+          }
+        );
+        pilleffectstore.pillEffectDatas.stopPillDtoList.forEach(
+          (flagdata, flagindex) => {
+            if (pilldata.pill_id === flagdata.pill_id) {
+              pilldata.categories.push("중단");
+            }
+          }
+        );
+        pilleffectstore.pillEffectDatas.effectPillDtoList.forEach(
+          (flagdata, flagindex) => {
+            if (pilldata.pill_id === flagdata.pill_id) {
+              pilldata.categories.push("효과");
+            }
+          }
+        );
       }
     );
+    pilldatas.value.push(...pilleffectstore.pillEffectDatas.totalPillDtoList);
+  } else if (tabnum.value === 3) {
+    pilldatas.value.push(
+      ...pilleffectstore.pillEffectDatas.siedEffectPillDtoList
+    );
+  } else if (tabnum.value === 2) {
+    pilldatas.value.push(...pilleffectstore.pillEffectDatas.stopPillDtoList);
+  } else {
+    pilldatas.value.push(...pilleffectstore.pillEffectDatas.effectPillDtoList);
+  }
+  const totalLoadedItems = page.value * 5;
+  hasNext.value = totalLoadedItems < counts.value;
+  page.value++;
+}
+
+async function setCategoryflagData(num) {
+  categoryflag.value = 0 == num;
+  tabnum.value = num;
+  page.value = 1;
+  await pilleffectstore.getpillEffectDatas(keyword.value, page.value);
+  if (tabnum.value === 0) {
+    pilldatas.value = pilleffectstore.pillEffectDatas.totalPillDtoList;
+    // counts.value = pilleffectstore.pillEffectDatas.totalPillDtoListCount;
     pilldatas.value.forEach((pilldata, pillindex) => {
       pilldata.categories = [];
       pilleffectstore.pillEffectDatas.siedEffectPillDtoList.forEach(
@@ -111,30 +167,66 @@ function setCategoryflagData(num) {
         }
       );
     });
-  } else if (num === 3) {
+  } else if (tabnum.value === 3) {
     pilldatas.value = pilleffectstore.pillEffectDatas.siedEffectPillDtoList;
-  } else if (num === 2) {
+    // counts.value = pilleffectstore.pillEffectDatas.siedEffectPillDtoListCount;
+  } else if (tabnum.value === 2) {
     pilldatas.value = pilleffectstore.pillEffectDatas.stopPillDtoList;
+    // counts.value = pilleffectstore.pillEffectDatas.stopPillDtoListCount;
   } else {
     pilldatas.value = pilleffectstore.pillEffectDatas.effectPillDtoList;
+    // counts.value = pilleffectstore.pillEffectDatas.effectPillDtoListCount;
   }
+  const totalLoadedItems = page.value * 5;
+  hasNext.value = totalLoadedItems < counts.value;
+  page.value++;
+  checkAndFetchData();
 }
-
-const effectData = computed(() => pilleffectstore.pillEffectDatas);
-
-watchEffect(async () => {
-  if (effectData.value) {
-    setCategoryflagData(tabnum.value);
-  }
-});
 
 function openModal() {
   msg.value = true;
 }
 
+// fetchData 호출 후 문서 높이 체크 및 추가 로드 처리
+async function checkAndFetchData() {
+  await addData();
+
+  await nextTick(); // DOM 업데이트 대기
+
+  const { clientHeight, scrollHeight } = document.documentElement;
+  if (scrollHeight <= clientHeight && hasNext.value) {
+    // 문서 전체 높이가 뷰포트 높이 이하이고, 추가 데이터가 있으면 재귀적으로 호출
+    checkAndFetchData();
+  }
+}
+
+// 스크롤 이벤트 핸들러
+function handleScroll() {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  if (scrollHeight - (scrollTop + clientHeight) < 1 && hasNext.value) {
+    checkAndFetchData();
+  }
+}
+
 onMounted(async () => {
-  await pilleffectstore.getpillEffectDatas("");
+  window.addEventListener("scroll", handleScroll);
+  await setCategoryflagData(0);
 });
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+// input 이벤트 핸들러
+function input(event) {
+  debouncedInput(event.target.value);
+}
+
+// 디바운스 함수 정의
+const debouncedInput = _.debounce(async (value) => {
+  keyword.value = value;
+  setCategoryflagData(tabnum.value);
+}, 200);
 </script>
 
 <style scoped>

@@ -30,23 +30,24 @@ const props = defineProps({
   },
   fontSize: {
     type: String,
-    default: "14px",
+    default: "9px",
   },
   padding: {
     type: String,
-    default: "3px 8px",
+    default: "2.5px 5px 3px 5px",
   },
 });
 </script>
 
 <style scoped>
 .badge-container {
-  border-radius: 5px; /* 둥근 모서리 */
+  border-radius: 4.5px; /* 둥근 모서리 */
   display: inline-block; /* 필요한 만큼의 공간만 차지 */
 }
 
 .badge-text {
   white-space: nowrap; /* 텍스트가 한 줄로 나타나도록 설정 */
   caret-color: transparent;
+  font-weight: 600;
 }
 </style>

@@ -110,8 +110,7 @@ const props = defineProps({
 });
 
 async function deletPillEffect() {
-  await pilleffectstore.deletFillEffect();
-  await pilleffectstore.getpillEffectDatas();
+  await pilleffectstore.deletFillEffect(props.pillId);
 }
 
 const truncateName = (name) => {

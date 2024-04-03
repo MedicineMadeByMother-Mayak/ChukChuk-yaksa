@@ -1,7 +1,11 @@
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">
+    
     <div class="modal">
       <ul class="modal-menu">
+        <div class="close-button">
+          <div class="close" @click="selectXButton">&times;</div>
+        </div>
         <li v-for="(item, index) in modalData" :key="index">
           <RouterLink
             v-if="item[1]"
@@ -31,9 +35,21 @@ const props = defineProps({
 const closeModal = () => {
   showModal.value = !showModal.value;
 };
+
+const selectXButton = () => {
+  showModal.value = true;
+}
 </script>
 
 <style scoped>
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -45,6 +61,8 @@ const closeModal = () => {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
+  z-index: 9999;
+  backdrop-filter: blur(1px);
 }
 
 .modal {
@@ -56,6 +74,7 @@ const closeModal = () => {
   overflow: hidden;
   bottom: 0px;
 	position: absolute;
+  animation: slideIn 0.7s ease-in-out;
 }
 
 .modal-menu {
@@ -90,4 +109,18 @@ const closeModal = () => {
   text-decoration: none;
   color: inherit;
 }
+
+.close-button {
+  position: relative;
+  margin-left: auto;
+}
+
+.close {
+  color: #aaaaaa;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 14px;
+}
+
 </style>

@@ -7,14 +7,14 @@ import { instance } from "@/util/mainAxios";
 export const pillEffectStore = defineStore("pilleffect", () => {
   const pillEffectDatas = ref([]);
 
-  const getpillEffectDatas = async (text) => {
+  const getpillEffectDatas = async (text, page) => {
     try {
       pillEffectDatas.value = (
         await instance.get("/effects", {
           params: {
             categoryid: 0,
             keyword: text,
-            page: 1,
+            page: page,
           },
         })
       ).data;
@@ -23,9 +23,9 @@ export const pillEffectStore = defineStore("pilleffect", () => {
     }
   };
 
-  const deletFillEffect = async (pillId) => {
+  const deletFillEffect = async (effectId) => {
     try {
-      const response = await instance.delete(`/effects/pill/${pillId}`);
+      const response = await instance.delete(`/effects/pill/${effectId}`);
     } catch (error) {
       console.log("약효 기록을 불러오는데 실패했습니다.", error);
     }
