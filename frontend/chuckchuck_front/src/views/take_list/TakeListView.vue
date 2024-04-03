@@ -537,7 +537,7 @@ ol {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 1px;
   background-color: #083688;
 }
 

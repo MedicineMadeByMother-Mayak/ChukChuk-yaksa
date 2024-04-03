@@ -1,9 +1,10 @@
 <template>
   <div class="pill-card">
     <div class="pill-image">
+      <!-- <img :src="imageUrl" alt="약 이미지" /> -->
       <img src="@/assests/img/tempPill.png" alt="약 이미지" />
     </div>
-    <div class="pill-info">
+    <div class="pill-info" @click="clickDetail(pillId)">
       <div class="pill-type">
         <strong>{{ type }}</strong>
       </div>
@@ -21,12 +22,15 @@
       </span>
       <!-- <span v-if="flag == 2">..</span> -->
       <!-- 수정 end -->
+
+      <font-awesome-icon
+        class="delete-icon"
+        :icon="['fas', 'x']"
+        size="xs"
+        @click="openDeletePillModal()"
+      />
     </div>
-    <font-awesome-icon
-      class="delete-icon"
-      :icon="['fas', 'x']"
-      @click="openDeletePillModal()"
-    />
+
     <DeleteCheckModal
       v-if="isDeletePillModalOpen"
       @close="closeDeletePillModal"
@@ -87,8 +91,8 @@ const props = defineProps({
 });
 
 const truncateName = (name) => {
-  if (name.length > 10) {
-    return name.slice(0, 13) + "..";
+  if (name.length > 8) {
+    return name.slice(0, 9) + "..";
   } else {
     return name;
   }
@@ -142,15 +146,8 @@ badges.forEach((badge, index) => {
 </script>
 
 <style scoped>
-.pill-image {
-  display: flex;
-  width: 120px;
-  height: 65px; /* 추가 */
-  overflow: hidden;
-  border-radius: 8px;
-}
 .pill-card {
-  width: 82%;
+  width: 93%;
   height: 70px;
   display: flex;
   align-items: center;
@@ -159,8 +156,15 @@ badges.forEach((badge, index) => {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   padding: 5px 10px;
+  position: relative;
 }
-
+.pill-image {
+  display: flex;
+  width: 120px;
+  height: 65px; /* 추가 */
+  overflow: hidden;
+  border-radius: 8px;
+}
 .pill-image img {
   width: 100%;
   height: 100%;
@@ -200,9 +204,9 @@ badges.forEach((badge, index) => {
 
 .delete-icon {
   position: absolute;
-  top: 3px;
-  right: 3px;
   cursor: pointer;
   margin: 3px;
+  top: 4px;
+  right: 4px;
 }
 </style>
