@@ -1,6 +1,6 @@
 <template>
   <div class="base-backgound-color">
-    <Wave title="약봉투/진단서 촬영" height="0px" Link="home" />
+    <Wave title="약봉투/진단서 촬영" height="120px" Link="home" />
     <!-- OcrListView -->
     <div class="text">
       <div>약봉투나 진단서를 촬영하여</div>

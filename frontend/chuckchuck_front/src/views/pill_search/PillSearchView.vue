@@ -1,7 +1,7 @@
 <template>
   <!-- PillSearchView(약검색) -->
   <div class="basic-background">
-    <Wave title="약 검색" height="1px" />
+    <Wave title="약 검색" height="85px" />
     <div style="padding: 8%; padding-bottom: 0">
       <SearchBar
         class="searchBar"
