@@ -4,7 +4,7 @@
   <div v-if="$route.path === '/pharmacy'" class="basic-background-color">
     <div class="header-container">
       <HeaderFormOnlyString :title="'약국검색'" />
-      <transition name="slide">
+      <transition class="header-transition" name="slide">
         <div class="header-back" :class="{ 'header-back-up': keyword }"></div>
       </transition>
     </div>
@@ -18,11 +18,9 @@
     </div>
 
     <div class="address-search-container" :class="{ 'move-up': keyword }">
-      <div>
-        <p class="address">
-          <img :src="mileStone" alt="" />대전광역시 서구 대덕대로150
-        </p>
-      </div>
+      <p class="address">
+        <img :src="mileStone" alt="" />대전광역시 서구 대덕대로150
+      </p>
       <SearchBar
         :value="keyword"
         @keyup="input"
@@ -155,17 +153,24 @@ const click = (pillId) => {
 </script>
 
 <style scoped>
-.header-container {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-}
-
 .basic-background-color {
   background-color: #f9f9f9;
   height: 100%;
   width: 100%;
   z-index: -1;
+}
+
+.header-container {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background-color: #f9f9f9;
+  height: 100%;
+  width: 100%;
+}
+
+.header-transition {
+  position: absolute;
 }
 
 /* 전환 효과 기본 스타일 */
@@ -177,13 +182,12 @@ const click = (pillId) => {
 .header-back {
   height: 620px;
   width: 620px;
-  top: -60vh;
+  top: -60%;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(60deg, #3183ff 0%, #86e7ee 100%);
   border-radius: 100%;
-  overflow: hidden;
-  position: fixed;
+  position: absolute;
   transition: top 0.7s; /* 전환 효과 추가 */
 }
 
@@ -238,6 +242,7 @@ const click = (pillId) => {
   align-items: center;
   justify-content: center;
   font-weight: 600;
+  z-index: 1;
 }
 
 .search-update-info {
@@ -250,6 +255,7 @@ const click = (pillId) => {
 .count-container {
   margin: 0 33px;
   width: 80%;
+  z-index: 1;
 }
 
 .count-container > hr {
@@ -279,5 +285,6 @@ const click = (pillId) => {
   display: flex;
   flex-direction: column;
   padding-bottom: 28%;
+  z-index: 1;
 }
 </style>
