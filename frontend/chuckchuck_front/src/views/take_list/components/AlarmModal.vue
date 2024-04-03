@@ -32,7 +32,13 @@ const msg = ref(true);
                   src="@/assests/img/startLogo.png"
                   alt=""
                 />
-                <div style="margin: 9px; font-size: 14px; font-weight: bold">
+                <div
+                  style="
+                    margin: 9px 9px 9px 3px;
+                    font-size: 16px;
+                    font-weight: bold;
+                  "
+                >
                   어떤 약에 대한 알람을
                   <span style="color: green">등록</span>하시겠어요?
                 </div>
@@ -45,11 +51,13 @@ const msg = ref(true);
                 >
                   <font-awesome-icon
                     :icon="['fas', 'bell']"
-                    size="xs"
-                    style="color: gray"
+                    size="s"
+                    style="color: gray; margin-right: 4px"
                   />
                   <!-- <font-awesome-icon :icon="medicine.isActive ? ['fas', 'bell'] : ['fas', ]" style="color: gray;"/> -->
-                  <span class="text">{{ alarm.takeListName }}</span>
+                  <span class="text">{{
+                    truncateName(alarm.takeListName, 8, 8)
+                  }}</span>
                 </button>
               </div>
               <button
@@ -85,6 +93,14 @@ const props = defineProps({
 });
 
 const medicines = reactive({});
+
+const truncateName = (name, num1, num2) => {
+  if (name.length > num1) {
+    return name.slice(0, num2) + " ..";
+  } else {
+    return name;
+  }
+};
 
 function clickAlarm(id) {
   selectTakeList.value = id;
@@ -237,8 +253,8 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 80px;
-  height: 25px;
+  width: 85px;
+  height: 30px;
   margin: 5px;
   background-color: white;
   box-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
@@ -247,7 +263,8 @@ onMounted(async () => {
   outline: none;
   cursor: pointer;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
+  padding: 10px;
 }
 
 .button-container button:active,
