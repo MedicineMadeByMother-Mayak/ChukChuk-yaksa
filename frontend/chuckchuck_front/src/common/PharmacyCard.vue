@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ backgroundImage: `url(/${img})` }" class="card-container">
+  <div :style="{ backgroundImage: `url(${img})` }" class="card-container">
     <div class="card-title">{{ title }}</div>
     <div class="card-info">
       <p class="status" v-if="status">영업 중</p>
@@ -14,6 +14,7 @@
 
 <script setup>
 import { ref } from "vue";
+import testImage from "@/assests/img/testPharmacy.svg";
 
 const props = defineProps({
   title: {
@@ -30,7 +31,7 @@ const props = defineProps({
   },
   img: {
     type: String,
-    default: "src/assests/img/testPharmacy.svg",
+    default: testImage,
   },
   status: {
     type: Boolean,
