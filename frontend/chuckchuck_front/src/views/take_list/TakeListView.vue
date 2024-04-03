@@ -77,7 +77,7 @@
             class="alarm-text"
             style="font-weight: bold; font-size: smaller"
           >
-            {{ truncateName(alarm.takeListName) }}
+            {{ truncateName(alarm.takeListName, 8, 6) }}
           </span>
         </button>
       </div>
@@ -86,9 +86,17 @@
     <div class="takelist-container">
       <div class="menu">
         <div class="menu-left">
-          <img src="@/assests/icon/pill.png" alt="복용리스트" />
-          <div v-if="!isNow"><strong>복용중</strong></div>
-          <div v-if="isNow"><strong>복용 완료</strong></div>
+          <!-- <img src="@/assests/icon/pill.png" alt="복용리스트" /> -->
+          <font-awesome-icon
+            :icon="['fas', 'paperclip']"
+            style="margin-right: 7px"
+          />
+          <div v-if="!isNow">
+            <strong style="color: black">복용중인 </strong>리스트
+          </div>
+          <div v-if="isNow">
+            <strong style="color: black">복용완료한 </strong>리스트
+          </div>
         </div>
         <div class="menu-right">
           <button
@@ -125,7 +133,7 @@
               {{ formatDate(takeListData.createDate) }}
             </div>
             <span v-if="!takeListData.edit"
-              >[{{ takeListData.takeListName }}]</span
+              >[ {{ truncateName(takeListData.takeListName, 10, 8) }} ]</span
             >
             <input
               v-else
@@ -278,9 +286,9 @@ onMounted(async () => {
   alarmstore.getAlarmList();
 });
 
-const truncateName = (name) => {
-  if (name.length > 8) {
-    return name.slice(0, 7) + " ..";
+const truncateName = (name, num1, num2) => {
+  if (name.length > num1) {
+    return name.slice(0, num2) + " ..";
   } else {
     return name;
   }
@@ -416,7 +424,7 @@ const advice = ref([
 
 .alarms {
   padding: 15px 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   background-color: #c0e6fc;
   display: flex;
   width: 300px;
@@ -473,6 +481,7 @@ button {
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 10px;
+  font-weight: 200;
   border: none;
   cursor: pointer;
   margin-right: 5px;
@@ -483,6 +492,7 @@ button {
   color: #ffffff;
   font-weight: bold;
   border-radius: 5px;
+  font-weight: 200;
   padding: 5px 15px;
   font-size: 10px;
   border: none;
@@ -575,7 +585,7 @@ ol {
   padding: 5px 8px;
   margin: 2.5px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   position: relative;
 }
@@ -597,7 +607,7 @@ ol {
 }
 
 .carousel__slide {
-  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   border-radius: 12px;
   height: 80px;
