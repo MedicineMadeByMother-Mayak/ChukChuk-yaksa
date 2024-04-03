@@ -8,7 +8,7 @@
         @input="input"
         :value="keyword"
         :keyword="keyword"
-        :width="'80%'"
+        :width="'100%'"
         :height="'33px'"
         :iconWidth="'15px'"
         :font-size="'15px'"
