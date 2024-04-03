@@ -154,6 +154,14 @@ function getCurrentDateTime() {
 </script>
 
 <style scoped>
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
 .modal-overlay {
   position: fixed;
   bottom: 0;
@@ -176,6 +184,7 @@ function getCurrentDateTime() {
   position: absolute;
   display: flex;
   flex-direction: column;
+  animation: slideIn 0.7s ease-in-out;
 }
 
 .modal-title {
@@ -210,6 +219,7 @@ function getCurrentDateTime() {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 5px;
 }
 .router-link-item {
   text-decoration: none;

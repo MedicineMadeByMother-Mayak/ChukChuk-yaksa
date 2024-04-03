@@ -270,7 +270,7 @@ onMounted(async () => {
   font-weight: bold;
   font-size: 12px;
   color: white;
-  background-color: navy;
+  background-color:#242291;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -279,6 +279,6 @@ onMounted(async () => {
 
 .save-button:active {
   background-color: white;
-  color: navy;
+  color: #242291;
 }
 </style>
