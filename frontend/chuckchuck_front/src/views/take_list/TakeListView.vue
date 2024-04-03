@@ -16,15 +16,15 @@
             <img class="logo" :src="logo" alt="chukchuklogo" />
           </div>
           <div class="carousel__text">
-            <div style="font-size: 12px">
+            <div style="font-size: 12px; margin-bottom: 3px">
               <strong>{{ item.title }}</strong>
             </div>
             <div>
-              <span style="font-weight: bold; color: blue">{{
+              <span style="font-weight: bold; color: #145bda">{{
                 item.pill1
               }}</span>
               <span>{{ item.content1 }}</span>
-              <span style="font-weight: bold; color: blue">{{
+              <span style="font-weight: bold; color: #145bda">{{
                 item.pill2
               }}</span>
               <span>{{ item.content2 }}</span>
@@ -632,7 +632,7 @@ ol {
 }
 
 .carousel__text {
-  margin-top: 0px;
+  margin-top: -5px;
   text-align: left;
   font-size: 10px;
   margin-left: -34%;
