@@ -119,6 +119,8 @@ async function savePill(selectId) {
     await takeListStore.addPill(selectId, [selectPill.value]);
   }
 
+  showModal.value = false;
+
   alertShowModal.value = true;
   setTimeout(() => {
     alertShowModal.value = false;
