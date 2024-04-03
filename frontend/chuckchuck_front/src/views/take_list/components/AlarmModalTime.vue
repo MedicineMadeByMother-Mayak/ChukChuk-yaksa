@@ -1,8 +1,14 @@
 <template>
-  <div class="modal-overlay" v-if="showModal" @click="closeModal">
+  <div
+    class="modal-overlay"
+    v-if="showModal"
+    @click="closeModal(), getCurrentDateTime()"
+  >
     <div class="modal" @click.stop="">
       <div class="close-button">
-        <div class="close" @click="closeModal">&times;</div>
+        <div class="close" @click="closeModal(), getCurrentDateTime()">
+          &times;
+        </div>
       </div>
       <div class="modal-title">
         <img src="@/assests/img/Group.png" />
@@ -25,9 +31,21 @@
                 name="selectTime"
                 v-model="selectTime"
               />매일
-              <div class="time-zone">{{ hours }}</div>
+              <select id="hourSelect" v-model="hours">
+                <option v-for="hour in hoursOptions" :key="hour" :value="hour">
+                  {{ hour }}
+                </option>
+              </select>
               :
-              <div class="time-zone">{{ minutes }}</div>
+              <select id="minuteSelect" v-model="minutes">
+                <option
+                  v-for="minute in minutesOptions"
+                  :key="minute"
+                  :value="minute"
+                >
+                  {{ minute }}
+                </option>
+              </select>
               에 알람을 울립니다.</label
             >
           </div>
@@ -49,16 +67,34 @@
                 name="selectTime"
                 v-model="selectTime"
               />
-              <div class="time-zone">{{ hours }}</div>
+              <select id="hourSelect" v-model="hours_second">
+                <option v-for="hour in hoursOptions" :key="hour" :value="hour">
+                  {{ hour }}
+                </option>
+              </select>
               :
-              <div class="time-zone">{{ minutes }}</div>
+              <select id="minuteSelect" v-model="minutes_second">
+                <option
+                  v-for="minute in minutesOptions"
+                  :key="minute"
+                  :value="minute"
+                >
+                  {{ minute }}
+                </option>
+              </select>
               기준,
-              <div class="time-zone">{{ selectCycle }}</div>
+              <select id="hourSelect" v-model="selectCycle">
+                <option v-for="hour in hoursOptions" :key="hour" :value="hour">
+                  {{ hour }}
+                </option>
+              </select>
               시간마다 알람을 울립니다.</label
             >
           </div>
         </li>
-        <button class="save-button" @click="turnOn">SAVE</button>
+        <button class="save-button" @click="turnOn(), getCurrentDateTime()">
+          SAVE
+        </button>
       </ul>
     </div>
   </div>
@@ -67,6 +103,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { alarmStore } from "@/stores/alarm";
+
+const hoursOptions = Array.from({ length: 24 }, (_, i) =>
+  String(i).padStart(2, "0")
+);
+const minutesOptions = Array.from({ length: 60 }, (_, i) =>
+  String(i).padStart(2, "0")
+);
 
 const props = defineProps({
   modalData: {
@@ -91,14 +134,16 @@ const selectCycle = ref(12);
 const select = ref(0);
 const currentDateTime = ref("");
 const hours = ref("");
+const hours_second = ref("");
 const minutes = ref("");
+const minutes_second = ref("");
 
 onMounted(() => {
   currentDateTime.value = getCurrentDateTime();
   // 시간 실시간 업데이트
-  setInterval(() => {
-    currentDateTime.value = getCurrentDateTime();
-  }, 1000); // 매 초마다 현재 시간 업데이트
+  // setInterval(() => {
+  //   currentDateTime.value = getCurrentDateTime();
+  // }, 1000); // 매 초마다 현재 시간 업데이트
 });
 
 // 알람 등록
@@ -148,6 +193,8 @@ function getCurrentDateTime() {
   hours.value = String(now.getHours()).padStart(2, "0");
   minutes.value = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
+  hours_second.value = String(now.getHours()).padStart(2, "0");
+  minutes_second.value = String(now.getMinutes()).padStart(2, "0");
 
   return `${year}-${month}-${day} ${hours.value}:${minutes.value}:${seconds}`;
 }
@@ -167,7 +214,7 @@ function getCurrentDateTime() {
   bottom: 0;
   width: 320px;
   height: 658px;
-  margin-left: -10px;      
+  margin-left: -10px;
   background: rgba(0, 0, 0, 0.6);
   caret-color: transparent;
   z-index: 9999;
@@ -190,7 +237,7 @@ function getCurrentDateTime() {
 .modal-title {
   display: flex;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 5px;
   margin-left: 20px;
   margin-bottom: 10px;
 }
@@ -213,24 +260,31 @@ function getCurrentDateTime() {
   background: white;
   font-size: 11px;
   display: flex;
-  margin: 0 50px 12px 0;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 .modal-menu {
+  padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   margin-top: 5px;
 }
 .router-link-item {
   text-decoration: none;
   color: inherit;
   display: flex;
-  align-items: start;
+  align-items: center;
+  justify-content: center;
   margin: 0;
 }
 
 .router-link-item > label {
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .time-zone {
@@ -242,6 +296,11 @@ function getCurrentDateTime() {
 
 .radio-button {
   border-color: rgb(0, 0, 0);
+}
+
+.txt {
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .save-button {
@@ -256,7 +315,6 @@ function getCurrentDateTime() {
   border-radius: 5px;
   padding: 0px;
   font-size: smaller;
-  margin: 0 40px 0 0;
 }
 
 .save-button:active {
