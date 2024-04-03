@@ -127,6 +127,7 @@ public class OCRService {
      * @return: HashMap<String, Object> 유효기록 해시맵
      */
     public HashMap<String, Object> validPillBag(List<String> ocrList) {
+        int tmp = 1;
         HashMap<String, Object> validResult = new HashMap<>();
         for (int i = 0; i < ocrList.size(); i++) {
             if (ocrList.get(i).equals("조제일자")) validResult.put("buildDate", ocrList.get(i + 1));
@@ -141,7 +142,11 @@ public class OCRService {
                 Page<Pill> searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
                 if (searchResult.isEmpty()) {
                     //==현재 약 데이터가 부족해 임시코드를 작성
-                    pillName = "리비셀캡슐(비페닐디메틸디카르복실레이트,우르소데옥시콜산)";
+                    if(tmp==1) {
+                        tmp++;
+                        pillName = "리비셀캡슐(비페닐디메틸디카르복실레이트,우르소데옥시콜산)";
+                    }
+                    else pillName = "AG피나스테리드정(피나스테리드)(수출용)";
                     searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
                     //==
 
