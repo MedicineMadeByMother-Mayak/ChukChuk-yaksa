@@ -20,7 +20,7 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-import Footer from "@/common/Footer.vue";
+import Footer from "@/common/FooterColor.vue";
 import Text from "@/views/pill_pic/components/Text.vue";
 import Timeline from "@/views/pill_pic/components/Timeline.vue";
 import SelectPic from "@/views/pill_pic/components/SelectPic.vue";

@@ -126,16 +126,16 @@
           >
             <!-- 약 카드 -->
             <Content
-            :takeListId="takeListData.takeListId"
-            :takeListName="takeListData.takeListName"
-            :pillId="currentPillData.pillId"
-            :pillName="currentPillData.name"
-            :imageUrl="currentPillData.imageUrl"
-            :type="currentPillData.type"
-            :warningPregnant="currentPillData.warningPregnant"
-            :warningUseDate="currentPillData.warningUseDate"
-            :warningElders="currentPillData.warningElders"
-            :warningTogether="currentPillData.warningTogether"
+              :takeListId="takeListData.takeListId"
+              :takeListName="takeListData.takeListName"
+              :pillId="currentPillData.pillId"
+              :pillName="currentPillData.name"
+              :imageUrl="currentPillData.imageUrl"
+              :type="currentPillData.type"
+              :warningPregnant="currentPillData.warningPregnant"
+              :warningUseDate="currentPillData.warningUseDate"
+              :warningElders="currentPillData.warningElders"
+              :warningTogether="currentPillData.warningTogether"
             />
           </li>
         </ul>
@@ -157,9 +157,12 @@
       />
     </div>
   </div>
+
+  <Footer></Footer>
 </template>
 
 <script setup>
+import Footer from "@/common/FooterNoColor.vue";
 import Wave from "@/common/Wave.vue";
 import { ref, onMounted, computed } from "vue";
 import Content from "./components/Content.vue";

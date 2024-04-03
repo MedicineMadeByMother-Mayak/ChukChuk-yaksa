@@ -129,9 +129,11 @@
       </div>
     </div>
   </div>
+  <Footer></Footer>
 </template>
 
 <script setup>
+import Footer from "@/common/FooterNoColor.vue";
 import Badge from "@/common/Badge.vue";
 import { ref, onMounted, computed } from "vue";
 import dayjs from "dayjs";

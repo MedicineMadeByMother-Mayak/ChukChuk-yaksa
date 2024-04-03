@@ -68,9 +68,11 @@
       ['약 사진', '을 찍어 약 선택하기', true, { params: {}, Link: 'pillpic' }],
     ]"
   />
+  <Footer></Footer>
 </template>
 
 <script setup>
+import Footer from "@/common/FooterNoColor.vue";
 import HeaderForm from "@/common/Form/HeaderForm.vue";
 import PillContent from "./components/Content.vue";
 import { ref, onMounted, nextTick, onUnmounted } from "vue";

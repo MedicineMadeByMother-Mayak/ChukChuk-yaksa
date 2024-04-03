@@ -1,5 +1,5 @@
 <template>
-  <nav class="nav-bar">
+  <div class="nav-bar">
     <div class="nav-item">
       <RouterLink class="link" :to="{ name: 'home' }">
         <img src="@/assests/icon/navbar/home.svg" alt="" />
@@ -21,7 +21,7 @@
         <img src="@/assests/icon/navbar/setting.svg" alt="" />
       </RouterLink>
     </div>
-  </nav>
+  </div>
 </template>
 <script></script>
 
@@ -29,8 +29,8 @@
 .nav-bar {
   /* background-color: aqua; */
   /* position: fixed; */
-  /* bottom: 20px; */
-  /* left: 160px; */
+  /* bottom: 0px; */
+  /* left: 0px; */
   /* transform: translateX(-50%); */
   width: 280px;
   height: 55px;

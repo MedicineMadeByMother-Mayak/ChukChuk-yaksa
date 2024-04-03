@@ -103,9 +103,11 @@
   </div>
   <!-- Nav-bar용 -->
   <!-- <div style="height: 85px; background-color: #f9f9f9"></div> -->
+  <!-- <NavBar class="nav" /> -->
 </template>
 
 <script setup>
+import NavBar from "@/common/NavBar.vue";
 import { userStore } from "@/stores/user";
 import { ref } from "vue";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";

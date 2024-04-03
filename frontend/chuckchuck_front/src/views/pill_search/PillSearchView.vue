@@ -80,9 +80,11 @@
     :text="'복용 리스트에 추가되었습니다.'"
     :showModal="alertShowModal"
   />
+  <Footer></Footer>
 </template>
 
 <script setup>
+import Footer from "@/common/FooterNoColor.vue";
 import Wave from "@/common/Wave.vue";
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
 import SearchBar from "@/common/SearchBar.vue";
@@ -235,5 +237,6 @@ function input(event) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 200px;
 }
 </style>

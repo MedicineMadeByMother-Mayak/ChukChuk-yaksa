@@ -1,8 +1,8 @@
 <template>
   <div class="modie_size">
+    <NavBar id="nav" v-if="!$route.meta.hideNavBar" />
     <router-view></router-view>
     <!-- meta: { hideNavBar: true } index.js의 navbar 필요없는 페이지에 추가 -->
-    <NavBar class="nav" v-if="!$route.meta.hideNavBar" />
   </div>
 </template>
 
@@ -25,10 +25,11 @@ export default {
   position: relative;
 }
 
-.nav {
-  position: fixed;
-  top: 88%;
-  left: 6%;
+#nav {
+  position: sticky;
+  top: 580px;
+  left: 20px;
+  margin-top: -55px; /* 네비게이션 바의 높이만큼 음수 margin을 줌 */
 }
 
 html,

@@ -27,7 +27,7 @@
       />
     </div>
   </div>
-  <Footer></Footer>
+  <!-- <Footer></Footer> -->
 </template>
 
 <script setup>

@@ -22,7 +22,7 @@
 
 <script setup>
 import Wave from "@/common/Wave.vue";
-import Footer from "@/common/Footer.vue";
+import Footer from "@/common/FooterColor.vue";
 import OcrSelectView from "@/views/ocr_list/OcrSelectView.vue";
 import FilmingView from "@/views/ocr_list/FilmingView.vue";
 import { ref, watch, computed } from "vue";

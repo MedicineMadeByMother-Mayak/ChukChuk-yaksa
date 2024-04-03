@@ -65,6 +65,7 @@ const modalhandler = () => {
   padding: 15px;
   margin: 20px 0px;
   background-color: white;
+  color: black;
 }
 
 /* 토글 스위치를 위한 스타일링 */
