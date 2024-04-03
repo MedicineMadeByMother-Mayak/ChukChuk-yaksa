@@ -1,12 +1,7 @@
 <template>
   <HeaderForm title="진단서 촬영" height="275px">
-    <div class="image-container"></div>
     <div class="white-box">
-      <img
-        class="receipt-image"
-        src="../../assests/img/image 16.png"
-        alt="약 봉투 이미지"
-      />
+      <img class="receipt-image" :src="diagnosisImageSrc" alt="진단서 이미지" />
     </div>
     <button @click="saveDiagnosis" class="custom-button">
       <div class="button-icon"></div>
@@ -61,7 +56,7 @@ const store = ocrListStore();
 function formatDate(date, format = "YYYY/MM/DD") {
   return dayjs(date).format(format);
 }
-const pillBagImageSrc = computed(() => store.pillBagImageSrc);
+const diagnosisImageSrc = computed(() => store.diagnosisImageSrc);
 const data = ref(store.diagnosisResult);
 
 const saveDiagnosis = async () => {
@@ -94,12 +89,11 @@ const saveDiagnosis = async () => {
 }
 
 .receipt-image {
-  max-width: 100%;
-  height: 150px;
-  max-height: 100%;
-  object-fit: cover;
+  width: 400px;
+  height: 140px;
   margin: 4px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .white-box::before {

@@ -1,30 +1,44 @@
 @font-face {
-  font-family: "Inter-SemiBold";
-  src: url("./Inter-SemiBold.ttf");
+  font-family: "SemiBold";
+  src: url("./pretendard/Pretendard-SemiBold.ttf");
 }
 
 @font-face {
-  font-family: "Inter-Bold";
-  src: url("./Inter-Bold.ttf");
+  font-family: "Bold";
+  src: url("./pretendard/Pretendard-Bold.ttf");
 }
 
 @font-face {
-  font-family: "Inter-Medium";
-  src: url("./Inter-Medium.ttf");
+  font-family: "Medium";
+  src: url("./pretendard/Pretendard-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Regular";
+  src: url("./pretendard/Pretendard-Regular.ttf");
 }
 
 * {
-  letter-spacing: -0.8px; /* 원하는 자간 값으로 변경하세요 */
+  letter-spacing: 0.05px; /* 원하는 자간 값으로 변경하세요 */
+  padding: 0px;
+  margin: 0px;
 }
 
 .bold {
-  font-family: "Inter-Bold";
+  font-family: "Bold";
 }
 
+div,
 p,
-span,
+span {
+  font-family: "Regular", sans-serif;
+  color: #303030;
+}
+
+button,
 strong {
-  font-family: "Inter-Medium", sans-serif;
+  font-family: "Medium", sans-serif;
+  color: #303030;
 }
 
 h1,
@@ -32,16 +46,7 @@ h2,
 h3,
 h4,
 h5,
-div,
 h6 {
-  /* font-family: "Inter-SemiBold", sans-serif; */
-  /* font-weight: 500; */
-
-  font-family: "Inter-Medium", sans-serif;
-  font-size: 12px;
-  color: #565656;
-}
-
-button {
-  font-family: "Inter-SemiBold", sans-serif;
+  font-family: "Bold", sans-serif;
+  color: #303030;
 }

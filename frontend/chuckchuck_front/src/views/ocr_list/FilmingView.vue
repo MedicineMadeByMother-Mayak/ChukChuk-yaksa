@@ -1,12 +1,12 @@
 <template>
   <div class="page">
-    <HeaderForm :title="type" />
+    <HeaderForm :title="analysis + ' 촬영'" :height="'50px'" />
     <div class="text-container">
-      <div>
+      <p>
         척척약사가 <strong>{{ analysis }}</strong
         >를 분석중이에요.
-      </div>
-      <div>잠시만 기다려주세요.</div>
+      </p>
+      <p>잠시만 기다려주세요.</p>
     </div>
     <div class="img-container">
       <svg
@@ -274,29 +274,26 @@ const props = defineProps({
 });
 
 const showImg = ref([false, false, false, false, false]);
+let intervalId;
 
 onMounted(() => {
-  const roadingInterval = setInterval(() => {
+  console.log("마운트됨");
+  intervalId = setInterval(() => {
     setTimeout(() => {
       showImg.value[0] = true;
     }, 500);
-
     setTimeout(() => {
       showImg.value[1] = true;
     }, 1000);
-
     setTimeout(() => {
       showImg.value[2] = true;
     }, 1500);
-
     setTimeout(() => {
       showImg.value[3] = true;
     }, 2000);
-
     setTimeout(() => {
       showImg.value[4] = true;
     }, 2500);
-
     setTimeout(() => {
       showImg.value[0] = false;
       showImg.value[1] = false;
@@ -307,18 +304,20 @@ onMounted(() => {
   }, 3000);
 });
 
-onUnmounted(() => {});
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
 </script>
 
 <style scoped>
 .page {
   background: linear-gradient(to right, #3183ff 0%, #86e7ee 100%);
+  padding-bottom: 50px;
 }
 
 .text-container {
   display: flex;
   justify-content: center;
-  font-size: 15px;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
