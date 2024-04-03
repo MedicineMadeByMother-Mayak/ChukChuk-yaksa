@@ -128,7 +128,7 @@ badges.forEach((badge, index) => {
 
 <style scoped>
 .pill-card {
-  width: 85%;
+  width: 82%;
   height: 70px;
   display: flex;
   align-items: center;
@@ -167,6 +167,7 @@ badges.forEach((badge, index) => {
   font-weight: bold;
   margin-bottom: 5px;
   font-size: 15px;
+  color: #303030;
 }
 
 .icon {

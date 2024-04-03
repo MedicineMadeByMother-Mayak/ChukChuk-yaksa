@@ -38,7 +38,7 @@ span {
 button,
 strong {
   font-family: "Medium", sans-serif;
-  color: #303030;
+  /* color: #303030; */
 }
 
 h1,
