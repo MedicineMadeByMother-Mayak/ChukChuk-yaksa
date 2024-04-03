@@ -54,6 +54,7 @@ const finishCurrentList = async() => {
     align-items: center;
     justify-content: center;
     caret-color: transparent;
+    z-index: 1000;
   }
   
   .modal {

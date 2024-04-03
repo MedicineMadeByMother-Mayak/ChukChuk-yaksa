@@ -96,6 +96,8 @@
         >
           <!-- 약 카드 -->
           <Content
+            :takeListId="takeListData.takeListId"
+            :takeListName="takeListData.takeListName"
             :pillId="currentPillData.pillId"
             :pillName="currentPillData.name"
             :imageUrl="currentPillData.imageUrl"
@@ -126,7 +128,7 @@ import { takelistStore } from "@/stores/takelist";
 import logo from "@/assests/img/Group.png";
 
 const store = takelistStore();
-// ----------------------------------------
+// -------------------복용 리스트 이름 변경, 삭제, 완료처리 로직 ---------------------
 const isTakeListModalOpen = ref(false)
 
 //리스트 모달창 띄우기
@@ -142,7 +144,6 @@ const closeTakeListModal = () => {
 
 // 모달에서 전달받은 데이터로 복용 리스트 리로드
 const handleUpdate = () => {
-  console.log("들어왔냐?")
   window.location.reload(true);
 };
 
@@ -151,7 +152,7 @@ const saveChangeName = async (takeListData) => {
   takeListData.edit = false; // 편집 모드 종료
   await store.rename(takeListData.takeListId, takeListData.takeListName);
 };
-// ----------------------------------------
+// -------------------------------------------------------------
 
 // 현재 복용중인 리스트
 const currentTakeList = computed(() =>
@@ -165,7 +166,7 @@ const finishedTakeList = computed(() =>
 
 onMounted(async () => {
   await store.getTakeListPageDatas();
-});
+  });
 
 // 척척약사의 조언 
 const advice = ref([
