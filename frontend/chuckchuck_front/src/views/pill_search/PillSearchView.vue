@@ -1,14 +1,14 @@
 <template>
   <!-- PillSearchView(약검색) -->
   <div class="basic-background">
-    <Wave title="약 검색" height="1px" />
+    <Wave title="약 검색" height="85px" />
     <div style="padding: 8%; padding-bottom: 0">
       <SearchBar
         class="searchBar"
         @input="input"
         :value="keyword"
         :keyword="keyword"
-        :width="'80%'"
+        :width="'100%'"
         :height="'33px'"
         :iconWidth="'15px'"
         :font-size="'15px'"
@@ -118,6 +118,8 @@ async function savePill(selectId) {
   } else {
     await takeListStore.addPill(selectId, [selectPill.value]);
   }
+
+  showModal.value = false;
 
   alertShowModal.value = true;
   setTimeout(() => {

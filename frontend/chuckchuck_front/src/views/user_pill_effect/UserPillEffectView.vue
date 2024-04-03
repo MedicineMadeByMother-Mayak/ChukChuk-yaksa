@@ -1,6 +1,6 @@
 <template>
-  <HeaderForm class="header-form" title="약효기록" height="160px">
-    <div class="header-content">
+  <HeaderForm class="header-form" title="약효기록" height="200px">
+    <div class="header-content" style="margin-top: 90px">
       <SearchBar
         @input="input"
         :value="keyword"
@@ -259,7 +259,7 @@ const debouncedInput = _.debounce(async (value) => {
   border: none;
   background-color: white;
   width: 55px;
-  height: 21px;
+  height: 100%;
   padding: 3px 10px;
   margin: 0px;
   cursor: pointer;
@@ -285,7 +285,7 @@ const debouncedInput = _.debounce(async (value) => {
   color: #ffffff;
   font-weight: bold;
   width: 65px;
-  height: 21px;
+  height: 100%;
   border-radius: 5px;
   padding: 3px;
   font-size: 11px;

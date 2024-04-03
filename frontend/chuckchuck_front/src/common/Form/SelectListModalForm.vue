@@ -31,30 +31,34 @@ const msg = ref(true);
 
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">
-    <div class="modal">
+    <div class="modal" @click.stop="">
       <div class="modal-menu">
         <div class="modal-title">
           <img src="@/assests/img/Group.png" />
           <p>추가할 리스트를 선택하세요.</p>
         </div>
-        <ul>
-          <li
-            v-for="(item, index) in modalData"
-            :key="item[0]"
-            @click.stop="select(item[0])"
-          >
-            <div class="router-link-item">
-              <input
-                type="radio"
-                class="radio-button"
-                :id="'radio_' + item[0]"
-                name="selecteListId"
-                :value="item[0]"
-                v-model="selecteListId"
-              />
-              <label :for="'radio_' + item[0]">{{ item[1] }}</label>
-            </div>
-          </li>
+        <ul class="modal-list">
+          <div class="router-link-item-container">
+            <li
+              v-for="(item, index) in modalData"
+              :key="item[0]"
+              @click="select(item[0])"
+            >
+              <div class="router-link-item">
+                <input
+                  type="radio"
+                  class="radio-button"
+                  :id="'radio_' + item[0]"
+                  name="selecteListId"
+                  :value="item[0]"
+                  v-model="selecteListId"
+                />
+                <label :for="'radio_' + item[0]" style="margin-left: 10px">{{
+                  item[1]
+                }}</label>
+              </div>
+            </li>
+          </div>
         </ul>
       </div>
       <button @click="$emit(`save`, selecteListId)" class="modal-button">
@@ -89,6 +93,7 @@ const closeModal = () => {
 .modal-overlay {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
@@ -99,15 +104,19 @@ const closeModal = () => {
   z-index: 9999;
 }
 
+.modal-list {
+  display: flex;
+  justify-content: center;
+}
+
 .modal {
   background: white;
-  width: 80%;
+  width: 300px;
   max-height: 50%;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 18%;
   overflow: hidden;
 }
 
@@ -155,14 +164,23 @@ const closeModal = () => {
   margin: 0 7px 0 0;
 }
 
+.router-link-item-container {
+  overflow: auto;
+  -ms-overflow-style: none; /* IE와 Edge에서 스크롤바 숨기기 */
+}
+
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+
 .router-link-item {
   text-decoration: none;
   color: inherit;
   display: flex;
-  align-items: start;
   margin: 0;
+  margin-bottom: 10px;
+  /* align-items: center; 제거 */
 }
-
 .radio-button {
   border-color: rgb(0, 0, 0);
 }
@@ -172,12 +190,12 @@ const closeModal = () => {
   background-color: navy; /* 남색 배경 */
   border-radius: 5px;
   color: white;
-  width: 80%;
+  width: 50%;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2% 0 8% 0;
+  margin: 5% 5%;
   padding: 2%;
 }
 </style>

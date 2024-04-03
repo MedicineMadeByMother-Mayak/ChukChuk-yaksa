@@ -78,9 +78,7 @@ async function clickDetail(pillId) {
   });
 }
 
-async function clickModal() {
-  console.log(1);
-}
+async function clickModal() {}
 
 const truncateName = (name) => {
   if (name.length > 10) {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 헤더 -->
-    <Wave title="복용 관리" height="30px" />
+    <Wave title="복용 관리" height="120px" />
 
     <!-- 척척약사의 조언 -->
     <Carousel
@@ -16,15 +16,15 @@
             <img class="logo" :src="logo" alt="chukchuklogo" />
           </div>
           <div class="carousel__text">
-            <div style="font-size: 12px">
+            <div style="font-size: 12px; margin-bottom: 3px">
               <strong>{{ item.title }}</strong>
             </div>
             <div>
-              <span style="font-weight: bold; color: blue">{{
+              <span style="font-weight: bold; color: #145bda">{{
                 item.pill1
               }}</span>
               <span>{{ item.content1 }}</span>
-              <span style="font-weight: bold; color: blue">{{
+              <span style="font-weight: bold; color: #145bda">{{
                 item.pill2
               }}</span>
               <span>{{ item.content2 }}</span>
@@ -33,7 +33,7 @@
         </div>
       </Slide>
       <template #addons>
-        <Pagination />
+        <Pagination class="page" />
       </template>
     </Carousel>
 
@@ -68,11 +68,16 @@
         :key="`pill-date-${index}`"
       >
         <button class="rounded-button" @click="modifyAlarm(alarm.takeListId)">
-          <span class="alarm">
-            <font-awesome-icon :icon="['fas', 'bell']" style="color: #ffd43b" />
-            <span style="font-weight: bold; font-size: smaller">{{
-              alarm.takeListName
-            }}</span>
+          <font-awesome-icon
+            class="alarm-icon"
+            :icon="['fas', 'bell']"
+            style="color: #ffd43b"
+          />
+          <span
+            class="alarm-text"
+            style="font-weight: bold; font-size: smaller"
+          >
+            {{ truncateName(alarm.takeListName, 8, 6) }}
           </span>
         </button>
       </div>
@@ -81,9 +86,17 @@
     <div class="takelist-container">
       <div class="menu">
         <div class="menu-left">
-          <img src="@/assests/icon/pill.png" alt="복용리스트" />
-          <div v-if="!isNow"><strong>복용중</strong></div>
-          <div v-if="isNow"><strong>복용 완료</strong></div>
+          <!-- <img src="@/assests/icon/pill.png" alt="복용리스트" /> -->
+          <font-awesome-icon
+            :icon="['fas', 'paperclip']"
+            style="margin-right: 7px"
+          />
+          <div v-if="!isNow">
+            <strong style="color: black">복용중인 </strong>리스트
+          </div>
+          <div v-if="isNow">
+            <strong style="color: black">복용완료한 </strong>리스트
+          </div>
         </div>
         <div class="menu-right">
           <button
@@ -120,7 +133,7 @@
               {{ formatDate(takeListData.createDate) }}
             </div>
             <span v-if="!takeListData.edit"
-              >[{{ takeListData.takeListName }}]</span
+              >[ {{ truncateName(takeListData.takeListName, 10, 8) }} ]</span
             >
             <input
               v-else
@@ -150,6 +163,7 @@
                 :pillName="currentPillData.name"
                 :imageUrl="currentPillData.imageUrl"
                 :type="currentPillData.type"
+                :takeListName="takeListData.takeListName"
                 :warningPregnant="currentPillData.warningPregnant"
                 :warningUseDate="currentPillData.warningUseDate"
                 :warningElders="currentPillData.warningElders"
@@ -202,6 +216,7 @@
                 :pillName="currentPillData.name"
                 :imageUrl="currentPillData.imageUrl"
                 :type="currentPillData.type"
+                :takeListName="takeListData.takeListName"
                 :warningPregnant="currentPillData.warningPregnant"
                 :warningUseDate="currentPillData.warningUseDate"
                 :warningElders="currentPillData.warningElders"
@@ -261,8 +276,8 @@ const isNow = ref(false);
 
 async function toggleIsNow() {
   isNow.value = !isNow.value;
-  console.log(isNow);
 }
+
 // 0 이면 생성 1 이면 수정
 const createOrModify = ref(0);
 
@@ -270,6 +285,14 @@ onMounted(async () => {
   await store.getTakeListPageDatas();
   alarmstore.getAlarmList();
 });
+
+const truncateName = (name, num1, num2) => {
+  if (name.length > num1) {
+    return name.slice(0, num2) + " ..";
+  } else {
+    return name;
+  }
+};
 
 function modifyAlarm(id) {
   createOrModify.value = 1;
@@ -357,20 +380,20 @@ const advice = ref([
   {
     img: logo,
     title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
+    pill1: "피콤씨에프정",
+    pill2: "비타민 중독",
+    content1: "은 과량복용 시 ",
     content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+      "의 위험이 있고 속쓰림, 두드러기, 어지럼증 증상이 나타날 경우 즉시 의사나 약사와 상의해야 합니다.",
   },
   {
     img: logo,
     title: "척척약사의 조언",
-    pill1: "트루포뮬러",
-    pill2: "프라닥사캡슐",
-    content1: "(오메가3)와 ",
+    pill1: "게보린정",
+    pill2: "아세트아미노펜",
+    content1: "은 ",
     content2:
-      "(항응고제)은 함께 섭취시 출혈의 위험이 있을 수 있어 주의가 필요합니다.",
+      "을 포함하는 다른 제품과 복용하면 간손상을 일으킬 수 있습니다. 일일 최대 4,000 mg을 초과하여 복용하지 마세요.",
   },
   {
     img: logo,
@@ -385,7 +408,6 @@ const advice = ref([
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
 @keyframes rotateAndPause {
   0% {
     transform: rotate(0deg);
@@ -402,7 +424,7 @@ const advice = ref([
 
 .alarms {
   padding: 15px 10px;
-  margin-top: 20px;
+  margin-top: 10px;
   background-color: #c0e6fc;
   display: flex;
   width: 300px;
@@ -459,6 +481,7 @@ button {
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 10px;
+  font-weight: 200;
   border: none;
   cursor: pointer;
   margin-right: 5px;
@@ -469,6 +492,7 @@ button {
   color: #ffffff;
   font-weight: bold;
   border-radius: 5px;
+  font-weight: 200;
   padding: 5px 15px;
   font-size: 10px;
   border: none;
@@ -554,20 +578,26 @@ ol {
   height: 25px;
 }
 
-.alarm > *:first-child {
-  margin-right: 10px;
-  margin-left: 0px;
-}
 .rounded-button {
   width: 95px;
   border: none;
   background-color: white;
-  padding: 5px 15px;
+  padding: 5px 8px;
   margin: 2.5px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   cursor: pointer;
-  transition: background-color 0.3s;
+  position: relative;
+}
+
+.alarm-icon {
+  position: absolute;
+  top: 6px;
+  left: 10px;
+}
+
+.alarm-text {
+  margin-left: 10px;
 }
 
 /* 척척약사의 조언 CSS */
@@ -577,7 +607,7 @@ ol {
 }
 
 .carousel__slide {
-  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.1em 0.3em rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   border-radius: 12px;
   height: 80px;
@@ -633,7 +663,7 @@ ol {
 }
 
 .carousel__text {
-  margin-top: 0px;
+  margin-top: -5px;
   text-align: left;
   font-size: 10px;
   margin-left: -34%;
