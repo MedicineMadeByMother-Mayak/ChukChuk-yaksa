@@ -43,51 +43,50 @@
     </div>
     <div class="appointment-section">
       <strong class="title-style">TAG</strong>
-      <div class="used-tag-list" @click="tagClick(true)">
+      <div class="used-tag-list" @click="activateInput">
+        <!-- 추가된태그 -->
         <div class="badge-list">
-          <div
-            class="badge-custom"
+          <Badge
+            class="used-custom"
             v-for="(tag, index) in usedTags"
             :key="index"
-          >
-            <Badge
-              :title="tag.tagName"
-              backgroundColor="#7fc2ff"
-              color="white"
-              fontSize="12"
-              padding="4px 15px 4px 15px"
-            />
-          </div>
-        </div>
-      </div>
-      <div class="add-tag" v-if="isVisibleUsed">
-        <input class="add-tag-used-input" type="text" />
-        <button class="add-tag-used-button">추가</button>
-      </div>
-      <div class="unused-tag-list" @click="tagClick(false)">
-        <div
-          class="badge-custom"
-          v-for="(tag, index) in unUsedTags"
-          :key="index"
-        >
-          <Badge
             :title="tag.tagName"
-            backgroundColor="#dfdfdf"
+            backgroundColor="#7fc2ff"
             color="white"
-            fontSize="12"
-            padding="4px"
+            fontSize="0.9rem"
+            padding="4px 15px 4px 15px"
           />
         </div>
+        <!-- 직접추가하는 인풋 -->
+        <input
+          class="tag-input"
+          ref="inputField"
+          v-model="tagMessage"
+          v-on:keyup="onEnter"
+        />
       </div>
-      <div class="add-tag" v-if="isVisibleUnUsed">
-        <input class="add-tag-unused-input" type="text" />
-        <button class="add-tag-unused-button">추가</button>
+      <!-- 사용후보태그 -->
+      <div class="unused-tag-list">
+        <Badge
+          class="unused-custom"
+          v-for="(tag, index) in unUsedTags"
+          :key="index"
+          :title="tag.tagName"
+          backgroundColor="#dfdfdf"
+          color="#5A5A5A"
+          fontSize="12"
+          padding="3px 10px 3px 10px"
+          @click="addUnusedTag(tag.tagId)"
+        />
       </div>
-      <img
+      <!-- <img
+        v-if="showBadges"
         :src="underDirection"
-        style="display: block; margin: 20px auto 12px"
-      />
-      <div style="border-bottom: 1px solid black"></div>
+        style="display: block; margin: 20px auto 12px; cursor: pointer"
+        @click="showBadges = false"
+      /> -->
+      <!-- <div style="border-bottom: 1px solid #bbbbbb"></div> -->
+      <br />
       <strong class="title-style">MEMO</strong>
 
       <div class="memo">
@@ -119,6 +118,9 @@ import underDirection from "@/assests/icon/underDirection.svg";
 import { ref, onMounted } from "vue";
 import { userPillEffectStore } from "@/stores/userPillEffect";
 import { pillSearchStore } from "@/stores/pillSearch";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const userPillEffect = userPillEffectStore();
 const pillSearch = pillSearchStore();
@@ -133,27 +135,62 @@ const usedTags = ref("");
 const unUsedTags = ref("");
 const userPillEffectId = ref();
 const memo = ref("");
-const isVisibleUsed = ref(false);
 const isVisibleUnUsed = ref(false);
-const Link = ref(null);
+const tagMessage = ref(null);
+const tabId = ref(3); //현재 탭 어딘지 저장 효과:3, 중단:2, 부작용:1
+const pillId = ref();
+const inputField = ref(null);
 
-const props = defineProps({
-  Link: String,
-});
-onMounted(async () => {
-  await userPillEffect.getUserPillEffectInfo(4); // 약효 기록 리스트에서 클릭할 때 해당 pillId로 실행할거라 삭제될 코드
-  await pillSearch.getPillInfo(4); // 이것도 마찬가지
+const activateInput = () => {
+  inputField.value.focus();
+};
 
+const addUnusedTag = async (tagId) => {
+  await userPillEffect.createUnUsedTag(tagId, pillId.value);
+  //동기화
+  await syncroData(pillId.value);
+};
+
+//input창에 새로운 태그 작성시 동작
+async function onEnter(event) {
+  if (event.keyCode === 13) {
+    // 새로운 태그를 바로 저장 및 동기화(param:카테고리ID, 태그Name)
+    const savedTagId = await userPillEffect.createTag(
+      tabId.value,
+      tagMessage.value
+    );
+    tagMessage.value = null;
+
+    // 사용중인 태그로 연결
+    await userPillEffect.createUnUsedTag(savedTagId, pillId.value);
+
+    await syncroData(pillId.value);
+  }
+}
+
+//약효기록 데이터 동기화
+async function syncroData(pillId) {
+  await userPillEffect.getUserPillEffectInfo(pillId);
   pillName.value = pillSearch.name;
   company.value = pillSearch.company;
-
   sideEffectList.value = userPillEffect.sideEffect;
   stopList.value = userPillEffect.stop;
   effectList.value = userPillEffect.effect;
   userPillEffectDtoList.value = userPillEffect.userPillEffectDtoList;
 
-  clickFace("effectFace"); // 시작하면 '효과' 클릭하도록 디폴트 세팅
-  Link.value = sessionStorage.getItem("Link");
+  if (tabId.value == 3) {
+    clickFace("effectFace");
+  } else if (tabId.value == 2) {
+    clickFace("stopFace");
+  } else if (tabId.value == 1) {
+    clickFace("sideEffectFace");
+  }
+}
+
+onMounted(async () => {
+  pillId.value = route.params.pillId;
+  await pillSearch.getPillInfo(pillId.value);
+  await syncroData(pillId.value);
 });
 
 // 이미지 투명도를 토글하는 함수
@@ -174,6 +211,8 @@ const clickFace = (imageId) => {
         usedTags.value = userPillEffect.usedTags;
         unUsedTags.value = userPillEffect.unUsedTags;
         memo.value = userPillEffect.memo;
+
+        tabId.value = currentImage.dataset.value;
       }
     } else {
       currentImage.style.opacity = "0.5";
@@ -200,25 +239,29 @@ const memoUpdate = (event) => {
   console.log("입력 값이 변경되었습니다:", event.target.value);
   userPillEffect.updateMemo(userPillEffectId.value, memo.value);
 };
-
-const tagClick = (param) => {
-  if (param === true) {
-    console.log("true!!!!!");
-    isVisibleUsed.value = !isVisibleUsed.value;
-  } else {
-    console.log("false!!!!!");
-    isVisibleUnUsed.value = !isVisibleUnUsed.value;
-  }
-};
 </script>
 
 <style scoped>
+.used-custom {
+  padding: 0 4px;
+  margin-right: 7px;
+  font-weight: bold;
+}
+.unused-custom {
+  /* margin-right: 7px; */
+  /* color: black; */
+  font-weight: bold;
+}
+.tag-input {
+  width: 100px;
+  border: none;
+  padding: 0;
+  /* margin: 0px 0px 0px 10px; */
+  outline: none;
+  box-sizing: border-box;
+}
 .badge-list {
   display: flex;
-}
-
-.badge-custom {
-  padding: 0 4px;
 }
 
 .appointment-section {
@@ -252,8 +295,8 @@ const tagClick = (param) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 20vh; /* 전체 화면 높이 설정 */
   width: 100vw; /* 전체 화면 너비 설정 */
+  margin-top: 15px;
 }
 
 .icon-container img {
@@ -267,27 +310,26 @@ const tagClick = (param) => {
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  padding: 7px 7px;
+  padding: 10px 7px;
   overflow-x: auto; /* 수평 스크롤바 추가 */
 }
 
 /* 사용중이지 않은 태그 리스트 */
 .unused-tag-list {
   display: flex;
-  align-items: center;
-  background-color: rgb(255, 255, 255);
+  flex-wrap: wrap; /* 요소들이 넘칠 때 다음 줄로 이동하도록 설정 */
   border-radius: 5px;
-  padding: 12px 7px;
-  overflow-x: auto; /* 수평 스크롤바 추가 */
+  padding: 12px 0px;
+  gap: 7px;
 }
 
 /* 태그 추가 div */
-.add-tag {
+/* .add-tag {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px 0 0 0;
-}
+} */
 
 /* 사용중 태그 추가 input */
 .add-tag-used-input {

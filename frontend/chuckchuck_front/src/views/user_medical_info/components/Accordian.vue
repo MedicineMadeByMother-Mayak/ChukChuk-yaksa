@@ -5,14 +5,21 @@
       :style="
         isOpen
           ? 'background : linear-gradient(to left, #86e7ee, #3183ff)'
-          : 'background : #ccc'
+          : 'background : #e7e7e7'
       "
       @click="toggleAccordion"
     >
       <h2>{{ title }}</h2>
-      <span class="icon"
-        ><i :class="isOpen ? 'arrow up' : 'arrow down'"></i
-      ></span>
+      <font-awesome-icon
+        :icon="['fas', 'angle-down']"
+        v-if="!isOpen"
+        class="icon"
+      />
+      <font-awesome-icon
+        :icon="['fas', 'angle-up']"
+        v-if="isOpen"
+        class="icon"
+      />
     </div>
     <div v-if="isOpen" class="accordion-content">
       <slot></slot>
@@ -40,7 +47,7 @@ function toggleAccordion() {
 <style scoped>
 .accordion {
   border-radius: 2px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
 
 .accordion-header {
@@ -55,7 +62,10 @@ function toggleAccordion() {
 
 .accordion-header h2 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.8rem;
+  color: rgb(39, 39, 39);
+  font-weight: 500;
+  letter-spacing: -0.4px;
 }
 
 .icon {
@@ -87,15 +97,5 @@ tr:nth-child(odd) {
   display: inline-block;
   padding: 3px;
   caret-color: transparent;
-}
-
-.up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
-}
-
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
 }
 </style>

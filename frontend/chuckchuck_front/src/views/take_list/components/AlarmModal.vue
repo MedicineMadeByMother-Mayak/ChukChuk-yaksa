@@ -11,36 +11,54 @@ import {ref} from "vue";
 const msg = ref(true);
 </script> -->
 
-
 <template>
-  <div class="modal-overlay" v-if="showModal">
-    <div class="modal">
-      <ul class="modal-menu">
+  <div class="modal-overlay" v-if="showModal" @click="closeModal">
+    <div class="modal" @click.stop="">
+      <ul class="modal-menu" @click.stop="">
         <li v-for="(item, index) in modalData" :key="index">
           <RouterLink
             v-if="item[1]"
             :to="{ name: item[2].Link, params: item[2].params }"
             class="router-link-item"
           >
-          <div class="modal-header">
-            
-            <div class="close-button">
-              <div class="close" @click="closeModal">&times;</div>
-            </div>
-            
-            <div class="top">
-              <img style="width: 20px; height: 20px" src="@/assests/img/startLogo.png" alt="">
-              <div style="margin: 9px; font-size: 14px; font-weight: bold;">어떤 약에 대한 알람을 <span style="color:green;">등록</span>하시겠어요?</div>
-            </div>
-            <div class="button-container">
-              <button v-for="(medicine, name) in medicines" :key="name" @click="toggleActive(name)" :class="{ 'active': medicine.isActive }">
-                <font-awesome-icon :icon="medicine.isActive ? ['fas', 'bell'] : ['fas', 'bell-slash']" style="color: gray;"/>
-                <span class="text">{{ name }}</span>
+            <div class="modal-header" @click.prevent="">
+              <div class="close-button">
+                <div class="close" @click="closeModal">&times;</div>
+              </div>
+
+              <div class="top">
+                <img
+                  style="width: 20px; height: 20px"
+                  src="@/assests/img/startLogo.png"
+                  alt=""
+                />
+                <div style="margin: 9px; font-size: 14px; font-weight: bold">
+                  어떤 약에 대한 알람을
+                  <span style="color: green">등록</span>하시겠어요?
+                </div>
+              </div>
+              <div class="button-container">
+                <button
+                  v-for="(alarm, idx) in store.offAlarmList"
+                  :key="alarm.takeListId"
+                  @click.prevent="clickAlarm(alarm.takeListId)"
+                >
+                  <font-awesome-icon
+                    :icon="['fas', 'bell']"
+                    size="xs"
+                    style="color: gray"
+                  />
+                  <!-- <font-awesome-icon :icon="medicine.isActive ? ['fas', 'bell'] : ['fas', ]" style="color: gray;"/> -->
+                  <span class="text">{{ alarm.takeListName }}</span>
+                </button>
+              </div>
+              <button
+                class="save-button"
+                @click.prevent="$emit('save', selectTakeList)"
+              >
+                SAVE
               </button>
             </div>
-            <button class="save-button" @click="redirectToAlarmModalTime">SAVE</button>
-          </div>
-            
           </RouterLink>
           <hr style="margin: 0px 10px" v-if="index < modalData.length - 1" />
         </li>
@@ -50,58 +68,54 @@ const msg = ref(true);
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { useRouter } from 'vue-router';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBell, faBellSlash } from '@fortawesome/free-solid-svg-icons';
-
+import { ref, reactive, onMounted } from "vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faBell, faBellSlash } from "@fortawesome/free-solid-svg-icons";
+import { alarmStore } from "@/stores/alarm";
 library.add(faBell, faBellSlash);
-const router = useRouter();
 
-const redirectToAlarmModalTime = () => {
-  router.push({ name: 'alarmmodaltime' }); // 'AlarmModalTime'은 목적지 컴포넌트의 라우터 이름입니다.
-};
-const showModal = ref(true);
-const medicines = reactive({
-  '빈혈약': { isActive: false },
-  '저혈압약': { isActive: false },
-  '고혈압약': { isActive: false },
-  '당뇨약': { isActive: false },
-  '심장약': { isActive: false },
+const store = alarmStore();
+defineEmits(["save"]);
+const showModal = defineModel();
+const selectTakeList = ref(0);
+
+const props = defineProps({
+  modalData: Array,
 });
+
+const medicines = reactive({});
+
+function clickAlarm(id) {
+  selectTakeList.value = id;
+}
 
 const toggleActive = (name) => {
   medicines[name].isActive = !medicines[name].isActive;
 };
 
+// 창 닫기
 const closeModal = () => {
   showModal.value = false;
 };
-// const showModal = defineModel();
-const props = defineProps({
-  modalData: {
-    type: Array,
-    default: [["원하는 텍스트 넣으세요", true, { params: {}, Link: "home" }]],
-  },
+
+onMounted(async () => {
+  await store.getOffAlarmList();
 });
-
-
-// const performAction = (action) => {
-//   console.log("Action performed:", action);
-//   showModal.value = !showModal.value;
-// };
-// const closeModal = () => {
-//   showModal.value = !showModal.value;
-// };
-
-
 </script>
 
 <style scoped>
 
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
 .button-container button.active {
-  background-color: #FFD43B; 
+  background-color: #ffd43b;
   color: white;
 }
 .modal-overlay {
@@ -110,10 +124,10 @@ const props = defineProps({
   width: 320px;
   height: 658px;
   margin-left: -10px;
-  z-index: 100;
   background: rgba(0, 0, 0, 0.6);
-  /* background-color: red; */
   caret-color: transparent;
+  z-index: 9999;
+  backdrop-filter: blur(1px);
 }
 
 .modal {
@@ -124,7 +138,8 @@ const props = defineProps({
   border-top-right-radius: 15px;
   overflow: hidden;
   bottom: 0px;
-	position: absolute;
+  position: absolute;
+  animation: slideIn 0.7s ease-in-out;
 }
 
 .modal-menu {
@@ -161,13 +176,13 @@ const props = defineProps({
   align-items: center;
   margin-top: 1px;
   margin-left: 25px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 .top img {
   width: 20px;
   height: 20px;
-  margin-right: 0px; 
+  margin-right: 0px;
 }
 
 .top div {
@@ -176,7 +191,7 @@ const props = defineProps({
 
 /* X버튼 CSS */
 .close-button {
-  position:relative;
+  position: relative;
   margin-left: auto;
 }
 
@@ -196,7 +211,7 @@ const props = defineProps({
 /* 알람 목록 CSS */
 .alarm-img {
   width: 10px;
-  height:10px;
+  height: 10px;
   align-self: flex-start;
 }
 
@@ -204,8 +219,8 @@ const props = defineProps({
 .button-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; 
-  gap: 8px; 
+  justify-content: center;
+  gap: 8px;
 }
 
 .button-container button {
@@ -214,7 +229,7 @@ const props = defineProps({
   justify-content: space-around;
   width: 80px;
   height: 25px;
-  margin: 5px; 
+  margin: 5px;
   background-color: white;
   box-shadow: 0 0 0.8em rgba(0, 0, 0, 0.2);
   border-radius: 8px;
@@ -227,7 +242,7 @@ const props = defineProps({
 
 .button-container button:active,
 .button-container button:focus {
-  background-color: #aaaaaa; 
+  background-color: #aaaaaa;
   color: white;
   font-weight: bold;
 }
@@ -242,33 +257,28 @@ const props = defineProps({
 
 .text {
   overflow: hidden;
-  white-space: nowrap; 
-  text-overflow: ellipsis; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .save-button {
   margin-top: 30px;
   margin-left: 50%;
-  transform: translateX(-50%); 
+  transform: translateX(-50%);
   width: 70%;
   height: 30px;
   font-weight: bold;
   font-size: 12px;
   color: white;
-  background-color: navy;
+  background-color:#242291;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition-duration: 0.3s;
-
 }
 
-.save-button:active{
+.save-button:active {
   background-color: white;
-  color: navy;
+  color: #242291;
 }
-
-
-
-
 </style>
