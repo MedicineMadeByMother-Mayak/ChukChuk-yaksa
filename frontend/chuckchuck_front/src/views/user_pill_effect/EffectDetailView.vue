@@ -1,18 +1,19 @@
 <!-- 약효기록 상세 -->
 <template>
   <div class="effect-detail-view">
-    <HeaderForm :title="'약효기록 작성'" :height="'260px'" :Link="Link">
+    <HeaderForm :title="'약효기록 작성'" height="260px" :Link="Link">
       <img
         class="pill-img"
         src="../../assests/img/tempPill.png"
         alt="Image description"
+        style="margin-top: 60px"
       />
       <div class="center-aligned">
         <div class="in-header-pill-name">
-          <div>
+          <div class="txt_line" style="width: 110px">
             <strong>{{ pillName }}</strong>
-            <div>{{ company }}</div>
           </div>
+          <div class="txt_line" style="font-size: 11px">{{ company }}</div>
         </div>
       </div>
     </HeaderForm>
@@ -63,6 +64,7 @@
           ref="inputField"
           v-model="tagMessage"
           v-on:keyup="onEnter"
+          @change="onEnter({ keyCode: 13 })"
         />
       </div>
       <!-- 사용후보태그 -->
@@ -242,6 +244,14 @@ const memoUpdate = (event) => {
 </script>
 
 <style scoped>
+.txt_line {
+  width: 170px;
+  padding: 0 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .used-custom {
   padding: 0 4px;
   margin-right: 7px;
@@ -274,12 +284,16 @@ const memoUpdate = (event) => {
 }
 
 .in-header-pill-name {
-  text-align: center;
+  bottom: 0;
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   background-color: white;
-  border-radius: 39px 39px 0 0;
+  border-radius: 50px 50px 0 0;
   padding: 10px;
-  margin: 10px; /* 양쪽에 10px 여백 설정 */
-  width: 120px;
+  width: 150px;
 }
 
 .img {
@@ -289,6 +303,7 @@ const memoUpdate = (event) => {
 .pill-img {
   border-radius: 10px;
   max-height: 150px;
+  max-width: 230px;
 }
 
 .icon-container {
