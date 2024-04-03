@@ -24,9 +24,9 @@ onUnmounted(() => {
   clearInterval(intervalId);
 });
 
-onMounted(async() => {
-  await store.photoSearch()
-  store.endLoading(3)
+onMounted(async () => {
+  await store.photoSearch();
+  store.endLoading(3);
 });
 </script>
 <style scoped>

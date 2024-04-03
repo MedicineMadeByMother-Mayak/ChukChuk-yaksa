@@ -46,7 +46,7 @@ body {
 }
 
 /* 스크롤바 전역 커스텀 */
-.modie_size::-webkit-scrollbar {
+body ::-webkit-scrollbar {
   display: none;
 }
 </style>
