@@ -45,6 +45,7 @@
       />
       <Observer @show="loadMoreData"> 0"></Observer>
     </div>
+    <Footer></Footer>
   </div>
   <ModalForm
     v-model="msg"
@@ -80,7 +81,6 @@
     :text="'복용 리스트에 추가되었습니다.'"
     :showModal="alertShowModal"
   />
-  <Footer></Footer>
 </template>
 
 <script setup>
@@ -215,6 +215,5 @@ function input(event) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 200px;
 }
 </style>

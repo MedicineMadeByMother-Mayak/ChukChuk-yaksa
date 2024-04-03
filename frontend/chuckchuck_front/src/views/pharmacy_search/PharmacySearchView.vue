@@ -19,7 +19,7 @@
 
     <div class="address-search-container" :class="{ 'move-up': keyword }">
       <p class="address">
-        <img :src="mileStone" alt="" />대전광역시 서구 대덕대로150
+        <img :src="mileStone" alt="" />대전광역시 유성구 덕명동 124
       </p>
       <SearchBar
         :value="keyword"
@@ -54,13 +54,15 @@
           :type="pill.type"
           :imageUrl="pill.imageUrl"
         />
-        <Observer @show="loadMoreData"> 0"></Observer>
+        <Observer v-if="showObserver" @show="loadMoreData"> 0"></Observer>
       </div>
     </div>
+    <Footer></Footer>
   </div>
 </template>
 
 <script setup>
+import Footer from "@/common/FooterNoColor.vue";
 import mileStone from "@/assests/img/mileStone.png";
 import logo from "@/assests/img/logo.png";
 import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
@@ -69,7 +71,7 @@ import PharmacyPill from "@/common/PharmacyPill.vue";
 import Observer from "@/views/pharmacy_search/components/Observer.vue";
 import _ from "lodash";
 import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { instance } from "@/util/mainAxios";
 import { RouterView } from "vue-router";
 
@@ -78,9 +80,24 @@ const keyword = ref("");
 const count = ref(0);
 const list = ref([]);
 const page = ref(1);
+const showObserver = ref(false);
 
 onMounted(() => {
-  loadMoreData;
+  loadMoreData();
+});
+
+// 키워드가 변경될 때 실행될 watch
+watch(keyword, (newValue, oldValue) => {
+  if (newValue.trim() !== "") {
+    showObserver.value = false;
+    // 0.7초(700ms) 후 showObserver 값을 true로 설정
+    setTimeout(() => {
+      showObserver.value = true;
+    }, 700);
+  } else {
+    // 키워드가 비어있다면 Observer를 바로 숨김
+    showObserver.value = false;
+  }
 });
 
 // 더 많은 데이터 로딩
