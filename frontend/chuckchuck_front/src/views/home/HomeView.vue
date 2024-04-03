@@ -245,8 +245,4 @@ store.getUserName(); // 유저 이름 가져오기 위함
 .middle-content img {
   width: 300px;
 }
-
-.carousel__pagination {
-  margin-left: -35px;
-}
 </style>

@@ -32,7 +32,7 @@ div,
 p,
 span {
   font-family: "Regular", sans-serif;
-  color: #303030;
+  /* color: #303030; */
 }
 
 button,
