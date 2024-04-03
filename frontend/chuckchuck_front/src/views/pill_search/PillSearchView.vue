@@ -45,7 +45,7 @@
         :warningTogether="pill.warningTogether"
         @click-modal="openModal"
       />
-      <Observer @show="loadMoreData"> 0"></Observer>
+      <!-- <Observer @show="loadMoreData"> 0"></Observer> -->
     </div>
     <Footer></Footer>
   </div>
