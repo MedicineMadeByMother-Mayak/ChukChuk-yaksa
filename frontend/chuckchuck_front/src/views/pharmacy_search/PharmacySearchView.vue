@@ -13,14 +13,14 @@
       <img class="logo" :src="logo" alt="" />
       <div>
         <p>찾는 약이 <strong>어떤 약국에 있는지</strong> 궁금하신가요?</p>
-        <p>척척약사가 찾아드릴게요.</p>
+        <p style="margin-top: 5px">척척약사가 찾아드릴게요.</p>
       </div>
     </div>
 
     <div class="address-search-container" :class="{ 'move-up': keyword }">
-      <p class="address">
+      <div class="address">
         <img :src="mileStone" alt="" />대전광역시 서구 대덕대로150
-      </p>
+      </div>
       <SearchBar
         :value="keyword"
         @keyup="input"
@@ -200,21 +200,21 @@ const click = (pillId) => {
 }
 
 .logo {
-  width: 39px;
-  height: 39px;
-  margin-bottom: 15px;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 30px;
 }
 
 .address-search-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50%;
+  margin-top: 40%;
   transition: margin-top 0.7s; /* 전환 효과 추가 */
 }
 
 .address-search-container img {
-  width: 14px;
+  width: 18px;
   margin: 0;
   margin-right: 8px;
 }
@@ -229,6 +229,9 @@ const click = (pillId) => {
   justify-content: center;
   font-weight: 600;
   z-index: 1;
+  margin-bottom: 20px;
+  color: #303030;
+  font-size: small;
 }
 
 .search-update-info {

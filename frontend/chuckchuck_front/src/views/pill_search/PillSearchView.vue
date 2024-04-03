@@ -8,7 +8,7 @@
         @input="input"
         :value="keyword"
         :keyword="keyword"
-        :width="'100%'"
+        :width="'80%'"
         :height="'33px'"
         :iconWidth="'15px'"
         :font-size="'15px'"
@@ -18,15 +18,17 @@
 
       <div class="count-container">
         <div class="count-box">
-          <p class="keyword">{{ keyword ? keyword : "전체" }}</p>
+          <p class="keyword">
+            {{ keyword ? keyword : "전체" }}
+          </p>
           <p class="count">
             검색결과:
             <strong>{{ count }}</strong
             >건
           </p>
         </div>
-        <hr />
       </div>
+      <div class="line"></div>
     </div>
 
     <div class="search-result-container">
@@ -177,6 +179,16 @@ function input(event) {
 </script>
 
 <style scoped>
+.line {
+  width: 100%;
+  height: 1px;
+  margin: 10px 0px;
+  background-color: #c8c8c8;
+}
+p {
+  font-size: small;
+  color: #303030;
+}
 .basic-background {
   background-color: #f9f9f9;
   height: 100%;
@@ -202,6 +214,7 @@ function input(event) {
 }
 
 .keyword {
+  font-size: small;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
