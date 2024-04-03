@@ -27,7 +27,7 @@ const props = defineProps({
 .header-background-color {
   width: 100%;
   background-color: transparent;
-  position: sticky;
+  position: absolute;
   top: 0;
   z-index: 999;
 }

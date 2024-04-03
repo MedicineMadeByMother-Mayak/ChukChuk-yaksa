@@ -4,6 +4,7 @@
 -->
 
 <template>
+  <HeaderFormOnlyString :title="title" :Link="Link" />
   <header :style="{ height }">
     <div class="container">
       <img :src="wave" id="pin" />
@@ -14,6 +15,7 @@
 </template>
 
 <script setup>
+import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
 import { ref, onMounted } from "vue";
 import wave from "@/assests/img/waves/wave.svg";
 import wave1 from "@/assests/img/waves/wave-1.svg";
@@ -23,7 +25,15 @@ import wave3 from "@/assests/img/waves/wave-3.svg";
 const props = defineProps({
   height: {
     type: Number,
-    default: "500px",
+    default: "120px",
+  },
+  title: {
+    type: String,
+    default: "title : 제목, height 높이",
+  },
+  Link: {
+    type: String,
+    default: "home",
   },
 });
 
@@ -37,7 +47,6 @@ const handleAnimationEnd = () => {
 <style scoped>
 header {
   background-color: #f9f9f9;
-  height: 10vh;
 }
 
 .container {

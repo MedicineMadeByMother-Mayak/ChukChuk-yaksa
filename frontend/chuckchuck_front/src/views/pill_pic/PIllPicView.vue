@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="base-backgound-color">
-      <Wave title="사진으로 약찾기" height="10px" />
+      <Wave title="사진으로 약찾기" height="100px" />
 
       <div class="container">
         <!-- Text -->
