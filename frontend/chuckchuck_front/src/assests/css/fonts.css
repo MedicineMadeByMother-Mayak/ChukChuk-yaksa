@@ -1,19 +1,44 @@
 @font-face {
-  font-family: "Cafe24SsurroundAir";
-  src: url("./Cafe24SsurroundAir-v1.1.ttf");
+  font-family: "SemiBold";
+  src: url("./pretendard/Pretendard-SemiBold.ttf");
 }
 
 @font-face {
-  font-family: "Cafe24SsurroundBold";
-  src: url("./Cafe24Ssurround-v2.0.ttf");
+  font-family: "Bold";
+  src: url("./pretendard/Pretendard-Bold.ttf");
 }
-body {
-  font-family: "Cafe24SsurroundAir", sans-serif;
-  font-size: 12px;
+
+@font-face {
+  font-family: "Medium";
+  src: url("./pretendard/Pretendard-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Regular";
+  src: url("./pretendard/Pretendard-Regular.ttf");
+}
+
+* {
+  letter-spacing: 0.05px; /* 원하는 자간 값으로 변경하세요 */
+  padding: 0px;
+  margin: 0px;
 }
 
 .bold {
-  font-family: "Cafe24SsurroundBold";
+  font-family: "Bold";
+}
+
+div,
+p,
+span {
+  font-family: "Regular", sans-serif;
+  /* color: #303030; */
+}
+
+button,
+strong {
+  font-family: "Medium", sans-serif;
+  /* color: #303030; */
 }
 
 h1,
@@ -22,5 +47,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Cafe24SsurroundAir", sans-serif;
+  font-family: "Bold", sans-serif;
+  color: #303030;
 }

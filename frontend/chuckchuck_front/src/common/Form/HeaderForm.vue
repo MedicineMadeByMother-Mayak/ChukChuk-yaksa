@@ -5,21 +5,19 @@
 -->
 
 <template>
-  <div class="header" :style="{ height }">
-    <div class="inner-header flex">
-      <RouterLink style="z-index: 3" :to="{ name: Link }">
-        <div class="arrow left">
-          <i></i>
-        </div>
-      </RouterLink>
-      <h1 class="bold" :style="{ fontSize }">{{ title }}</h1>
-      <p></p>
+  <div>
+    <HeaderFormOnlyString :title="title" :Link="Link" />
+    <div class="header" :style="{ height }">
+      <div class="inner-header flex">
+        <p></p>
+      </div>
+      <slot></slot>
     </div>
-    <slot></slot>
   </div>
 </template>
 
 <script setup>
+import HeaderFormOnlyString from "@/common/Form/HeaderFormOnlyString.vue";
 const props = defineProps({
   title: {
     type: String,
@@ -55,8 +53,7 @@ h1 {
 }
 
 .inner-header h1 {
-  flex-grow: 1; /* h1 태그가 가능한 모든 공간을 차지하도록 함 */
-  text-align: center; /* h1 내의 텍스트 중앙 정렬 */
+  content: "";
 }
 
 .arrow.left {
@@ -67,7 +64,7 @@ h1 {
 .header {
   position: relative;
   text-align: center;
-  background: linear-gradient(60deg, #3183ff 0%, #86e7ee 100%);
+  background: linear-gradient(to right, #3183ff 0%, #86e7ee 100%);
   color: black;
   margin-bottom: 10px;
 }
@@ -85,10 +82,6 @@ h1 {
   align-items: center;
   text-align: center;
   padding: auto;
-}
-
-.inner-header > i {
-  margin: 10px;
 }
 
 .arrow {

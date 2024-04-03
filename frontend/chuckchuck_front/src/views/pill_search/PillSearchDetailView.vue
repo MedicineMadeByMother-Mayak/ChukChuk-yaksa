@@ -1,7 +1,7 @@
 <!-- 약 상세 페이지 -->
 <template>
   <div class="basic-background-color">
-    <Wave :title="waveTitle" height="10px" />
+    <Wave :title="waveTitle" :Link="'pillsearch'" height="10px" />
     <div class="container">
       <img :src="imagePath" alt="Image description" />
     </div>
@@ -25,7 +25,13 @@
             class="fa-solid fa-circle-info"
             style="margin-right: 5px; color: #509af8"
           ></i>
-          <span style="vertical-align: middle">{{ item.title }}</span>
+          <font-awesome-icon
+            :icon="['fas', 'circle-info']"
+            style="color: #509af8; margin-right: 5px"
+          />
+          <span class="info-title" style="vertical-align: middle">{{
+            item.title
+          }}</span>
         </strong>
         <span style="font-size: 10px"></span>
       </div>
@@ -35,41 +41,41 @@
     </div>
   </div>
   <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #f9f9f9;"></div>
+  <div style="height: 85px; background-color: #f9f9f9"></div>
 </template>
 
 <script setup>
 import Wave from "@/common/Wave.vue";
 
-const waveTitle = "활명수"; // 약 이름 받아오기
-const imagePath = "../../assests/img/tempPill.png"; // 이미지 경로 받아오기
+import { ref, onMounted } from "vue";
+import { pillSearchStore } from "@/stores/pillSearch";
+import { useRoute } from "vue-router";
 
-const appointmentDetails = [
-  { title: "제조사", content: "동화약품 (주)" },
-  {
-    title: "주의사항",
-    content:
-      "주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항 주의사항",
-  },
-  { title: "종류", content: "진통제 (painkiller)" },
-  {
-    title: "효능",
-    content:
-      "기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음 기부니가 조음",
-  },
-  { title: "사용법", content: "동화약품 (주)" },
-  { title: "주성분", content: "시나몬, 초코, 얼음" },
-  {
-    title: "약 사용 전 반드시 알아야 할 내용",
-    content:
-      "알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용 알아야 할 내용",
-  },
-  {
-    title: "보관시 주의사항",
-    content:
-      "상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관 상온에 보관",
-  },
-];
+// route 파라미터로부터 pillId 값을 가져옴
+const route = useRoute();
+const pillId = ref(route.params.id);
+
+const waveTitle = ref("");
+const imagePath = ref("");
+const appointmentDetails = ref([]);
+
+onMounted(async () => {
+  const store = pillSearchStore();
+  await store.getPillInfo(pillId.value);
+
+  waveTitle.value = store.name;
+  imagePath.value = store.imageUrl; // 이미지 경로 받아오기
+  appointmentDetails.value = [
+    { title: "제조사", content: store.company },
+    { title: "주의사항", content: store.caution },
+    { title: "종류", content: store.type },
+    { title: "효능", content: store.effect },
+    { title: "사용법", content: store.capacity },
+    { title: "주성분", content: store.basis },
+    // { title: "약 사용 전 반드시 알아야 할 내용", content: store. },
+    // { title: "보관시 주의사항", content:  },
+  ];
+});
 </script>
 
 <style scoped>
@@ -101,8 +107,8 @@ const appointmentDetails = [
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 25vh; /* 전체 화면 높이 설정 */
-  width: 100vw; /* 전체 화면 너비 설정 */
+  height: 25%; /* 전체 화면 높이 설정 */
+  width: 100%; /* 전체 화면 너비 설정 */
 }
 
 img {
@@ -113,5 +119,10 @@ img {
 
 .info {
   padding: 4px;
+  /* color: rgb(86, 86, 86); */
+}
+
+.info-title {
+  /* color: rgb(86, 86, 86); */
 }
 </style>

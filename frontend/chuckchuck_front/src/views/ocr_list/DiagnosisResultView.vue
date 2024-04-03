@@ -1,84 +1,75 @@
 <template>
-  <HeaderForm title="약봉투 촬영" height="275px">
-    <div class="image-container"></div>
+  <HeaderForm title="진단서 촬영" height="275px">
     <div class="white-box">
-      <img
-        class="receipt-image"
-        src="../../assests/img/image 16.png"
-        alt="약 봉투 이미지"
-      />
+      <img class="receipt-image" :src="diagnosisImageSrc" alt="진단서 이미지" />
     </div>
-    <button class="custom-button">
+    <button @click="saveDiagnosis" class="custom-button">
       <div class="button-icon"></div>
-      <strong>복용관리</strong>에 추가하기
+      병력 저장하기
     </button>
-    <div class="grey-oval"></div>
+    <div
+      style="
+        position: relative;
+        top: 19px;
+        height: 10px;
+        background-color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+      "
+    ></div>
   </HeaderForm>
-  <div style="margin: 20px">
+  <div style="margin: 0px 20px">
+    <div style="text-align: center">진단서 분석 결과입니다.</div>
+    <hr />
     <li>
       <strong>영수증</strong>
       <TableForm
         style="margin-top: 10px"
         :tableData="[
-          ['약국정보', dumydata.pharmacyName],
-          ['조제일자', formatDate(dumydata.buildDate, 'YYYY/MM/DD')],
-          ['수납금액', dumydata.cost],
+          ['진단일', formatDate(data.buildDate, 'YYYY/MM/DD')],
+          ['병원명', data.hospitalName],
+          ['질병코드', data.illCode],
+          ['질병명', data.illName],
+          ['소견', data.opinion],
         ]"
       ></TableForm>
     </li>
-    <li style="margin: 10px 0px">
-      <strong>복약안내</strong>
-      <div v-for="pillData in dumydata.pills" style="margin-top: 10px">
-        <PillBagContent
-          :pillName="pillData.name"
-          :type="pillData.type"
-          :capacity="pillData.guide"
-        />
-      </div>
-    </li>
   </div>
+  <AlertModal
+    v-if="showModal"
+    :text="'진단서가 저장 되었습니다.'"
+    :showModal="showModal"
+  />
 </template>
 
 <script setup>
 import HeaderForm from "@/common/Form/HeaderForm.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import TableForm from "@/common/Form/TableForm.vue";
-import PillBagContent from "@/common/PillInfo.vue";
 import dayjs from "dayjs";
+import { ocrListStore } from "@/stores/ocrList";
+import AlertModal from "@/common/Form/AlertModal.vue";
+const showModal = ref(false);
+
+const store = ocrListStore();
 
 function formatDate(date, format = "YYYY/MM/DD") {
   return dayjs(date).format(format);
 }
+const diagnosisImageSrc = computed(() => store.diagnosisImageSrc);
+const data = ref(store.diagnosisResult);
 
-const dumydata = ref({
-  buildDate: new Date("2022-05-21 10:30:20"), // 조제 일자
-  pharmacyName: "나라사랑약국", // 약국명
-  cost: 8500, // 수납 금액
-  pills: [
-    // 약 리스트
-    {
-      pillId: 1, // 약 Id
-      name: "프라닥사캡슐", // 약 name
-      imageUrl: "../../assests/img/image 16.png", // AI가 준 이미지
-      type: "항히스타민제", // 약 분류 (ex항비타민제)
-      guide: "1정씩 2회, 14일분", // 복약 안내
-    },
-    {
-      pillId: 1, // 약 Id
-      name: "프라닥사캡슐", // 약 name
-      imageUrl: "../../assests/img/image 16.png", // AI가 준 이미지
-      type: "항히스타민제", // 약 분류 (ex항비타민제)
-      guide: "1정씩 2회, 14일분", // 복약 안내
-    },
-    {
-      pillId: 1, // 약 Id
-      name: "프라닥사캡슐", // 약 name
-      imageUrl: "../../assests/img/image 16.png", // AI가 준 이미지
-      type: "항히스타민제", // 약 분류 (ex항비타민제)
-      guide: "1정씩 2회, 14일분", // 복약 안내
-    },
-  ],
-});
+const saveDiagnosis = async () => {
+  try {
+    await store.saveDiagnosis();
+    showModal.value = true;
+    setTimeout(() => {
+      showModal.value = false;
+    }, 2500);
+  } catch (error) {
+    alert("진단서 저장중 오류가 발생하였습니다.");
+  }
+};
 </script>
 
 <style scoped>
@@ -98,12 +89,11 @@ const dumydata = ref({
 }
 
 .receipt-image {
-  max-width: 100%;
-  height: 150px;
-  max-height: 100%;
-  object-fit: cover;
+  width: 400px;
+  height: 140px;
   margin: 4px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .white-box::before {
@@ -137,19 +127,10 @@ const dumydata = ref({
 }
 
 .button-icon {
-  background-image: url("../../assests/img/Group.png");
+  background-image: url("@/assests/img/Group.png");
   background-size: cover;
   width: 20px;
   height: 20px;
   margin-right: 8px;
-}
-
-.grey-oval {
-  position: relative;
-  top: 18px;
-  width: 320px;
-  height: 20px;
-  background-color: #e7e7e7;
-  border-radius: 50%;
 }
 </style>

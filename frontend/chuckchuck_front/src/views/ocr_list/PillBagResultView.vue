@@ -1,64 +1,79 @@
 <template>
-  <HeaderForm title="진단서 촬영" height="275px">
-    <div class="image-container"></div>
+  <HeaderForm title="약봉투 촬영" height="275px">
     <div class="white-box">
-      <img
-        class="receipt-image"
-        src="../../assests/img/image 16.png"
-        alt="약 봉투 이미지"
-      />
+      <img class="receipt-image" :src="pillBagImageSrc" alt="약 봉투 이미지" />
     </div>
-    <button class="custom-button">
+    <button @click="savePillBag" class="custom-button">
       <div class="button-icon"></div>
-      병력 저장하기
+      <strong>복용관리</strong>에 추가하기
     </button>
-    <div
-      style="
-        position: relative;
-        top: 19px;
-        height: 10px;
-        background-color: white;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-      "
-    ></div>
+    <div class="grey-oval"></div>
   </HeaderForm>
-  <div style="margin: 0px 20px">
-    <div style="text-align: center">진단서 분석 결과입니다.</div>
+  <div style="margin: 20px">
+    <div style="text-align: center" class="bold">
+      처방 받으신 약 봉투 분석 결과입니다.
+    </div>
     <hr />
     <li>
       <strong>영수증</strong>
       <TableForm
         style="margin-top: 10px"
         :tableData="[
-          ['진단일', formatDate(dumydata.buildDate, 'YYYY/MM/DD')],
-          ['병원명', dumydata.hospitalName],
-          ['질병코드', dumydata.illCode],
-          ['질병명', dumydata.illName],
-          ['소견', dumydata.opinion],
+          ['약국정보', data.pharmacyName],
+          ['조제일자', formatDate(data.buildDate, 'YYYY/MM/DD')],
+          ['수납금액', data.cost],
         ]"
       ></TableForm>
     </li>
+    <li style="margin: 10px 0px">
+      <strong>복약안내</strong>
+      <div v-for="pillData in data.pills" style="margin-top: 10px">
+        <PillBagContent
+          :pillName="pillData.pillName"
+          :type="pillData.type"
+          :capacity="pillData.guide"
+        />
+      </div>
+    </li>
   </div>
+  <AlertModal
+    v-if="showModal"
+    :text="'복용관리에 추가 되었습니다.'"
+    :showModal="showModal"
+  />
 </template>
 
 <script setup>
 import HeaderForm from "@/common/Form/HeaderForm.vue";
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import TableForm from "@/common/Form/TableForm.vue";
+import PillBagContent from "@/common/PillInfo.vue";
 import dayjs from "dayjs";
+import { ocrListStore } from "@/stores/ocrList";
+import AlertModal from "@/common/Form/AlertModal.vue";
+const showModal = ref(false);
+
+const store = ocrListStore();
+
+const pillBagImageSrc = computed(() => store.pillBagImageSrc);
 
 function formatDate(date, format = "YYYY/MM/DD") {
   return dayjs(date).format(format);
 }
 
-const dumydata = ref({
-  diagnosisDate: new Date("2022-05-21 10:30:20"),
-  hospitalName: "싸피사랑병원",
-  illCode: "Joo",
-  illName: "코로나",
-  opinion: "널옵션",
-});
+const data = ref(store.pillBagResult);
+
+const savePillBag = async () => {
+  try {
+    await store.savePillBag();
+    showModal.value = true;
+    setTimeout(() => {
+      showModal.value = false;
+    }, 2500);
+  } catch (error) {
+    alert("약봉투 저장중 오류가 발생하였습니다.");
+  }
+};
 </script>
 
 <style scoped>
@@ -78,12 +93,11 @@ const dumydata = ref({
 }
 
 .receipt-image {
-  max-width: 100%;
-  height: 150px;
-  max-height: 100%;
-  object-fit: cover;
+  width: 400px;
+  height: 140px;
   margin: 4px;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .white-box::before {
@@ -117,10 +131,21 @@ const dumydata = ref({
 }
 
 .button-icon {
-  background-image: url("@/assests/img/Group.png");
+  background-image: url("../../assests/img/Group.png");
   background-size: cover;
   width: 20px;
   height: 20px;
   margin-right: 8px;
+}
+
+.grey-oval {
+  caret-color: transparent;
+  position: relative;
+  top: 18px;
+  width: 320px;
+  height: 20px;
+  background-color: #e7e7e7;
+  border-radius: 50%;
+  caret-color: transparent;
 }
 </style>

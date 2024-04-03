@@ -1,31 +1,18 @@
-<!-- 사용법 RouterLink편
-<template>
-    <ModalForm v-model="msg" :modalData="[
-    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
-    ['원하는 텍스트', RouterLink면 true axios면 false, {params:{ 전송하는 데이터 }, Link:'연결을 원하는 링크'],
-    ]" /> 
-</template> 
-
-<script setup>
-    import { ref } from "vue";
-    const msg = ref(true); //모달창 관리하는 변수 ref로 반드시 설정해주세요
-</script>
--->
-
-<!-- 사용법 axios편
-부탁해 서현몬 -->
-
 <template>
   <div class="modal-overlay" v-if="showModal" @click="closeModal">
+    
     <div class="modal">
       <ul class="modal-menu">
+        <div class="close-button">
+          <div class="close" @click="selectXButton">&times;</div>
+        </div>
         <li v-for="(item, index) in modalData" :key="index">
           <RouterLink
             v-if="item[1]"
             :to="{ name: item[2].Link, params: item[2].params }"
             class="router-link-item"
           >
-            <div style="margin: 9px; font-size: 14px">{{ item[0] }}</div>
+            <div style="margin: 15px; font-size: 13px">{{ item[0] }}</div>
           </RouterLink>
           <hr style="margin: 0px 10px" v-if="index < modalData.length - 1" />
         </li>
@@ -45,17 +32,24 @@ const props = defineProps({
   },
 });
 
-// const performAction = (action) => {
-//   console.log("Action performed:", action);
-//   showModal.value = !showModal.value;
-// };
-
 const closeModal = () => {
   showModal.value = !showModal.value;
 };
+
+const selectXButton = () => {
+  showModal.value = true;
+}
 </script>
 
 <style scoped>
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -67,14 +61,20 @@ const closeModal = () => {
   align-items: center;
   justify-content: center;
   caret-color: transparent;
+  z-index: 9999;
+  backdrop-filter: blur(1px);
 }
 
 .modal {
   background: white;
-  width: 80%;
-  max-width: 300px;
-  border-radius: 10px;
+  width: 100%;
+  height: 30%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   overflow: hidden;
+  bottom: 0px;
+	position: absolute;
+  animation: slideIn 0.7s ease-in-out;
 }
 
 .modal-menu {
@@ -84,10 +84,10 @@ const closeModal = () => {
 }
 
 .modal-menu li {
-  text-align: center;
+  text-align: left;
+  margin-left: 5px;
   background: white;
-  color: black;
-  font-weight: bold;
+  color: #565656;
   cursor: pointer;
 }
 
@@ -109,4 +109,18 @@ const closeModal = () => {
   text-decoration: none;
   color: inherit;
 }
+
+.close-button {
+  position: relative;
+  margin-left: auto;
+}
+
+.close {
+  color: #aaaaaa;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: right;
+  margin-right: 14px;
+}
+
 </style>

@@ -3,7 +3,7 @@
     <div class="header">
       <h3>설정</h3>
     </div>
-    <div class="settings-option">
+    <div class="settings-option" @click="modalhandler">
       <span>개인정보 수정</span>
     </div>
     <div class="settings-option">
@@ -15,22 +15,37 @@
       <input type="checkbox" id="push-notification-toggle" />
       <label for="push-notification-toggle"></label>
     </div>
-    <div class="settings-option">로그아웃</div>
+    <div class="settings-option" @click="logout">로그아웃</div>
   </div>
+  <UserUpdateModal v-if="modalflag" v-model="modalflag"></UserUpdateModal>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import UserUpdateModal from "./components/UserUpdateModal.vue";
+import { useAuthStore } from "@/stores/auth.js";
+
+const store = useAuthStore();
 
 const router = useRouter();
 const pushNotificationsEnabled = ref(false);
+const modalflag = ref(false);
 
 const navigateTo = (path) => {
   router.push({ name: path });
 };
 
-const logout = () => {};
+const logout = () => {
+  store.logout();
+  router.push({
+    name: "home",
+  });
+};
+
+const modalhandler = () => {
+  modalflag.value = true;
+};
 </script>
 
 <style scoped>
@@ -51,12 +66,14 @@ const logout = () => {};
 
 .settings-option,
 .settings-toggle {
+  caret-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px;
   margin: 20px 0px;
   background-color: white;
+  color: black;
 }
 
 /* 토글 스위치를 위한 스타일링 */
@@ -65,6 +82,7 @@ input[type="checkbox"] {
   opacity: 0;
   width: 0;
   height: 0;
+  caret-color: transparent;
 }
 
 input[type="checkbox"] + label {
@@ -75,6 +93,7 @@ input[type="checkbox"] + label {
   height: 25px;
   background-color: #ccc;
   border-radius: 25px;
+  caret-color: transparent;
 }
 
 input[type="checkbox"]:checked + label {
