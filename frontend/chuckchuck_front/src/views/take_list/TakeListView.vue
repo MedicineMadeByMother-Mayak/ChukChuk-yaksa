@@ -141,10 +141,15 @@
               @blur="saveChangeName(takeListData)"
               @keydown.enter="saveChangeName(takeListData)"
             />
-            <img
+            <!-- <img
               src="@/assests/icon/edit.png"
               alt="편집 아이콘"
               @click="openTakeListModal(takeListData.takeListId, index)"
+            /> -->
+            <font-awesome-icon
+              @click="openTakeListModal(takeListData.takeListId, index)"
+              :icon="['fas', 'gear']"
+              style="color: #303030; margin-left: 5px"
             />
           </div>
 
@@ -186,7 +191,7 @@
               {{ formatDate(takeListData.createDate) }}
             </div>
             <span v-if="!takeListData.edit"
-              >[{{ takeListData.takeListName }}]</span
+              >[ {{ truncateName(takeListData.takeListName, 16, 13) }}]</span
             >
             <input
               v-else
@@ -194,10 +199,15 @@
               @blur="saveChangeName(takeListData)"
               @keydown.enter="saveChangeName(takeListData)"
             />
-            <img
+            <!-- <img
               src="@/assests/icon/edit.png"
               alt="편집 아이콘"
               @click="openTakeListModal(takeListData.takeListId, index)"
+            /> -->
+            <font-awesome-icon
+              @click="openTakeListModal(takeListData.takeListId, index)"
+              :icon="['fas', 'gear']"
+              style="color: #303030"
             />
           </div>
 
