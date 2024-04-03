@@ -88,6 +88,7 @@ const medicines = reactive({});
 
 function clickAlarm(id) {
   selectTakeList.value = id;
+  console.log(store.offAlarmList);
 }
 
 const toggleActive = (name) => {
