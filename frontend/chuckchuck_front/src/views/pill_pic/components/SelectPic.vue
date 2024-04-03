@@ -39,8 +39,8 @@ const handleImageUpload = (event) => {
 }
 
 .custom-button {
-  width: 90%;
-  height: 90px;
+  width: 85%;
+  height: 80px;
   display: inline-flex; /* Flexbox 사용 */
   align-items: center; /* 수직 정렬 */
   justify-content: center; /* 수평 정렬 */
@@ -50,7 +50,7 @@ const handleImageUpload = (event) => {
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .custom-button:hover {

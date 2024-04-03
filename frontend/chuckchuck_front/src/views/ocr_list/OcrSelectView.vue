@@ -4,7 +4,7 @@
     <!-- OcrListView -->
     <div class="text">
       <div>약봉투나 진단서를 촬영하여</div>
-      <div>약력과 병력을 체계적으로 관리해보세요</div>
+      <div>약력과 병력을 체계적으로 관리해보세요.</div>
     </div>
     <div class="buttons">
       <label for="pillBag-file-upload" class="custom-button"
@@ -45,7 +45,7 @@ const pillBag = (event) => {
   store.setPillBagImage(event.target.files[0]);
 };
 
-const diagnosis = () => {
+const diagnosis = (event) => {
   store.setDianosisImage(event.target.files[0]);
 };
 </script>
@@ -74,8 +74,8 @@ const diagnosis = () => {
 }
 
 .custom-button {
-  width: 90%;
-  height: 90px;
+  width: 85%;
+  height: 80px;
   display: inline-flex; /* Flexbox 사용 */
   align-items: center; /* 수직 정렬 */
   justify-content: center; /* 수평 정렬 */
@@ -85,7 +85,7 @@ const diagnosis = () => {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
   text-align: center;
   line-height: 1.5; /* 버튼 내부 텍스트의 수직 정렬을 위해 사용 */
-  font-size: 14px;
+  font-size: 19px;
 }
 .custom-button:hover {
   background-color: rgb(241, 241, 241); /* 흰색 배경 */
@@ -100,7 +100,6 @@ button {
   border: none; /* outline 없음 */
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1); /* 그림자 하단 3px */
   border-radius: 5px;
-  font-size: 14px;
   width: 90%;
   height: 80px;
 }

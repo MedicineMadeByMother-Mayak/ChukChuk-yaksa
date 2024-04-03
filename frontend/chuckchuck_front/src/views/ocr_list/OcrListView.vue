@@ -56,7 +56,6 @@ watch(
 watch(
   () => store.diagnosisImage,
   async (diagnosisImage) => {
-    console.log("dd");
     text.value = "진단서";
     isLoading.value = true;
     analysisType.value = "diagnosis";

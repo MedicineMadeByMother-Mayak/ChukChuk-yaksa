@@ -42,6 +42,8 @@ export const ocrListStore = defineStore("ocrList", () => {
           "Content-Type": "multipart/form-data",
         },
       });
+
+      await delay(3000);
       pillBagResult.value = data;
     } catch (error) {
       // 에러 처리
@@ -60,12 +62,17 @@ export const ocrListStore = defineStore("ocrList", () => {
           "Content-Type": "multipart/form-data",
         },
       });
+      await delay(3000);
       diagnosisResult.value = data;
     } catch (error) {
       // 에러 처리
       alert("진단서 이미지 분석 중 오류 발생:", error);
     }
   };
+
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
 
   //약봉투 약 저장
   const savePillBag = async () => {

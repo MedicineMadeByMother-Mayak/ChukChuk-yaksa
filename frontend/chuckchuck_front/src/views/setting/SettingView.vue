@@ -15,7 +15,7 @@
       <input type="checkbox" id="push-notification-toggle" />
       <label for="push-notification-toggle"></label>
     </div>
-    <div class="settings-option">로그아웃</div>
+    <div class="settings-option" @click="logout">로그아웃</div>
   </div>
   <UserUpdateModal v-if="modalflag" v-model="modalflag"></UserUpdateModal>
 </template>
@@ -24,6 +24,9 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import UserUpdateModal from "./components/UserUpdateModal.vue";
+import { useAuthStore } from "@/stores/auth.js";
+
+const store = useAuthStore();
 
 const router = useRouter();
 const pushNotificationsEnabled = ref(false);
@@ -33,7 +36,12 @@ const navigateTo = (path) => {
   router.push({ name: path });
 };
 
-const logout = () => {};
+const logout = () => {
+  store.logout();
+  router.push({
+    name: "home",
+  });
+};
 
 const modalhandler = () => {
   modalflag.value = true;

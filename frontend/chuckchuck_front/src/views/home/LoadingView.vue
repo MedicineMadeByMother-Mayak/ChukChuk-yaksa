@@ -15,7 +15,7 @@
       </button>
       <button class="login-btn naver" @click="loginWithNaver">
         <img src="../../assests/img/네이버 로고.png" alt="" />
-        <p>네이버 로그인</p>
+        <p style="color: white">네이버 로그인</p>
       </button>
       <button class="login-btn kakao" @click="loginWithKakao">
         <img src="../../assests/img/Kakao.png" alt="" />
@@ -158,12 +158,12 @@ export default {
 
 .login-btn.google {
   background: #ffffff;
-  color: #000000;
+  color: #303030;
   border: 1px solid #d5d5d5;
 }
 
 .login-btn.kakao {
   background: #fee500;
-  color: #000000;
+  color: #303030;
 }
 </style>
