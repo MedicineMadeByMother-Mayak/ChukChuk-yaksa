@@ -141,7 +141,7 @@ public class OCRService {
                 Page<Pill> searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
                 if (searchResult.isEmpty()) {
                     //==현재 약 데이터가 부족해 임시코드를 작성
-                    pillName = "활명수";
+                    pillName = "리비셀캡슐(비페닐디메틸디카르복실레이트,우르소데옥시콜산)";
                     searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
                     //==
 
