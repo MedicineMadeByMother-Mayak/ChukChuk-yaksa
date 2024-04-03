@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<template>결과</template>
-<script setup></script>
-<style scoped></style>
-=======
 <template>
   <div class="container">
     <section class="img-container">
@@ -132,4 +127,3 @@ button {
   gap: 15px;
 }
 </style>
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86

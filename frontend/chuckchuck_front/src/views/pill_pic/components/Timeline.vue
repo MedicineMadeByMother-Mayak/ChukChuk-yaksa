@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<template>1,2,3</template>
-<script setup></script>
-<style scoped></style>
-=======
 <template>
   <div class="survey-container">
     <div class="survey-header">
@@ -100,4 +95,3 @@ const props = defineProps({
   color: rgb(88, 88, 88);
 }
 </style>
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86

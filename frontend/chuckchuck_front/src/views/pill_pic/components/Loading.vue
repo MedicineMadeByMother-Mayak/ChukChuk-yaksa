@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<template>로딩창</template>
-<script setup></script>
-<style scoped></style>
-=======
 <template>
   <div class="container">
     <img src="@/assests/img/ai.gif" />
@@ -29,9 +24,9 @@ onUnmounted(() => {
   clearInterval(intervalId);
 });
 
-onMounted(async() => {
-  await store.photoSearch()
-  store.endLoading(3)
+onMounted(async () => {
+  await store.photoSearch();
+  store.endLoading(3);
 });
 </script>
 <style scoped>
@@ -53,4 +48,3 @@ p {
   /* margin-top: 20px; */
 }
 </style>
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86

@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<template>사진선택 버튼</template>
-<script setup></script>
-<style scoped></style>
-=======
 <template>
   <div class="buttons">
     <label for="file-upload" class="custom-button"
@@ -66,4 +61,3 @@ button:hover {
   background-color: rgb(241, 241, 241); /* 흰색 배경 */
 }
 </style>
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86

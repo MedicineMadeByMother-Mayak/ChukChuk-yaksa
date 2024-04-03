@@ -1,11 +1,7 @@
 <!-- 약효기록 상세 -->
 <template>
   <div class="effect-detail-view">
-<<<<<<< HEAD
-    <HeaderForm :title="'약효기록 작성'" :height="'260px'">
-=======
     <HeaderForm :title="'약효기록 작성'" :height="'260px'" :Link="Link">
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
       <img
         class="pill-img"
         src="../../assests/img/tempPill.png"
@@ -24,23 +20,6 @@
       <div class="icon-container">
         <img
           id="effectFace"
-<<<<<<< HEAD
-          :src="EffectFace"
-          alt="Effect Face Icon"
-          @click="toggleOpacity('effectFace')"
-        />
-        <img
-          id="stopFace"
-          :src="StopFace"
-          alt="StopFace Face Icon"
-          @click="toggleOpacity('stopFace')"
-        />
-        <img
-          id="sideEffectFace"
-          :src="SideEffectFace"
-          alt="SideEffectFace Face Icon"
-          @click="toggleOpacity('sideEffectFace')"
-=======
           data-value="3"
           :src="EffectFace"
           alt="Effect Face Icon"
@@ -59,7 +38,6 @@
           :src="SideEffectFace"
           alt="SideEffectFace Face Icon"
           @click="clickFace('sideEffectFace')"
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
         />
       </div>
     </div>
@@ -68,21 +46,6 @@
       <div class="used-tag-list" @click="activateInput">
         <!-- 추가된태그 -->
         <div class="badge-list">
-<<<<<<< HEAD
-          <div
-            class="badge-custom"
-            v-for="(tag, index) in userPillEffectList[0].categories[0].usedTags"
-            :key="index"
-          >
-            <Badge
-              :title="tag.tagName"
-              :backgroundColor="getBackgroundColor(tag.categoryId)"
-              color="white"
-              fontSize="12"
-              padding="4px 15px 4px 15px"
-            />
-          </div>
-=======
           <Badge
             class="used-custom"
             v-for="(tag, index) in usedTags"
@@ -93,7 +56,6 @@
             fontSize="0.9rem"
             padding="4px 15px 4px 15px"
           />
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
         </div>
         <!-- 직접추가하는 인풋 -->
         <input
@@ -105,27 +67,6 @@
       </div>
       <!-- 사용후보태그 -->
       <div class="unused-tag-list">
-<<<<<<< HEAD
-        <div
-          class="badge-custom"
-          v-for="(tag, index) in userPillEffectList[0].categories[0].unUsedTags"
-          :key="index"
-        >
-          <Badge
-            :title="tag.tagName"
-            backgroundColor="#dfdfdf"
-            color="white"
-            fontSize="12"
-            padding="4px"
-          />
-        </div>
-      </div>
-      <img
-        :src="underDirection"
-        style="display: block; margin: 20px auto 12px"
-      />
-      <div style="border-bottom: 1px solid black"></div>
-=======
         <Badge
           class="unused-custom"
           v-for="(tag, index) in unUsedTags"
@@ -146,7 +87,6 @@
       /> -->
       <!-- <div style="border-bottom: 1px solid #bbbbbb"></div> -->
       <br />
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
       <strong class="title-style">MEMO</strong>
 
       <div class="memo">
@@ -154,10 +94,7 @@
           class="memo-input"
           type="text"
           v-model="memo"
-<<<<<<< HEAD
-=======
           @change="memoUpdate"
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
           placeholder="메모를 입력하세요"
           maxlength="100"
         />
@@ -263,15 +200,6 @@ const clickFace = (imageId) => {
   images.forEach((img) => {
     const currentImage = document.getElementById(img);
 
-<<<<<<< HEAD
-    if (img !== imageId) {
-      if (currentImage) {
-        // 이미지 요소가 존재하는지 확인
-        currentImage.style.opacity = "0.5";
-      }
-    } else {
-      currentImage.style.opacity = "1.0";
-=======
     if (img == imageId) {
       if (currentImage) {
         // 이미지 요소가 존재하는지 확인
@@ -288,7 +216,6 @@ const clickFace = (imageId) => {
       }
     } else {
       currentImage.style.opacity = "0.5";
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
     }
   });
 };

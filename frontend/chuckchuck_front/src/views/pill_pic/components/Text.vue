@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-<template>설명</template>
-<script setup></script>
-<style scoped></style>
-=======
 <template>
   <div class="text">
     <p>무슨 약인지 잊어버리셨나요?</p>
@@ -26,4 +21,3 @@ p {
   font-size: 0.8rem;
 }
 </style>
->>>>>>> 626bca03e5d4973cfd50f9a2f8dc11c51770da86
