@@ -48,5 +48,6 @@ p {
   justify-content: center;
   align-items: center;
   /* margin-top: 20px; */
+  margin-bottom: 40px;
 }
 </style>

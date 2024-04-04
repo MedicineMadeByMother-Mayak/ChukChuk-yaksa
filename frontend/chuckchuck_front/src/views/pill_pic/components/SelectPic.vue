@@ -38,6 +38,7 @@ const handleImageUpload = (event) => {
   justify-content: center;
   padding: 0px;
   gap: 20px;
+  margin-bottom: 90px;
 }
 
 .custom-button {
