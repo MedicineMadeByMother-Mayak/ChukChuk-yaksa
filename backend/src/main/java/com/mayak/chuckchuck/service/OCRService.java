@@ -94,9 +94,15 @@ public class OCRService {
 
             //질병코드 추출
             Matcher illCodeMatcher = illCodeRegex.matcher(ocrList.get(i));
-            if(illCodeMatcher.find()) validResult.put("illCode",ocrList.get(i));
+            if(illCodeMatcher.find()) {
+                if (validResult.containsKey("illCode")) validResult.put("illCode",validResult.get("illCode")+"\n"+ocrList.get(i));
+                else validResult.put("illCode",ocrList.get(i));
+                // 진단코드로 부터 진단명을 공공데이터에 요청
+                String illName = openApiManager.getIllNamethroughOpenApi(ocrList.get(i));
+                if(illName != null) validResult.put("illName", (validResult.getOrDefault("illName", ""))+"\n"+illName);
+            }
 
-                //병원명 추출
+            //병원명 추출
             else if(ocrList.get(i).contains("의원")) validResult.put("hospitalName",ocrList.get(i));
             else if(ocrList.get(i).contains("병원")) validResult.put("hospitalName",ocrList.get(i));
             else if(ocrList.get(i).contains("내과")) validResult.put("hospitalName",ocrList.get(i));
@@ -104,17 +110,14 @@ public class OCRService {
             else if(ocrList.get(i).contains("피부과")) validResult.put("hospitalName",ocrList.get(i));
             else if(ocrList.get(i).contains("치과")) validResult.put("hospitalName",ocrList.get(i));
 
-                //소견
+            //소견
             else if(ocrList.get(i).equals("치료내용")) validResult.put("opinion",ocrList.get(i+1));
             else if(ocrList.get(i).equals("소견")) validResult.put("opinion",ocrList.get(i+1));
 
+
+
         }
 
-        // 진단코드로 부터 진단명을 공공데이터에 요청
-        if((String)validResult.get("illCode") != null) {
-            //openApiManager.getIllNamethroughOpenApi((String)validResult.get("illCode"));
-            validResult.put("illName","상세불명의 급성 상기도염");
-        }
 
 
         return validResult;
