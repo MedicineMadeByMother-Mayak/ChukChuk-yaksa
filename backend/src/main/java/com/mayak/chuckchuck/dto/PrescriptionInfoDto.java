@@ -14,4 +14,8 @@ public record PrescriptionInfoDto(
         return new PrescriptionInfoDto(pill.getPillId(), pill.getName(),
                 pill.getImageUrl(), pill.getType(), guide);
     }
+
+    public static PrescriptionInfoDto fromNoDataEntity(String pillName){
+        return new PrescriptionInfoDto(null, pillName,null,null,null);
+    }
 }

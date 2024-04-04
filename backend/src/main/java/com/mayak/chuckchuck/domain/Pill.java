@@ -16,18 +16,18 @@ public class Pill {
     //약 id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="pill_id")
+    @Column(name = "pill_id")
     private Long pillId;
 
     //약 이름
-    @Column(name="name", length = 50)
+    @Column(name = "name", length = 50)
     private String name;
 
     //약 코드
     private Long code;
 
     //약 제조사
-    @Column(name="company", length = 50)
+    @Column(name = "company", length = 50)
     private String company;
 
     //약 효과
@@ -47,7 +47,7 @@ public class Pill {
     private String capacity;
 
     //약 이미지 링크
-    @Column(name="image_url", length = 1000)
+    @Column(name = "image_url", length = 1000)
     private String imageUrl;
 
     //약 분류
@@ -55,21 +55,22 @@ public class Pill {
     private String type;
 
     //임산부 주의
-    @Column(name="warning_pregnant")
+    @Column(name = "warning_pregnant")
     private Boolean warningPregnant;
 
     //투여기간주의
-    @Column(name="warning_use_date")
+    @Column(name = "warning_use_date")
     private Boolean warningUseDate;
 
     //노인주의
-    @Column(name="warning_elders")
+    @Column(name = "warning_elders")
     private Boolean warningElders;
 
     //병용금기
-    @Column(name="warning_together")
+    @Column(name = "warning_together")
     private Boolean warningTogether;
 
     @Embedded
-    private CommonData commonData = new CommonData();;
+    private CommonData commonData = new CommonData();
+
 }

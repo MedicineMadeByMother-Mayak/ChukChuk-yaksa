@@ -4,6 +4,8 @@ import com.mayak.chuckchuck.domain.Pill;
 import com.mayak.chuckchuck.dto.PagingDto;
 import com.mayak.chuckchuck.dto.response.PillDetailInfoResultResponse;
 import com.mayak.chuckchuck.dto.response.PillSearchResultResponse;
+import com.mayak.chuckchuck.exception.ErrorCode.CommonErrorCode;
+import com.mayak.chuckchuck.exception.RestApiException;
 import com.mayak.chuckchuck.repository.PillRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,7 @@ public class PillService {
      */
     public PillSearchResultResponse getSearchResult(String keyword, int page) {
         PagingDto pagingDto = new PagingDto(page, "name");
-        Page<Pill> searchResult = pillRepository.findByNameContaining(keyword, pagingDto.getPageable());
+        Page<Pill> searchResult = pillRepository.findByNameContaining(keyword, pagingDto.getPageable()).orElseThrow(() -> new RestApiException(CommonErrorCode.RESULT_NOT_FOUND));
         Long totalCount = pillRepository.countByNameContaining(keyword);
         return PillSearchResultResponse.fromEntity(searchResult, totalCount);
     }

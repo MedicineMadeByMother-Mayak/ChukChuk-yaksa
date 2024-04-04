@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -130,7 +131,6 @@ public class OCRService {
      * @return: HashMap<String, Object> 유효기록 해시맵
      */
     public HashMap<String, Object> validPillBag(List<String> ocrList) {
-        int tmp = 1;
         HashMap<String, Object> validResult = new HashMap<>();
         for (int i = 0; i < ocrList.size(); i++) {
             if (ocrList.get(i).equals("조제일자")) validResult.put("buildDate", ocrList.get(i + 1));
@@ -142,22 +142,19 @@ public class OCRService {
                 String guide = ocrList.get(i + 1); //안내
 
                 PagingDto pagingDto = new PagingDto(1, "name");
-                Page<Pill> searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
-                if (searchResult.isEmpty()) {
-                    //==현재 약 데이터가 부족해 임시코드를 작성
-                    if(tmp==1) {
-                        tmp++;
-                        pillName = "리비셀캡슐(비페닐디메틸디카르복실레이트,우르소데옥시콜산)";
-                    }
-                    else pillName = "AG피나스테리드정(피나스테리드)(수출용)";
-                    searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
-                    //==
+                Optional<Page<Pill>> searchResult = pillRepository.findByNameContaining(pillName, pagingDto.getPageable());
 
-                    //==나중에 위 임시코드 지우고 아래 컨티뉴를 활성화하자
-                    //continue;
+                Pill pill;
+                PrescriptionInfoDto prescriptionInfoDto;
+                if (searchResult.isPresent() && !searchResult.get().isEmpty()) {
+                    //검색결과 있음 -> 약이 척척약사 DB에 있다.
+                    pill = searchResult.get().getContent().get(0);
+                    prescriptionInfoDto = PrescriptionInfoDto.fromEntityAndGuide(pill, guide);
+                } else{
+                    //검색결과 없음 -> 약이 척척약사 DB에 없다.
+                    prescriptionInfoDto = PrescriptionInfoDto.fromNoDataEntity(pillName);
                 }
-                Pill pill = searchResult.getContent().get(0);
-                PrescriptionInfoDto prescriptionInfoDto = PrescriptionInfoDto.fromEntityAndGuide(pill, guide);
+
 
                 if (!validResult.containsKey("prescriptionInfo")) {
                     validResult.put("prescriptionInfo", new ArrayList<PrescriptionInfoDto>());
