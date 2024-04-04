@@ -71,9 +71,9 @@ const props = defineProps({
   },
 });
 
-function handleImageError(event) {
-  event.target.src = "/src/assests/img/dumypillimg.jpg";
-}
+// function handleImageError(event) {
+//   event.target.src = "/src/assests/img/dumypillimg.jpg";
+// }
 
 async function clickDetail(pillId) {
   // await store.getPillInfo(pillId);

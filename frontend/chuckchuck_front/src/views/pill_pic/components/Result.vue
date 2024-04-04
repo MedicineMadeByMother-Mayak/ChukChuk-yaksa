@@ -215,17 +215,17 @@ function openModal(pillId) {
 }
 
 // store의 data.pic_url이 변경될 때마다 picUrl 업데이트
-// watch(
-//   () => store.results.pic_url,
-//   (newPicUrl) => {
-//     picUrl.value = newPicUrl;
-//   }
-// );
+watch(
+  () => store.results.pic_url,
+  (newPicUrl) => {
+    picUrl.value = newPicUrl;
+  }
+);
 
 // 컴포넌트가 마운트될 때 store 데이터 초기화
-// onMounted(() => {
-//   picUrl.value = store.results.pic_url;
-// });
+onMounted(() => {
+  picUrl.value = store.results.pic_url;
+});
 </script>
 
 <style scoped>
