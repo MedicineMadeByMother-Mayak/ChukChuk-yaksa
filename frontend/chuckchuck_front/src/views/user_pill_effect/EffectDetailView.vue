@@ -71,43 +71,6 @@
       <div class="unused-tag-list">
         <Badge
           class="unused-custom"
-          :title="'지혈효과 짱좋음!'"
-          backgroundColor="#dfdfdf"
-          color="#5A5A5A"
-          fontSize="12"
-          padding="3px 10px 3px 10px"
-          @click="addUnusedTag(tag.tagId)"
-        />
-        <Badge
-          class="unused-custom"
-          :title="'각성효과'"
-          backgroundColor="#dfdfdf"
-          color="#5A5A5A"
-          fontSize="12"
-          padding="3px 10px 3px 10px"
-          @click="addUnusedTag(tag.tagId)"
-        />
-        <Badge
-          class="unused-custom"
-          :title="'진통완화'"
-          backgroundColor="#dfdfdf"
-          color="#5A5A5A"
-          fontSize="12"
-          padding="3px 10px 3px 10px"
-          @click="addUnusedTag(tag.tagId)"
-        />
-        <Badge
-          class="unused-custom"
-          :title="'우울감완화'"
-          backgroundColor="#dfdfdf"
-          color="#5A5A5A"
-          fontSize="12"
-          padding="3px 10px 3px 10px"
-          @click="addUnusedTag(tag.tagId)"
-        />
-
-        <Badge
-          class="unused-custom"
           v-for="(tag, index) in unUsedTags"
           :key="index"
           :title="tag.tagName"
