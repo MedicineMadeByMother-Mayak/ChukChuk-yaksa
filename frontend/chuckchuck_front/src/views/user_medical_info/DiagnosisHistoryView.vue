@@ -1,8 +1,13 @@
 <!-- 처방내역 -->
 <template>
-  <Wave title="진단내역" height="30px" Link="usermedicalinfo" />
+  <Wave
+    title="진단내역"
+    height="30px"
+    Link="usermedicalinfo"
+    style="z-index: 0"
+  />
 
-  <div style="margin: 5px 10px">
+  <div style="z-index: 9999; margin-top: 80px">
     총 {{ diagnosishistorydata.count }}건의 진단내역이 있습니다.
   </div>
   <hr style="margin: 10px" />

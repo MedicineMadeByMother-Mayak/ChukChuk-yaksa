@@ -1,7 +1,12 @@
 <template>
-  <Wave title="처방내역" height="30px" Link="usermedicalinfo" />
+  <Wave
+    title="처방내역"
+    height="30px"
+    Link="usermedicalinfo"
+    style="z-index: 0"
+  />
 
-  <section>
+  <section style="margin-top: 80px">
     <div style="margin: 5px 10px">
       총 {{ pillbaghistorydata.count }}건의 처방내역이 있습니다.
     </div>
@@ -9,7 +14,7 @@
 
     <div v-for="data in pillbaghistorydata.result">
       <Accordian
-        style="margin: 10px"
+        style="margin: 10px; z-index: 9"
         :title="formatDate(data.receipt.buildDate, 'YYYY/MM/DD 처방내역')"
       >
         <li>

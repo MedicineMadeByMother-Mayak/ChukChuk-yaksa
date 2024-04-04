@@ -51,6 +51,8 @@ function toggleAccordion() {
 }
 
 .accordion-header {
+  position: relative;
+  z-index: 10;
   background: linear-gradient(to left, #86e7ee, #3183ff);
   border-radius: 2px;
   padding: 10px;
