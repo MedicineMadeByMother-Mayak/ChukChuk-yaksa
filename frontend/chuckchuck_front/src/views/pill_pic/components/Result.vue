@@ -9,6 +9,7 @@
       <p>분석된 약들을 복용목록에 추가할 수 있어요.</p>
       <div class="line"></div>
     </section>
+
     <section class="under">
       <button>모든 분석결과를 복용목록에 추가하기</button>
       <div class="pill-box">
@@ -27,6 +28,7 @@
         />
       </div>
     </section>
+
     <ModalForm
       v-model="msg"
       @add-pill-in-take-list="addPill"
@@ -63,7 +65,8 @@
     />
   </div>
   <!-- Nav-bar용 -->
-  <div style="height: 85px; background-color: #f9f9f9"></div>
+
+  <!-- <Footer></Footer> -->
 </template>
 <script setup>
 import PillInfoPlus from "@/common/PillInfoPlus.vue";
@@ -74,9 +77,10 @@ import AlertModal from "@/common/Form/AlertModal.vue";
 import ModalForm from "@/common/Form/AddModalForm.vue";
 import { takelistStore } from "@/stores/takelist";
 
+import Footer from "@/common/FooterColor.vue";
 const takeListStore = takelistStore();
 const store = pillPicStore();
-// const data = store.results;
+const data = store.results;
 const picUrl = ref("");
 const msg = ref(false);
 const showModal = ref(false);
@@ -99,101 +103,101 @@ async function savePill(selectId) {
   }, 2500);
 }
 
-const data = ref({
-  count: 5,
-  pills: [
-    {
-      pillId: 1,
-      pillName: "중외5%포도당생리식염액(수출명:5%DextroseinnormalsalineInj.)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 2,
-      pillName: "디고신정(디곡신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 3,
-      pillName: "옥시톤주사액5아이유(옥시토신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 4,
-      pillName: "아주디곡신주사액",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 5,
-      pillName: "삐콤정",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 2,
-      pillName: "디고신정(디곡신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 3,
-      pillName: "옥시톤주사액5아이유(옥시토신)",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: false,
-      warningElders: true,
-      warningTogether: true,
-    },
-    {
-      pillId: 4,
-      pillName: "아주디곡신주사액",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: false,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-    {
-      pillId: 5,
-      pillName: "삐콤정",
-      imageUrl: "../../assests/img/tempPill.png",
-      type: "진통제 (painkiller)",
-      warningPregnant: true,
-      warningUseDate: true,
-      warningElders: true,
-      warningTogether: false,
-    },
-  ],
-});
+// const data = ref({
+//   count: 5,
+//   pills: [
+//     {
+//       pillId: 1,
+//       pillName: "중외5%포도당생리식염액(수출명:5%DextroseinnormalsalineInj.)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: true,
+//     },
+//     {
+//       pillId: 2,
+//       pillName: "디고신정(디곡신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 3,
+//       pillName: "옥시톤주사액5아이유(옥시토신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: true,
+//     },
+//     {
+//       pillId: 4,
+//       pillName: "아주디곡신주사액",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 5,
+//       pillName: "삐콤정",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 2,
+//       pillName: "디고신정(디곡신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 3,
+//       pillName: "옥시톤주사액5아이유(옥시토신)",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: false,
+//       warningElders: true,
+//       warningTogether: true,
+//     },
+//     {
+//       pillId: 4,
+//       pillName: "아주디곡신주사액",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: false,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//     {
+//       pillId: 5,
+//       pillName: "삐콤정",
+//       imageUrl: "../../assests/img/tempPill.png",
+//       type: "진통제 (painkiller)",
+//       warningPregnant: true,
+//       warningUseDate: true,
+//       warningElders: true,
+//       warningTogether: false,
+//     },
+//   ],
+// });
 
 async function addPill() {
   modalData.value = [[1, "새로운 리스트에 추가하기"]];
@@ -230,7 +234,7 @@ function openModal(pillId) {
   flex-direction: column;
   align-items: center;
   /* gap: 2vh; */
-  gap: 2%;
+  gap: 12px;
 }
 p {
   color: #535353;
@@ -268,11 +272,12 @@ p {
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-size: 15px;
 }
 .line {
   height: 1.5px;
   border-radius: 10px;
-  background-color: #bebebe;
+  background-color: rgb(72, 72, 72);
 }
 
 button {
@@ -295,5 +300,7 @@ button {
   flex-direction: column;
   align-items: center;
   gap: 15px;
+  width: 90%;
+  margin-bottom: 100px;
 }
 </style>

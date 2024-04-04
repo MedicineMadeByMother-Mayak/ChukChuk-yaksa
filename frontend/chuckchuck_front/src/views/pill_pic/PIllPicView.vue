@@ -15,7 +15,6 @@
       </div>
     </div>
   </section>
-  <Footer></Footer>
 </template>
 
 <script setup>
@@ -49,7 +48,7 @@ watch(
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
-  height: 460px;
+  /* height: 460px; */
   /* gap: 10px; */
 }
 

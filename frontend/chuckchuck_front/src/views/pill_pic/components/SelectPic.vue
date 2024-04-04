@@ -11,10 +11,12 @@
     />
     <label class="custom-button">카메라로 알약사진 촬영하기</label>
   </div>
+  <Footer></Footer>
 </template>
 
 <script setup>
 import Wave from "@/common/Wave.vue";
+import Footer from "@/common/FooterColor.vue";
 import { ref } from "vue";
 import { pillPicStore } from "@/stores/pillPic";
 const store = pillPicStore();

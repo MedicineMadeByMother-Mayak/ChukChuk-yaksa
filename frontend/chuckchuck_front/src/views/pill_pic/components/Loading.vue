@@ -3,11 +3,13 @@
     <img src="@/assests/img/ai.gif" />
     <p class="bold">{{ analyzingText }}</p>
   </div>
+  <Footer></Footer>
 </template>
 <script setup>
 import { ref, watchEffect, onUnmounted, onMounted } from "vue";
 import { pillPicStore } from "@/stores/pillPic";
 import { instance } from "@/util/mainAxios";
+import Footer from "@/common/FooterColor.vue";
 const store = pillPicStore();
 const dots = ref(0);
 const analyzingText = ref("분석중" + ".".repeat(dots.value));
