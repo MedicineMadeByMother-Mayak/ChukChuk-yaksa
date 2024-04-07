@@ -1,0 +1,52 @@
+@font-face {
+  font-family: "SemiBold";
+  src: url("./pretendard/Pretendard-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Bold";
+  src: url("./pretendard/Pretendard-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Medium";
+  src: url("./pretendard/Pretendard-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Regular";
+  src: url("./pretendard/Pretendard-Regular.ttf");
+}
+
+* {
+  letter-spacing: 0.05px; /* 원하는 자간 값으로 변경하세요 */
+  padding: 0px;
+  margin: 0px;
+}
+
+.bold {
+  font-family: "Bold";
+}
+
+div,
+p,
+span {
+  font-family: "Regular", sans-serif;
+  /* color: #303030; */
+}
+
+button,
+strong {
+  font-family: "Medium", sans-serif;
+  /* color: #303030; */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bold", sans-serif;
+  color: #303030;
+}
